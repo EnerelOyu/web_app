@@ -1,60 +1,33 @@
 
-:root {
-    --text-color-0: hsl(212 25% 10%);
-    --text-color-1: hsl(212 25% 20%);
-    --text-color-2: hsl(212 25% 30%);
-    --text-color-3: hsl(212 25% 40%);
-    --text-color-4: hsl(212 25% 50%);
-    --text-color-5: hsl(212 25% 60%);
-    --text-color-6: hsl(212 25% 70%);
-    --text-color-7: hsl(212 25% 80%);
-    --text-color-8: hsl(212 25% 90%);
-    --text-color-9: hsl(212 25% 100%);
-
-    --primary: hsl(24 94% 50%);
-    --primary-1: hsl(24 94% 60%);
-    --primary-2: hsl(24 94% 70%);
-    --primary-3: hsl(24 94% 80%);
-    --primary-4: hsl(24 94% 90%);
-    --primary-4: hsl(24 94% 97%);
-
-    --secondary: hsl(30, 96%, 60%);
-    --secondary-1: hsl(30, 96%, 70%);
-    --secondary-2: hsl(30, 96%, 80%);
-    --secondary-3: hsl(30, 96%, 90%);
-
-    --accent: hsl(156, 58%, 20%);
-    --accent–1: hsl(156, 58%, 30%);
-    --accent-2: hsl(156, 58%, 40%);
-    --accent-3: hsl(156, 58%, 50%);
-    --accent-4: hsl(156, 58%, 60%);
-    --accent-5: hsl(156, 58%, 70%);
-    --accent-6: hsl(156, 58%, 80%);
-    --accent-7: hsl(156, 58%, 97%);
-
-    --bg-color: hsl(0, 0%, 100%);
-    --hdr-bg-color: hsl(212 25% 10%);
-    --ftr-bg-color: hsl(212 25% 10%);
-
-}
 *{
     margin:0px;
 }
 .main-container {
     display: flex;
+    align-items: flex-start;
+    margin-top: 100px;
 }
 
 header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding: 10px 30px;
+    z-index: 1000;  
     background-color: var(--hdr-bg-color);
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 .header-logo{
     display: flex;
     flex-direction: row;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
 }
-.header-logo>img{
+.header-logo img{
     width: 74px;
     height: 74px;
 }
@@ -73,6 +46,10 @@ header{
     padding: 20px;
     font-weight: bold ;
 }
+.header-nav{
+    display: inline-flex;
+    gap: 8px;
+}
 .header-nav>a:link{
     text-decoration: none;
 }
@@ -84,8 +61,35 @@ header{
     color: var(--primary);
 }
 
+.header-nav .btn svg{
+    height: 20px;
+    width: 20px;
+}
 
+.header-nav input{
+    background-color: var(--primary-4);
+    border-radius: 8px;
+    border-style: none;
+}
+
+.header-nav input::placeholder{
+    color: var(--text-color-4);
+    padding-left: 10px;
+}
+
+.btn {
+    background-color: var(--primary-4);
+    border-style: none;
+    border-radius: 8px;
+}
+
+.btn svg{
+    color: var(--text-color);
+}
 .filter-aside {
+    position:sticky;
+    top: 100px;
+    height: 100vh; 
     width: 30%;
     display: flex;
     flex-direction: column;
@@ -93,10 +97,15 @@ header{
     padding-left: 20px ;
 }
 
+h2{
+    padding: 10px 10px;
+    color: var(--text-color);
+    
+}
+
 .filter-section {
     display: flex;
     flex-direction: column;
-    border: #EB6708;
 }
 
 .filters {
@@ -105,14 +114,11 @@ header{
     border: none;
 }
 .spot-cards-container{
-    border: #EB6708;
-    border-style: dotted;
-    width: 70%;
+    width: 70vw;
+    height: 100vh;
+    overflow-y: auto;
 }
-.spot-cards-container>h3{
-    float: right;
-    
-}
+
 .spot-card{
     float: end;
     border: #EB6708;
@@ -120,9 +126,8 @@ header{
     flex-direction: column;
 }
 
-
 .spot-img {
-    background-color: #FFFBFF;
+    background-color: var(--primary-4);
 }
 
 .spot-card {
@@ -131,28 +136,66 @@ header{
     flex-direction: row;
 }
 
-.spot-img>a>img {
+.spot-img img {
     width: 320px;
     height: 200px;
     object-fit: cover;
 }
 
-
-.actions {
+.spot-card .rating, .spot-card .action-btns{
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+.readOnly-rating-stars{
+    display: inline-flex;
+    gap: 0px;
+}
+.readOnly-rating-stars .star{
+    width: 15px;
+    height: 15px;
+    display: block;
+    color: var(--primary);
 }
 
-.checked {
-    color: #EB6708
+.action-btns{
+    margin-left: auto;
+    display: inline-flex;
+    gap: 8px;
 }
 
+.action-btns .btn{
+    width: 30px;
+    height: 30px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: var(--primary);
+    border-radius: 8px;
+    border-style: none;
+    
+}
+.action-btns .btn svg{
+    color: var(--text-color);
+}
+
+.reviews{
+    color: var(--text-color-4);
+}
 .spot-info {
     padding-left: 20px;
 }
-.icon{
-    height: 20px;
-    width: 20px;
-    fill: currentColor; 
+
+.spot-info ul{
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.spot-info ul li{
+    background-color: var(--primary-4);
+    list-style: none;
+    border-radius:  8px;
+    padding: 5px;
+    color: var(--text-color-4);
 }
