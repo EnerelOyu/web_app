@@ -29,7 +29,9 @@
     --accent-4: hsl(156, 58%, 60%);
     --accent-5: hsl(156, 58%, 70%);
     --accent-6: hsl(156, 58%, 80%);
-    --accent-7: hsl(156, 58%, 97%);
+    --accent-7: hsl(156, 58%, 85%);;
+    --accent-8: hsl(156, 58%,90%);
+    --accent-9: hsl(156, 58%, 97%);
 
     --bg-color: hsl(0, 0%, 100%);
     --hdr-bg-color: hsl(212 25% 10%);
