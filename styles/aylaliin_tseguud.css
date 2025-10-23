@@ -1,8 +1,13 @@
 @import url('fonts.css');
 *{
     margin:0px;
+}
+h1, h2, h3{
     font-family: 'Rubik';
+}
 
+p{
+    font-family: 'NunitoSans';
 }
 .main-container {
     display: flex;
@@ -11,28 +16,27 @@
 
 header{
     position: sticky;
-    top: 0;
-    left: 0;
     width: auto;
     z-index: 1000; 
     padding: 10px;
     background-color: var(--hdr-bg-color);
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items:center;
 }
+
 .header-logo{
     display: inline-flex;
     margin-right: auto;
     align-items: center;
     justify-content: center;
 }
+
 .header-logo img{
     width: 74px;
     height: 74px;
 }
 .header-logo>h1{
-    color: var(--accent-7);
+    color: var(--primary-4);
     padding-left: 10px;
     font-size: 35px;
     font-weight: bolder;
@@ -50,28 +54,32 @@ header{
 .header-nav{
     display: flex;
     gap: 8px;
+    align-items: center;
 }
 .header-nav>a:link{
     text-decoration: none;
 }
 .header-nav a{
-    color:var(--accent-7);
-    font-size: 16px;
+    color:var(--primary-4);
+    font-size: 12px;
+    font-family: 'NunitoSans';
 }
 
 .header-nav a:hover{
     color: var(--primary);
 }
 
-.header-nav .btn svg{
+.btn svg{
     height: 20px;
     width: 20px;
+    color: var(--primary);
 }
 
 .header-nav input{
-    background-color: var(--accent-7);
+    background-color: var(--primary-4);
     border-radius: 8px;
     border-style: none;
+    padding: 7px;
 }
 
 .header-nav input::placeholder{
@@ -80,7 +88,7 @@ header{
 }
 
 .btn {
-    background-color: var(--accent-7);
+    background-color: var(--primary-4);
     border-style: none;
     border-radius: 8px;
 }
@@ -91,18 +99,17 @@ header{
 .filter-aside {
     position:sticky;
     height: 100vh; 
-    width: 30%;
+    width: 25%;
     display: flex;
     flex-direction: column;
-    background-color: var(--accent-9);
-    padding-left: 20px ;
+    padding: 10px ;
+    box-shadow: 1px 0 10px 2px var(--text-color-6);
 }
-
-h2{
-    padding: 10px 10px;
-    color: var(--text-color);
-    
-}
+ .filter-aside h2{
+    color: var(--text-color-1);
+    font-size: 32px;
+    padding-bottom: 10px;
+ }
 
 .filter-section {
     display: flex;
@@ -114,33 +121,58 @@ h2{
     flex-direction: column;
     border: none;
 }
+legend{
+    font-family: 'Rubik';
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--text-color-1);
+}
+
+.filters label{
+    color: var(--text-color-2);
+    font-family: 'NunitoSans';
+}
+
+
 .spot-cards-container{
-    width: 70vw;
+    width: 75%;
     height: 100vh;
     overflow-y: auto;
 }
 
-.spot-img {
-    background-color: var(--primary-4);
+.spot-cards-container h2{
+    color: var(--text-color-1);
+    font-size: 28px;
+    padding: 20px;
+    text-align: right;
 }
 
+
 .spot-card {
+    margin: 20px 30px;
     display: flex;
-    padding: 20px;
     flex-direction: row;
+    border-style: solid;
+    border-width: 0px 0px 0.5px 0px;
+    border-color: var(--text-color-6);
+    border-radius: 0px 8px;
 }
 
 .spot-img img {
     width: 320px;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 8px 0px 0px 8px;
 }
 
 .spot-card .rating, .spot-card .action-btns{
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+.rating{
+    padding: 5px;
 }
 .readOnly-rating-stars{
     display: inline-flex;
@@ -150,7 +182,7 @@ h2{
     width: 15px;
     height: 15px;
     display: block;
-    color: var(--primary);
+    color: var(--accent-2);
 }
 
 .action-btns{
@@ -159,37 +191,44 @@ h2{
     gap: 8px;
 }
 
-.action-btns .btn{
-    width: 30px;
-    height: 30px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border-radius: 8px;
-    border-style: solid;
-    border-color: var(--hdr-bg-color);
-}
-.action-btns .btn svg{
-    color: var(--hdr-bg-color);
-}
-
-.reviews{
-    color: var(--text-color-4);
+.rating-num{
+    color: var(--accent-2);
+    font-family: 'NunitoSans';
 }
 .spot-info {
-    padding-left: 20px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    justify-content: space-between;
+}
+
+.spot-info h3{
+    font-family: 'Rubik';
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--text-color-2);
+    
 }
 
 .spot-info ul{
-    display: inline-flex;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 5px;
+    
 }
 .spot-info ul li{
-    background-color: var(--primary-4);
     list-style: none;
     border-radius:  8px;
     padding: 5px;
-    color: var(--text-color-4);
+    color: var(--accent-2);
+    font-family: 'NunitoSans';
+    color: var(--text-color-3);
+    background-color: var(--accent-9);
+}
+
+.spot-info p{
+    color: var(--text-color-2);
 }

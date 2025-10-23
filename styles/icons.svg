@@ -17,15 +17,6 @@
              128 192.5 128 272C128 351.5 192.5 416 272 416z"/>
   </symbol>
 
-  <!-- add -->
-<symbol id="icon-add" viewBox="0 0 48 48">
-  <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4">
-    <rect width="36" height="36" x="6" y="6" rx="3"/>
-    <path stroke-linecap="round" d="M24 16v16m-8-8h16"/>
-  </g>
-</symbol>
-
-
   <!-- save -->
   <symbol id="icon-save" viewBox="0 0 24 24">
     <path fill="currentColor" d="M4 3h16v19.943l-8-5.714l-8 5.714V3Zm2 2v14.057l6-4.286l6 4.286V5H6Z"/>
@@ -50,6 +41,11 @@
              a1 1 0 0 0 .4-1l-1-5.68l4.13-4A1 1 0 0 0 22 9.67Zm-6.15 4a1 1 0 0 0-.29.89
              l.72 4.19l-3.76-2a1 1 0 0 0-.94 0l-3.76 2l.72-4.19a1 1 0 0 0-.29-.89l-3-3
              l4.21-.61a1 1 0 0 0 .76-.55L12 5.7l1.88 3.82a1 1 0 0 0 .76.55l4.21.61Z"/>
+  </symbol>
+
+  <!-- add -->
+  <symbol id="icon-add" viewBox="0 0 20 20">
+    <path fill="currentColor" d="M11 9V4H9v5H4v2h5v5h2v-5h5V9z"/>
   </symbol>
 
 </svg>
