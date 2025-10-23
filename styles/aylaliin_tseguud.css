@@ -184,6 +184,10 @@ legend{
     display: block;
     color: var(--accent-2);
 }
+.rating-num{
+    color: var(--accent-2);
+    font-family: 'NunitoSans';
+}
 
 .action-btns{
     margin-left: auto;
@@ -191,10 +195,6 @@ legend{
     gap: 8px;
 }
 
-.rating-num{
-    color: var(--accent-2);
-    font-family: 'NunitoSans';
-}
 .spot-info {
     padding: 20px;
     display: flex;

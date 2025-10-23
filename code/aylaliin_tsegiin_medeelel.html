@@ -11,29 +11,45 @@
 
 <body>
     <header>
-
+        <div class="header-logo">
+            <img src="../files/logo.svg" alt="Logo">
+            <h1>Ayal<span>GO</span></h1>
+            <p>Discover Mongolia <br>your way</p>
+        </div>
+        <div class="header-nav">
+            <a href="home_page.html">Нүүр Хуудас</a>
+            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын Цэгүүд</a>
+            <input type="text" placeholder="Хайлт хийх..">
+            <button class="btn">
+                <svg>
+                    <use href="../styles/icons.svg#icon-search"></use>
+                </svg>
+            </button>
+        </div>
     </header>
     <div class="main-container">
         <article>
-            <header class="spot_header">
+            <div class="spot-header">
                 <h1>Аяллын цэгийн нэр</h1>
                 <div class="actions">
-                    <button class="share-btn"> Хуваалцах
-                        <svg class="icon">
+                    <button class="btn"> Хуваалцах
+                        <svg>
                             <use href="../styles/icons.svg#icon-share"></use>
                         </svg>
                     </button>
-                    <button class="share-btn"> Нэмэх
-                        <svg class="icon">
+                    <button class="btn"> Нэмэх
+                        <svg>
                             <use href="../styles/icons.svg#icon-add"></use>
                         </svg>
                     </button>
-                    <button class="share-btn"> Хадгалах
-                        <svg class="icon">
+                    <button class="btn"> Хадгалах
+                        <svg>
                             <use href="../styles/icons.svg#icon-save"></use>
                         </svg>
                     </button>
                 </div>
+            </div>
+            <div class="rating">
                 <div class="readOnly-rating-stars">
                     <svg class="star">
                         <use href="../styles/icons.svg#icon-star-filled"></use>
@@ -51,8 +67,39 @@
                         <use href="../styles/icons.svg#icon-star-filled"></use>
                     </svg>
                 </div>
-            </header>
+                <p class="rating-num">5.0</p>
+            </div>
+            <ul>
+                <li>Аяллын төрөл1</li>
+                <li>Аяллын төрөл2</li>
+                <li>Үйл ажиллагаа</li>
+            </ul>
+            <div class="spot-schedue">
+                <p class="status">Hээлттэй </p>
+                <p class="time-zone">9:00AM–6:00 PM</p>
+            </div>
+            <div class="spot-imgs">
+                <img id="main-img" src="../files/11statue1.jpg" alt="main-img">
+                <img id="second-img" src="../files/12Landscape1.jpg" alt="img-2">
+                <img id="third-img" src="../files/12Landscape1.jpg" alt="img-3">
+            </div>
         </article>
+        <aside>
+
+        </aside>
+        <section class="intro">
+            <h3>Танилцуулга</h3>
+            <p>.....</p>
+        </section>
+        <section>
+            <h3>Санал болгох хөтөч</h3>
+            <article class="guide-card">
+                <svg class="default-profile">
+                    <use href="../styles/icons.svg#default-profile"></use>
+                </svg>
+
+            </article>
+        </section>
     </div>
 
 
