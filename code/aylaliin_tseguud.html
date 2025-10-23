@@ -6,19 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/colors.css">
     <link rel="stylesheet" href="../styles/aylaliin_tseguud.css">
-    <title>Аяллын цэгүүд</title>
+     <title>Аяллын цэгүүд</title>
+     <script type="module" src="./spot-card.js"></script>
+     <script type="module" src="./category-filter.js"></script>
 </head>
 
 <body>
     <header>
         <div class="header-logo">
-            <img src="../files/Logo.svg" alt="Logo">
+            <img src="../files/logo-version4.svg" alt="Logo">
             <h1>Ayal<span>GO</span></h1>
             <p>Discover Mongolia <br>your way</p>
         </div>
         <div class="header-nav">
-            <a href="home_page.html">Нүүр хуудас</a>
-            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын цэгүүд</a>
+            <a href="home_page.html">НҮҮР ХУУДАС</a>
+            <a href="aylaliin_tseguud.html" aria-current="page">АЯЛЛЫН ЦЭГҮҮД</a>
             <input type="text" placeholder="Хайлт хийх..">
             <button class="btn">
                 <svg>
@@ -32,246 +34,23 @@
         <aside class="filter-aside">
             <h2>Аллын цэг хайх</h2>
             <section class="filter-section">
-                <fieldset class="filters">
-                    <legend>Категори</legend>
-                    <label><input type="checkbox">Соёл</label>
-                    <label><input type="checkbox">Амралт сувилал</label>
-                    <label><input type="checkbox">Адал явдалтай</label>
-                    <label><input type="checkbox">Баяр наадам</label>
-                    <label><input type="checkbox">Ууланд гарах</label>
-                    <label><input type="checkbox">Байгалийн гэрэл зураг</label>
-                    <label><input type="checkbox">Гэр бүл</label>
-                </fieldset>
-                <fieldset class="filters">
-                    <legend>Бүс нутаг</legend>
-                    <label><input type="checkbox">Төв</label>
-                    <label><input type="checkbox">Хангай</label>
-                    <label><input type="checkbox">Зүүн</label>
-                    <label><input type="checkbox">Баруун</label>
-                    <label><input type="checkbox">Улаанбаатар</label>
-                </fieldset>
-                <fieldset class="filters">
-                    <legend>Үйл ажиллагаа</legend>
-                    <label><input type="checkbox">Морин аялал</label>
-                    <label><input type="checkbox">Говьд тэмээ унах</label>
-                    <label><input type="checkbox">Сур харваа</label>
-                    <label><input type="checkbox">Загасчлал</label>
-                    <label><input type="checkbox">Амьтантай ойр</label>
-                </fieldset>
+                <category-filter ner="Категори" turul1="Соёл" turul2="Амралт сувилал" turul3="Адал явдалт" turul4="Баяр наадам" turul5="Ууланд гарах" ></category-filter>
+                <category-filter ner="Бүс нутаг" turul1="Алтай" turul2="Баруун" turul3="Говь" turul4="Зүүн" turul5="Хангай" turul6="Төв"></category-filter>
+                <category-filter ner="Үйл ажиллагаа" turul1="Амьтантай ойр" turul2="Говьд тэмээ унах" turul3="Загасчлал" turul4="Морин аялал" turul5="Сур харваа" turul6=""></category-filter>
+                <category-filter ner="Насны ангилал" turul1="18-аас бага" turul2="18–25" turul3="26–45" turul4="46-аас их" turul5="Бүх нас" turul6=""></category-filter>
+
             </section>
         </aside>
         <div class="spot-cards-container">
             <h2>Эрэмбэлэгдсэн аяллын цэг</h3>
-            <article class="spot-card">
-                <div class="spot-img">
-                    <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
-                        <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
-                    </a>
-                    <div class="rating">
-                        <div class="readOnly-rating-stars">
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                        </div>
-                        <p class="rating-num">5.0</p>
-                        <p class="reviews">(888)</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="spot-info">
-                    <h3>Аяллын цэгийн нэр</h3>
-                    <ul>
-                        <li>Аяллын төрөл1</li>
-                        <li>Аяллын төрөл2</li>
-                        <li>Үйл ажиллагаа</li>
-                    </ul>
-                    <p>Бүс нутаг: </p>
-                    <p>Тасалбарын эхлэх үнэ: </p>
-                </div>
-            </article>
-            <article class="spot-card">
-                <div class="spot-img">
-                    <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
-                        <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
-                    </a>
-                    <div class="rating">
-                        <div class="readOnly-rating-stars">
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                        </div>
-                        <p class="rating-num">5.0</p>
-                        <p class="reviews">(888)</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="spot-info">
-                    <h3>Аяллын цэгийн нэр</h3>
-                    <ul>
-                        <li>Аяллын төрөл1</li>
-                        <li>Аяллын төрөл2</li>
-                        <li>Үйл ажиллагаа</li>
-                    </ul>
-                    <p>Бүс нутаг: </p>
-                    <p>Тасалбарын эхлэх үнэ: </p>
-                </div>
-            </article>
-            <article class="spot-card">
-                <div class="spot-img">
-                    <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
-                        <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
-                    </a>
-                    <div class="rating">
-                        <div class="readOnly-rating-stars">
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                        </div>
-                        <p class="rating-num">5.0</p>
-                        <p class="reviews">(888)</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="spot-info">
-                    <h3>Аяллын цэгийн нэр</h3>
-                    <ul>
-                        <li>Аяллын төрөл1</li>
-                        <li>Аяллын төрөл2</li>
-                        <li>Үйл ажиллагаа</li>
-                    </ul>
-                    <p>Бүс нутаг: </p>
-                    <p>Тасалбарын эхлэх үнэ: </p>
-                </div>
-            </article>
-            <article class="spot-card">
-                <div class="spot-img">
-                    <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
-                        <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
-                    </a>
-                    <div class="rating">
-                        <div class="readOnly-rating-stars">
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                        </div>
-                        <p class="rating-num">5.0</p>
-                        <p class="reviews">(888)</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="spot-info">
-                    <h3>Аяллын цэгийн нэр</h3>
-                    <ul>
-                        <li>Аяллын төрөл1</li>
-                        <li>Аяллын төрөл2</li>
-                        <li>Үйл ажиллагаа</li>
-                    </ul>
-                    <p>Бүс нутаг: </p>
-                    <p>Тасалбарын эхлэх үнэ: </p>
-                </div>
-            </article>
-            <article class="spot-card">
-                <div class="spot-img">
-                    <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
-                        <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
-                    </a>
-                    <div class="rating">
-                        <div class="readOnly-rating-stars">
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                            <svg class="star">
-                                <use href="../styles/icons.svg#icon-star-filled"></use>
-                            </svg>
-                        </div>
-                        <p class="rating-num">5.0</p>
-                        <p class="reviews">(888)</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
-                    </div>
-                </div>
-                <div class="spot-info">
-                    <h3>Аяллын цэгийн нэр</h3>
-                    <ul>
-                        <li>Аяллын төрөл1</li>
-                        <li>Аяллын төрөл2</li>
-                        <li>Үйл ажиллагаа</li>
-                    </ul>
-                    <p>Бүс нутаг: </p>
-                    <p>Тасалбарын эхлэх үнэ: </p>
-                </div>
-            </article>
+            <spot-card title="Chinggis Khaan Statue Complex" rating="5.0" review="(100)" area="Төв" price="500"></spot-card>
+            <spot-card title="Sukhbaatar Square" rating="2.0" review="(234)" area="Хангай" price="100"></spot-card>
+            <spot-card title="Bogd Khaan Palace Museum" rating="3.0" review="(550)" area="Говь" price="200"></spot-card>
+            <spot-card title="State Opera and Ballet Academic Theatre" rating="5.0" review="(123)" area="Зүүн" price="50"></spot-card>
+            <spot-card title="Megjid Janraisig Datsan" rating="4.0" review="(445)" area="Баруун" price="30"></spot-card>
+            <spot-card title="Mongolian National Art Gallery" rating="2.0" review="(998)" area="Баруун" price="10"></spot-card>
+            <spot-card title="Choijin Lama Temple Museum" rating="5.0" review="(666)" area="Баруун" price="200"></spot-card>
+            <spot-card title="Zaisan Monument" rating="5.0" review="(72)" area="Зүүн" price="10"></spot-card>
         </div>
     </div>
 
