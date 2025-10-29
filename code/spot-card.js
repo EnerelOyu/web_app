@@ -5,7 +5,6 @@ class SpotCard extends HTMLElement {
 
     connectedCallback() {
         const unelgee=this.getAttribute("rating") || "0.0";
-        const uzelt = this.getAttribute("review") ||"0";
         const title = this.getAttribute("title") ||"Unknown";
         const bus = this.getAttribute("area") || "unknown";
         const une = this.getAttribute("price") || "0"
@@ -14,6 +13,10 @@ class SpotCard extends HTMLElement {
                     <a target="_blank" href="aylaliin_tsegiin_medeelel.html">
                         <img src="../files/spot_img_eg.jpg" alt="chingis_khan_statue_img">
                     </a>
+                    
+                </div>
+                <div class="spot-info">
+                    <h3>${title}</h3>
                     <div class="rating">
                         <div class="readOnly-rating-stars">
                             <svg class="star">
@@ -33,15 +36,7 @@ class SpotCard extends HTMLElement {
                             </svg>
                         </div>
                         <p class="rating-num">${unelgee}</p>
-                        <p class="reviews">${uzelt}</p>
-                        <div class="action-btns">
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
-                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
-                        </div>
                     </div>
-                </div>
-                <div class="spot-info">
-                    <h3>${title}</h3>
                     <ul>
                         <li>Аяллын төрөл1</li>
                         <li>Аяллын төрөл2</li>
@@ -49,6 +44,10 @@ class SpotCard extends HTMLElement {
                     </ul>
                     <p>Бүс нутаг: ${bus}</p>
                     <p>Тасалбарын эхлэх үнэ: ${une}</p>
+                    <div class="action-btns">
+                            <button class="btn"><svg><use href="../styles/icons.svg#icon-add"></use></svg></button>
+                            <button class="btn"><svg><use href="../styles/icons.svg#icon-share"></use></svg></button>
+                    </div>
                 </div>
             </article>`;
 

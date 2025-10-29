@@ -13,12 +13,12 @@ class CategoryFilter extends HTMLElement {
         const choice6 = this.getAttribute("turul6") || "";
         this.innerHTML=`<fieldset class="filters">
                     <legend>${ner}</legend>
-                    <label><input type="checkbox">${choice1}</label>
-                    <label><input type="checkbox">${choice2}</label>
-                    <label><input type="checkbox">${choice3}</label>
-                    <label><input type="checkbox">${choice4}</label>
-                    <label><input type="checkbox">${choice5}</label>
-                    <label><input type="checkbox">${choice6}</label>
+                    <label><input type="checkbox"> ${choice1}</label>
+                    <label><input type="checkbox"> ${choice2}</label>
+                    <label><input type="checkbox"> ${choice3}</label>
+                    <label><input type="checkbox"> ${choice4}</label>
+                    <label><input type="checkbox"> ${choice5}</label>
+                    <label><input type="checkbox"> ${choice6}</label>
                 </fieldset>`;
     }
 
