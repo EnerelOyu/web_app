@@ -1,86 +1,142 @@
-
-:root {
-    --text-color-0: hsl(212 25% 10%);
-    --text-color-1: hsl(212 25% 20%);
-    --text-color-2: hsl(212 25% 30%);
-    --text-color-3: hsl(212 25% 40%);
-    --text-color-4: hsl(212 25% 50%);
-    --text-color-5: hsl(212 25% 60%);
-    --text-color-6: hsl(212 25% 70%);
-    --text-color-7: hsl(212 25% 80%);
-    --text-color-8: hsl(212 25% 90%);
-    --text-color-9: hsl(212 25% 100%);
-
-    --primary: hsl(24 94% 50%);
-    --primary-1: hsl(24 94% 60%);
-    --primary-2: hsl(24 94% 70%);
-    --primary-3: hsl(24 94% 80%);
-    --primary-4: hsl(24 94% 90%);
-    --primary-4: hsl(24 94% 97%);
-
-    --secondary: hsl(30, 96%, 60%);
-    --secondary-1: hsl(30, 96%, 70%);
-    --secondary-2: hsl(30, 96%, 80%);
-    --secondary-3: hsl(30, 96%, 90%);
-
-    --accent: hsl(156, 58%, 20%);
-    --accent–1: hsl(156, 58%, 30%);
-    --accent-2: hsl(156, 58%, 40%);
-    --accent-3: hsl(156, 58%, 50%);
-    --accent-4: hsl(156, 58%, 60%);
-    --accent-5: hsl(156, 58%, 70%);
-    --accent-6: hsl(156, 58%, 80%);
-    --accent-7: hsl(156, 58%, 97%);
-
-    --bg-color: hsl(0, 0%, 100%);
-    --hdr-bg-color: hsl(212 25% 10%);
-    --ftr-bg-color: hsl(212 25% 10%);
-
+@import url('../styles/colors.css');
+@import url('../styles/fonts.css');
+h1, h2, h3{
+    font-family: 'Rubik';
+}
+p{
+    font-family: 'NunitoSans';
 }
 *{
     margin:0px;
+    /* border: 1px black dashed; */
 }
+
 .main-container {
+    display: grid;
+    max-width: 100%;
+    grid-template-areas:
+    'plan-title'
+    'suggestion'
+    'route'
+    'notes'
+    'save'
+    'liked';
+    gap: 50px;
+}
+
+.suggestion{
+    display: block;
+}
+
+.suggestion h3{
+    font-size: 18px;
+}
+
+.suggestion a{
+    text-align: end;
+}
+
+.TL {
     display: flex;
 }
 
-header{
-    padding: 10px 30px;
-    background-color: var(--hdr-bg-color);
+.TP {
+    padding: 5px;
+}
+
+.plan-title {
+    grid-area: plan-title;
+    background: url("../files/14Landscape3.png") no-repeat center;
+    background-size: cover;
+    background-position-y: 50%;
+    height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+.plan-title div {
+    background-color: var(--bg-color);
+    width: 80%;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 3px 9px var(--text-color-1);
+    display: grid;
+    grid-template-areas: 
+        "h1 h1"
+        "btn btn";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 30px;
+}
+.plan-title h1 {
+    grid-area: h1;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-self: flex-end;
+    gap: 5px;
+}            
+.share-button img {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    border-radius: 100%;
+    background-color: var(--primary-2);
+}
+
+header{
+    position: sticky;
+    width: auto;
+    z-index: 1000; 
+    padding: 10px;
+    background-color: var(--hdr-bg-color);
+    display: flex;
+    align-items:center;
 }
 .header-logo{
-    display: flex;
-    flex-direction: row;
+    display: inline-flex;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
 }
-.header-logo>img{
+.header-logo img{
     width: 74px;
     height: 74px;
 }
-.header-logo>h2{
-    color:var(--text-color-9);
+.header-logo>h1{
+    color: var(--primary-4);
     padding-left: 10px;
     font-size: 35px;
-    font-weight:  bolder;
+    font-weight: bolder;
+    font-family: 'Rubik';
 }
-.header-logo>h2>span{
+.header-logo>h1>span{
     color:var(--primary);
 }
 .header-logo>p{
-    color:var(--secondary);
+    color:var(--primary);
     font-size: 12px;
     padding: 20px;
     font-weight: bold ;
+}
+.header-nav{
+    display: flex;
+    gap: 8px;
+    align-items: center;
 }
 .header-nav>a:link{
     text-decoration: none;
 }
 .header-nav a{
-    color:var(--text-color-9);
+    color:var(--primary-4);
+    font-size: 12px;
+    font-family: 'NunitoSans';
 }
-
 .header-nav a:hover{
     color: var(--primary);
 }
-
