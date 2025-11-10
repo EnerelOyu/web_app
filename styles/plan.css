@@ -6,14 +6,26 @@ p{
     font-family: 'NunitoSans';
 }
 *{
-    margin:0px;
+    /* margin: none;
+    border: none; */
     border: 1px black dashed;
 }
+img {
+    max-width: 300px;
+    max-height: auto;
+}
+.route {
+    display: flex;
+}
 
-.plan-title svg {
+.rt-section{
+    display: ;
+}
+
+svg {
     height: 30px;
     width: 30px;
-    color: var(--primary);
+    fill: var(--primary);
 }
 
 .main-container {
@@ -30,21 +42,21 @@ p{
 }
 
 .suggestion{
-    display: block;
+    display: grid;
     height: 300px;
+    overflow: hidden;
+    width: auto;
 }
 
 .suggestion h3{
     font-size: 18px;
     font-weight: 200;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .suggestion a{
-    display: inline-block;
+    justify-self: end;
     color: var(--primary);
-    text-align: end;
-    margin-bottom: 10px;
     transition: color 0.3s;
 }
 
@@ -54,42 +66,33 @@ p{
 }
 
  .TL {
-    display: grid;
+    display: inline-flex;
+    flex-direction: row;
+    overflow-inline: scroll;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 25px;
-    overflow: scroll;
-    overflow: hidden;
+    overflow-x: auto;
+    align-self: center;
+    padding: 10px;
 }
 
-.TP {
-    padding: 5px;
-    position: relative;
+.TP, suggested-point {
+    padding: 10px;
+    height: 200px;
     border-radius: 12px;
-    overflow: hidden;
-}
-
-.tp_bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100px;
-    height: 100%;
-    object-fit: cover;
+    background: no-repeat center;
+    background-size: cover;
+    gap: 100px;
 }
 
 .tp_ic {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
     flex-direction: column;
-    align-items: flex-end;
     gap: 10px;
+    z-index: 2; 
 }
 
-.tp_ic, .TP p {
-    position: relative;
-    z-index: 2; 
+.TP>p {
+    font: 20px var(--bg-color);
 }
 
 .plan-title {
@@ -98,6 +101,7 @@ p{
     background-size: cover;
     background-position-y: 50%;
     height: 100%;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;
