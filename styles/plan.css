@@ -1,25 +1,48 @@
 @import url('../styles/fonts.css');
-h1, h2, h3{
+@import url('../styles/font-size.css');
+
+h1{
     font-family: 'Rubik';
+    font-size: var(--fs-2xl);
+}
+h2{
+    font-family: 'Rubik';
+    font-size: var(--fs-xl);
+}
+h3{
+    font-family: 'Rubik';
+    font-size: var(--fs-lg);
 }
 p{
     font-family: 'NunitoSans';
+    font-size: var(--fs-base);
 }
 *{
     /* margin: none;
     border: none; */
     border: 1px black dashed;
 }
-img {
+/* img {
     max-width: 300px;
     max-height: auto;
-}
+} */
 .route {
-    display: flex;
+    display: block;
+    padding: 40px;
 }
 
-.rt-section{
-    display: ;
+.route>section{
+    /* display: grid;
+    grid-template: 1fr 3fr; */
+}
+
+.rt-details {
+    display: inline-flexbox;
+    padding: 5%;
+}
+
+.text-box {
+
 }
 
 svg {
