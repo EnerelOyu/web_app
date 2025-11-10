@@ -58,13 +58,12 @@ header{
     gap: 8px;
     align-items: center;
 }
-.header-nav>a:link{
-    text-decoration: none;
-}
+
 .header-nav a{
     color:var(--primary-4);
     font-size: 12px;
     font-family: 'NunitoSans';
+    text-decoration: none;
 }
 
 .header-nav a:hover{
@@ -94,11 +93,10 @@ header{
     background-color: var(--primary-4);
     border-style: none;
     border-radius: 8px;
+    cursor: pointer;
 }
 
-.btn svg{
-    color: var(--primary);
-}
+
 .filter-aside {
     position:sticky;
     top: 80px;
@@ -125,6 +123,8 @@ header{
     display: flex;
     flex-direction: column;
     border: none;
+    justify-content: center;
+
 }
 legend{
     font-family: 'Rubik';
@@ -138,6 +138,25 @@ legend{
     font-family: 'NunitoSans';
 }
 
+.filters input[type="checkbox"]{
+    cursor: pointer;
+    accent-color: var(--primary);
+    background-color: var(--primary-4);
+    appearance: none; 
+    -webkit-appearance: none; 
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid var(--primary);
+}
+
+.filters input[type="checkbox"]:checked {
+  background-color: var(--primary); 
+}
+
+.filters input[type="checkbox"]:hover {
+  background-color: var(--primary); 
+}
 
 .spot-cards-container{
     width: 75%;
@@ -150,8 +169,8 @@ legend{
     font-size: 20px;
     padding: 20px;
     text-align: right;
-}
 
+}
 
 .spot-card {
     margin: 20px 30px;
@@ -160,14 +179,35 @@ legend{
     border-style: solid;
     border-width: 0px 0px 0.5px 0px;
     border-color: var(--text-color-6);
-    border-radius: 0px 8px;
+    border-radius: 20px;
+    box-shadow: 2px 2px 2px var(--text-color-6);
+    width: 90%;
+    height: auto;
+
+}
+
+.spot-card :hover {
+    transition: background-color 200ms;
+    background-color: var(--accent-9);
+    border-radius: 20px;
+}
+.spot-card :hover .btn{
+    background-color: var(--primary-4);
+}
+.spot-card :hover .btn:hover {
+    
+    background-color: var(--primary);
+}
+.spot-card :hover .btn:hover svg{
+    color:var(--primary-4);
+    background-color: var(--primary);
 }
 
 .spot-img img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
-    border-radius: 8px 0px 0px 8px;
+    border-radius: 20px 0px 0px 20px;
 }
 
 .spot-card .rating, .spot-card .action-btns{
