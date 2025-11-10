@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/colors.css">
     <link rel="stylesheet" href="../styles/aylaliin_tseguud.css">
-     <title>Аяллын цэгүүд</title>
-     <script type="module" src="./spot-card.js"></script>
-     <script type="module" src="./category-filter.js"></script>
+    <title>Аяллын цэгүүд</title>
+    <script type="module" src="./ag-spot-card.js"></script>
+    <script type="module" src="./ag-filter.js"></script>
+     <script type="module" src="./ag-spots-manager.js"></script>
+
 </head>
 
 <body>
@@ -31,26 +33,68 @@
     </header>
     <div class="main-container">
         <aside class="filter-aside">
-            <h2>Аллын цэг хайх</h2>
+            <h2>Аяллын цэг хайх</h2>
             <section class="filter-section">
-                <category-filter ner="Категори" turul1="Соёл" turul2="Амралт сувилал" turul3="Адал явдалт" turul4="Баяр наадам" turul5="Ууланд гарах" ></category-filter>
-                <category-filter ner="Бүс нутаг" turul1="Алтай" turul2="Баруун" turul3="Говь" turul4="Зүүн" turul5="Хангай" turul6="Төв"></category-filter>
-                <category-filter ner="Үйл ажиллагаа" turul1="Амьтантай ойр" turul2="Говьд тэмээ унах" turul3="Загасчлал" turul4="Морин аялал" turul5="Сур харваа" turul6=""></category-filter>
-                <category-filter ner="Насны ангилал" turul1="18-аас бага" turul2="18–25" turul3="26–45" turul4="46-аас их" turul5="Бүх нас" turul6=""></category-filter>
-
+                <ag-filter ner="Категори" 
+                           turul1="Соёл" turul2="Амралт сувилал" turul3="Адал явдалт"
+                           turul4="Баяр наадам" turul5="Ууланд гарах"></ag-filter>
+                <ag-filter ner="Бүс нутаг" 
+                           turul1="Алтай" turul2="Баруун" turul3="Говь" turul4="Зүүн"
+                           turul5="Хангай" turul6="Төв"></ag-filter>
+                <ag-filter ner="Үйл ажиллагаа" 
+                           turul1="Амьтантай ойр" turul2="Говьд тэмээ унах"
+                           turul3="Загасчлал" turul4="Морин аялал" turul5="Сур харваа" turul6=""></ag-filter>
+                <ag-filter ner="Насны ангилал" 
+                            turul1="18-аас бага" turul2="18–25" turul3="26–45"
+                            turul4="46-аас их" turul5="Бүх нас" turul6=""></ag-filter>
             </section>
         </aside>
         <div class="spot-cards-container">
-            <h2>Эрэмбэлэгдсэн аяллын цэг</h2>
-            <spot-card title="Chinggis Khaan Statue Complex" rating="5.0" area="Төв" price="500"></spot-card>
-            <spot-card title="Sukhbaatar Square" rating="2.0" area="Хангай" price="100"></spot-card>
-            <spot-card title="Bogd Khaan Palace Museum" rating="3.0" area="Говь" price="200"></spot-card>
-            <spot-card title="State Opera and Ballet Academic Theatre" rating="5.0" area="Зүүн" price="50"></spot-card>
-            <spot-card title="Megjid Janraisig Datsan" rating="4.0" area="Баруун" price="30"></spot-card>
-            <spot-card title="Mongolian National Art Gallery" rating="2.0" area="Баруун" price="10"></spot-card>
-            <spot-card title="Choijin Lama Temple Museum" rating="5.0" area="Баруун" price="200"></spot-card>
-            <spot-card title="Zaisan Monument" rating="5.0" area="Зүүн" price="10"></spot-card>
+            <h2>Шүүсэн аяллын цэгүүд</h2>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
+            <ag-spot-card title="Chinggis Khaan Statue Complex" 
+                          rating="5.0" 
+                          area="Төв" price="900" 
+                          categories="Соёл, Адал явдалт" 
+                          activities="Морин аялал" 
+                          img="../files/spot_img_eg.jpg"></ag-spot-card>
         </div>
+
     </div>
 
 </body>

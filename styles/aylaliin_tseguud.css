@@ -6,6 +6,7 @@ h1, h2, h3{
     font-family: 'Rubik';
 }
 
+
 p{
     font-family: 'NunitoSans';
 }
@@ -16,6 +17,7 @@ p{
 
 header{
     position: sticky;
+    top: 0;
     width: auto;
     z-index: 1000; 
     padding: 10px;
@@ -35,17 +37,17 @@ header{
     width: 74px;
     height: 74px;
 }
-.header-logo>h1{
-    color: var(--primary-4);
+.header-logo h1{
+    color: var(--bg-color);
     padding-left: 10px;
     font-size: 35px;
     font-weight: bolder;
     font-family: 'Rubik';
 }
-.header-logo>h1>span{
+.header-logo h1 span{
     color:var(--primary);
 }
-.header-logo>p{
+.header-logo p{
     color:var(--primary);
     font-size: 12px;
     padding: 20px;
@@ -84,6 +86,7 @@ header{
 
 .header-nav input::placeholder{
     color: var(--text-color-2);
+    font-family: 'NunitoSans';
     padding-left: 10px;
 }
 
@@ -98,7 +101,8 @@ header{
 }
 .filter-aside {
     position:sticky;
-    height: 100vh; 
+    top: 80px;
+    align-self: flex-start;
     width: 25%;
     display: flex;
     flex-direction: column;
@@ -107,9 +111,10 @@ header{
 }
  .filter-aside h2{
     color: var(--text-color-1);
-    font-size: 32px;
     padding-bottom: 10px;
+    font-size: 28px;
  }
+
 
 .filter-section {
     display: flex;
@@ -142,7 +147,7 @@ legend{
 
 .spot-cards-container h2{
     color: var(--text-color-1);
-    font-size: 28px;
+    font-size: 20px;
     padding: 20px;
     text-align: right;
 }
@@ -159,8 +164,8 @@ legend{
 }
 
 .spot-img img {
-    width: 320px;
-    height: 100%;
+    width: 100%;
+    height: auto;
     object-fit: cover;
     border-radius: 8px 0px 0px 8px;
 }
@@ -200,6 +205,7 @@ legend{
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
     justify-content: space-between;
 }
 
