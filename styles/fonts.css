@@ -9,7 +9,7 @@
   font-family: 'Rubik';
   src: url('../fonts/Rubik-Bold.ttf') format('truetype');
   font-weight: 700;
-  font-style: normal;
+  font-style: bold;
 }
 
 @font-face {
@@ -17,6 +17,27 @@
   src: url('../fonts/Rubik-Italic.ttf') format('truetype');
   font-weight: 400;
   font-style: italic;
+}
+
+@font-face {
+  font-family: 'Rubik Mono One';
+  src: url('../fonts/RubikMonoOne-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: regular;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fonts/Rubik-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: medium;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fonts/Rubik-MediumItalic.ttf') format('truetype');
+  font-weight: 500;
+  font-style: medium italic;
 }
 
 @font-face{

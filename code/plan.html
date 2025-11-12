@@ -5,21 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Төлөвлөгөө</title>
     <link rel="stylesheet" href="../styles/plan.css">
-    <link rel="stylesheet" href="../styles/colors.css">
+    <link rel="stylesheet" href="../styles/icons.svg">
 </head>
 <body>
     <header>
         <div class="header-logo">
-            <img src="../files/Logo.svg" alt="Logo">
-            <h2>Ayal<span>GO</span></h2>
+            <img src="../files/logo.svg" alt="Logo">
+            <h1>Ayal<span>GO</span></h1>
             <p>Discover Mongolia <br>your way</p>
         </div>
         <div class="header-nav">
-            <a href="home_page.html">Нүүр хуудас</a>
-            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын цэгүүд</a>
-            <input type="text" placeholder="Search..">
-            <button class="search-btn">
-                
+            <a href="home.html">Нүүр Хуудас</a>
+            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын Цэгүүд</a>
+            <input type="text" placeholder="Хайлт хийх..">
+            <button class="btn">
+                <svg>
+                    <use href="../styles/icons.svg#icon-search"></use>
+                </svg>
             </button>
         </div>
     </header>
@@ -54,7 +56,7 @@
                             <use href="../styles/icons.svg#icon-add"></use>
                         </svg>
                     </div>
-                    <p>Цэгийн нэр</p>
+                    <h3>Цэгийн нэр</h3>
                     <p>Байршил</p>
                 </article>
                 <suggested-point></suggested-point>
@@ -66,30 +68,31 @@
             <h2>Таны аяллын маршрут</h2>
             <section>
                 <div class="top-route">
-                    <svg role="img" aria-label="route">
+                    <svg role="img" area-label="route">
                         <use xlink:href="../styles/icons.svg#top-route"></use>
                     </svg>
-                    <button type="button">Нэмэх</button>
+                    <button type="button" class="add-btn">Нэмэх</button>
                 </div>
 
                 <div class="rt-details">
-                    <svg role="icon" aria-label="drag">
+                    <svg id="drag" role="icon" aria-label="drag">
                             <use xlink:href="../styles/icons.svg#drag"></use>
                         </svg>
-                    <div class="text-box">
-                        
+                    <div class="text-box">    
                         <h3>Аяллын цэгийн гарчиг</h3>
                         <p class="loc_text">Газрын байршил</p>
-                        <p>Энэ бол тухайн газрын дажгүй дэлгэрэнгүй тайлбар юм. Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
+                        <p>Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
                     </div>
                     <img src="../files/11statue1.jpg" alt="">
-                    <span class="delete">Цуцлах</span>
+                    <!-- <span class="delete">Цуцлах</span> -->
                     <div class="inst">
                         <svg>
                             <use href="../styles/icons.svg#icon-add"></use>
                         </svg>
                         <label for="guide">Хөтөч сонгох</label>
-                        <select id="guide" name="guide"></select>
+                        <select id="guide" name="guide">
+                            <option value=""></option>
+                        </select>
                     </div>
                 </div>
             </section>
@@ -104,10 +107,10 @@
                             <span class="drag_top"></span>
                             <h3>Аяллын цэгийн гарчиг</h3>
                             <p class="loc_text">Газрын байршил</p>
-                            <p>Энэ бол тухайн газрын дажгүй дэлгэрэнгүй тайлбар юм. Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
+                            <p>Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
                         </div>
                         <img src="../files/11statue1.jpg" alt="">
-                        <span class="delete">Цуцлах</span>
+                        <!-- <span class="delete">Цуцлах</span> -->
                         <div class="inst">
                             <img src="../files/person.svg" class="icon" alt="">
                             <select name="Хөтөч сонгох" id=""></select>
@@ -129,7 +132,7 @@
                             <p>Энэ бол тухайн газрын дажгүй дэлгэрэнгүй тайлбар юм. Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
                         </div>
                         <img src="../files/11statue1.jpg" alt="">
-                        <span class="delete">Цуцлах</span>
+                        <!-- <span class="delete">Цуцлах</span> -->
                         <div class="inst">
                             <img src="../files/person.svg" class="icon" alt="">
                             <select name="Хөтөч сонгох" id=""></select>
@@ -157,7 +160,7 @@
                 <p>Хадгалах</p>
             </button>
         </div>
-        <div class="liked">
+        <!-- <div class="liked">
             <h3>Таалагдсан цэгүүд</h3>
             <article class="TP">
                 <img class="TP-bg" src="../files/13Landscape2.webp" alt="">
@@ -184,7 +187,7 @@
                 <p>Байршил</p>
             </article>
         </div>
-    </div>
+    </div> -->
 
     <script>
         const box = document.getElementById('notes');
