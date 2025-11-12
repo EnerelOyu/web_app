@@ -1,4 +1,49 @@
+@import url("https://unpkg.com/open-props");
+
 :root {
+    /* === font size === */
+
+    font-size: 16px;
+
+  --fs-xs: 0.75rem;   /* 12px */
+  --fs-sm: 0.875rem;  /* 14px */
+  --fs-base: 1rem;    /* 16px */
+  --fs-lg: 1.25rem;   /* 20px */
+  --fs-xl: 1.5rem;    /* 24px */
+  --fs-2xl: 2rem;     /* 32px */
+
+  /* === svg size === */
+
+  --svg-s: 1.25rem;
+  --svg-m: 1.5rem;
+  --svg-l: 2rem;
+
+  /* === padding size === */
+
+   --p-xxs: 0.25rem;  /* 4px */
+  --p-xs:  0.5rem;   /* 8px */
+  --p-sm:  0.75rem;  /* 12px */
+  --p-md:  1rem;     /* 16px */
+  --p-lg:  1.5rem;   /* 24px */
+  --p-xl:  2rem;     /* 32px */
+  --p-2xl: 3rem;     /* 48px */
+  --p-3xl: 4rem;     /* 64px */
+
+  /* === gap size === */
+
+  --gap-size-xs: 0.313rem;
+  --gap-size-s: 0.75rem;
+  --gap-size-m: 1.25rem;
+  --gap-size-l: 1.85rem;
+
+  /* === border radius === */
+  
+  --br-s: 0.5rem;
+  --br-m: 1.25rem;
+  --br-circle: 50%;
+
+  /* === COLOR === */
+
     --text-color-0: hsl(212 25% 10%);
     --text-color-1: hsl(212 25% 20%);
     --text-color-2: hsl(212 25% 30%);
