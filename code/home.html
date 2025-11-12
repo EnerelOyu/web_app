@@ -33,13 +33,39 @@
   </header>
   <main>
     <p class="uria">Аялаж зугаалмаар байвч хаашаа явах аа мэдэхгүй байна уу?</p>
-
+    <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ,<span> ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
+    <form class="search-form">
+      <div class="form-group">
+        <label for="areas">Бүс нутаг</label>
+        <select name="areas" id="areas">
+          <option value="" disabled selected>Аялах бүс нутаг аа сонгоно уу.</option>
+          <option value="tuv">Төв</option>
+          <option value="hangai">Хангай</option>
+          <option value="zuun">Зүүн</option>
+          <option value="baruun">Баруун</option>
+          <option value="altai">Алтай</option>
+          <option value="govi">Говь</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="categories">Категори</label>
+        <select name="categories" id="categories">
+          <option value="" disabled selected>Сонирхож буй аяллын төрөл сонгоно уу.</option>
+          <option value="soyol">Соёл</option>
+          <option value="amralt">Амралт сувилал</option>
+          <option value="adal">Адал явдалт</option>
+          <option value="bayar">Баяр наадам</option>
+          <option value="uuland">Ууланд гарах</option>
+        </select>
+      </div>
+      <button class="submit-btn">
+        <svg>
+          <use href="../styles/icons.svg#icon-search"></use>
+        </svg>
+      </button>
+    </form>
 
   </main>
-
-  <nav>
-    <p>Хиймээр байгаа зүйлээ оруулаад<a>хялбар төлөвлө</a></p>
-  </nav>
 
   <section>
     <h3>Шилдэг 5-н аяллын цэгүүд</h3>

@@ -7,4 +7,17 @@
   --fs-lg: 1.25rem;   /* 20px */
   --fs-xl: 1.5rem;    /* 24px */
   --fs-2xl: 2rem;     /* 32px */
+
+  --svg-s: 1.25rem;
+  --svg-m: 1.5rem;
+  --svg-l: 2rem;
+
+  --gap-size-xs: 0.313rem;
+  --gap-size-s: 0.75rem;
+  --gap-size-m: 1.25rem;
+  --gap-size-l: 1.85rem;
+/* border radius*/
+  --br-s: 0.5rem;
+  --br-m: 1.25rem;
+  --br-circle: 50%;
 }
