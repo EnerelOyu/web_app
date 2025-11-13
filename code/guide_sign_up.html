@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="guide_sign_up.css">
 </head>
 <body>
     <header>
@@ -25,6 +27,16 @@
     </header>
     <main>
         <h1>Хөтөч болох бүртгэл</h1>
+        <div class="photo-card" role="group" aria-label="Зураг оруулах">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="opacity:.35;margin-bottom:8px">
+                <path d="M4 7a2 2 0 0 1 2-2h1.5l1-1h5l1 1H18a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7z" stroke="#000" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="13" r="3" stroke="#000" stroke-width="0.8"/>
+            </svg>
+
+    <div class="pc-text" style="font-size:13px;color:#9aa3a8;margin-bottom:10px">Зураг оруулах</div>
+    <input id="photo" name="photo" type="file" accept="image/*" aria-label="Фото оруулах">
+    <label for="photo">Файл сонгох</label>
+</div>
         <form action="#">
             <p>Овог нэр</p>
             <input type="text">

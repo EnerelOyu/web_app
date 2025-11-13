@@ -1,0 +1,296 @@
+@import url('fonts.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+h1, h2, h3 {
+    font-family: 'Rubik';
+}
+
+p {
+    font-family: 'NunitoSans';
+}
+
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 20px;
+    background-color: var(--hdr-bg-color);
+    display: flex;
+    align-items: center;
+    height: 100px;
+}
+
+.header-logo {
+    display: inline-flex;
+    margin-right: auto;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-logo img {
+    width: 74px;
+    height: 74px;
+}
+
+.header-logo > h1 {
+    color: var(--bg-color);
+    font-size: 35px;
+    font-weight: bolder;
+    font-family: 'Rubik';
+}
+
+.header-logo > h1 > span {
+    color: var(--primary);
+}
+
+.header-logo > p {
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Rubik';
+}
+
+.header-nav {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.header-nav > a:link {
+    text-decoration: none;
+}
+
+.header-nav a {
+    color: var(--primary-4);
+    font-size: 12px;
+    font-family: 'NunitoSans';
+}
+
+.header-nav a:hover {
+    color: var(--primary);
+}
+
+.header-nav input {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    padding: 10px 15px;
+    width: 200px;
+    font-family: 'NunitoSans';
+}
+
+.header-nav input::placeholder {
+    color: var(--text-color-2);
+}
+
+.btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.btn svg {
+    width: 20px;
+    height: 20px;
+    color: var(--primary);
+}
+
+main {
+    width: 100%;
+    max-width: 1440px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+main > h1 {
+    font-size: 32px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #1f2937;
+}
+
+form {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    gap: 24px 40px;
+    align-items: middle;
+}
+
+form > p {
+    font-size: 13px;
+    color: #1f2937;
+    font-weight: 600;
+    grid-column: 1;
+    margin-bottom: 4px;
+}
+
+form > input,
+form > select,
+form > textarea {
+    grid-column: 1;
+    padding: 12px 14px;
+    border: 1px solid #e6e6e6;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    font-family: 'NunitoSans', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+}
+
+form > input:focus,
+form > select:focus,
+form > textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+form > textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.photo-card {
+    grid-column: 2;
+    grid-row: 1 / span 8;
+    height: 280px;
+    width: 200px;
+    border: 2px dashed #e6e6e6;
+    border-radius: 10px;
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #9aa3a8;
+    text-align: center;
+    padding: 20px;
+}
+
+.photo-card svg {
+    opacity: 0.35;
+    margin-bottom: 12px;
+}
+
+.pc-text {
+    font-size: 13px;
+    color: #9aa3a8;
+    margin-bottom: 12px;
+}
+
+.photo-card input {
+    display: none;
+}
+
+.photo-card label {
+    background: var(--primary, #EB6708);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    transition: opacity 0.2s;
+    font-family: 'NunitoSans';
+}
+
+.photo-card label:hover {
+    opacity: 0.9;
+}
+
+button[type="submit"] {
+    grid-column: 1 / -1;
+    background: var(--primary, #EB6708);
+    color: #fff;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    width: fit-content;
+    justify-self: center;
+    margin-top: 20px;
+    transition: opacity 0.2s;
+    box-shadow: 0 6px 18px rgba(240, 122, 20, 0.24);
+    font-family: 'NunitoSans';
+}
+
+button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 1024px) {
+    main {
+        margin: 30px 20px;
+        padding: 30px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        gap: 18px;
+    }
+
+    .photo-card {
+        grid-column: 1;
+        grid-row: auto;
+        height: 200px;
+    }
+
+    button[type="submit"] {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    main > h1 {
+        font-size: 24px;
+    }
+
+    form {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .photo-card {
+        grid-column: 1;
+        grid-row: auto;
+        height: 180px;
+    }
+
+    header {
+        height: auto;
+        padding: 10px;
+    }
+
+    .header-nav {
+        gap: 8px;
+    }
+
+    .header-nav input {
+        width: 120px;
+    }
+}
+
