@@ -218,10 +218,35 @@ header{
   color: var(--bg-color);
 }
 .tp_ic {
-  flex-direction: column;
-  gap: 10px;
+  display: flex;
+  gap: 20px;
   z-index: 2;
 }
+
+.rating {
+  display: flex;
+  gap: var(--gap-xs, 0.5rem);
+  cursor: pointer;
+}
+
+.rating svg {
+  width: var(--svg-m, 1.5rem);
+  height: var(--svg-m, 1.5rem);
+  fill: var(--primary-3, #ccc);
+  transition: fill 0.2s ease;
+}
+
+.rating svg.active,
+.rating svg:hover,
+.rating svg:hover ~ svg {
+  fill: var(--accent, gold);
+}
+
+.rating svg:hover ~ svg {
+  fill: var(--primary-3, #ccc);
+}
+
+
 
 /* ====== Route section ====== */
 .route {
