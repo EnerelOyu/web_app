@@ -6,7 +6,8 @@
     <title>Төлөвлөгөө</title>
     <link rel="stylesheet" href="../styles/plan.css">
     <link rel="stylesheet" href="../styles/icons.svg">
-    <link rel="script" href="../code/plan.js">
+    <script type="module" src="../code/suggested-point.js"></script>
+    <script type="module" src="../code/route-section.js"></script>
 </head>
 <body>
     <header>
@@ -44,22 +45,11 @@
             <h3>Танд санал болгох аяллын цэгүүд</h3>
             <a href="../code/aylaliin_tseguud.html">Нэмж харах >></a>
             <div class="TL">
-                <article style="background-image: url(../files/12Landscape1.jpg);" class="TP">
-                    <div class="tp_ic">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                        <svg>
-                            <use href="../styles/icons.svg#icon-add"></use>
-                        </svg>
-                    </div>
-                    <h3>Цэгийн нэр</h3>
-                    <p>Байршил</p>
-                </article>
+                <suggested-point></suggested-point>
+                <suggested-point></suggested-point>
+                <suggested-point></suggested-point>
+                <suggested-point></suggested-point>
+                <suggested-point></suggested-point>
                 <suggested-point></suggested-point>
                 <suggested-point></suggested-point>
                 <suggested-point></suggested-point>
@@ -67,81 +57,10 @@
         </div>
         <div class="route">
             <h2>Таны аяллын маршрут</h2>
-            <section>
-                <div class="top-route">
-                    <svg role="img" area-label="route">
-                        <use xlink:href="../styles/icons.svg#top-route"></use>
-                    </svg>
-                    <button type="button" class="add-btn">Нэмэх</button>
-                </div>
-
-                <div class="rt-details">
-                    <svg id="drag" role="icon" aria-label="drag">
-                            <use xlink:href="../styles/icons.svg#drag"></use>
-                        </svg>
-                    <div class="text-box">    
-                        <h3>Аяллын цэгийн гарчиг</h3>
-                        <p class="loc_text">Газрын байршил</p>
-                        <p>Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
-                    </div>
-                    <img src="../files/11statue1.jpg" alt="">
-                    <!-- <span class="delete">Цуцлах</span> -->
-                    <div class="inst">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-add"></use>
-                        </svg>
-                        <label for="guide">Хөтөч сонгох</label>
-                        <select id="guide" name="guide">
-                            <option value=""></option>
-                        </select>
-                    </div>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <span class="route-mid"></span>
-                    <button>add</button>
-                </div>
-                <div class="rt-details">
-                    <article>
-                        <div>
-                            <span class="drag_top"></span>
-                            <h3>Аяллын цэгийн гарчиг</h3>
-                            <p class="loc_text">Газрын байршил</p>
-                            <p>Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
-                        </div>
-                        <img src="../files/11statue1.jpg" alt="">
-                        <!-- <span class="delete">Цуцлах</span> -->
-                        <div class="inst">
-                            <img src="../files/person.svg" class="icon" alt="">
-                            <select name="Хөтөч сонгох" id=""></select>
-                        </div>
-                    </article>
-                </div>
-            </section>
-            <section>
-                <div>
-                    <span class="route-mid"></span>
-                    <button>add</button>
-                </div>
-                <div class="rt-details">
-                    <article>
-                        <div>
-                            <span class="drag_top"></span>
-                            <h3>Аяллын цэгийн гарчиг</h3>
-                            <p class="loc_text">Газрын байршил</p>
-                            <p>Энэ бол тухайн газрын дажгүй дэлгэрэнгүй тайлбар юм. Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
-                        </div>
-                        <img src="../files/11statue1.jpg" alt="">
-                        <!-- <span class="delete">Цуцлах</span> -->
-                        <div class="inst">
-                            <img src="../files/person.svg" class="icon" alt="">
-                            <select name="Хөтөч сонгох" id=""></select>
-                        </div>
-                    </article>
-                    </div>
-                </div>
-            </section>
+            <route-section></route-section>
+            <route-section></route-section>
+            <route-section></route-section>
+            <route-section></route-section>
         </div>
         <div class="notes">
             <h3>Тэмдэглэл</h3>
@@ -149,15 +68,21 @@
         </div>
         <div class="save">
             <button id="return">
-                <img src="../files/return.svg" alt="">
+                <svg>
+                    <use href="../styles/icons.svg#return"></use>
+                </svg>
                 <p>Буцаах</p>
             </button>
             <button id="redo">
-                <img src="../files/redo.svg" alt="">
+                <svg>
+                    <use href="../styles/icons.svg#redo"></use>
+                </svg>
                 <p>Дахих</p>
             </button>
             <button id="save">
-                <img src="../files/check.svg" alt="">
+                <svg>
+                    <use href="../styles/icons.svg#save"></use>
+                </svg>
                 <p>Хадгалах</p>
             </button>
         </div>
