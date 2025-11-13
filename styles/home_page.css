@@ -17,8 +17,6 @@ h1, h2, h3, h4, label{
 }
 
 h3{
-    font-size: var(--fs-xl);
-    color: var(--text-color-2);
     text-align: center;
     text-transform: uppercase;
 }
@@ -31,12 +29,11 @@ p{
 .uria{
     font-size: var(--fs-xl);
     font-style: italic;
+    color: var(--text-color-1);
     text-align: center;
     width: 100%;
-    text-align: center;
     padding: var(--p-md);
-    border: 1px dotted;
-    
+    margin-top: var(--m-xl);
 }
 
 .uria-h1{
@@ -57,12 +54,16 @@ p{
     flex-direction: row;
     justify-content: center;
     gap: var(--gap-size-s);
+    box-shadow: 2px 2px 20px -3px var(--accent);
 }
+
 .form-group{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-s);
+    justify-content: flex-start;
 }
+
 .form-group label{
     font-size: var(--fs-m);
     font-weight: bold;
@@ -75,6 +76,13 @@ p{
     border: none;
     background-color: var(--accent-9);
     cursor: pointer;
+    transition: background-color 0.5s;
+}
+
+.form-group select:hover{
+    background-color: var(--accent);
+    color: var(--accent-9);
+    
 }
 
 .submit-btn{
@@ -83,20 +91,23 @@ p{
     justify-content: center;
     align-items: center;
     border-style: none;
-    border-radius: 50%;
-    height: var(--svg-xl);
-    width: var(--svg-xl);
+    border-radius: var(--br-circle);
+    height: var(--svg-l);
+    width: var(--svg-l);
+    transition: background-color 0.5s;
+
+}
+
+.submit-btn:hover{
+    background-color: var(--accent-9);
+    border: 1px solid var(--accent);
 }
 
 .submit-btn svg{
     height: var(--svg-l);
     width:var(--svg-l);
     color: var(--accent-9);
-}
-
-.submit-btn:hover{
-    background-color: var(--accent-9);
-    border: 2px solid var(--accent);
+    transition: color 0.5s;
 }
 
 .submit-btn:hover svg{
@@ -121,13 +132,14 @@ p{
     align-items: center;
     width: 100%;
     gap: var(--gap-size-xl);
-    border: 1px dotted;
 }
 
 .recommend h3{
     width: 100%;
-    margin: 0;
-    padding: var(--p-md) 0;
+    padding: var(--p-xl) 0;
+    color: var(--text-color-1);
+    font-size: var(--fs-xl);
+
 }
 
 .rec-grid{
@@ -163,11 +175,12 @@ p{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-xl);
-    border: 1px dotted;
 }
 
 .tutorial h3{
-    padding: var(--p-md) 0;
+    padding: var(--p-xl) 0;
+    color: var(--text-color-1);
+    font-size: var(--fs-xl);
 }
 
 
@@ -177,6 +190,7 @@ p{
     width: 100%;
     max-width: 90vw;
     gap: var(--gap-size-m);
+    padding-bottom: var(--p-xl);
 
 }
 
@@ -199,20 +213,25 @@ p{
     color: var(--text-color-3);
 }
 
-.top-spots{
+.top-spots , .culture-spots{
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-xl);
 }
 
+.top-spots h3, .culture-spots h3{
+    padding: var(--p-xl) 0;
+    color: var(--text-color-1);
+    font-size: var(--fs-xl);
+}
 
 .spots-grid{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: var(--gap-size-xl);
     margin: 0px var(--m-xl);
-
+    padding-bottom: var(--p-xl);
 }
 
 
@@ -220,6 +239,7 @@ p{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-s);
+    border-radius: var(--br-s);
 }
 
 .spot-img{
@@ -243,28 +263,34 @@ p{
     background-color: var(--primary-4);
     border: none;
     border-radius: var(--br-s);
-    width: var(--svg-l);
-    height: var(--svg-l);
+    width: var(--svg-m);
+    height: var(--svg-m);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: background-color 200ms;
+    opacity: 0.7;
+    transition: background-color 0.5s;
 
 }
 .spot-img button:hover { 
     background-color: var(--primary);
     border: 1px solid var(--primary);
+    opacity: 1;
 }
 
 .spot-img button:hover svg{ 
     color: var(--primary-4);
+    opacity: 1;
 }
 
 .spot-img svg{
     color: var(--primary);
     width: var(--svg-m);
     height: var(--svg-m);
+    transform: color 0.5s;
+    opacity: 0.7;
+
 }
 
 .line{
@@ -283,6 +309,8 @@ p{
 .spot-name{
     font-size: var(--fs-base);
     color: var(--text-color-2);
+    text-transform: uppercase;
+
 }
 
 .spot-card a{
@@ -346,12 +374,18 @@ p{
     text-decoration: none;
     justify-self: end;     
     margin-right: var(--m-xl);
+    transition: background-color 0.5s;
 }
 
 .guide-btn:hover{
     background-color: var(--primary-4);
     color: var(--primary);
-    border: 1px solid var(--primary);
 }
 
-
+/*footer*/
+.footer-logo{
+    display: inline-flex;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+}

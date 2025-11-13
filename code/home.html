@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="../styles/global.css">
   <link rel="stylesheet" href="../styles/header.css">
   <script type="module" src="../code/component/ag-header.js"></script>
+  <script type="module" src="../code/component/ag-spot.js"></script>
 </head>
 
 <body>
@@ -101,83 +102,30 @@
     <section class="top-spots">
       <h3>Шилдэг аяллын цэгүүд</h3>
       <div class="spots-grid">
-        <article class="spot-card">
-          <figure class="spot-img">
-            <img src="../files/spot_img_eg.jpg" alt="top-spot">
-            <button>
-              <svg>
-                <use href="../styles/icons.svg#icon-add"></use>
-              </svg>
-            </button>
-          </figure>
-          <p>МОНГОЛЫН ҮЗЭГСЛЭНТ ГАЗРУУД</p>
-          <h4 class="spot-name">СҮХБААТАРЫН ТАЛБАЙ</h4>
-          <div class="line"></div>
-          <a href="../code/aylaliin_tsegiin_medeelel.html">
-            <p>ДЭЛЭГРЭНГҮЙ</p>
-            <svg class="more-icon">
-              <use href="../styles/icons.svg#icon-arrow"></use>
-            </svg>
-          </a>
-        </article>
-        <article class="spot-card">
-          <figure class="spot-img">
-            <img src="../files/spot_img_eg.jpg" alt="top-spot">
-            <button>
-              <svg>
-                <use href="../styles/icons.svg#icon-add"></use>
-              </svg>
-            </button>
-          </figure>
-          <p>МОНГОЛЫН ҮЗЭГСЛЭНТ ГАЗРУУД</p>
-          <h4 class="spot-name">СҮХБААТАРЫН ТАЛБАЙ</h4>
-          <div class="line"></div>
-          <a href="../code/aylaliin_tsegiin_medeelel.html">
-            <p>ДЭЛЭГРЭНГҮЙ</p>
-            <svg class="more-icon">
-              <use href="../styles/icons.svg#icon-arrow"></use>
-            </svg>
-          </a>
-        </article>
-        <article class="spot-card">
-          <figure class="spot-img">
-            <img src="../files/spot_img_eg.jpg" alt="top-spot">
-            <button>
-              <svg>
-                <use href="../styles/icons.svg#icon-add"></use>
-              </svg>
-            </button>
-          </figure>
-          <p>МОНГОЛЫН ҮЗЭГСЛЭНТ ГАЗРУУД</p>
-          <h4 class="spot-name">СҮХБААТАРЫН ТАЛБАЙ</h4>
-          <div class="line"></div>
-          <a href="../code/aylaliin_tsegiin_medeelel.html">
-            <p>ДЭЛЭГРЭНГҮЙ</p>
-            <svg class="more-icon">
-              <use href="../styles/icons.svg#icon-arrow"></use>
-            </svg>
-          </a>
-        </article>
-        <article class="spot-card">
-          <figure class="spot-img">
-            <img src="../files/spot_img_eg.jpg" alt="top-spot">
-            <button>
-              <svg>
-                <use href="../styles/icons.svg#icon-add"></use>
-              </svg>
-            </button>
-          </figure>
-          <p>МОНГОЛЫН ҮЗЭГСЛЭНТ ГАЗРУУД</p>
-          <h4 class="spot-name">СҮХБААТАРЫН ТАЛБАЙ</h4>
-          <div class="line"></div>
-          <a href="../code/aylaliin_tsegiin_medeelel.html">
-            <p>ДЭЛЭГРЭНГҮЙ</p>
-            <svg class="more-icon">
-              <use href="../styles/icons.svg#icon-arrow"></use>
-            </svg>
-          </a>
-        </article>
-
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/870d8d6123525e17e6a4c9d34b14f8c7-chinggis-khaan-sukhbaatar-square.jpg"
+        ner="СҮХБААТАРЫН ТАЛБАЙ"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
+        ner="Гандан Тэгчинлэн Хийд"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+        ner="Амарбаясгалант хийд"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockeditorial1596873184.jpg"
+        ner="Монголын Үндэсний музейн"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
       </div>
     </section>
     <!--Хөтөч болох-->
@@ -189,8 +137,47 @@
       <a class="guide-btn" href="guide_sign_up.html">Хөтөч болох</a>
     </section>
 
+    <!--Соёлын үзэсгэлэнт газрууд-->
+    <section class="culture-spots">
+      <h3>Соёлын үзэсгэлэнт газрууд</h3>
+      <div class="spots-grid">
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/870d8d6123525e17e6a4c9d34b14f8c7-chinggis-khaan-sukhbaatar-square.jpg"
+        ner="СҮХБААТАРЫН ТАЛБАЙ"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
+        ner="Гандан Тэгчинлэн Хийд"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+        ner="Амарбаясгалант хийд"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+        <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockeditorial1596873184.jpg"
+        ner="Монголын Үндэсний музейн"
+        bus="төв"
+        link="../code/aylaliin_tsegiin_medeelel.html">
+        </ag-spot>
+      </div>
+    </section>
+
 
   </main>
+  <footer>
+    <div class="footer-logo">
+      <img src="../files/logo.svg" alt="Logo">
+      <p>Discover Mongolia <br>your way</p>
+    </div>
+    <h1>Ayal<span>GO</span></h1>
+
+  </footer>
 
 </body>
 
