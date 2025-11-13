@@ -11,9 +11,9 @@ class suggestedPoint  extends HTMLElement {
         this.innerHTML=`<article style="background-image: url(../files/12Landscape1.jpg);" class="TP">
                     <div class="tp_ic">
                         <div class="rating">
-                            <svg data-value="1"><use href="../styles/icons.svg#icon-star-unfilled"></use></svg>
-                            <svg data-value="2"><use href="../styles/icons.svg#icon-star-unfilled"></use></svg>
-                            <svg data-value="3"><use href="../styles/icons.svg#icon-star-unfilled"></use></svg>
+                            <svg data-value="1"><use href="../styles/icons.svg#icon-star-filled"></use></svg>
+                            <svg data-value="2"><use href="../styles/icons.svg#icon-star-filled"></use></svg>
+                            <svg data-value="3"><use href="../styles/icons.svg#icon-star-filled"></use></svg>
                             <svg data-value="4"><use href="../styles/icons.svg#icon-star-unfilled"></use></svg>
                             <svg data-value="5"><use href="../styles/icons.svg#icon-star-unfilled"></use></svg>
                         </div>

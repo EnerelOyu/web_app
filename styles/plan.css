@@ -230,20 +230,20 @@ header{
 }
 
 .rating svg {
-  width: var(--svg-m, 1.5rem);
-  height: var(--svg-m, 1.5rem);
-  fill: var(--primary-3, #ccc);
-  transition: fill 0.2s ease;
+  width: var(--svg-s);
+  height: var(--svg-s);
+  color: var(--secondary);
+  transition: color 0.2s ease;
 }
 
 .rating svg.active,
 .rating svg:hover,
 .rating svg:hover ~ svg {
-  fill: var(--accent, gold);
+  color: var(--secondary);
 }
 
 .rating svg:hover ~ svg {
-  fill: var(--primary-3, #ccc);
+  color: var(--secondary-2);
 }
 
 
