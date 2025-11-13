@@ -6,12 +6,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px dashed black;
+  /* border: 1px dashed black; */
 }
 svg {
-  width: 30px;
-  height: 30px;
-  fill: var(--primary);
+  width: var(--svg-m);
+  height: var(--svg-m);
+  color: var(--primary);
 }
 
 /* ====== Typography ====== */
@@ -40,6 +40,8 @@ p {
     "plan-title"
     "suggestion" 
     "route"
+    "notes"
+    "save"
     /
     1fr;
   width: 100%;
@@ -216,10 +218,35 @@ header{
   color: var(--bg-color);
 }
 .tp_ic {
-  flex-direction: column;
-  gap: 10px;
+  display: flex;
+  gap: 20px;
   z-index: 2;
 }
+
+.rating {
+  display: flex;
+  gap: var(--gap-xs, 0.5rem);
+  cursor: pointer;
+}
+
+.rating svg {
+  width: var(--svg-s);
+  height: var(--svg-s);
+  color: var(--secondary);
+  transition: color 0.2s ease;
+}
+
+.rating svg.active,
+.rating svg:hover,
+.rating svg:hover ~ svg {
+  color: var(--secondary);
+}
+
+.rating svg:hover ~ svg {
+  color: var(--secondary-2);
+}
+
+
 
 /* ====== Route section ====== */
 .route {
@@ -262,12 +289,10 @@ header{
 }
 .rt-details #drag {
   grid-area: icon;
-  position: absolute;
+  /* position: absolute;
   left: 0;
   top: 10%;
-  /* transform: translateX(50%); */
-  width: 30px;
-  height: auto;
+  transform: translateX(50%); */
   fill: var(--primary-2);
 }
 .inst {
@@ -287,7 +312,32 @@ header{
     align-self: auto;
 }
 
+.notes {
+    grid-area: notes;
+    width: 100%;
+    max-width: 100vw;
+    padding: var(--p-md);
+}
 
+.notes > textarea {
+    background-color: var(--primary-4);
+    color: var(--text-color-4);
+    width: 75vw;
+    height: auto;
+}
+
+.save {
+    grid-area: save;
+    display: flex;
+    gap: 20px;
+    justify-self: center;
+}
+
+.save > button {
+    height: fit-content;
+    background-color: var(--accent);
+    display: flex;
+}
 
 /* ====== Responsive (max-width: 600px) ====== */
 @media (max-width: 600px) {
@@ -324,7 +374,7 @@ header{
     flex-wrap: wrap;
   }
 
-  .TP {
+  /* .TP {
 
-  }
+  } */
 }
