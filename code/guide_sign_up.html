@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="header-logo">
+            <img src="../files/logo.svg" alt="Logo">
+            <h1>Ayal<span>GO</span></h1>
+            <p>Discover Mongolia <br>your way</p>
+        </div>
+        <div class="header-nav">
+            <a href="home.html">Нүүр Хуудас</a>
+            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын Цэгүүд</a>
+            <input type="text" placeholder="Хайлт хийх..">
+            <button class="btn">
+                <svg>
+                    <use href="../styles/icons.svg#icon-search"></use>
+                </svg>
+            </button>
+        </div>
+    </header>
+    <main>
+        <h1>Хөтөч болох бүртгэл</h1>
+        <form action="#">
+            <p>Овог нэр</p>
+            <input type="text">
+            <p>Холбоо барих дугаар</p>
+            <input type="number">
+            <p>И-мэйл хаяг</p>
+            <input type="email">
+            <p>Хөтөч хийх бүс нутаг</p>
+            <select name="bus_nutag" id="bus_nutag">
+                <option value="Ulaanbaatar">Улаанбаатар</option>
+                <option value="arkhangai">Архангай</option>
+                <option value="bayankhongor">Баянхонгор</option>
+                <option value="bayanulgii">Баян-Өлгий</option>
+                <option value="bulgan">Булган</option>
+                <option value="govi-altai">Говь-Алтай</option>
+                <option value="govisumber">Говьсүмбэр</option>
+                <option value="darkhan-uul">Дархан-Уул</option>
+                <option value="dornod">Дорнод</option>
+                <option value="dornogovi">Дорноговь</option>
+                <option value="dundgovi">Дундговь</option>
+                <option value="ovorkhangai">Өвөрхангай</option>
+                <option value="umngovi">Өмнөговь</option>
+                <option value="orkhon">Орхон</option>
+                <option value="uvs">Увс</option>
+                <option value="sukhbaatar">Сүхбаатар</option>
+                <option value="selenge">Сэлэнгэ</option>
+                <option value="tuv">Төв</option>
+                <option value="Uvs">Увс</option>
+                <option value="khentii">Хэнтий</option>
+                <option value="khovd">Ховд</option>
+                <option value="khuvsgul">Хөвсгөл</option>
+                <option value="umnugovi">Өмнөговь</option>
+            </select>
+            <p>Хөтөч хийх категори</p>
+            <select name="category" id="category">
+                <option value="nature">Байгалийн үзэсгэлэнт газар</option>
+                <option value="historical">Түүх соёлын дурсгалт газар</option>
+                <option value="adventure">Адал явдалт аялал</option>
+                <option value="cultural">Соёлын үзэсгэлэнт газар</option>
+                <option value="wildlife">Морин аялал</option>
+                <option value="wellness">Амралт сувилал </option>
+            </select>
+            <p>Хөтөч хийх хэл</p>
+            <select name="language" id="language">
+                <option value="mongolian">Монгол хэл</option>
+                <option value="english">Англи хэл</option>
+                <option value="russian">Орос хэл</option>
+                <option value="chinese">Хятад хэл</option>
+                <option value="japanese">Япон хэл</option>
+            </select>
+            <p>Хөтөч хийсэн туршлага (жилээр)</p>
+            <input type="number">
+        </form>
+            <button type="submit">Бүртгүүлэх</button>
+    </main>
+</body>
+</html>
