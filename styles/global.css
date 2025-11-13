@@ -30,12 +30,26 @@
   --p-2xl: 3rem;     /* 48px */
   --p-3xl: 4rem;     /* 64px */
 
+    /* === margin size === */
+
+  --m-xxs: 0.25rem;  /* 4px */
+  --m-xs:  0.5rem;   /* 8px */
+  --m-sm:  0.75rem;  /* 12px */
+  --m-md:  1rem;     /* 16px */
+  --m-lg:  1.5rem;   /* 24px */
+  --m-xl:  2rem;     /* 32px */
+  --m-2xl: 3rem;     /* 48px */
+  --m-3xl: 4rem;     /* 64px */
+
+
   /* === gap size === */
 
   --gap-size-xs: 0.313rem;
   --gap-size-s: 0.75rem;   /* 12px */
-  --gap-size-m: 1.25rem;   /* 20px */
-  --gap-size-l: 1.85rem;
+  --gap-size-m: 1rem;     /* 16px */
+  --gap-size-l: 1.5rem;   /* 24px */
+  --gap-size-xl: 2rem;     /* 32px */
+  --gap-size-2xl: 3rem;     /* 48px */
 
   /* === border radius === */
   

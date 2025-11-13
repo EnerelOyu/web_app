@@ -385,13 +385,13 @@ header{
 .guide{
     width: 100%;
     background-color: var(--hdr-bg-color);
-    padding: var(--p-lg);
+    padding: var(--p-2xl);
 }
 .guide-inner{
     max-width: 50%;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-size-m);
+    gap: var(--gap-size-xl);
     align-items: flex-start;
 
 }
@@ -412,9 +412,9 @@ header{
     margin-left: var(--p-lg);
     color: var(--primary-4);
     font-family: 'Rubik';
+    font-size: var(--fs-s);
     font-weight: bold;
-    font-size: var(--fs-m);
-    padding: var(--p-lg);
+    padding: var(--p-md) var(--p-lg);
     cursor: pointer;
     transition: background-color;
  }
