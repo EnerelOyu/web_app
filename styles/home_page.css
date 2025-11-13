@@ -9,7 +9,7 @@ main{
     align-items: center;
     display: flex;
     flex-direction: column;
-    gap: var(--gap-size-m);
+    gap: var(--gap-size-xl);
 }
 
 h1, h2, h3, h4, label{
@@ -27,88 +27,6 @@ p{
     font-family: 'NunitoSans';
 }
 
-header{
-    position: sticky;
-    width: auto;
-    z-index: 1000; 
-    padding: var(--p-sm);
-    background-color: var(--hdr-bg-color);
-    display: flex;
-    align-items:center;
-}
-
-.header-logo{
-    display: inline-flex;
-    margin-right: auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-logo img{
-    width: var(--logo-size);
-    height: var(--logo-size);
-}
-.header-logo>h1{
-    color: var(--bg-color);
-    padding-left: var(--p-sm);
-    font-size: var(--fs-2xl);
-    font-family: 'Rubik';
-}
-.header-logo>h1>span{
-    color:var(--primary);
-}
-.header-logo>p{
-    color:var(--primary);
-    font-size: var(--fs-xs);
-    padding: var(--p-md);
-    font-weight: bold ;
-    font-family: 'Rubik';
-}
-.header-nav{
-    display: flex;
-    gap: var(--gap-size-s);
-    align-items: center;
-}
-.header-nav>a:link{
-    text-decoration: none;
-}
-.header-nav a{
-    color:var(--primary-4);
-    font-size: var(--fs-xs);
-    font-family: 'NunitoSans';
-    text-transform: uppercase;
-}
-
-.header-nav a:hover{
-    color: var(--primary);
-}
-
-.btn{
-    display: inline-flex;
-    background-color: var(--primary-4);
-    border-radius: var(--br-s);
-    border-style: none;
-    align-items: center;
-    justify-content: center;
-}
-.btn svg{
-    height: var(--svg-s);
-    width: var(--svg-s);
-    color: var(--primary);
-}
-
-.header-nav input{
-    background-color: var(--primary-4);
-    border-radius: var(--br-s);
-    border-style: none;
-    padding: var(--p-xs);
-}
-
-.header-nav input::placeholder{
-    color: var(--text-color-2);
-    font-family: 'NunitoSans';
-    padding-left: var(--p-sm);
-}
 
 .uria{
     font-size: var(--fs-xl);
@@ -117,6 +35,7 @@ header{
     width: 100%;
     text-align: center;
     padding: var(--p-md);
+    border: 1px dotted;
     
 }
 
@@ -201,7 +120,8 @@ header{
     flex-direction: column;
     align-items: center;
     width: 100%;
-
+    gap: var(--gap-size-xl);
+    border: 1px dotted;
 }
 
 .recommend h3{
@@ -217,8 +137,6 @@ header{
     justify-items:center;
     width: 100%;
     max-width: 70vw;   
-    padding: var(--p-md) 0;
-
 }
 
 .rec-icons{
@@ -244,6 +162,12 @@ header{
 .tutorial{
     display: flex;
     flex-direction: column;
+    gap: var(--gap-size-xl);
+    border: 1px dotted;
+}
+
+.tutorial h3{
+    padding: var(--p-md) 0;
 }
 
 
@@ -253,6 +177,7 @@ header{
     width: 100%;
     max-width: 90vw;
     gap: var(--gap-size-m);
+
 }
 
 .tutorial-card{
@@ -278,22 +203,23 @@ header{
     width: 100%;
     display: flex;
     flex-direction: column;
+    gap: var(--gap-size-xl);
 }
 
 
 .spots-grid{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--gap-size-m);
-    margin: 0px 30px;
+    gap: var(--gap-size-xl);
+    margin: 0px var(--m-xl);
 
 }
+
 
 .spot-card{
     display: flex;
     flex-direction: column;
-    padding: var(--p-sm);
-    gap: var(--gap-size-m);
+    gap: var(--gap-size-s);
 }
 
 .spot-img{
@@ -385,51 +311,47 @@ header{
 .guide{
     width: 100%;
     background-color: var(--hdr-bg-color);
-    padding: var(--p-2xl);
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    padding: var(--p-2xl) var(--p-xl);
+    align-items: center; 
 }
+
 .guide-inner{
-    max-width: 50%;
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-xl);
     align-items: flex-start;
-
+    margin-left: var(--m-xl);
 }
- .guide-inner h3 , .guide-inner p{
-    color: var(--primary);
-    padding-left: var(--p-lg);
- }
 
- .guide p{
+.guide-inner h3 , .guide-inner p{
+    color: var(--primary);
+}
+
+.guide-inner p{
     font-size: var(--fs-m);
     text-transform: uppercase;
- }
+}
 
- .guide-btn{
+.guide-btn{
     background-color: var(--primary);
-    border-style: none;
+    border: none;
     border-radius: 9999px;
-    margin-left: var(--p-lg);
     color: var(--primary-4);
     font-family: 'Rubik';
     font-size: var(--fs-s);
     font-weight: bold;
     padding: var(--p-md) var(--p-lg);
-    cursor: pointer;
-    transition: background-color;
- }
-
- .guide-btn:link{
     text-decoration: none;
- }
+    justify-self: end;     
+    margin-right: var(--m-xl);
+}
 
- .guide-btn:hover{
+.guide-btn:hover{
     background-color: var(--primary-4);
     color: var(--primary);
     border: 1px solid var(--primary);
-
- }
-
-
+}
 
 
