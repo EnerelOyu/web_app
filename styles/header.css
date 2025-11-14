@@ -1,20 +1,5 @@
 @import url('fonts.css');
 
-h1, h2, h3, h4, label{
-    font-family: 'Rubik';
-}
-
-h3{
-    font-size: var(--fs-xl);
-    color: var(--text-color-2);
-    text-align: center;
-    text-transform: uppercase;
-}
-
-p{
-    font-family: 'NunitoSans';
-}
-
 header{
     position: sticky;
     width: auto;
@@ -25,30 +10,30 @@ header{
     align-items:center;
 }
 
-.header-logo{
+.logo{
     display: inline-flex;
     margin-right: auto;
     align-items: center;
     justify-content: center;
 }
 
-.header-logo img{
+.logo img{
     width: var(--logo-size);
     height: var(--logo-size);
 }
 
-.header-logo>h1{
+.logo>h1{
     color: var(--bg-color);
     padding-left: var(--p-sm);
     font-size: var(--fs-2xl);
     font-family: 'Rubik';
 }
 
-.header-logo>h1>span{
+.logo>h1>span{
     color:var(--primary);
 }
 
-.header-logo>p{
+.logo>p{
     color:var(--primary);
     font-size: var(--fs-xs);
     padding: var(--p-md);
@@ -77,32 +62,45 @@ header{
     color: var(--primary);
 }
 
-.btn{
+.search-btn{
     display: inline-flex;
     background-color: var(--primary-4);
-    border-radius: var(--br-s);
+    border-radius: var(--br-circle);
     border-style: none;
     align-items: center;
     justify-content: center;
+    height: var(--svg-m);
+    width: var(--svg-m);
+    transition: background-color 0.3s;
 }
 
-.btn svg{
-    height: var(--svg-s);
-    width: var(--svg-s);
+.search-btn svg{
+    height: var(--svg-m);
+    width: var(--svg-m);
     color: var(--primary);
+    transition: 0.3s;
+}
+
+.search-btn:hover{
+    background-color: var(--primary);
+}
+
+.search-btn:hover svg{
+    color: var(--primary-4);
 }
 
 .header-nav input{
     background-color: var(--primary-4);
-    border-radius: var(--br-s);
+    border-radius: 9999px;
     border-style: none;
-    padding: var(--p-xs);
+    height: var(--svg-m);
+    padding-left: var(--p-md);
+
 }
 
 .header-nav input::placeholder{
     color: var(--text-color-2);
     font-family: 'NunitoSans';
-    padding-left: var(--p-sm);
 }
 
 .header-nav a.is-active {

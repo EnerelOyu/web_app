@@ -40,7 +40,7 @@ class AgSpot extends HTMLElement {
           <p class="spot-area">${area}</p>
           <h4 class="spot-name">${name}</h4>
           <div class="line"></div>
-          <a href="${link}">
+          <a href="${link}" class="spot-detail">
             <p>ДЭЛЭГРЭНГҮЙ</p>
             <svg class="more-icon">
               <use href="../styles/icons.svg#icon-arrow"></use>

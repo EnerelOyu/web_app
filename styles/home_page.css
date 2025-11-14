@@ -218,6 +218,7 @@ p{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-xl);
+    border: 1px dotted;
 }
 
 .top-spots h3, .culture-spots h3{
@@ -300,7 +301,7 @@ p{
 
 }
 
-.spot-card p{
+.spot-card p, .more-spots p{
     font-size: var(--fs-xs);
     color: var(--text-color-3);
     text-transform: uppercase;
@@ -313,7 +314,7 @@ p{
 
 }
 
-.spot-card a{
+.spot-detail, .more-spots{
     display: inline-flex;
     justify-content: flex-start;
     align-items: center;
@@ -321,7 +322,7 @@ p{
     color: var(--text-color-2);
 }
 
-.spot-card a:link{
+.spot-detail:link, .more-spots:link{
     text-decoration: none;
 }
 
@@ -332,10 +333,18 @@ p{
     transition: transform .2s ease;
 }
 
-.spot-card a:hover .more-icon{
+.spot-detail:hover .more-icon, .more-spots:hover .more-icon{
   transform: translateX(4px);
 }
 
+.more-spots {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;   
+  margin-right: var(--m-xl);
+  align-items: center;
+  gap: var(--gap-size-s);
+}
 .guide{
     width: 100%;
     background-color: var(--hdr-bg-color);

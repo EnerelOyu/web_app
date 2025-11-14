@@ -7,7 +7,7 @@ class AgHeader extends HTMLElement {
   render() {
     this.innerHTML = `
       <header>
-        <div class="header-logo">
+        <div class="logo">
           <img src="../files/logo.svg" alt="Logo">
           <h1>Ayal<span>GO</span></h1>
           <p>Discover Mongolia <br>your way</p>
@@ -17,7 +17,7 @@ class AgHeader extends HTMLElement {
           <a href="aylaliin_tseguud.html">Аяллын Цэгүүд</a>
           <a href="plan.html">Миний Төлөвлөгөө</a>
           <input type="text" placeholder="Хайлт хийх..">
-          <button class="btn">
+          <button class="search-btn">
             <svg>
               <use href="../styles/icons.svg#icon-search"></use>
             </svg>
