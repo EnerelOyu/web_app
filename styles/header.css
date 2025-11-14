@@ -2,9 +2,8 @@
 
 header{
     position: sticky;
-    width: auto;
     z-index: 1000; 
-    padding: var(--p-sm);
+    padding: var(--p-md) var(--p-sm);
     background-color: var(--hdr-bg-color);
     display: flex;
     align-items:center;
