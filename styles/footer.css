@@ -4,7 +4,6 @@ footer{
     flex-direction: row;
     justify-content: space-between;
     padding: var(--p-md) var(--p-sm);
-    margin-top: var(--m-xl);
 }
 
 .footer-left{

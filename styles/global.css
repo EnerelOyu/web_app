@@ -44,7 +44,7 @@
 
   /* === gap size === */
 
-  --gap-size-xs: 0.313rem;
+  --gap-size-xs: 0.313rem;  /* 5px */
   --gap-size-s: 0.75rem;   /* 12px */
   --gap-size-m: 1.25rem;   /* 20px */
   --gap-size-l: 2rem;      /* 32px*/
@@ -87,7 +87,7 @@
     --secondary-3: hsl(30, 96%, 90%);
 
     --accent: hsl(165, 95%, 20%);
-    --accent–1: hsl(165, 95%, 25%);
+    --accent-1: hsl(165, 95%, 25%);
     --accent-2: hsl(165, 95%, 30%);
     --accent-3: hsl(165, 95%, 50%);
     --accent-4: hsl(165, 95%, 60%);

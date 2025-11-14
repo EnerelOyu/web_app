@@ -14,7 +14,7 @@ class AgHeader extends HTMLElement {
         </div>
         <div class="header-nav">
           <a href="home.html">Нүүр Хуудас</a>
-          <a href="aylaliin_tseguud.html">Аяллын Цэгүүд</a>
+          <a href="spots.html">Аяллын Цэгүүд</a>
           <a href="plan.html">Миний Төлөвлөгөө</a>
           <input type="text" placeholder="Хайлт хийх..">
           <button class="search-btn">
