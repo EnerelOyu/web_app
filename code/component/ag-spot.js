@@ -25,7 +25,7 @@ class AgSpot extends HTMLElement {
         const img = this.getAttribute("zrg") || "../files/spot_img_eg.jpg";
         const name = this.getAttribute("ner") || "Unknown";
         const area = this.getAttribute("bus") || "Unknown";
-        const link = this.getAttribute("zam") || "../code/aylaliin_tsegiin_medeelel.html";
+        const link = this.getAttribute("zam") || "../code/spot-info.html";
 
         this.innerHTML =   `
         <article class="spot-card">

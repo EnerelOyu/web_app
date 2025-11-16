@@ -1,5 +1,5 @@
-class AgHeader extends HTMLElement {
-  constructor() {
+class AgJishee extends HTMLElement {
+    constructor() {
         super();
         this.css=`
         @import url('fonts.css');
@@ -113,15 +113,15 @@ class AgHeader extends HTMLElement {
 
         `
     }
-  connectedCallback() {
-    this.render();
-    this.markActiveLink();
-  }
 
-  render() {
-    this.innerHTML = `
-    <style>${this.css}</style>
-      <header>
+    connectedCallback() {
+        this.render();
+        
+    }
+    render(){
+        this.innerHTML=`
+        <style>${this.css}</style>
+        <header>
         <div class="logo">
           <img src="../files/logo.svg" alt="Logo">
           <h1>Ayal<span>GO</span></h1>
@@ -139,24 +139,21 @@ class AgHeader extends HTMLElement {
           </button>
         </div>
       </header>
-    `;
-  }
-
-  markActiveLink() {
-    let currentPath = window.location.pathname.split("/").pop();
-    if (!currentPath) {
-      currentPath = "home.html"; 
+        `;
     }
 
-    const links = this.querySelectorAll(".header-nav a[href]");
-    links.forEach((link) => {
-      const href = link.getAttribute("href");
-      if (href === currentPath) {
-        link.setAttribute("aria-current", "page");
-        link.classList.add("is-active");
-      }
-    });
-  }
+    disconnectedCallback() {
+        
+    }
+
+    attributeChangedCallback(name, oldVal, newVal) {
+        
+    }
+
+    adoptedCallback() {
+        
+    }
+
 }
 
-customElements.define("ag-header", AgHeader);
+window.customElements.define('ag-jishee', AgJishee);

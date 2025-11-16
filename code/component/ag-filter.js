@@ -5,6 +5,9 @@ class CategoryFilter extends HTMLElement {
     }
 
     connectedCallback() {
+        this.render();
+
+        this.shadowRoot.qu
         const group = (this.getAttribute("ner") || "Тодорхойгүй").trim();
         const choices = [
             this.getAttribute("turul1"),
