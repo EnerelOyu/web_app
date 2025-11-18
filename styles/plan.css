@@ -42,6 +42,7 @@ p {
     "route"
     "notes"
     "save"
+    "liked"
     /
     1fr;
   width: 100%;
@@ -214,38 +215,79 @@ header{
   background-size: cover;
   gap: 1vh;
 }
-.TP > p, .TP > h3 {
-  color: var(--bg-color);
-}
+
 .tp_ic {
   display: flex;
-  gap: 20px;
-  z-index: 2;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .rating {
-  display: flex;
-  gap: var(--gap-xs, 0.5rem);
-  cursor: pointer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--gap-size-xs);
 }
 
-.rating svg {
-  width: var(--svg-s);
-  height: var(--svg-s);
-  color: var(--secondary);
-  transition: color 0.2s ease;
+.readOnly-rating-stars {
+    display: inline-flex;
 }
 
-.rating svg.active,
-.rating svg:hover,
-.rating svg:hover ~ svg {
-  color: var(--secondary);
+.readOnly-rating-stars .star {
+    width: var(--svg-s);
+    height: var(--svg-s);
+    display: block;
+    color: var(--primary-2);
 }
 
-.rating svg:hover ~ svg {
-  color: var(--secondary-2);
+.rating .rating-num {
+    font-family: 'NunitoSans';
+    font-size: var(--fs-sm);
+    color: var(--primary-2);
 }
 
+.tp_ic button {
+    top: var(--p-sm);
+    width: var(--svg-m);
+    height: var(--svg-m);
+    border: none;
+    border-radius: var(--br-s);
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: background-color 0.5s, opacity 0.5s;
+}
+
+.tp_ic button:nth-of-type(1),
+.tp_ic button:nth-of-type(2) {
+    right: auto;
+    left: auto;
+}
+
+.tp_ic button:hover {
+    background-color: var(--primary);
+    border: 1px solid var(--primary);
+    opacity: 1;
+}
+
+.tp_ic button:hover svg {
+    color: var(--primary-4);
+    opacity: 1;
+}
+
+.tp_ic svg {
+    width: var(--svg-m);
+    height: var(--svg-m);
+    color: var(--primary-2);
+}
+
+.tp-info {
+    align-self: flex-end;
+    color: var(--bg-color);
+}
 
 
 /* ====== Route section ====== */
@@ -297,7 +339,7 @@ header{
 }
 .inst {
     grid-area: guide;
-    justify-items: center;
+    justify-content: center;
     display: block;
 }
 /* .delete{
@@ -337,6 +379,12 @@ header{
     height: fit-content;
     background-color: var(--accent);
     display: flex;
+}
+
+.liked {
+    grid-area: liked;
+    justify-self: center;
+    overflow-x: scroll;
 }
 
 /* ====== Responsive (max-width: 600px) ====== */
