@@ -1,46 +1,21 @@
-class AgHomeSearch extends HTMLElement {
-    constructor() {
-        super();
-        //implementation
-    }
+// ../code/component/ag-home-search.js
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("search-form");
+  if (!form) return;
 
-    connectedCallback() {
-        const name = this.getAttribute("name")||"Unknown"
-        const options = [
-            this.getAttribute("op1"),
-            this.getAttribute("op2"),
-            this.getAttribute("op3"),
-            this.getAttribute("op4"),
-            this.getAttribute("op5"),
-            this.getAttribute("op5"),
-        ].filter(Boolean)
-        this.innerHTML=`
-        <form>
-      <label for="areas">Бүс нутаг</label>
-      <select name="areas" id="areas">
-        <option value="tuv">Төв</option>
-        <option value="hangai">Хангай</option>
-        <option value="zuun">Зүүн</option>
-        <option value="baruun">Баруун</option>
-        <option value="altai">Алтай</option>
-        <option value="govi">Говь</option>
-      </select>
-    </form>
-        `
-    }
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-    disconnectedCallback() {
-        //implementation
-    }
+    const area = document.getElementById("areas").value;
+    const category = document.getElementById("categories").value;
 
-    attributeChangedCallback(name, oldVal, newVal) {
-        //implementation
-    }
+    // ⚠ АНХААР: энд URL дээрх параметрийн нэр нь
+    // spots.html дээр ашиглахтайгаа таарах ёстой
+    const params = new URLSearchParams();
 
-    adoptedCallback() {
-        //implementation
-    }
+    if (area) params.set("bus", area);       // бүсийг bus гэж дамжуулна
+    if (category) params.set("cate", category); // категорииг cate гэж дамжуулна
 
-}
-
-window.customElements.define('ag-home-search', AgHomeSearch);
+    window.location.href = `../code/spots.html?${params.toString()}`;
+  });
+});

@@ -11,6 +11,7 @@
   <script type="module" src="../code/component/ag-spot.js"></script>
   <script type="module" src="../code/component/ag-footer.js"></script>
   <script type="module" src="../code/component/ag-tutorial-card.js"></script>
+  <script type="module" src="../code/component/ag-home-search.js"></script>
 </head>
 
 <body>
@@ -18,17 +19,17 @@
   <main>
     <p class="uria">Аялаж зугаалмаар байвч хаашаа явах аа мэдэхгүй байна уу?</p>
     <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ,<span> ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
-    <form class="search-form">
+    <form class="search-form" id="search-form">
       <div class="form-group">
         <label for="areas">Бүс нутаг</label>
         <select name="areas" id="areas">
           <option value="" disabled selected>Аялах бүс нутаг аа сонгоно уу.</option>
-          <option value="tuv">Төв</option>
-          <option value="hangai">Хангай</option>
-          <option value="zuun">Зүүн</option>
-          <option value="baruun">Баруун</option>
-          <option value="altai">Алтай</option>
-          <option value="govi">Говь</option>
+          <option value="Төв">Төв</option>
+          <option value="Хангай">Хангай</option>
+          <option value="Зүүн">Зүүн</option>
+          <option value="Баруун">Баруун</option>
+          <option value="Алтай">Алтай</option>
+          <option value="Говь">Говь</option>
         </select>
       </div>
       <div class="form-group">
@@ -38,11 +39,11 @@
           <option value="soyol">Соёл</option>
           <option value="amralt">Амралт сувилал</option>
           <option value="adal">Адал явдалт</option>
-          <option value="bayar">Баяр наадам</option>
+          <option value="baigal">Байгаль</option>
           <option value="uuland">Ууланд гарах</option>
         </select>
       </div>
-      <button class="submit-btn">
+      <button id="filter-submit" type="submit">
         <svg>
           <use href="../styles/icons.svg#icon-search"></use>
         </svg>

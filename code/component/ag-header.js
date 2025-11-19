@@ -119,7 +119,7 @@ class AgHeader extends HTMLElement {
   }
 
   render() {
-    this.innerHTML = `
+    this.innerHTML =`
     <style>${this.css}</style>
       <header>
         <div class="logo">

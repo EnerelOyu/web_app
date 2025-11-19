@@ -1,71 +1,56 @@
-class CategoryFilter extends HTMLElement {
-    constructor() {
-        super();
-        
-    }
+class AgFilter extends HTMLElement {
+  constructor() {
+    super();
+  }
 
-    connectedCallback() {
-        this.render();
+  connectedCallback() {
+    const group = this.getAttribute("ner") || "Ангилал";
 
-        this.shadowRoot.qu
-        const group = (this.getAttribute("ner") || "Тодорхойгүй").trim();
-        const choices = [
-            this.getAttribute("turul1"),
-            this.getAttribute("turul2"),
-            this.getAttribute("turul3"),
-            this.getAttribute("turul4"),
-            this.getAttribute("turul5"),
-            this.getAttribute("turul6"),
-        ].filter(Boolean);
-        
-        this.innerHTML=`
-            <fieldset class="filters">
-                <legend>${group}</legend>
-                ${choices
-                    .map(
-                        (c, i)=>`
-                        <label>
-                        <input type="checkbox" name="${group}" value="${c}" data-group="${group}">
-                        ${c}
-                        </label>`
-                    )
-                    .join("")}
-                    
-                </fieldset>
-                `;
-                this.addEventListener("change", () => {
-                    const inputs = this.querySelectorAll('input[type="checkbox"]');
-                    const selected = [...inputs].filter(i => i.checked).map(i => i.value);
-                    this.dispatchEvent(
-                        new CustomEvent("filter-change",{
-                            bubbles: true,
-                            detail: {group, selected},
-                        })
-                    );
-                });
+    const choices = [
+      this.getAttribute("turul1"),
+      this.getAttribute("turul2"),
+      this.getAttribute("turul3"),
+      this.getAttribute("turul4"),
+      this.getAttribute("turul5"),
+      this.getAttribute("turul6"),
+    ].filter(Boolean);
 
-                const inputs = this.querySelectorAll('input[type="checkbox"]');
-                const selected = [...inputs].filter(i => i.checked).map(i => i.value);
-                this.dispatchEvent(
-                    new CustomEvent("filter-change",{
-                        bubbles: true,
-                        detail:{group, selected},
-                    })
-                );
-            
-    }
-    disconnectedCallback() {
-        
-    }
+    // SPOTS.CSS ажиллах боломжтой Light DOM HTML
+    this.innerHTML = `
+      <fieldset class="filters">
+        <legend>${group}</legend>
+        ${choices
+          .map(
+            (c) => `
+          <label>
+            <input type="checkbox" value="${c}">
+            ${c}
+          </label>
+        `
+          )
+          .join("")}
+      </fieldset>
+    `;
 
-    attributeChangedCallback(name, oldVal, newVal) {
-        
-    }
+    // ag-filter доторх checkbox өөрчлөгдөх болгонд
+    this.addEventListener("change", () => this.update());
+  }
 
-    adoptedCallback() {
-        
-    }
+  update() {
+    const checked = [...this.querySelectorAll("input:checked")].map(
+      (cb) => cb.value
+    );
 
+    this.dispatchEvent(
+      new CustomEvent("filter-changed", {
+        detail: {
+          type: this.getAttribute("ner"), // "Категори", "Бүс нутаг" гэх мэт
+          values: checked,                // ["Соёл", "Байгаль"] гэх мэт
+        },
+        bubbles: true,
+      })
+    );
+  }
 }
 
-window.customElements.define('ag-filter', CategoryFilter);
+customElements.define("ag-filter", AgFilter);
