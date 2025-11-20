@@ -118,14 +118,14 @@ header{
 .cat{
     grid-area: cat;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--gap-size-m); 
     padding: var(--p-lg);
 }
 .area {
     grid-area: area;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: var(--gap-size-m); 
     padding: var(--p-lg);
 }

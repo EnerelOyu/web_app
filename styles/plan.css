@@ -371,14 +371,29 @@ header{
 .save {
     grid-area: save;
     display: flex;
-    gap: 20px;
+    gap: var(--gap-size-xl);
     justify-self: center;
 }
 
 .save > button {
     height: fit-content;
-    background-color: var(--accent);
+    width: fit-content;
+    color: var(--bg-color);
+    padding: var(--p-sm);
+    background-color: var(--primary-2);
     display: flex;
+    justify-content: center;
+    border-radius: var(--br-m);
+}
+
+.save > button > svg {
+  fill: var(--bg-color);
+  width: var(--svg-s);
+  height: var(--svg-s);
+}
+
+.save>#save{
+  background-color: var(--accent-2);
 }
 
 .liked {
