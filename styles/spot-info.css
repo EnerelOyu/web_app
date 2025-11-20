@@ -13,7 +13,6 @@
     background-color: var(--primary-4);
     padding: var(--p-xs);
     cursor: pointer;
-    border: 1px solid;
 }
 .btn svg{
     height: var(--svg-s);

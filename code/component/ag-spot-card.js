@@ -5,6 +5,46 @@ class AgSpotCard extends HTMLElement {
   }
 
   connectedCallback() {
+    this.render();
+    
+  }
+
+  createStars(rating){
+    const fullStars = Math.floor(rating);
+    const hasHalf = rating - fullStars >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
+
+    let html="";
+
+    for(let i = 0; i < fullStars; i++){
+      html += `
+          <svg class="star">
+              <use href="../styles/icons.svg#icon-star-filled"></use>
+          </svg>
+      `;
+    }
+
+    if(hasHalf){
+      html += `
+          <svg class="star">
+              <use href="../styles/icons.svg#icon-star-half"></use>
+          </svg>
+      `;
+    }
+
+    for(let i = 0; i < emptyStars; i++){
+      html += `
+          <svg class="star">
+              <use href="../styles/icons.svg#icon-star-unfilled"></use>
+          </svg>
+      `;
+    }
+
+    return html;
+
+  }
+
+  render(){
     const href = this.getAttribute("href") || "#";
     const img = this.getAttribute("zrg") || "NULL";
     const area = this.getAttribute("bus") || "NULL";
@@ -17,7 +57,6 @@ class AgSpotCard extends HTMLElement {
     const tagsHtml = tags.map(t => `<li>${t}</li>`).join("");
 
     this.innerHTML = `
-
             <article class="spot-card">
                 <figure class="spot-img">
                     <a href="${href}">
@@ -58,41 +97,6 @@ class AgSpotCard extends HTMLElement {
                 </div>
             </article>
     `;
-
-  }
-
-  createStars(rating){
-    const fullStars = Math.floor(rating);
-    const hasHalf = rating - fullStars >= 0.5;
-    const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
-
-    let html="";
-
-    for(let i = 0; i < fullStars; i++){
-      html += `
-          <svg class="star">
-              <use href="../styles/icons.svg#icon-star-filled"></use>
-          </svg>
-      `;
-    }
-
-    if(hasHalf){
-      html += `
-          <svg class="star">
-              <use href="../styles/icons.svg#icon-star-half"></use>
-          </svg>
-      `;
-    }
-
-    for(let i = 0; i < emptyStars; i++){
-      html += `
-          <svg class="star">
-              <use href="../styles/icons.svg#icon-star-unfilled"></use>
-          </svg>
-      `;
-    }
-
-    return html;
 
   }
 

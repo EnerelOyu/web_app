@@ -59,16 +59,16 @@ class AgSpotManager extends HTMLElement {
   _applyFilters() {
     if (!this._cards.length) return;
 
-    const busFilters      = (this._filters.bus      || []).map(v => this._normalize(v)).filter(Boolean);
-    const cateFilters     = (this._filters.cate     || []).map(v => this._normalize(v)).filter(Boolean);
-    const activityFilters = (this._filters.activity || []).map(v => this._normalize(v)).filter(Boolean);
-    const ageFilters      = (this._filters.age      || []).map(v => this._normalize(v)).filter(Boolean);
+    const busFilters = (this._filters.bus||[]).map(v => this._normalize(v)).filter(Boolean);
+    const cateFilters = (this._filters.cate||[]).map(v => this._normalize(v)).filter(Boolean);
+    const activityFilters = (this._filters.activity||[]).map(v => this._normalize(v)).filter(Boolean);
+    const ageFilters = (this._filters.age||[]).map(v => this._normalize(v)).filter(Boolean);
 
     this._cards.forEach(card => {
-      const busVal      = this._normalize(card.getAttribute("bus"));
-      const cateVal     = this._normalize(card.getAttribute("cate"));
+      const busVal = this._normalize(card.getAttribute("bus"));
+      const cateVal = this._normalize(card.getAttribute("cate"));
       const activityVal = this._normalize(card.getAttribute("activity"));
-      const ageVal      = this._normalize(card.getAttribute("age"));
+      const ageVal = this._normalize(card.getAttribute("age"));
 
       const matchBus =
         busFilters.length === 0 ||
