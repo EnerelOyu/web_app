@@ -36,47 +36,67 @@
 
             <p class="container-hdr">шүүсэн аяллын цэгүүд</p>
             <div class="spots-grid">
-                <ag-spot-card href="../code/spot-info.html" ,
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , bus="төв" ,
-                    unelgee="4.5" , ner="Цонжин Болдог" , cate="Соёл" , une="20,000"></ag-spot-card>
+                <ag-spot-card 
+                    href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , 
+                    bus="төв",
+                    unelgee="4.5", 
+                    ner="Цонжин Болдог", 
+                    cate="Соёл", 
+                    activity="Морин аялал, Амьтантай ойр",
+                    une="20,000", 
+                    age="18–25, Бүх нас">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
                     zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
                     , bus="төв" , unelgee="4.5" , ner="Гандан Тэгчинлэн Хийд" , cate="Соёл, Түүхэн" ,
-                    une="Үнэгүй"></ag-spot-card>
+                    une="Үнэгүй">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
                     zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg" , bus="төв" ,
-                    unelgee="4.3" , ner="Амарбаясгалант хийд" , cate="Соёл, Түүхэн" , une="Үнэгүй"></ag-spot-card>
+                    unelgee="4.3" , ner="Амарбаясгалант хийд" , cate="Соёл, Түүхэн" , une="Үнэгүй">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
                     zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg" , bus="төв" , unelgee="4.5"
                     , ner="хустайн байгалийн цогцолбор" , cate="Байгаль, Морин аялал, Сур харваа" ,
-                    une="20,000"></ag-spot-card>
+                    une="20,000">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" , zrg="https://montsame.mn/files/667399f904664.jpeg" ,
-                    bus="Баруун" , unelgee="4.5" , ner="Алтай Таван Богд" , cate="Байгаль ,Амралт сувилал" ,
-                    une=""></ag-spot-card>
+                    bus="Алтай" , unelgee="4.5" , ner="Алтай Таван Богд" , cate="Байгаль ,Амралт сувилал" ,
+                    une="">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
                     zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
                     bus="Зүүн" , unelgee="3" , ner="ганга нуур" , cate="Байгаль, Амралт сувилал" ,
-                    une="20,000"></ag-spot-card>
+                    une="20,000">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , bus="төв" ,
-                    unelgee="4.5" , ner="Цонжин Болдог" , cate="Соёл" , une="20,000"></ag-spot-card>
+                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1427612316.jpg" , bus="Баруун" ,
+                    unelgee="3.0" , ner="Монгол Элс" , cate="Байгаль" , une="20,000">
+                </ag-spot-card>
 
                 <ag-spot-card href="../code/spot-info.html" ,
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , bus="төв" ,
-                    unelgee="4.5" , ner="Цонжин Болдог" , cate="Соёл" , une="20,000"></ag-spot-card>
+                    zrg="https://lp-cms-production.imgix.net/2023-06/iStock-513683766.jpg" , bus="Хангай" ,
+                    unelgee="5.00" , ner="хөвсгөл нуур" , cate="Байгаль, Амралт сувилал" , une="20,000">
+                </ag-spot-card>
+
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="http://www.newkhovd.mn/news-images/%D0%BC-05.jpg_medium.jpg" , bus="Хангай" ,
+                    unelgee="5.00" , ner="Мөнххайрхан уул" , cate="Байгаль, Амралт сувилал, ууланд гарах" , une="20,000">
+                </ag-spot-card>
 
             </div>
         </div>
 
     </main>
     <ag-footer></ag-footer>
-<script>
+    <script>
 function getQueryParams() {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -85,27 +105,23 @@ function getQueryParams() {
     };
 }
 
-// Хуудас ачаалагдмагц checkbox-уудыг activate хийж, filter update дуудах
 document.addEventListener("DOMContentLoaded", () => {
     const { area, cate } = getQueryParams();
 
-    if (!area && !cate) return; // Query үгүй бол юу ч хийхгүй
+    if (!area && !cate) return; 
 
-    // Бүх <ag-filter>-үүдийг авч үзнэ
     document.querySelectorAll("ag-filter").forEach(filter => {
         const type = filter.getAttribute("ner");
 
-        // Бүс нутаг тохирох filter дээр check тавина
         if (type === "Бүс нутаг" && area) {
             [...filter.querySelectorAll("input[type='checkbox']")].forEach(cb => {
                 if (cb.value.toLowerCase() === area.toLowerCase()) {
                     cb.checked = true;
                 }
             });
-            filter.update(); // өөрийн эвентийн update
+            filter.update(); 
         }
 
-        // Категори тохирох filter дээр check тавина
         if (type === "Категори" && cate) {
             [...filter.querySelectorAll("input[type='checkbox']")].forEach(cb => {
                 if (cb.value.toLowerCase() === cate.toLowerCase()) {

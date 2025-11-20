@@ -15,7 +15,6 @@ class AgFilter extends HTMLElement {
       this.getAttribute("turul6"),
     ].filter(Boolean);
 
-    // SPOTS.CSS ажиллах боломжтой Light DOM HTML
     this.innerHTML = `
       <fieldset class="filters">
         <legend>${group}</legend>
@@ -32,7 +31,6 @@ class AgFilter extends HTMLElement {
       </fieldset>
     `;
 
-    // ag-filter доторх checkbox өөрчлөгдөх болгонд
     this.addEventListener("change", () => this.update());
   }
 
@@ -44,8 +42,8 @@ class AgFilter extends HTMLElement {
     this.dispatchEvent(
       new CustomEvent("filter-changed", {
         detail: {
-          type: this.getAttribute("ner"), // "Категори", "Бүс нутаг" гэх мэт
-          values: checked,                // ["Соёл", "Байгаль"] гэх мэт
+          type: this.getAttribute("ner"), 
+          values: checked,               
         },
         bubbles: true,
       })

@@ -85,7 +85,7 @@ p{
     opacity: 1;
 }
 
-.submit-btn{
+#filter-submit{
     background-color: var(--accent);
     display: inline-flex;
     justify-content: center;
@@ -98,19 +98,19 @@ p{
 
 }
 
-.submit-btn:hover{
+#filter-submit:hover{
     background-color: var(--accent-9);
     border: 1px solid var(--accent);
 }
 
-.submit-btn svg{
+#filter-submit svg{
     height: var(--svg-l);
     width:var(--svg-l);
     color: var(--accent-9);
     transition: color 0.5s;
 }
 
-.submit-btn:hover svg{
+#filter-submit:hover svg{
     color: var(--accent);
 }
 

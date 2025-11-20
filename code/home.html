@@ -19,7 +19,7 @@
   <main>
     <p class="uria">Аялаж зугаалмаар байвч хаашаа явах аа мэдэхгүй байна уу?</p>
     <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ,<span> ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
-    <form class="search-form" id="search-form">
+    <form class="search-form" id="searchForm">
       <div class="form-group">
         <label for="areas">Бүс нутаг</label>
         <select name="areas" id="areas">
@@ -36,11 +36,11 @@
         <label for="categories">Категори</label>
         <select name="categories" id="categories">
           <option value="" disabled selected>Сонирхож буй аяллын төрөл сонгоно уу.</option>
-          <option value="soyol">Соёл</option>
-          <option value="amralt">Амралт сувилал</option>
-          <option value="adal">Адал явдалт</option>
-          <option value="baigal">Байгаль</option>
-          <option value="uuland">Ууланд гарах</option>
+          <option value="Соёл">Соёл</option>
+          <option value="Амралт сувилал">Амралт сувилал</option>
+          <option value="Адал явдалт">Адал явдалт</option>
+          <option value="Байгаль">Байгаль</option>
+          <option value="Ууланд гарах">Ууланд гарах</option>
         </select>
       </div>
       <button id="filter-submit" type="submit">
@@ -226,6 +226,20 @@
     </section>
   </main>
   <ag-footer></ag-footer>
+
+<script>
+document.getElementById("searchForm").addEventListener("submit", function(event) {
+    event.preventDefault(); 
+
+    const area = document.getElementById("areas").value;
+    const category = document.getElementById("categories").value;
+
+    const url = `../code/spots.html?area=${encodeURIComponent(area)}&cate=${encodeURIComponent(category)}`;
+
+    window.location.href = url; 
+});
+</script>
+
 
 </body>
 

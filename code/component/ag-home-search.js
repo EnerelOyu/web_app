@@ -1,4 +1,3 @@
-// ../code/component/ag-home-search.js
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("search-form");
   if (!form) return;
@@ -9,12 +8,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const area = document.getElementById("areas").value;
     const category = document.getElementById("categories").value;
 
-    // ⚠ АНХААР: энд URL дээрх параметрийн нэр нь
-    // spots.html дээр ашиглахтайгаа таарах ёстой
     const params = new URLSearchParams();
 
-    if (area) params.set("bus", area);       // бүсийг bus гэж дамжуулна
-    if (category) params.set("cate", category); // категорииг cate гэж дамжуулна
+    if (area) params.set("bus", area);       
+    if (category) params.set("cate", category); 
 
     window.location.href = `../code/spots.html?${params.toString()}`;
   });

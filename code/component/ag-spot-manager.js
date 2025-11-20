@@ -1,93 +1,97 @@
-// ../code/component/ag-spot-manager.js
 class AgSpotManager extends HTMLElement {
   constructor() {
     super();
     this._cards = [];
+
     this._filters = {
-      bus: null,   // бүс нутаг
-      cate: null,  // категори
-      // цаашид "Үйл ажиллагаа", "Нас" гэх мэтийг нэмэх боломжтой
+      bus: [],       
+      cate: [],      
+      activity: [],  
+      age: [],      
     };
 
-    // event handler-ийг this-тэй нь bind хийж тогтооно
     this._onFilterChanged = this._onFilterChanged.bind(this);
   }
 
   connectedCallback() {
-    // 1. Өөрийнхөө ойр орчмоос SPOT card-уудыг олж авна
     const container = this.closest(".spot-cards-container") || document;
     this._cards = Array.from(container.querySelectorAll("ag-spot-card"));
 
-    // 2. URL-ээс анхны filter-ийг уншина (home.html-ээс ирсэн bus, cate)
     this._applyInitialFiltersFromURL();
 
-    // 3. ag-filter-үүдийн "filter-changed" эвентүүдийг сонсоно
     document.addEventListener("filter-changed", this._onFilterChanged);
   }
 
   disconnectedCallback() {
-    // memory leak-ээс сэргийлж listener-ээ салгана
     document.removeEventListener("filter-changed", this._onFilterChanged);
   }
 
-  // ---------- URL-ээс filter унших ----------
   _applyInitialFiltersFromURL() {
     const params = new URLSearchParams(window.location.search);
 
-    const bus = params.get("bus");   // ?bus=...
-    const cate = params.get("cate"); // ?cate=...
+    const bus  = params.get("bus");
+    const cate = params.get("cate");
 
-    if (bus)  this._filters.bus  = bus;
-    if (cate) this._filters.cate = cate;
+    if (bus)  this._filters.bus  = [bus];
+    if (cate) this._filters.cate = [cate];
 
     this._applyFilters();
   }
 
-  // ---------- ag-filter-ээс ирэх эвент ----------
   _onFilterChanged(event) {
     const { type, values } = event.detail || {};
-    // values = checkbox-оор сонгосон бүх утгуудын массив
-    // бид одоогоор эхнийхийг нь ашиглая (хэрвээ хоёроос олон байвал дараа өргөтгөж болно)
-    const first = values && values.length ? values[0] : null;
+
+    const arr = Array.isArray(values) ? values : [];
 
     if (type === "Бүс нутаг") {
-      this._filters.bus = first;
+      this._filters.bus = arr;
     } else if (type === "Категори") {
-      this._filters.cate = first;
+      this._filters.cate = arr;
+    } else if (type === "Үйл ажиллагаа") {
+      this._filters.activity = arr;
+    } else if (type === "Насны ангилал") {
+      this._filters.age = arr;
     }
-    // Хэрвээ "Үйл ажиллагаа", "Насны ангилал"-аар бас шүүх бол
-    // энд өөр key нэмж болно.
 
     this._applyFilters();
   }
 
-  // ---------- Шүүх үндсэн логик ----------
   _applyFilters() {
     if (!this._cards.length) return;
 
-    const busFilter  = this._normalize(this._filters.bus);
-    const cateFilter = this._normalize(this._filters.cate);
+    const busFilters      = (this._filters.bus      || []).map(v => this._normalize(v)).filter(Boolean);
+    const cateFilters     = (this._filters.cate     || []).map(v => this._normalize(v)).filter(Boolean);
+    const activityFilters = (this._filters.activity || []).map(v => this._normalize(v)).filter(Boolean);
+    const ageFilters      = (this._filters.age      || []).map(v => this._normalize(v)).filter(Boolean);
 
     this._cards.forEach(card => {
-      const bus  = this._normalize(card.getAttribute("bus"));
-      const cate = this._normalize(card.getAttribute("cate"));
+      const busVal      = this._normalize(card.getAttribute("bus"));
+      const cateVal     = this._normalize(card.getAttribute("cate"));
+      const activityVal = this._normalize(card.getAttribute("activity"));
+      const ageVal      = this._normalize(card.getAttribute("age"));
 
-      // Бүс нутаг таарах эсэх (filter байхгүй бол үнэн гэж үзнэ)
       const matchBus =
-        !busFilter || (bus && bus === busFilter);
+        busFilters.length === 0 ||
+        (busVal && busFilters.some(f => busVal === f));
 
-      // Категори таарах эсэх
-      // cate="Соёл, Түүхэн" байж болно → includes ашиглая
       const matchCate =
-        !cateFilter || (cate && cate.includes(cateFilter));
+        cateFilters.length === 0 ||
+        (cateVal && cateFilters.some(f => cateVal.includes(f)));
 
-      const visible = matchBus && matchCate;
+      const matchActivity =
+        activityFilters.length === 0 ||
+        (activityVal && activityFilters.some(f => activityVal.includes(f)));
+
+      const matchAge =
+        ageFilters.length === 0 ||
+        (ageVal && ageFilters.some(f => ageVal.includes(f)));
+
+      const visible = matchBus && matchCate && matchActivity && matchAge;
 
       card.style.display = visible ? "" : "none";
     });
   }
 
-  // Жижиг туслах функц: string-ийг жижиг үсэг + trim болгох
   _normalize(value) {
     return value ? value.toString().trim().toLowerCase() : "";
   }
