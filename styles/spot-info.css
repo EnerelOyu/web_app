@@ -4,84 +4,27 @@
 }
 
 .spot-main, .spot-details{
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-header{
-    position: sticky;
-    width: auto;
-    z-index: 1000; 
-    padding: 10px;
-    background-color: var(--hdr-bg-color);
-    display: flex;
-    align-items:center;
+    padding-top: var(--p-lg);
+    padding-left: var(--p-lg);
+    padding-right: var(--p-lg);
 }
 
-.header-logo{
-    display: inline-flex;
-    margin-right: auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-logo img{
-    width: 74px;
-    height: 74px;
-}
-.header-logo>h1{
-    color: var(--bg-color);
-    padding-left: 10px;
-    font-size: 35px;
-    font-weight: bolder;
-    font-family: 'Rubik';
-}
-.header-logo>h1>span{
-    color:var(--primary);
-}
-.header-logo>p{
-    color:var(--primary);
-    font-size: 12px;
-    padding: 20px;
-    font-weight: bold ;
-    font-family: 'Rubik';
-}
-.header-nav{
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-.header-nav>a:link{
-    text-decoration: none;
-}
-.header-nav a{
-    color:var(--primary-4);
-    font-size: 12px;
-    font-family: 'NunitoSans';
-}
-
-.header-nav a:hover{
-    color: var(--primary);
-}
-
-.btn svg{
-    height: 20px;
-    width: 20px;
-    color: var(--primary);
-}
-
-.header-nav input{
+.btn{
     background-color: var(--primary-4);
-    border-radius: 8px;
-    border-style: none;
-    padding: 7px;
+    padding: var(--p-xs);
+    cursor: pointer;
+    border: 1px solid;
+}
+.btn svg{
+    height: var(--svg-s);
+    width: var(--svg-s);
+    color: var(--primary);
 }
 
-.header-nav input::placeholder{
-    color: var(--text-color-2);
-    font-family: 'NunitoSans';
-    padding-left: 10px;
+.btn :hover{
+    background-color: var(--primary);
 }
+
 .spot-main{
     display: flex;
     flex-direction: row;
@@ -94,15 +37,10 @@ header{
 
 .spot-header h1{
     font-family: 'Rubik';
-    font-weight: bold;
     color: var(--text-color-1);
-    font-size: 32px;
+    font-size: var(--fs-xl);
+    text-transform: uppercase;
 
-}
-
-.spot-header .btn{
-    color: var(--text-color-2);
-    
 }
 
 .spot-header .actions{
@@ -274,15 +212,21 @@ h3{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-s);
+    
 }
 
 h3{
-    font-size: var(--fs-xl);
+    font-size: var(--fs-lg);
+    text-transform: uppercase;
+    font-family: 'Rubik';
+    font-weight: 100;
+
 }
 .intro p{
     font-family:'NunitoSans' ;
     background-color: var(--accent-9);
     border-radius: var(--br-s);
+    padding: var(--p-xs);
 }
 
 .default-profile{

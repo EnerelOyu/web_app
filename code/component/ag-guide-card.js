@@ -1,12 +1,14 @@
-class GuideCard extends HTMLElement {
+class AgGuideCard extends HTMLElement {
     constructor() {
         super();
-
+    
     }
 
     connectedCallback() {
-        const name = this.getAttribute("ner") || "unKnown"
-        const turshilag = this.getAttribute
+        const name = this.getAttribute("ner") || "unKnown";
+        const experience = this.getAttribute("turshilag") || "0";
+        const language = this.getAttribute("hel") || "unKnown";
+        const phone = this.getAttribute("utas") || "unKnown";
         this.innerHTML = `<article class="guide-card">
                         <div class="guide-info">
                             <svg class="default-profile">
@@ -14,9 +16,9 @@ class GuideCard extends HTMLElement {
                             </svg>
                             <ul>
                                 <li><span class="label">Нэр:</span><span class="value">${name}</span></li>
-                                <li><span class="label">Туршлага:</span><span class="value">${turshilag}</span></li>
-                                <li><span class="label">Хөтлөх хэл:</span><span class="value">Англи</span></li>
-                                <li><span class="label">Дугаар:</span><span class="value">90909090</span></li>
+                                <li><span class="label">Туршлага:</span><span class="value">${experience}</span></li>
+                                <li><span class="label">Хөтлөх хэл:</span><span class="value">${language}</span></li>
+                                <li><span class="label">Дугаар:</span><span class="value">${phone}</span></li>
                             </ul>
                         </div>
                         <div class="rating">
@@ -44,17 +46,17 @@ class GuideCard extends HTMLElement {
     }
 
     disconnectedCallback() {
-
+    
     }
 
     attributeChangedCallback(name, oldVal, newVal) {
-
+    
     }
 
     adoptedCallback() {
-
+    
     }
 
 }
 
-window.customElements.define('guide-card', GuideCard);
+window.customElements.define('ag-guide-card', AgGuideCard);

@@ -6,29 +6,14 @@
     <title>Төлөвлөгөө</title>
     <link rel="stylesheet" href="../styles/plan.css">
     <link rel="stylesheet" href="../styles/icons.svg">
-    <script type="module" src="../code/plan-js/suggested-point.js"></script>
-    <script type="module" src="../code/plan-js/route-section.js"></script>
+    <script type="module" src="../code/component/ag-suggested-point.js"></script>
+    <script type="module" src="../code/component/ag-route-section.js"></script>
     <script type="module" src="../code/rating.js"></script>
+    <script type="module" src="../code/component/ag-header.js"></script>
     
 </head>
 <body>
-    <header>
-        <div class="header-logo">
-            <img src="../files/logo.svg" alt="Logo">
-            <h1>Ayal<span>GO</span></h1>
-            <p>Discover Mongolia <br>your way</p>
-        </div>
-        <div class="header-nav">
-            <a href="home.html">Нүүр Хуудас</a>
-            <a href="aylaliin_tseguud.html" aria-current="page">Аяллын Цэгүүд</a>
-            <input type="text" placeholder="Хайлт хийх..">
-            <button class="btn">
-                <svg>
-                    <use href="../styles/icons.svg#icon-search"></use>
-                </svg>
-            </button>
-        </div>
-    </header>
+    <ag-header></ag-header>
     <div class="main-container">
         <div class="plan-title">
             <div>
@@ -47,14 +32,36 @@
             <h3>Танд санал болгох аяллын цэгүүд</h3>
             <a href="../code/aylaliin_tseguud.html">Нэмж харах >></a>
             <div class="TL">
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
-                <suggested-point></suggested-point>
+                <suggested-point
+                zrg="../files/12Landscape1.jpg",
+                bus="Төв аймгийн бүс",
+                unelgee="4.5",
+                ner="Цонжин Болдог"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/13Landscape2.webp",
+                bus="Төв аймгийн бүс",
+                unelgee="3.5",
+                ner="Амарбаясгалант хийд"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/14Landscape3.png",
+                bus="Төв аймгийн бүс",
+                unelgee="5",
+                ner="Хустайн байгалийн цогцолборг"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/12Landscape1.jpg",
+                bus="Төв аймгийн бүс",
+                unelgee="4.5",
+                ner="Цонжин Болдог"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/12Landscape1.jpg",
+                bus="Төв аймгийн бүс",
+                unelgee="4.5",
+                ner="Цонжин Болдог"
+                ></suggested-point>
             </div>
         </div>
         <div class="route">
@@ -88,34 +95,37 @@
                 <p>Хадгалах</p>
             </button>
         </div>
-        <!-- <div class="liked">
+    
+        <div class="liked">
             <h3>Таалагдсан цэгүүд</h3>
-            <article class="TP">
-                <img class="TP-bg" src="../files/13Landscape2.webp" alt="">
-                <button class="add"></button>
-                <h5>Гарчиг</h5>
-                <p>Байршил</p>
-            </article>
-            <article class="TP">
-                <img class="TP-bg" src="../files/13Landscape2.webp" alt="">
-                <button class="add"></button>
-                <h5>Гарчиг</h5>
-                <p>Байршил</p>
-            </article>
-            <article class="TP">
-                <img class="TP-bg" src="../files/13Landscape2.webp" alt="">
-                <button class="add"></button>
-                <h5>Гарчиг</h5>
-                <p>Байршил</p>
-            </article>
-            <article class="TP">
-                <img class="TP-bg" src="../files/13Landscape2.webp" alt="">
-                <button class="add"></button>
-                <h5>Гарчиг</h5>
-                <p>Байршил</p>
-            </article>
+            <div class="TL">
+                <suggested-point
+                zrg="../files/14Landscape3.png",
+                bus="Төв аймгийн бүс",
+                unelgee="5",
+                ner="Хустайн байгалийн цогцолборг"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/14Landscape3.png",
+                bus="Төв аймгийн бүс",
+                unelgee="5",
+                ner="Хустайн байгалийн цогцолборг"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/14Landscape3.png",
+                bus="Төв аймгийн бүс",
+                unelgee="5",
+                ner="Хустайн байгалийн цогцолборг"
+                ></suggested-point>
+                <suggested-point
+                zrg="../files/14Landscape3.png",
+                bus="Төв аймгийн бүс",
+                unelgee="5",
+                ner="Хустайн байгалийн цогцолборг"
+                ></suggested-point>
+            </div>
         </div>
-    </div> -->
+    </div>
 
     <script>
         const box = document.getElementById('notes');

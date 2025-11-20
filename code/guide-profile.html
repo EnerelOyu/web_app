@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="../code/component/ag-header.js"></script>
+    <link rel="stylesheet" href="../styles/guide-profile.css">
+</head>
+<body>
+    <ag-header></ag-header>
+    <div class="main-container">
+        <div class="main-info">
+            <div class="txt-info">
+                <h1>Хөтчийн мэдээлэл</h1>
+                <div class="rating">
+                    <div class="readOnly-rating-stars">
+                        ${starsHtml}
+                    </div>
+                    <p class="rating-num">${rating.toFixed(1)}</p>
+                </div>
+                <h2>Доржийн Намжирмаа</h2>
+                <p><span>Төрсөн огноо:</span> 2002.10.03</p>
+                <p><span>Холбогдох дугаар:</span> 90990990</p>
+            </div>
+            <div class="icon">
+                <svg>
+                    <use href="../styles/icons.svg#icon-fb2"></use>
+                </svg>
+                <svg>
+                    <use href="../styles/icons.svg#icon-share"></use>
+                </svg>
+            </div>
+            <img src="../files/11statue1.jpg" alt="profile">
+        </div>
+    </div>
+</body>
+</html>
