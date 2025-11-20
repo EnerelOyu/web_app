@@ -1,8 +1,9 @@
 class AgSpotManager extends HTMLElement {
   constructor() {
     super();
+    //buh spotiig hadgalna
     this._cards = [];
-
+    //filteruudiig hadgala
     this._filters = {
       bus: [],       
       cate: [],      
@@ -29,7 +30,7 @@ class AgSpotManager extends HTMLElement {
   _applyInitialFiltersFromURL() {
     const params = new URLSearchParams(window.location.search);
 
-    const bus  = params.get("bus");
+    const bus = params.get("bus");
     const cate = params.get("cate");
 
     if (bus)  this._filters.bus  = [bus];
@@ -70,21 +71,13 @@ class AgSpotManager extends HTMLElement {
       const activityVal = this._normalize(card.getAttribute("activity"));
       const ageVal = this._normalize(card.getAttribute("age"));
 
-      const matchBus =
-        busFilters.length === 0 ||
-        (busVal && busFilters.some(f => busVal === f));
+      const matchBus = busFilters.length === 0 || (busVal && busFilters.some(f => busVal.includes(f)));
 
-      const matchCate =
-        cateFilters.length === 0 ||
-        (cateVal && cateFilters.some(f => cateVal.includes(f)));
+      const matchCate = cateFilters.length === 0 || (cateVal && cateFilters.some(f => cateVal.includes(f)));
 
-      const matchActivity =
-        activityFilters.length === 0 ||
-        (activityVal && activityFilters.some(f => activityVal.includes(f)));
+      const matchActivity = activityFilters.length === 0 || (activityVal && activityFilters.some(f => activityVal.includes(f)));
 
-      const matchAge =
-        ageFilters.length === 0 ||
-        (ageVal && ageFilters.some(f => ageVal.includes(f)));
+      const matchAge = ageFilters.length === 0 || (ageVal && ageFilters.some(f => ageVal.includes(f)));
 
       const visible = matchBus && matchCate && matchActivity && matchAge;
 

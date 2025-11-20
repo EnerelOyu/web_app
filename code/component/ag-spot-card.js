@@ -50,11 +50,14 @@ class AgSpotCard extends HTMLElement {
     const area = this.getAttribute("bus") || "NULL";
     const rating = parseFloat(this.getAttribute("unelgee")) || "0.0";
     const title = this.getAttribute("ner") || "NULL";
-    const tags = (this.getAttribute("cate") || "").split(",").map(t => t.trim()).filter(Boolean);
+    const cates = (this.getAttribute("cate") || "").split(",").map(t => t.trim()).filter(Boolean);
+    const acts = (this.getAttribute("activity")||"").split(",").map(t => t.trim()).filter(Boolean);
     const price = this.getAttribute("une") || "";
 
     const starsHtml = this.createStars(rating);
-    const tagsHtml = tags.map(t => `<li>${t}</li>`).join("");
+    const catesHtml = cates.map(t => `<li>${t}</li>`).join("");
+    const actsHtml = acts.map(t => `<li>${t}</li>`).join("");
+
 
     this.innerHTML = `
             <article class="spot-card">
@@ -88,7 +91,7 @@ class AgSpotCard extends HTMLElement {
                     <h3>${title}</h3>
                     </a>
                     <ul class="tags">
-                        ${tagsHtml}
+                        ${catesHtml}${actsHtml}
                     </ul>
                     <div class="price">
                         <p>Тасалбарын эхлэх үнэ:</p>
