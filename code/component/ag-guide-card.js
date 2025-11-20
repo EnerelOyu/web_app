@@ -49,7 +49,6 @@ class AgGuideCard extends HTMLElement {
         const language = (this.getAttribute("hel") || "").split(",").map( t => t.trim()).filter(Boolean);
         const phone = this.getAttribute("utas") || "unKnown";
         const rating = parseFloat(this.getAttribute("unelgee")) || "0.0";
-
         const starsHtml = this.createStars(rating);
 
         this.innerHTML = `<article class="guide-card">

@@ -3,6 +3,10 @@
     margin:0px;
 }
 
+main{
+    padding-bottom: var(--p-lg) ;
+}
+
 .spot-main, .spot-details{
     padding-top: var(--p-lg);
     padding-left: var(--p-lg);
