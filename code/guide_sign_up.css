@@ -114,6 +114,10 @@ main {
     padding: 40px;
     background: #fff;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 main > h1 {
@@ -130,7 +134,6 @@ form {
     display: grid;
     grid-template-columns: 1fr 260px;
     gap: 24px 40px;
-    align-items: middle;
 }
 
 form > p {
