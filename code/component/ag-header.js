@@ -78,8 +78,8 @@ class AgHeader extends HTMLElement {
         }
 
         .search-btn svg{
-            height: var(--svg-m);
-            width: var(--svg-m);
+            height: var(--svg-s);
+            width: var(--svg-s);
             color: var(--primary);
             transition: 0.3s;
         }

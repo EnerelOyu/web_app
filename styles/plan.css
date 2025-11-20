@@ -9,8 +9,8 @@
   /* border: 1px dashed black; */
 }
 svg {
-  width: var(--svg-m);
-  height: var(--svg-m);
+  width: var(--svg-s);
+  height: var(--svg-s);
   color: var(--primary);
 }
 
@@ -63,7 +63,7 @@ p {
   align-items: center;
   width: 100%;
   max-width: 100vw;
-  background: url("../files/14Landscape3.png") no-repeat center / cover;
+  background: url("../files/spot-img/14Landscape3.png") no-repeat center / cover;
   padding: 20px;
 }
 .plan-title div {
