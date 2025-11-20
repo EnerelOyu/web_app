@@ -108,16 +108,39 @@ p {
   grid-area: title;
   text-align: start;
 }
-.suggestion a {
-  grid-area: sm;
-  color: var(--primary);
-  transition: color 0.3s;
+
+.more-spots{
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--gap-size-s);
+    color: var(--text-color-2);
 }
 
-.suggestion a:hover {
-  color: var(--accent);
-  text-decoration: underline;
+.more-spots:link{
+    text-decoration: none;
 }
+
+.more-icon{
+    width: var(--svg-s);
+    height: var(--svg-s);
+    color: var(--text-color-2);
+    transition: transform .2s ease;
+}
+
+.spot-detail:hover .more-icon, .more-spots:hover .more-icon{
+  transform: translateX(4px);
+}
+
+.more-spots {
+  display: flex;
+  justify-content: flex-end;
+  margin-left: auto;   
+  margin-right: var(--m-xl);
+  align-items: center;
+  gap: var(--gap-size-s);
+}
+
 .TL {
   grid-area: list;
   display: inline-flex;
