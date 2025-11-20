@@ -6,8 +6,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px dashed black;
+  /* border: 1px dashed black; */
 }
+
 svg {
   width: var(--svg-m);
   height: var(--svg-m);
@@ -38,8 +39,9 @@ p {
   grid-template:
     "header"
     "info"
-    "suggestion" 
-    "route"
+    "cat" 
+    "area"
+    "rew"
     /
     1fr;
   width: 100%;
@@ -52,101 +54,38 @@ p {
 .main-info {
   grid-area: info;
   display: flex;
+  align-items: center;
   width: 100%;
   max-width: 100vw;
   margin: 0 auto;
-  padding: var(--gap-size-xl);
-  justify-content: space-between;
+  gap: var(--gap-size-l);
+  padding: var(--p-xl);
 }
 
 .icon {
-    display: block;
+  display: flex;
+  flex-direction: column;
+  justify-self: end;
+}
+
+.txt-info {
+    align-content: space-between;
 }
 
 .main-info > img{
-    width: 150px;
+    width: 200px;
     height: fit-content;
     border-radius: var(--br-s);
+    justify-self: end;
 }
 
 p > span {
     color: var(--primary);
 }
+
 /* ====== Header ====== */
 header{
     grid-area: header;
-    position: sticky;
-    top: 0;
-    width: auto;
-    z-index: 1000; 
-    padding: 10px;
-    background-color: var(--hdr-bg-color);
-    display: flex;
-    align-items:center;
-}
-
-.header-logo{
-    display: inline-flex;
-    margin-right: auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-logo img{
-    width: 74px;
-    height: 74px;
-}
-.header-logo h1{
-    color: var(--bg-color);
-    padding-left: 10px;
-    font-size: 35px;
-    font-weight: bolder;
-    font-family: 'Rubik';
-}
-.header-logo h1 span{
-    color:var(--primary);
-}
-.header-logo p{
-    color:var(--primary);
-    font-size: 12px;
-    padding: 20px;
-    font-weight: bold ;
-}
-.header-nav{
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.header-nav a{
-    color:var(--primary-4);
-    font-size: 12px;
-    font-family: 'NunitoSans';
-    text-decoration: none;
-}
-
-.header-nav a:hover{
-    color: var(--primary);
-}
-
-.header-nav input{
-    background-color: var(--primary-4);
-    border-radius: 8px;
-    border-style: none;
-    padding: 7px;
-}
-
-.header-nav input::placeholder{
-    color: var(--text-color-2);
-    font-family: 'NunitoSans';
-    padding-left: 10px;
-}
-
-.btn {
-    background-color: var(--primary-4);
-    border-style: none;
-    border-radius: 8px;
-    cursor: pointer;
 }
 
 /* === rating === */
@@ -174,3 +113,95 @@ header{
     font-size: var(--fs-sm);
     color: var(--primary-2);
 }
+
+
+.cat{
+    grid-area: cat;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-size-m); 
+    padding: var(--p-lg);
+}
+.area {
+    grid-area: area;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-size-m); 
+    padding: var(--p-lg);
+}
+
+.bubble-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-size-l); 
+}
+
+.bubble {
+    padding: 0.75rem 2rem;
+    border-radius: 2rem; /* Зураг дээрх шиг том дугуй */
+    background-color: var(--primary-3);
+    width: fit-content;
+}
+
+.bubble p {
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap; /* Мөр тасрахгүй */
+}
+
+.review-section {
+    grid-area: rew;
+    padding: var(--p-lg);
+}
+
+.reviews{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    gap:var(--gap-size-l);
+}
+
+.review-card{
+    background-color: var(--primary-4);
+    padding: 15px;
+    font-family: 'NunitoSans';
+    color: var(--text-color-2);
+}
+
+.brief-review{
+    font-weight:400;
+    font-family: 'Rubik';
+}
+
+.review-card .star, .review-card .rating-num{
+    color: var(--primary);
+}
+
+.btn{
+    display: inline-flex;
+    background-color: var(--primary-4);
+    border-radius: var(--br-s);
+    border-style: none;
+    align-items: center;
+    justify-content: center;
+    font-family: 'NunitoSans';
+    font-size: var(--fs-xs);
+}
+
+.actions{
+    display: flex;
+    gap:10px;    
+}
+.guide-btn, .review-btn{
+    background-color: var(--primary);
+    border-style: none;
+    border-radius: var(--br-s);
+    color:var(--primary-4);
+    padding: 5px;
+    width: 150px;
+}
+ .review-btn{
+    background-color: var(--accent-2);
+    color: var(--accent-9);
+ }
