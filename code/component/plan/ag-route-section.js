@@ -25,17 +25,36 @@ class routeSection  extends HTMLElement {
                         <p class="loc_text">Газрын байршил</p>
                         <p>Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
                     </div>
-                    <img src="../files/11statue1.jpg" alt="">
+                    <img src="../files/spot-img/11statue1.jpg" alt="">
                     <!-- <span class="delete">Цуцлах</span> -->
-                    <div class="inst">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-add"></use>
-                        </svg>
-                        <label for="guide">Хөтөч сонгох</label>
-                        <select id="guide" name="guide">
-                            <option value=""></option>
-                        </select>
+                    <!-- place this inside your route-section HTML where .inst previously байсан -->
+                    <div class="inst" aria-live="polite">
+                        <div class="inst-select">
+                            <label for="guideSelect">Хөтөч сонгох</label>
+                            <select id="guideSelect" aria-label="Guide select">
+                            <option value="">Сонгох</option>
+                            </select>
+                        </div>
+
+                        <div class="inst-card" id="instCard" hidden>
+                            <div class="inst-card-left">
+                            <img id="instPhoto" src="../files/spot-img/zurag.jpg" alt="Guide photo">
+                            </div>
+                            <div class="inst-card-right">
+                            <h4 id="instName">Хөтөчийн нэр</h4>
+                            <div class="inst-rating" id="instRating" aria-hidden="true">
+                                <!-- stars inserted by JS -->
+                            </div>
+                            <p class="inst-meta"><strong>Байрлал:</strong> <span id="instArea"></span></p>
+                            <p class="inst-meta"><strong>Утас:</strong> <a id="instPhone" href="#">-</a></p>
+                            <div class="inst-actions">
+                                <button id="contactBtn" type="button">Захиалах</button>
+                                <button id="profileBtn" type="button">Дэлгэрэнгүй</button>
+                            </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
             </section>
         `;
