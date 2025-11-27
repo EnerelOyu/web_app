@@ -1,4 +1,5 @@
 @import url("https://unpkg.com/open-props");
+@import url(../styles/fonts.css);
 
 :root {
 
@@ -126,4 +127,37 @@
   --container-max-width: 90vw;
   --mobile-breakpoint: 768px;
 
+}
+
+h1 {
+  font-family: 'Rubik';
+  font-size: var(--fs-2xl);
+  padding-bottom: var(--p-lg);
+}
+
+h2 {
+  font-family: 'Rubik';
+  font-size: var(--fs-xl);
+  text-transform: uppercase;
+  padding-bottom: var(--p-md);
+}
+
+h3 {
+  font-family: 'Rubik';
+  font-size: var(--fs-lg);
+  text-transform: uppercase;
+  padding-bottom: var(--p-sm);
+}
+
+h4 {
+  font-family: 'Rubik';
+  font-size: var(--fs-base);
+  text-transform: uppercase;
+  padding-bottom: var(--p-sm);
+}
+
+p {
+  font-family: 'Nunito Sans';
+  font-size: var(--fs-base);
+  padding-bottom: var(--p-xs);
 }
