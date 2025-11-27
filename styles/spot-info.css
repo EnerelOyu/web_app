@@ -7,10 +7,12 @@ main{
     padding-bottom: var(--p-lg) ;
 }
 
-.spot-main, .spot-details{
-    padding-top: var(--p-lg);
-    padding-left: var(--p-lg);
-    padding-right: var(--p-lg);
+p{
+    font-family: 'NunitoSans';
+}
+
+main{
+    margin: var(--m-md);
 }
 .actions{
     display: flex;
@@ -54,6 +56,7 @@ main{
     display: grid;
     grid-template-columns: 2fr 1fr;
 }
+
 .spot-header{
     display: flex;
     gap: 10px;
@@ -147,74 +150,64 @@ main{
 .spot-aside{
     background-color: var(--primary-5);
     align-items: center;
-    border-radius: 8px;
-    padding: 10px;
-    margin-left: 10px;
+    border-radius: var(--br-s);
+    padding: var(--p-sm);
+    margin-left: var(--m-sm);
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: var(--m-md);
     font-family: 'NunitoSans';
-    font-size: 14px;
+    font-size: var(--fs-sm);
 }
 
 .spot-aside img{
     align-self: center;
     width:100%;
 }
+
 .info-list{
     margin:0px;
     padding: 0px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: var(--gap-size-s);
 }
 
 .info-list li{
     list-style: none;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-size-m);
 }
 
 .info-list .label{
     white-space: nowrap;
     color: var(--text-color-2);
+    text-transform: uppercase;
+    size: var(--fs-base);
 }
 
 .info-list .value{
-    color: var(--accent-2);
+    color: var(--accent-1);
 }
 
 .schedule{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-xs);
+    padding: 0;
+    margin: 0;
 }
+
 .schedule li {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   white-space: nowrap;
   gap: var(--gap-size-s);
 }
 
-.schedule .value {
-  text-align: right;
-}
-
-h3{
-    font-family: 'Rubik';
-    color: var(--text-color-2);
-}
-
-.spot-details, .intro, .guide-section, .review-section{
+.spot-details, .intro, .review-section{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-s);
-}
-.intro{
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-size-s);
-    
 }
 
 h3{
@@ -222,10 +215,16 @@ h3{
     text-transform: uppercase;
     font-family: 'Rubik';
     font-weight: 100;
-
+    color: var(--text-color-2);
 }
+
+.intro{
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-size-s);
+}
+
 .intro p{
-    font-family:'NunitoSans' ;
     background-color: var(--accent-9);
     border-radius: var(--br-s);
     padding: var(--p-xs);
@@ -235,7 +234,6 @@ h3{
     width: 100px;
     height: 100px;
 }
-
 
 .guides{
     display: flex;
