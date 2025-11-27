@@ -71,7 +71,7 @@ legend {
 .filters input[type="checkbox"] {
     cursor: pointer;
     accent-color: var(--primary);
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     appearance: none;
     -webkit-appearance: none;
     width: var(--svg-s);
@@ -153,7 +153,7 @@ legend {
     height: var(--svg-m);
     border: none;
     border-radius: var(--br-s);
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -177,7 +177,7 @@ legend {
 }
 
 .spot-img button:hover svg {
-    color: var(--primary-4);
+    color: var(--primary-5);
     opacity: 1;
 }
 

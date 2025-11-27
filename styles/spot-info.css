@@ -17,7 +17,7 @@ main{
 }
 
 .action-btn{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     padding: var(--p-xs);
     cursor: pointer;
     color: var(--primary);
@@ -44,7 +44,7 @@ main{
 
 .action-btn :hover{
     background-color: var(--primary);
-    color: var(--primary-4);
+    color: var(--primary-5);
 }
 
 
@@ -168,7 +168,7 @@ main{
 }
 
 .spot-aside{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     align-items: center;
     border-radius: 8px;
     padding: 10px;
@@ -305,7 +305,7 @@ h3{
 }
 
 .review-card{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     padding: 15px;
     font-family: 'NunitoSans';
     color: var(--text-color-2);
@@ -322,7 +322,7 @@ h3{
 
 .btn{
     display: inline-flex;
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     border-radius: var(--br-s);
     border-style: none;
     align-items: center;
@@ -339,7 +339,7 @@ h3{
     background-color: var(--primary);
     border-style: none;
     border-radius: var(--br-s);
-    color:var(--primary-4);
+    color:var(--primary-5);
     padding: 5px;
     width: 150px;
 }

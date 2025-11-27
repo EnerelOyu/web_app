@@ -163,7 +163,7 @@ header{
 }
 
 .review-card{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     padding: 15px;
     font-family: 'NunitoSans';
     color: var(--text-color-2);
@@ -180,7 +180,7 @@ header{
 
 .btn{
     display: inline-flex;
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     border-radius: var(--br-s);
     border-style: none;
     align-items: center;
@@ -197,7 +197,7 @@ header{
     background-color: var(--primary);
     border-style: none;
     border-radius: var(--br-s);
-    color:var(--primary-4);
+    color:var(--primary-5);
     padding: 5px;
     width: 150px;
 }

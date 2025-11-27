@@ -268,7 +268,7 @@ p{
     position: absolute;
     top: var(--p-sm);
     right: var(--p-sm);
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     border: none;
     border-radius: var(--br-s);
     width: var(--svg-m);
@@ -288,7 +288,7 @@ p{
 }
 
 .spot-img button:hover svg{ 
-    color: var(--primary-4);
+    color: var(--primary-5);
     opacity: 1;
 }
 
@@ -380,7 +380,7 @@ p{
     background-color: var(--primary);
     border: none;
     border-radius: 9999px;
-    color: var(--primary-4);
+    color: var(--primary-5);
     font-family: 'Rubik';
     font-size: var(--fs-s);
     font-weight: bold;
@@ -392,7 +392,7 @@ p{
 }
 
 .guide-btn:hover{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     color: var(--primary);
 }
 
