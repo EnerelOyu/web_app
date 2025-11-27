@@ -766,14 +766,208 @@ p {
     grid-area: notes;
     width: 100%;
     max-width: 100vw;
-    padding: var(--p-md);
+    padding: var(--p-lg);
+    background: var(--bg-color);
+    border-radius: var(--br-m);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    margin: var(--m-md) 0;
 }
 
-.notes > textarea {
-    background-color: var(--primary-4);
-    color: var(--text-color-4);
-    width: 75vw;
-    height: auto;
+.notes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--m-md);
+    padding-bottom: var(--p-sm);
+    border-bottom: 2px solid var(--primary-4);
+}
+
+.notes-header h3 {
+    font-size: var(--fs-xl);
+    color: var(--text-color-0);
+    font-weight: 600;
+    margin: 0;
+}
+
+.notes-actions {
+    display: flex;
+    gap: var(--p-sm);
+    align-items: center;
+}
+
+.notes-save-btn, .notes-clear-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--p-xs);
+    padding: var(--p-sm) var(--p-md);
+    border: none;
+    border-radius: var(--br-s);
+    font-size: var(--fs-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.notes-save-btn {
+    background: var(--primary);
+    color: white;
+}
+
+.notes-save-btn:hover {
+    background: var(--primary-1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+}
+
+.notes-clear-btn {
+    background: var(--text-color-8);
+    color: var(--text-color-3);
+    border: 1px solid var(--text-color-7);
+}
+
+.notes-clear-btn:hover {
+    background: var(--text-color-7);
+    color: var(--text-color-2);
+}
+
+.notes-save-btn svg, .notes-clear-btn svg {
+    width: var(--svg-s);
+    height: var(--svg-s);
+}
+
+.notes-container {
+    position: relative;
+    width: 100%;
+}
+
+.notes textarea {
+    width: 100%;
+    min-height: 200px;
+    max-height: 400px;
+    padding: var(--p-lg);
+    background: var(--primary-4);
+    color: var(--text-color-1);
+    border: 2px solid var(--text-color-8);
+    border-radius: var(--br-m);
+    font-size: var(--fs-base);
+    font-family: 'NunitoSans', sans-serif;
+    line-height: 1.6;
+    resize: vertical;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.notes textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--primary-3);
+    box-shadow: 
+        inset 0 2px 8px rgba(0,0,0,0.05),
+        0 0 0 3px rgba(255, 107, 0, 0.1);
+}
+
+.notes textarea::placeholder {
+    color: var(--text-color-5);
+    font-style: italic;
+}
+
+.notes-counter {
+    position: absolute;
+    bottom: var(--p-sm);
+    right: var(--p-sm);
+    background: rgba(255, 255, 255, 0.9);
+    padding: var(--p-xs) var(--p-sm);
+    border-radius: var(--br-s);
+    font-size: var(--fs-xs);
+    color: var(--text-color-3);
+    backdrop-filter: blur(10px);
+}
+
+/* Auto-resize functionality */
+.notes textarea {
+    min-height: 200px;
+    max-height: 500px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .notes {
+        padding: var(--p-md);
+        margin: var(--m-sm) 0;
+    }
+    
+    .notes-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--p-sm);
+    }
+    
+    .notes-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .notes-save-btn, .notes-clear-btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .notes textarea {
+        min-height: 150px;
+        padding: var(--p-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .notes {
+        padding: var(--p-sm);
+        border-radius: var(--br-s);
+    }
+    
+    .notes-header h3 {
+        font-size: var(--fs-lg);
+    }
+    
+    .notes textarea {
+        min-height: 120px;
+        padding: var(--p-sm);
+        font-size: var(--fs-sm);
+    }
+    
+    .notes-counter {
+        position: static;
+        margin-top: var(--p-xs);
+        text-align: right;
+    }
+}
+
+/* Character limit warning */
+.notes textarea.warning {
+    border-color: var(--accent);
+    background: var(--accent-9);
+}
+
+.notes-counter.warning {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Print styles */
+@media print {
+    .notes {
+        box-shadow: none;
+        border: 1px solid var(--text-color-7);
+        break-inside: avoid;
+    }
+    
+    .notes-actions {
+        display: none;
+    }
+    
+    .notes textarea {
+        background: transparent;
+        border: 1px solid var(--text-color-7);
+    }
 }
 
 .save {
