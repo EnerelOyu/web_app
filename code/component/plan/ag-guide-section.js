@@ -5,7 +5,7 @@ const guides = [
     name: 'Дорж',
     phone: '+97690909909',
     rating: 4.4,
-    area: 'Улаанбаатар, Төв талбай',
+    area: '3 жил',
     photo: '../files/guide-img/zurag.jpg' 
   },
   {
@@ -13,7 +13,7 @@ const guides = [
     name: 'Саран',
     phone: '+97699001122',
     rating: 5.0,
-    area: 'Хангай, Баруун хэсэг',
+    area: '2 жил',
     photo: '../files/guide-img/zurag.jpg'
   }
 ];

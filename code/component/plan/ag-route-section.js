@@ -69,7 +69,7 @@ class routeSection  extends HTMLElement {
                                 <div class="inst-rating" id="instRating" aria-hidden="true">
                                     <!-- stars inserted by JS -->
                                 </div>
-                                <p class="inst-meta"><strong>Байрлал:</strong> <span id="instArea"></span></p>
+                                <p class="inst-meta"><strong>Туршлага:</strong> <span id="instArea"></span></p>
                                 <p class="inst-meta"><strong>Утас:</strong> <a id="instPhone" href="#">-</a></p>
                             </div>
                         </div>
