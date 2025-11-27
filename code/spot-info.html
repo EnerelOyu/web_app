@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/spot-info.css">
+    <link rel="stylesheet" href="../styles/icons.svg">
     <script type="module" src="../code/component/ag-header.js"></script>
-    <script type="module" src="../code/component/spot-info/ag-guide-card.js"></script>
+    <script type="module" src="../code/component/ag-guide-card.js"></script>
     <script type="module" src="../code/component/ag-footer.js"></script>
     <script type="module" src="../code/component/spot-info/ag-review.js"></script>
     <script type="module" src="../code/component/ag-rating.js"></script>
@@ -89,13 +90,32 @@
 
             <section class="guide-section">
                 <h3>Санал болгох хөтөч</h3>
-                <div class="guides">
-                    <button class="scrl"><svg><use  href="../styles/icons.svg #icon-left-scroll"></svg></button>
-                    <ag-guide-card ner="Бат", turshilag="5", hel="Ангил, Хятад", utas="80805555", unelgee="3.0"></ag-guide-card>
-                    <ag-guide-card ner="Баяр", turshilag="2", hel="Ангил", utas="80805555", unelgee="4.5"></ag-guide-card>
-                    <ag-guide-card ner="Бат", turshilag="5", hel="Ангил", utas="80805555", unelgee="5.0"></ag-guide-card>
-                    <ag-guide-card ner="Бат", turshilag="5", hel="Ангил", utas="80805555", unelgee="5.0"></ag-guide-card>
-                    <button class="scrl"><svg><use  href="../styles/icons.svg #icon-right-scroll"></svg></button>
+                <div class="guide-scroll-container">
+                    <button class="scrl scrl-left">
+                        <svg>
+                            <use href="../styles/icons.svg#icon-left-scroll">
+                        </svg>
+                    </button>
+                    <div class="guides">
+                        <ag-guide-card id="guide1"></ag-guide-card>
+                        <ag-guide-card id="guide2"></ag-guide-card>
+                        <ag-guide-card id="guide3"></ag-guide-card>
+                    </div>
+                    <button class="scrl scrl-right">
+                        <svg>
+                            <use href="../styles/icons.svg#icon-right-scroll">
+                        </svg>
+                    </button>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            // Set each guide card with specific guide
+                            document.getElementById('guide1').setGuide('g1');
+                            document.getElementById('guide2').setGuide('g2');
+                            document.getElementById('guide3').setGuide('g3');
+                        });
+                    </script>
+                    
                 </div>
                 <button class="guide-btn">Бүх хөтөчийг харах</button>
             </section>

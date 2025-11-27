@@ -218,6 +218,7 @@ h3{
     color: var(--text-color-2);
 }
 
+
 .intro{
     display: flex;
     flex-direction: column;
@@ -230,45 +231,79 @@ h3{
     padding: var(--p-xs);
 }
 
-.default-profile{
-    width: 100px;
-    height: 100px;
-}
-
-.guides{
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    gap: var(--gap-size-l);
-}
-
-.guide-card{
-    background-color: var(--accent-9);
-    border-radius: var(--br-s);
+.guide-section{
     display: flex;
     flex-direction: column;
-    padding: 15px;
-}
-.guide-info{
-    display: flex;
-    flex-direction: row;
-}
-
-.guide-info ul li{
-    list-style: none;
-    white-space: nowrap;
-    font-family: 'NunitoSans';
-    display: flex;
-    justify-content: space-between;
     gap: var(--gap-size-m);
 }
 
-.guide-info .label{
-    color:var(--text-color-2);
+.guide-scroll-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
-.guide-info .value{
-    color:var(--accent-2);
+
+.guides {
+    display: flex;
+    gap: var(--gap-size-m);
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.guides::-webkit-scrollbar {
+    display: none;
+}
+
+
+
+.scrl {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+
+    width: var(--svg-m);
+    height: var(--svg-m);
+    border: none;
+    border-radius: var(--br-circle);
+    background-color: var(--primary-5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    opacity: 0.85;
+    transition: background-color 200ms ease, opacity 200ms ease;
+
+}
+
+.scrl:hover {
+    background-color: var(--primary);
+    opacity: 1;
+}
+
+.scrl svg{
+    width: var(--svg-s);
+    height: var(--svg-s);
+    color: var(--primary);
+    opacity: 0.9;
+    transition: color 200ms ease, opacity 200ms ease;
+}
+.scrl:hover svg {
+    color: var(--primary-5);      /* Цагаан эсвэл bright өнгө */
+    opacity: 1;
+}
+
+.scrl-left {
+    left: 0;
+}
+
+.scrl-right {
+    right: 0;
+    width: var(--svg-m);
+    height: var(--svg-m);
 }
 
 .reviews{

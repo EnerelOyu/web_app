@@ -47,15 +47,13 @@ class GuideCard extends HTMLElement {
                 border: 2px solid var(--text-color-8);
                 box-shadow: 0 4px 16px rgba(0,0,0,0.08);
                 align-items: flex-start;
-                position: relative;
                 animation: fadeIn 0.3s ease;
             }
-            img {
+            .guide-card img {
                 width: fit content;
                 ratio: 1/1;
                 border-radius: var(--br-circle);
                 object-fit: cover;
-                border: 3px solid var(--primary-3);
                 flex-shrink: 0;
             }
 
