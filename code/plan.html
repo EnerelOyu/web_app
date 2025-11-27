@@ -9,6 +9,7 @@
     <script type="module" src="../code/component/plan/ag-suggested-point.js"></script>
     <script type="module" src="../code/component/plan/ag-route-section.js"></script>
     <script type="module" src="../code/component/plan/guide-section.js"></script>
+    <script type="module" src="../code/component/plan/note-area.js"></script>
     <script type="module" src="../code/component/ag-header.js"></script>
 </head>
 <body>
@@ -72,112 +73,35 @@
             <h2>Таны аяллын маршрут</h2>
             
             <!-- Divider with add button -->
-            <div class="route-divider">
-                <!-- <div class ><svg><use href="../styles/icons.svg#route-dash"></use></svg> </div> -->
-                <div class="divider-line"></div>
-                <div class="divider-content">
-                    <button class="add-block-btn">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-add"></use>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Route item -->
-            <div class="route-item" draggable="true">
-                <div class="drag-handle">
-                    <svg>
-                        <use href="../styles/icons.svg#drag"></use>
-                    </svg>
-                </div>
-
-                <!-- Main content -->
-                <div class="route-main">
-                    <!-- Place info -->
-                    <div class="place-info">
-                        <div class="place-header">
-                            <h3 class="place-title">Аяллын цэгийн гарчиг</h3>
-                            <p class="location-text">Газрын байршил</p>
-                        </div>
-                        <div class="place-description">
-                            <p>Энэ бол тухайн газрын дэлгэрэнгүй тайлбар юм. Энэ тайлбарт эхлэх үнэ, цагийн хуваарь байх болно. Мөн анхаарах зүйлсийг хүн өөрөө нэмэлтээр оруулж өөрчилж болно.</p>
-                        </div>
-                    </div>
-
-                    <!-- Image and Inst section -->
-                    <div class="media-section">
-                        <!-- Image -->
-                        <div class="place-image">
-                            <div class="image-container">
-                                <img src="../files/spot-img/11statue1.jpg" alt="Аяллын цэгийн зураг">
-                            </div>
-                        </div>
-
-                        <!-- Inst section -->
-                        <div class="inst" aria-live="polite">
-                            <div class="inst-select" id="instSelect">
-                                <label for="guideSelect">Хөтөч сонгох</label>
-                                <select id="guideSelect" aria-label="Guide select">
-                                    <option value="">Сонгох</option>
-                                </select>
-                            </div>
-
-                            <div class="inst-card" id="instCard" hidden>
-                                <button class="change-guide-btn" id="changeGuideBtn" aria-label="Change guide">
-                                    <svg>
-                                        <use href="../styles/icons.svg#icon-change"></use>
-                                    </svg>
-                                </button>
-                                
-                                <div class="inst-card-left">
-                                    <img id="instPhoto" src="../files/spot-img/zurag.jpg" alt="Guide photo">
-                                </div>
-                                <div class="inst-card-right">
-                                    <h4 id="instName">Хөтөчийн нэр</h4>
-                                    <div class="inst-rating" id="instRating" aria-hidden="true">
-                                        <!-- stars inserted by JS -->
-                                    </div>
-                                    <p class="inst-meta"><strong>Байрлал:</strong> <span id="instArea"></span></p>
-                                    <p class="inst-meta"><strong>Утас:</strong> <a id="instPhone" href="#">-</a></p>
-                                </div>
-                            </div>
-                        </div>
-
-                <!-- Right delete button -->
-                <div class="route-actions">
-                    <button class="delete-btn">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-trash"></use>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-        </div>
+        <route-section></route-section>
+        <route-section></route-section>
+        <route-section></route-section>
         <div class="notes">
-            <h3>Тэмдэглэл</h3>
-            <textarea id="notes" placeholder="Тэмдэглэж санах зүйлс оруул..."></textarea>
+            <div class="notes-header">
+                <h3>Тэмдэглэл</h3>
+                <div class="notes-actions">
+                    <button class="notes-save-btn" id="notesSave">
+                        <svg>
+                            <use href="../styles/icons.svg#icon-save"></use>
+                        </svg>
+                        Хадгалах
+                    </button>
+                    <button class="notes-clear-btn" id="notesClear">
+                        <svg>
+                            <use href="../styles/icons.svg#icon-clear"></use>
+                        </svg>
+                        Цэвэрлэх
+                    </button>
+                </div>
+            </div>
+            <div class="notes-container">
+                <textarea id="notes" placeholder="Тэмдэглэж санах зүйлс оруул..."></textarea>
+                <div class="notes-counter">
+                    <span id="charCount">0</span> тэмдэгт
+                </div>
+            </div>
         </div>
-        <div class="save">
-            <button id="return">
-            
-                <svg>
-                    <use href="../styles/icons.svg#return"></use>
-                </svg>
-                <p>Буцаах</p>
-            </button>
-            <button id="redo">
-                <svg>
-                    <use href="../styles/icons.svg#redo"></use>
-                </svg>
-                <p>Дахих</p>
-            </button>
-            <button id="save">
-                <p>Хадгалах</p>
-            </button>
-        </div>
-    
+    </div>
         <div class="liked">
             <h3>Таалагдсан цэгүүд</h3>
             <div class="TL">
@@ -208,18 +132,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const box = document.getElementById('notes');
-        const key = 'instantNotes';
-
-        // Load saved content
-        box.value = localStorage.getItem(key) || '';
-
-        // Save instantly on typing
-        box.addEventListener('input', () => {
-            localStorage.setItem(key, box.value);
-        });
-    </script>
 </body>
 </html>

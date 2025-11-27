@@ -770,7 +770,7 @@ p {
 }
 
 .notes > textarea {
-    background-color: var(--primary-5);
+    background-color: var(--primary-4);
     color: var(--text-color-4);
     width: 75vw;
     height: auto;
