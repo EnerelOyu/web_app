@@ -76,29 +76,6 @@ main{
     gap: 10px;
 
 }
-.rating{
-    display: flex;
-    align-items: center;
-}
-.rating-num{
-    padding-left: 5px;
-}
-.readOnly-rating-stars{
-    display: inline-flex;
-    gap: 0px;
-}
-.readOnly-rating-stars .star{
-    width: 15px;
-    height: 15px;
-    display: block;
-    color: var(--accent-2);
-}
-
-.rating-num{
-    color: var(--accent-2);
-    font-family: 'NunitoSans';
-}
-
 
 .small-img{
     width: 260px;

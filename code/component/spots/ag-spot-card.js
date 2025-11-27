@@ -74,30 +74,6 @@ class AgSpotCard extends HTMLElement {
         transition: color 0.5s, opacity 0.5s;
     }
 
-    .rating {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: var(--gap-size-xs);
-    }
-
-    .readOnly-rating-stars {
-        display: inline-flex;
-    }
-
-    .readOnly-rating-stars .star {
-        width: var(--svg-s);
-        height: var(--svg-s);
-        display: block;
-        color: var(--accent-1);
-    }
-
-    .rating .rating-num {
-        font-family: 'NunitoSans';
-        font-size: var(--fs-sm);
-        color: var(--accent-1);
-    }
-
     .spot-info {
         display: flex;
         flex-direction: column;
@@ -181,7 +157,6 @@ class AgSpotCard extends HTMLElement {
     const acts = (this.getAttribute("activity")||"").split(",").map(t => t.trim()).filter(Boolean);
     const price = this.getAttribute("une") || "";
 
-    const starsHtml = this.createStars(rating);
     const catesHtml = cates.map(t => `<li>${t}</li>`).join("");
     const actsHtml = acts.map(t => `<li>${t}</li>`).join("");
 
@@ -207,7 +182,7 @@ class AgSpotCard extends HTMLElement {
                 <div class="spot-info">
                     <div class="short-info">
                         <p class="area">${area}</p>
-                        <ag-rating></ag-rating>
+                        <ag-rating value="${rating}" color="var(--accent-1)"></ag-rating>
                     </div>
                     <div class="line"></div>
                     <a href="${href}">

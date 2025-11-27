@@ -10,6 +10,7 @@
     <script type="module" src="../code/component/spot-info/ag-guide-card.js"></script>
     <script type="module" src="../code/component/ag-footer.js"></script>
     <script type="module" src="../code/component/spot-info/ag-review.js"></script>
+    <script type="module" src="../code/component/ag-rating.js"></script>
     <title>Аяллын цэгийн мэдээлэл</title>
 </head>
 
@@ -42,26 +43,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="rating">
-                    <div class="readOnly-rating-stars">
-                        <svg class="star">
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                        <svg class="star">
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                        <svg class="star">
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                        <svg class="star">
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                        <svg class="star">
-                            <use href="../styles/icons.svg#icon-star-filled"></use>
-                        </svg>
-                    </div>
-                    <p class="rating-num">5.0</p>
-                </div>
+                <ag-rating value="3.0" color="var(--primary)"></ag-rating>
                 <ul class="spot-category">
                     <li>Түүхэн</li>
                     <li>Соёл</li>
