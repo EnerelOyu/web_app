@@ -16,43 +16,43 @@ main{
     display: flex;
 }
 
-.action-btn{
+.action-btn {
     background-color: var(--primary-5);
     padding: var(--p-xs);
     cursor: pointer;
     color: var(--primary);
-    transition: background-color 200ms;
     display: flex;
-    align-items: center;
+    justify-content: space-between;
     gap: var(--gap-size-xs);
     border-style: none;
     border-radius: var(--br-s);
     font-family: 'NunitoSans';
     font-size: var(--fs-xs);
     text-transform: uppercase;
-    transition: 
-        background-color 0.25s ease,
-        transform 0.2s ease,
-        box-shadow 0.25s ease;
+    transition: background-color 200ms, color 200ms;
 }
 
-.action-btn svg{
+.action-btn svg {
     width: var(--svg-s);
     height: var(--svg-s);
-    fill: var(--accent-2);
+    fill: currentColor; 
 }
 
-.action-btn :hover{
+.action-btn:hover {
     background-color: var(--primary);
     color: var(--primary-5);
 }
 
+.action-btn:hover svg {
+    color: var(--primary-5);
+    fill: var(--primary-5); /* SVG-н өнгө */
+}
 
 
 
 .spot-main{
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 .spot-header{
     display: flex;
