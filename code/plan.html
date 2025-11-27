@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,10 @@
     <script type="module" src="../code/component/plan/ag-guide-section.js"></script>
     <script type="module" src="../code/component/plan/ag-note-area.js"></script>
     <script type="module" src="../code/component/ag-header.js"></script>
+    <script type="module" src="../code/component/spots/ag-spot-card.js"></script>
+    <script type="module" src="../code/component/ag-footer.js"></script>
 </head>
+
 <body>
     <ag-header></ag-header>
     <div class="main-container">
@@ -37,36 +41,30 @@
                 </svg>
             </a>
             <div class="TL">
-                <suggested-point
-                zrg="../files/spot-img/11statue1.jpg",
-                bus="Төв аймгийн бүс",
-                unelgee="4.5",
-                ner="Цонжин Болдог"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/13Landscape2.webp",
-                bus="Төв аймгийн бүс",
-                unelgee="3.5",
-                ner="Амарбаясгалант хийд"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/14Landscape3.png",
-                bus="Төв аймгийн бүс",
-                unelgee="5",
-                ner="Хустайн байгалийн цогцолборг"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/12Landscape1.jpg",
-                bus="Төв аймгийн бүс",
-                unelgee="4.5",
-                ner="Цонжин Болдог"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/12Landscape1.jpg",
-                bus="Төв аймгийн бүс",
-                unelgee="4.5",
-                ner="Цонжин Болдог"
-                ></suggested-point>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , bus="төв" ,
+                    unelgee="4.5" , ner="Цонжин Болдог" , cate="Соёл" , activity="Морин аялал, Амьтантай ойр" ,
+                    une="20,000" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
+                    , bus="төв" , unelgee="4.5" , ner="Гандан Тэгчинлэн Хийд" , cate="Соёл" , activity="Түүхэн" ,
+                    une="50,000" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg" , bus="төв" ,
+                    unelgee="4.3" , ner="Амарбаясгалант хийд" , cate="Соёл" , activity="Түүхэн" , une="Үнэгүй" ,
+                    age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg" , bus="төв" , unelgee="4.5"
+                    , ner="хустайн байгалийн цогцолбор" , cate="Байгаль" , une="500,000" ,
+                    activity="Морин аялал, Сур харваа" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" , zrg="https://montsame.mn/files/667399f904664.jpeg" ,
+                    bus="Алтай" , unelgee="4.5" , ner="Алтай Таван Богд" , cate="Байгаль ,Амралт сувилал" ,
+                    une="100,000">
+                </ag-spot-card>
             </div>
         </div>
         <div class="route">
@@ -102,32 +100,34 @@
         <div class="liked">
             <h3>Таалагдсан цэгүүд</h3>
             <div class="TL">
-                <suggested-point
-                zrg="../files/spot-img/14Landscape3.png",
-                bus="Төв аймгийн бүс",
-                unelgee="5",
-                ner="Хустайн байгалийн цогцолборг"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/14Landscape3.png",
-                bus="Төв аймгийн бүс",
-                unelgee="5",
-                ner="Хустайн байгалийн цогцолборг"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/14Landscape3.png",
-                bus="Төв аймгийн бүс",
-                unelgee="5",
-                ner="Хустайн байгалийн цогцолборг"
-                ></suggested-point>
-                <suggested-point
-                zrg="../files/spot-img/14Landscape3.png",
-                bus="Төв аймгийн бүс",
-                unelgee="5",
-                ner="Хустайн байгалийн цогцолборг"
-                ></suggested-point>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , bus="төв" ,
+                    unelgee="4.5" , ner="Цонжин Болдог" , cate="Соёл" , activity="Морин аялал, Амьтантай ойр" ,
+                    une="20,000" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
+                    , bus="төв" , unelgee="4.5" , ner="Гандан Тэгчинлэн Хийд" , cate="Соёл" , activity="Түүхэн" ,
+                    une="50,000" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg" , bus="төв" ,
+                    unelgee="4.3" , ner="Амарбаясгалант хийд" , cate="Соёл" , activity="Түүхэн" , une="Үнэгүй" ,
+                    age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" ,
+                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg" , bus="төв" , unelgee="4.5"
+                    , ner="хустайн байгалийн цогцолбор" , cate="Байгаль" , une="500,000" ,
+                    activity="Морин аялал, Сур харваа" , age="Бүх нас">
+                </ag-spot-card>
+                <ag-spot-card href="../code/spot-info.html" , zrg="https://montsame.mn/files/667399f904664.jpeg" ,
+                    bus="Алтай" , unelgee="4.5" , ner="Алтай Таван Богд" , cate="Байгаль ,Амралт сувилал" ,
+                    une="100,000">
+                </ag-spot-card>
             </div>
         </div>
     </div>
+    <ag-footer></ag-footer>
 </body>
+
 </html>

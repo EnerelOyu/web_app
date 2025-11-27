@@ -17,83 +17,85 @@
     <main>
         <h1>Хөтөч болох бүртгэл</h1>
         <div class="container">
-                <div class="profile-card">
-                    <svg>
-                        <use href="../styles/icons.svg#icon-camera"></use>
-                    </svg>
-                    <p class="profile-text">Зураг оруулах</p>
-                    <button class="upload-btn" id="chooseBtn">Файл сонгох</button>
-                    <input type="file" id="fileInput" accept="image/*" hidden>
-                </div>
-                <form class="guide-info">
-                    <label for="fname">Овог</label>
-                    <input type="text" placeholder="Овог" required>
-                    <label for="lname">Нэр</label>
-                    <input type="text" placeholder="Нэр" required>
-                    <label for="phone">Утасны дугаар</label>
-                    <input type="text" placeholder="Утасны дугаар" required>
-                    <label for="phone">Цахим шуудан</label>
-                    <input type="email" placeholder="Цахим шуудан" required>
-                </form>
-                        <form class="right-side">
-            <label for="area">Хөтөч хийх бүс нутаг</label>
-            <select name="bus_nutag" id="bus_nutag">
-                <option value="default"></option>
-                <option value="Ulaanbaatar">Улаанбаатар</option>
-                <option value="arkhangai">Архангай</option>
-                <option value="bayankhongor">Баянхонгор</option>
-                <option value="bayanulgii">Баян-Өлгий</option>
-                <option value="bulgan">Булган</option>
-                <option value="govi-altai">Говь-Алтай</option>
-                <option value="govisumber">Говьсүмбэр</option>
-                <option value="darkhan-uul">Дархан-Уул</option>
-                <option value="dornod">Дорнод</option>
-                <option value="dornogovi">Дорноговь</option>
-                <option value="dundgovi">Дундговь</option>
-                <option value="ovorkhangai">Өвөрхангай</option>
-                <option value="umngovi">Өмнөговь</option>
-                <option value="orkhon">Орхон</option>
-                <option value="uvs">Увс</option>
-                <option value="sukhbaatar">Сүхбаатар</option>
-                <option value="selenge">Сэлэнгэ</option>
-                <option value="tuv">Төв</option>
-                <option value="Uvs">Увс</option>
-                <option value="khentii">Хэнтий</option>
-                <option value="khovd">Ховд</option>
-                <option value="khuvsgul">Хөвсгөл</option>
-                <option value="umnugovi">Өмнөговь</option>
-            </select>
-            <label for="category">Хөтөч хийх категори</label>
-            <select name="category" id="category">
-                <option value="default"></option>
-                <option value="nature">Байгалийн үзэсгэлэнт газар</option>
-                <option value="historical">Түүх соёлын дурсгалт газар</option>
-                <option value="adventure">Адал явдалт аялал</option>
-                <option value="cultural">Соёлын үзэсгэлэнт газар</option>
-                <option value="wildlife">Морин аялал</option>
-                <option value="wellness">Амралт сувилал </option>
-            </select>
-            <label for="language">Хөтөч хийх хэл</label>
-            <select name="language" id="language">
-                <option value="default"></option>
-                <option value="mongolian">Монгол хэл</option>
-                <option value="english">Англи хэл</option>
-                <option value="russian">Орос хэл</option>
-                <option value="chinese">Хятад хэл</option>
-                <option value="japanese">Япон хэл</option>
-            </select>
-            <label for="experience">Хөтөч хийсэн туршлага (жилээр)</label>
-            <select name="experience" id="experience">
-                <option value="default"></option>
-                <option value="1">1 жил ба түүнээс доош</option>
-                <option value="1-5">1 - 5 жил</option>
-                <option value="5++">5 -аас дээш жил</option>
-            </select>
-        </form>
-        <button class="submit-btn">Бүртгүүлэх</button>
+            <div class="profile-card">
+                <svg>
+                    <use href="../styles/icons.svg#icon-camera"></use>
+                </svg>
+                <p class="profile-text">Зураг оруулах</p>
+                <button class="upload-btn" id="chooseBtn">Файл сонгох</button>
+                <input type="file" id="fileInput" accept="image/*" hidden>
+            </div>
+            <form class="guide-info">
+                <label for="fname">Овог</label>
+                <input type="text" placeholder="Овог" required>
+                <label for="lname">Нэр</label>
+                <input type="text" placeholder="Нэр" required>
+                <label for="phone">Утасны дугаар</label>
+                <input type="text" placeholder="Утасны дугаар" required>
+                <label for="phone">Цахим шуудан</label>
+                <input type="email" placeholder="Цахим шуудан" required>
+            </form>
+            <form class="right-side">
+                <label for="area">Хөтөч хийх бүс нутаг</label>
+                <select name="bus_nutag" id="bus_nutag">
+                    <option value="default"></option>
+                    <option value="Ulaanbaatar">Улаанбаатар</option>
+                    <option value="arkhangai">Архангай</option>
+                    <option value="bayankhongor">Баянхонгор</option>
+                    <option value="bayanulgii">Баян-Өлгий</option>
+                    <option value="bulgan">Булган</option>
+                    <option value="govi-altai">Говь-Алтай</option>
+                    <option value="govisumber">Говьсүмбэр</option>
+                    <option value="darkhan-uul">Дархан-Уул</option>
+                    <option value="dornod">Дорнод</option>
+                    <option value="dornogovi">Дорноговь</option>
+                    <option value="dundgovi">Дундговь</option>
+                    <option value="ovorkhangai">Өвөрхангай</option>
+                    <option value="umngovi">Өмнөговь</option>
+                    <option value="orkhon">Орхон</option>
+                    <option value="uvs">Увс</option>
+                    <option value="sukhbaatar">Сүхбаатар</option>
+                    <option value="selenge">Сэлэнгэ</option>
+                    <option value="tuv">Төв</option>
+                    <option value="Uvs">Увс</option>
+                    <option value="khentii">Хэнтий</option>
+                    <option value="khovd">Ховд</option>
+                    <option value="khuvsgul">Хөвсгөл</option>
+                    <option value="umnugovi">Өмнөговь</option>
+                </select>
+                <label for="category">Хөтөч хийх категори</label>
+                <select name="category" id="category">
+                    <option value="default"></option>
+                    <option value="nature">Байгалийн үзэсгэлэнт газар</option>
+                    <option value="historical">Түүх соёлын дурсгалт газар</option>
+                    <option value="adventure">Адал явдалт аялал</option>
+                    <option value="cultural">Соёлын үзэсгэлэнт газар</option>
+                    <option value="wildlife">Морин аялал</option>
+                    <option value="wellness">Амралт сувилал </option>
+                </select>
+                <label for="language">Хөтөч хийх хэл</label>
+                <select name="language" id="language">
+                    <option value="default"></option>
+                    <option value="mongolian">Монгол хэл</option>
+                    <option value="english">Англи хэл</option>
+                    <option value="russian">Орос хэл</option>
+                    <option value="chinese">Хятад хэл</option>
+                    <option value="japanese">Япон хэл</option>
+                </select>
+                <label for="experience">Хөтөч хийсэн туршлага (жилээр)</label>
+                <select name="experience" id="experience">
+                    <option value="default"></option>
+                    <option value="1">1 жил ба түүнээс доош</option>
+                    <option value="1-5">1 - 5 жил</option>
+                    <option value="5++">5 -аас дээш жил</option>
+                </select>
+            </form>
+            <button class="submit-btn">Бүртгүүлэх</button>
 
         </div>
     </main>
     <ag-footer></ag-footer>
+    
 </body>
+
 </html>

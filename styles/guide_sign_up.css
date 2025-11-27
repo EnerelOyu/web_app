@@ -10,6 +10,9 @@ main{
     align-items: center;
     gap: var(--gap-size-m);
     margin: var(--m-md);
+    min-height: 70vh;
+    position: relative;
+
 }
 .container{
     display: grid;
@@ -99,7 +102,8 @@ input::placeholder{
 }
 
 .submit-btn{
-    position: relative;
+    position: absolute;
+    right: var(--m-lg);
     bottom: var(--m-lg);
-    left: var(--m-lg);
+
 }

@@ -137,24 +137,12 @@ p {
 }
 
 .TL {
-  grid-area: list;
-  display: inline-flex;
-  flex-direction: row;
-  gap: 20px;
-  overflow-x: auto;
-  width: 100%;
-  max-width: 100%;
-  padding: 10px;
-  scroll-behavior: smooth;
-}
-.TP {
-  padding: 10px;
-  width: 30vh;
-  min-height: calc(30 * var(--vh));
-  border-radius: 12px;
-  background: no-repeat center;
-  background-size: cover;
-  gap: 1vh;
+    grid-area: list;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 300px;
+    gap: var(--gap-size-s);
+    overflow-x: auto;
 }
 
 .tp_ic {
@@ -979,8 +967,8 @@ p {
 
 .liked {
     grid-area: liked;
-    justify-self: center;
-    overflow-x: scroll;
+    overflow: hidden;
+
 }
 
 /* ====== Responsive (max-width: 600px) ====== */
