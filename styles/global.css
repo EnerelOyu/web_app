@@ -80,7 +80,7 @@
     --primary-2: hsl(24 100% 70%);
     --primary-3: hsl(24 100% 80%);
     --primary-4: hsl(24 100% 90%);
-    --primary-4: hsl(24 100% 97%);
+    --primary-5: hsl(24 100% 97%);
 
     --secondary: hsl(30, 96%, 60%);
     --secondary-1: hsl(30, 96%, 70%);
@@ -101,4 +101,29 @@
     --bg-color: hsl(0, 0%, 100%);
     --hdr-bg-color: hsl(212 50% 13%);
     --ftr-bg-color: hsl(212 50% 13%);
+
+    --vh: 1vh;
+  --vw: 1vw;
+  
+  /* === Component heights === */
+  --header-height: 4rem; /* 64px */
+  --footer-height: 3rem; /* 48px */
+  
+  /* === Spacing in vh/vw === */
+  --spacing-vh-xs: calc(2 * var(--vh));
+  --spacing-vh-sm: calc(4 * var(--vh));
+  --spacing-vh-md: calc(6 * var(--vh));
+  --spacing-vh-lg: calc(8 * var(--vh));
+  --spacing-vh-xl: calc(12 * var(--vh));
+  
+  --spacing-vw-xs: calc(1 * var(--vw));
+  --spacing-vw-sm: calc(2 * var(--vw));
+  --spacing-vw-md: calc(4 * var(--vw));
+  --spacing-vw-lg: calc(6 * var(--vw));
+  --spacing-vw-xl: calc(8 * var(--vw));
+  
+  /* === Container sizes === */
+  --container-max-width: 90vw;
+  --mobile-breakpoint: 768px;
+
 }

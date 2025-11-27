@@ -27,7 +27,6 @@ class routeSection  extends HTMLElement {
                     </div>
                     <img src="../files/spot-img/11statue1.jpg" alt="">
                     <!-- <span class="delete">Цуцлах</span> -->
-                    <!-- place this inside your route-section HTML where .inst previously байсан -->
                     <div class="inst" aria-live="polite">
                         <div class="inst-select">
                             <label for="guideSelect">Хөтөч сонгох</label>
