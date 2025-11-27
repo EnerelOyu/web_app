@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../styles/icons.svg">
     <script type="module" src="../code/component/plan/ag-suggested-point.js"></script>
     <script type="module" src="../code/component/plan/ag-route-section.js"></script>
-    <script type="module" src="../code/component/plan/guide-section.js"></script>
-    <script type="module" src="../code/component/plan/note-area.js"></script>
+    <script type="module" src="../code/component/plan/ag-guide-section.js"></script>
+    <script type="module" src="../code/component/plan/ag-note-area.js"></script>
     <script type="module" src="../code/component/ag-header.js"></script>
 </head>
 <body>
@@ -71,37 +71,35 @@
         </div>
         <div class="route">
             <h2>Таны аяллын маршрут</h2>
-            
-            <!-- Divider with add button -->
-        <route-section></route-section>
-        <route-section></route-section>
-        <route-section></route-section>
-        <div class="notes">
-            <div class="notes-header">
-                <h3>Тэмдэглэл</h3>
-                <div class="notes-actions">
-                    <button class="notes-save-btn" id="notesSave">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-save"></use>
-                        </svg>
-                        Хадгалах
-                    </button>
-                    <button class="notes-clear-btn" id="notesClear">
-                        <svg>
-                            <use href="../styles/icons.svg#icon-clear"></use>
-                        </svg>
-                        Цэвэрлэх
-                    </button>
+            <route-section></route-section>
+            <route-section></route-section>
+            <route-section></route-section>
+            <div class="notes">
+                <div class="notes-header">
+                    <h3>Тэмдэглэл</h3>
+                    <div class="notes-actions">
+                        <button class="notes-save-btn" id="notesSave">
+                            <svg>
+                                <use href="../styles/icons.svg#icon-save"></use>
+                            </svg>
+                            Хадгалах
+                        </button>
+                        <button class="notes-clear-btn" id="notesClear">
+                            <svg>
+                                <use href="../styles/icons.svg#icon-clear"></use>
+                            </svg>
+                            Цэвэрлэх
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="notes-container">
-                <textarea id="notes" placeholder="Тэмдэглэж санах зүйлс оруул..."></textarea>
-                <div class="notes-counter">
-                    <span id="charCount">0</span> тэмдэгт
+                <div class="notes-container">
+                    <textarea id="notes" placeholder="Тэмдэглэж санах зүйлс оруул..."></textarea>
+                    <div class="notes-counter">
+                        <span id="charCount">0</span> тэмдэгт
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
         <div class="liked">
             <h3>Таалагдсан цэгүүд</h3>
             <div class="TL">
