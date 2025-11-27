@@ -370,7 +370,8 @@ p {
 }
 
 .place-info {
-    min-width: 0;
+    min-width: var(--vw);
+    max-width: 80%;
     display: flex;
     flex-direction: column;
     margin-left: var(--m-md);
