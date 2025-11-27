@@ -968,7 +968,12 @@ p {
 .liked {
     grid-area: liked;
     overflow: hidden;
+    padding: var(--p-md);
+    margin: var(--m-md);
+}
 
+.liked h3 {
+    margin-bottom: var(--m-sm);
 }
 
 /* ====== Responsive (max-width: 600px) ====== */
