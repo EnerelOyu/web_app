@@ -365,13 +365,9 @@ p {
     grid-template-columns: 1fr auto;
     gap: 2rem;
     align-items: start;
-    min-width: 0;
-    flex: 1;
 }
 
 .place-info {
-    min-width: var(--vw);
-    max-width: 80%;
     display: flex;
     flex-direction: column;
     margin-left: var(--m-md);
@@ -408,28 +404,11 @@ p {
     font-size: var(--fs-base);
 }
 
-.delete-btn-text {
-    background: none;
-    border: none;
-    color: var(-);
-    cursor: pointer;
-    font-size: var(--fs-sm);
-    padding: 0.5rem 0;
-    align-self: flex-start;
-    transition: color 0.3s ease;
-}
-
-.delete-btn-text:hover {
-    color: var(--accent-1);
-    text-decoration: underline;
-}
-
 /* Media section (Image + Inst) */
 .media-section {
     display: flex;
     flex-direction: row;
     gap: 1.5rem;
-    min-width: 280px;
 }
 
 /* Image */
