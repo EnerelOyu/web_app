@@ -13,7 +13,7 @@ main{
 }
 .container{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: var(--gap-size-2xl);
     align-items: center;
 }
@@ -56,7 +56,7 @@ h1{
 
 .upload-btn, .submit-btn{
     background-color: var(--primary);
-    color: var(--primary-4);
+    color: var(--primary-5);
     text-transform: uppercase;
     font-size: var(--fs-xs);
     font-family: 'NunitoSans';
@@ -68,7 +68,7 @@ h1{
 }
 
 .upload-btn:hover, .submit-btn:hover{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     color: var(--primary);
 }
 
@@ -85,7 +85,7 @@ label{
 }
 
 input, select{
-    background-color: var(--primary-4);
+    background-color: var(--primary-5);
     border-radius: var(--br-s);
     border: 1px solid var(--text-color-2);
     padding: var(--p-xs);
@@ -96,4 +96,10 @@ input, select{
 input::placeholder{
     font-family: 'NunitoSans';
     color: var(--text-color-3);
+}
+
+.submit-btn{
+    position: relative;
+    bottom: var(--m-lg);
+    left: var(--m-lg);
 }

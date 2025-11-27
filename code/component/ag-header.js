@@ -55,7 +55,7 @@ class AgHeader extends HTMLElement {
         }
 
         .header-nav a{
-            color:var(--primary-4);
+            color:var(--primary-5);
             font-size: var(--fs-xs);
             font-family: 'NunitoSans';
             text-transform: uppercase;
@@ -67,7 +67,7 @@ class AgHeader extends HTMLElement {
 
         .search-btn{
             display: inline-flex;
-            background-color: var(--primary-4);
+            background-color: var(--primary-5);
             border-radius: var(--br-circle);
             border-style: none;
             align-items: center;
@@ -89,11 +89,11 @@ class AgHeader extends HTMLElement {
         }
 
         .search-btn:hover svg{
-            color: var(--primary-4);
+            color: var(--primary-5);
         }
 
         .header-nav input{
-            background-color: var(--primary-4);
+            background-color: var(--primary-5);
             border-radius: 9999px;
             border-style: none;
             height: var(--svg-m);
