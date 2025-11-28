@@ -53,8 +53,10 @@ class AgGuideSection extends HTMLElement {
         width: 100%;
         display: flex;
         flex-direction: column;
-        gap: var(--p-sm);
         position: relative;
+      }
+      .inst h4, p {
+        padding: 0;
       }
 
       /* Inst select - visible by default */
@@ -66,6 +68,7 @@ class AgGuideSection extends HTMLElement {
       }
 
       .inst-select label {
+          font-family: 'Nunito-Sans';
           font-size: var(--fs-sm);
           color: var(--text-color-2);
           font-weight: 500;
@@ -93,10 +96,6 @@ class AgGuideSection extends HTMLElement {
           display: none;
           gap: var(--p-sm);
           padding: var(--p-md);
-          border-radius: var(--br-s);
-          background: var(--bg-color);
-          border: 1px solid var(--text-color-8);
-          box-shadow: 0 2px 8px var(--text-color-9);
           align-items: flex-start;
           position: relative;
           animation: fadeIn 0.3s ease;
@@ -135,14 +134,20 @@ class AgGuideSection extends HTMLElement {
           height: var(--svg-s);
       }
 
-      .inst-card-left img {
-          width: 60px;
-          height: 60px;
-          border-radius: var(--br-s);
-          object-fit: cover;
-          border: 2px solid var(--text-color-8);
-          flex-shrink: 0;
-      }
+      .inst-actions {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: var(--p-xs);
+    bottom: 16px;
+    right: 16px;
+    z-index: 5;
+}
+
+/* If you want the buttons to have a fixed width */
+.inst-actions .inst-btn {
+    min-width: 120px;
+}
 
       .inst-meta {
           margin: 0;
@@ -151,11 +156,7 @@ class AgGuideSection extends HTMLElement {
           line-height: 1.4;
       }
 
-      .inst-actions {
-          display: flex;
-          gap: var(--p-xs);
-          margin-top: var(--p-xs);
-      }
+       
 
       /* Animation */
       @keyframes fadeIn {
@@ -225,9 +226,11 @@ class AgGuideSection extends HTMLElement {
                             <path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/>
                         </svg>
                     </button>
-                    <button class="inst-btn secondary" id="profileBtn">
-                      <ag-guide-card id="guideCardElement"></ag-guide-card>
-                    </button>
+                    <ag-guide-card id="guideCardElement"></ag-guide-card>
+                    <div class="inst-actions">
+                        <button class="inst-btn primary" id="contactBtn">Утасдах</button>
+                        <button class="inst-btn secondary" id="profileBtn">Профайл харах</button>
+                    </div>
                 </div>
             </div>
         `;
