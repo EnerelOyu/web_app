@@ -242,17 +242,9 @@ class AgHeader extends HTMLElement {
           min-height: 60px;
         }
 
-<<<<<<< HEAD
-        .logo{
-            display: flex;
-            margin-right: auto;
-            align-items: center;
-            justify-content: center;
-=======
         .logo img {
           width: 32px;
           height: 32px;
->>>>>>> refs/remotes/origin/main
         }
 
         .logo h1 {

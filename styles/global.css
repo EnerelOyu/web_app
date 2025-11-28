@@ -61,7 +61,7 @@
 
   /* === logo size === */
 
- --logo-size: 4rem;  /* 64px */
+ --logo-size: 3rem;  /* 64px */
 
   /* === COLOR === */
 
@@ -160,4 +160,5 @@ p {
   font-family: 'Nunito Sans';
   font-size: var(--fs-base);
   padding-bottom: var(--p-xs);
+  flex-direction: column;
 }
