@@ -10,8 +10,9 @@
     <script type="module" src="../code/component/ag-header.js"></script>
     <script type="module" src="../code/component/ag-guide-card.js"></script>
     <script type="module" src="../code/component/ag-footer.js"></script>
-    <script type="module" src="../code/component/spot-info/ag-review.js"></script>
+    <script type="module" src="../code/component/spot-info/ag-spot-review.js"></script>
     <script type="module" src="../code/component/ag-rating.js"></script>
+    <script type="module" src="../code/component/ag-review-card.js"></script>
     <script type="module" src="../code/component/spot-info/ag-scroll-guide.js"></script>
     <title>Аяллын цэгийн мэдээлэл</title>
 </head>
@@ -141,35 +142,7 @@
                     </a>
                 </section>
                 <!--Сэтгэгдэл-->
-                <section class="review-section">
-                    <h3>Сэтгэгдэл</h3>
-                    <div class="reviewе-scroll-container">
-                        <button class="scrl scrl-left">
-                            <svg>
-                                <use href="../styles/icons.svg#icon-leftScroll"></use>
-                            </svg>
-                        </button>
-                        <div class="reviews">
-                            <ag-review bogin="Сайхан газар байна." urt="Байгалийн үзэсгэлэнтэй сайхан газар байна. Хүмүүс нь найрсаг дотно."
-                                unelgee="4.5"></ag-review>
-                            <ag-review bogin="Гоё газар байна." urt="Аялал жуулчлалын хувьд маш их хөгжиж байгаа газар юм байна."
-                                unelgee="5.0"></ag-review>
-                            <ag-review bogin="Дахин очмоор газар." urt="Байгалийн үзэсгэлэнтэй сайхан газар байна. Хүмүүс нь найрсаг дотно."
-                                unelgee="2.5"></ag-review>
-                        </div>
-                        <button class="scrl scrl-right">
-                            <svg>
-                                <use href="../styles/icons.svg#icon-rightScroll"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <a href="" class="more-guides">
-                        <p>Бүгдийг харах</p>
-                        <svg class="more-icon">
-                            <use href="../styles/icons.svg#icon-arrow"></use>
-                        </svg>
-                    </a>
-                </section>
+                <ag-spot-review-list></ag-spot-review-list>
             </div>
         </div>
 

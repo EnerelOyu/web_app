@@ -55,7 +55,7 @@ p {
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   margin: 0 auto;
   gap: var(--gap-size-l);
   padding: var(--p-xl);
@@ -132,7 +132,7 @@ header{
 .bubble-row {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--gap-size-l); 
+    gap: var(--gap-size-xs); 
 }
 
 .bubble {
@@ -148,59 +148,3 @@ header{
     white-space: nowrap; /* Мөр тасрахгүй */
 }
 
-.review-section {
-    grid-area: rew;
-    padding: var(--p-lg);
-}
-
-.reviews{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    gap:var(--gap-size-l);
-}
-
-.review-card{
-    background-color: var(--primary-5);
-    padding: 15px;
-    font-family: 'NunitoSans';
-    color: var(--text-color-2);
-}
-
-.brief-review{
-    font-weight:400;
-    font-family: 'Rubik';
-}
-
-.review-card .star, .review-card .rating-num{
-    color: var(--primary);
-}
-
-.btn{
-    display: inline-flex;
-    background-color: var(--primary-5);
-    border-radius: var(--br-s);
-    border-style: none;
-    align-items: center;
-    justify-content: center;
-    font-family: 'NunitoSans';
-    font-size: var(--fs-xs);
-}
-
-.actions{
-    display: flex;
-    gap:10px;    
-}
-.guide-btn, .review-btn{
-    background-color: var(--primary);
-    border-style: none;
-    border-radius: var(--br-s);
-    color:var(--primary-5);
-    padding: 5px;
-    width: 150px;
-}
- .review-btn{
-    background-color: var(--accent-2);
-    color: var(--accent-9);
- }
