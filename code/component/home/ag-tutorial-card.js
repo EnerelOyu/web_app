@@ -4,6 +4,11 @@ class AgTutorialCard extends HTMLElement {
     }
     constructor() {
         super();
+        this.css=`
+        p{
+        font-family: 'NunitoSans';
+        }
+        `;
         
     }
 
@@ -18,6 +23,7 @@ class AgTutorialCard extends HTMLElement {
         const long = this.getAttribute("urt") || "NULL";
         
         this.innerHTML=`
+        <style>${this.css}</style>
         <article class="tutorial-card">
           <img src="${img}" alt="tutorial-1">
           <h4>${short}</h4>

@@ -14,7 +14,7 @@ class AgHeader extends HTMLElement {
         }
 
         .logo{
-            display: inline-flex;
+            display: flex;
             margin-right: auto;
             align-items: center;
             justify-content: center;
