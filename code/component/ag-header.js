@@ -2,7 +2,7 @@ class AgHeader extends HTMLElement {
   constructor() {
     super();
     this.css = `
-      @import url('fonts.css');
+      @import url('../styles/fonts.css');
 
       header {
         position: sticky;
@@ -242,17 +242,16 @@ class AgHeader extends HTMLElement {
           min-height: 60px;
         }
 
-<<<<<<< HEAD
         .logo{
-            display: flex;
-            margin-right: auto;
-            align-items: center;
-            justify-content: center;
-=======
+          display: flex;
+          margin-right: auto;
+          align-items: center;
+          justify-content: center;
+        }
+
         .logo img {
           width: 32px;
           height: 32px;
->>>>>>> refs/remotes/origin/main
         }
 
         .logo h1 {
@@ -450,7 +449,6 @@ class AgHeader extends HTMLElement {
     mobileMenuBtn.addEventListener('click', () => {
       mobileNav.classList.toggle('active');
       
-      // Update button text
       if (mobileNav.classList.contains('active')) {
         mobileMenuBtn.textContent = '✕';
         mobileMenuBtn.setAttribute('aria-label', 'Цэс хаах');
@@ -460,7 +458,6 @@ class AgHeader extends HTMLElement {
       }
     });
 
-    // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!this.contains(e.target) && mobileNav.classList.contains('active')) {
         mobileNav.classList.remove('active');
@@ -469,7 +466,6 @@ class AgHeader extends HTMLElement {
       }
     });
 
-    // Close mobile menu when clicking on a link
     const mobileLinks = this.querySelectorAll('.mobile-nav a');
     mobileLinks.forEach(link => {
       link.addEventListener('click', () => {
