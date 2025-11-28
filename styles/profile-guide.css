@@ -6,7 +6,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px dashed black;
 }
 
 svg {
@@ -19,132 +18,269 @@ svg {
 h1 {
   font-family: 'Rubik';
   font-size: var(--fs-2xl);
+  font-weight: 600;
 }
 h2 {
   font-family: 'NunitoSans';
   font-size: var(--fs-xl);
+  font-weight: 600;
 }
 h3 {
   font-family: 'NunitoSans';
   font-size: var(--fs-lg);
+  font-weight: 600;
 }
 p {
   font-family: 'NunitoSans';
   font-size: var(--fs-base);
   word-wrap: break-word;
+  line-height: 1.5;
 }
+
 /* ====== Main layout ====== */
 .main-container {
-  display: grid;
-  grid-template:
-    "header"
-    "info"
-    "cat" 
-    "area"
-    "rew"
-    /
-    1fr;
-
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0;
-  overflow: scroll;
+  overflow: hidden;
 }
 
-.main-info {
-  grid-area: info;
-  display: flex;
-  align-items: center;
+/* ====== Header ====== */
+header {
   width: 100%;
-  max-width: 100%;
-  margin: 0 auto;
-  gap: var(--gap-size-l);
+  padding: var(--p-lg);
+}
+
+/* ====== Main Info Section ====== */
+.main-info {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-size-xl);
   padding: var(--p-xl);
+  width: 100%;
+  border-bottom: 1px solid var(--text-color-8);
+}
+
+.main-info > img {
+  width: 200px;
+  height: 200px;
+  border-radius: var(--br-m);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.txt-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-size-m);
 }
 
 .icon {
   display: flex;
   flex-direction: column;
-  justify-self: end;
-}
-
-.txt-info {
-    align-content: space-between;
-}
-
-.main-info > img{
-    width: 200px;
-    height: fit-content;
-    border-radius: var(--br-s);
-    justify-self: end;
+  gap: var(--gap-size-s);
+  align-items: flex-end;
+  flex-shrink: 0;
 }
 
 p > span {
-    color: var(--primary);
+  color: var(--primary);
+  font-weight: 600;
 }
 
-/* ====== Header ====== */
-header{
-    grid-area: header;
-}
-
-/* === rating === */
-
+/* ====== Rating ====== */
 .rating {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: var(--gap-size-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--gap-size-xs);
 }
 
 .readOnly-rating-stars {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .readOnly-rating-stars .star {
-    width: var(--svg-s);
-    height: var(--svg-s);
-    display: block;
-    color: var(--primary-2);
+  width: var(--svg-s);
+  height: var(--svg-s);
+  display: block;
+  color: var(--primary-2);
 }
 
 .rating .rating-num {
-    font-family: 'NunitoSans';
-    font-size: var(--fs-sm);
-    color: var(--primary-2);
+  font-family: 'NunitoSans';
+  font-size: var(--fs-sm);
+  color: var(--primary-2);
+  font-weight: 600;
 }
 
-
-.cat{
-    grid-area: cat;
-    display: flex;
-    flex-direction: row;
-    gap: var(--gap-size-m); 
-    padding: var(--p-lg);
+/* ====== Category and Area Sections ====== */
+.cat, .area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-size-m);
+  padding: var(--p-lg);
+  width: 100%;
 }
-.area {
-    grid-area: area;
-    display: flex;
-    flex-direction: row;
-    gap: var(--gap-size-m); 
-    padding: var(--p-lg);
+
+.cat h2, .area h2 {
+  color: var(--text-color-1);
+  margin-bottom: var(--m-sm);
 }
 
 .bubble-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-size-xs); 
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-size-s);
+  align-items: center;
 }
 
 .bubble {
-    padding: 0.75rem 2rem;
-    border-radius: 2rem; /* Зураг дээрх шиг том дугуй */
-    background-color: var(--primary-3);
-    width: fit-content;
+  padding: var(--p-sm) var(--p-xl);
+  border-radius: 2rem;
+  background-color: var(--primary-3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+}
+
+.bubble:hover {
+  background-color: var(--primary-2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.2);
 }
 
 .bubble p {
-    font-weight: 700;
-    margin: 0;
-    white-space: nowrap; /* Мөр тасрахгүй */
+  font-weight: 600;
+  margin: 0;
+  white-space: nowrap;
+  color: var(--text-color-1);
+  font-size: var(--fs-sm);
 }
 
+/* ====== Reviews Section ====== */
+.rew {
+  padding: var(--p-lg);
+  width: 100%;
+  border-top: 1px solid var(--text-color-8);
+}
+
+/* ====== Responsive Design ====== */
+@media (max-width: 1024px) {
+  .main-info {
+    gap: var(--gap-size-l);
+    padding: var(--p-lg);
+  }
+  
+  .main-info > img {
+    display: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--gap-size-m);
+    padding: var(--p-md);
+  }
+  
+  .main-info > img {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .icon {
+    align-items: center;
+    width: 100%;
+  }
+  
+  .txt-info {
+    align-items: center;
+  }
+  
+  .cat, .area {
+    padding: var(--p-md);
+  }
+  
+  .bubble {
+    padding: var(--p-xs) var(--p-lg);
+  }
+  
+  .bubble p {
+    font-size: var(--fs-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 0 var(--p-sm);
+  }
+  
+  .main-info {
+    padding: var(--p-sm);
+    gap: var(--gap-size-s);
+  }
+  
+  .main-info > img {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .cat, .area {
+    padding: var(--p-sm);
+  }
+  
+  .bubble-row {
+    gap: var(--gap-size-xs);
+    justify-content: center;
+  }
+  
+  .bubble {
+    padding: var(--p-xs) var(--p-md);
+  }
+  
+  h1 {
+    font-size: var(--fs-xl);
+  }
+  
+  h2 {
+    font-size: var(--fs-lg);
+  }
+  
+  h3 {
+    font-size: var(--fs-base);
+  }
+}
+
+/* ====== Additional Utility Classes ====== */
+.section-divider {
+  height: 1px;
+  background: var(--text-color-8);
+  margin: var(--m-md) 0;
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.w-full {
+  width: 100%;
+}

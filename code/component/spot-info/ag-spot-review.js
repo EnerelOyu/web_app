@@ -100,8 +100,9 @@ class AgSpotReviewList extends HTMLElement {
             }
 
             .form-group textarea {
-                min-height: 80px;
-                resize: vertical;
+              max-height: 100px;
+              min-height: 80px;
+              resize: vertical;
             }
 
             .submit-btn {
