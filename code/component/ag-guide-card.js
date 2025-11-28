@@ -62,7 +62,6 @@ class GuideCard extends HTMLElement {
                 display: flex;
                 flex-direction: column;
                 gap: var(--p-sm);
-                min-width: 0;
             }
 
             .guide-details h4 {

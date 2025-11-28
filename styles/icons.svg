@@ -166,21 +166,17 @@
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7h16m-10 4v6m4-6v6M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2l1-12M9 7V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
 </symbol>
 
-</svg>
-
 <!-- camera-icon -->
 <symbol id="icon-camera" viewBox="0 0 20 20">
   <path fill="currentColor" d="M0 6c0-1.1.9-2 2-2h3l2-2h6l2 2h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6zm10 10a5 5 0 1 0 0-10a5 5 0 0 0 0 10zm0-2a3 3 0 1 1 0-6a3 3 0 0 1 0 6z"/>
 </symbol>
 
-<!-- left scroll-->
-<symbol id="icon-left-scroll" viewBox="0 0 48 48">
-    <path d="M31 36L19 24l12-12" />
+
+<symbol id="icon-rightScroll" viewBox="0 0 24 24">
+  <path d="M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z"/>
 </symbol>
 
-<!-- right scroll-->
-<symbol id="icon-right-scroll" viewBox="0 0 48 48">
-    <path d="m19 12l12 12l-12 12" />
+<symbol id="icon-leftScroll" viewBox="0 0 24 24">
+  <path d="m4.431 12.822l13 9A1 1 0 0 0 19 21V3a1 1 0 0 0-1.569-.823l-13 9a1.003 1.003 0 0 0 0 1.645z"/>
 </symbol>
-
 
