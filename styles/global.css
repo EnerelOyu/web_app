@@ -18,9 +18,12 @@
 
   /* === svg size === */
 
-  --svg-s: 1rem;
-  --svg-m: 2rem;
-  --svg-l: 3rem;
+  /* === svg size (responsive) === */
+
+  --svg-s: clamp(0.875rem, 1.8vw, 1.25rem); 
+  --svg-m: clamp(1.5rem, 3vw, 2.5rem);      
+  --svg-l: clamp(2rem, 4vw, 3rem);         
+
 
   /* === padding size === */
 

@@ -1,9 +1,12 @@
 @import url('fonts.css');
 
-*{
-    margin:0px;
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
 }
-
 
 main{
     justify-content: center;
@@ -13,8 +16,6 @@ main{
     gap: var(--gap-size-xl);
     padding-bottom: var(--p-lg);
 }
-
-
 
 h3{
     text-align: center;
@@ -28,7 +29,6 @@ label{
 p{
     font-family: 'NunitoSans';
 }
-
 
 .uria{
     font-size: var(--fs-xl);
@@ -47,19 +47,25 @@ p{
     text-align: center;
     color: var(--text-color-1);
     width: 100%;
-    text-align: center;
     padding: var(--p-xl);
 }
 .uria-h1 span{
     color: var(--primary);
 }
 
+/* --- хайлтын хэсэг --- */
 .search-form{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: var(--gap-size-s);
-    box-shadow: 2px 2px 20px 0 rgba(1, 76, 63, 0.25);}
+    flex-direction:row;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 9999px;
+    background-color: var(--accent-9);
+    padding: var(--p-sm) var(--p-lg);
+    gap: var(--gap-size-m);
+    width: 70%;
+    box-shadow: 2px 2px 20px 0 rgba(1, 76, 63, 0.25);
+}
 
 .form-group{
     display: flex;
@@ -80,12 +86,11 @@ p{
     border: none;
     background-color: var(--accent-9);
     cursor: pointer;
-    transition: background-color 0.5s;
+    transition: background-color 0.5s, opacity 0.5s;
     opacity: 0.8;
 }
 
 .form-group select:hover{
-
     opacity: 1;
 }
 
@@ -99,7 +104,7 @@ p{
     height: var(--svg-l);
     width: var(--svg-l);
     transition: background-color 0.5s;
-
+    cursor: pointer;
 }
 
 #filter-submit:hover{
@@ -118,18 +123,7 @@ p{
     color: var(--accent);
 }
 
-.search-form{
-    display: flex;
-    flex-direction:row;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 9999px;
-    background-color: var(--accent-9);
-    padding: var(--p-sm) var(--p-lg);
-    gap: var(--gap-size-m);
-    width: 70%;
-}
-
+/* --- санал болголт --- */
 .recommend{
     display: flex;
     flex-direction: column;
@@ -143,7 +137,6 @@ p{
     padding: var(--p-xl) 0;
     color: var(--text-color-1);
     font-size: var(--fs-xl);
-
 }
 
 .rec-grid{
@@ -164,18 +157,18 @@ p{
 }
 
 .rec-icons svg{
-  height: var(--svg-m);     
-  width: auto;
+  width: var(--svg-l); 
+  height:  var(--svg-l);
   color: var(--primary);
-  padding: var(--p-sm);
-
+  padding: var(--p-xs);
 }
+
 
 .rec-icons p{
   color: var(--text-color-3);
-  font-family: 'NunitoSans';
 }
 
+/* --- заавар --- */
 .tutorial{
     display: flex;
     flex-direction: column;
@@ -188,7 +181,6 @@ p{
     font-size: var(--fs-xl);
 }
 
-
 .tutorial-grid{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -196,7 +188,6 @@ p{
     max-width: 90vw;
     gap: var(--gap-size-m);
     padding-bottom: var(--p-xl);
-
 }
 
 .tutorial-card{
@@ -218,6 +209,7 @@ p{
     color: var(--text-color-3);
 }
 
+/* --- аяллын цэгүүд --- */
 .spots{
     width: 100%;
     display: flex;
@@ -246,13 +238,15 @@ p{
     margin: 0px var(--m-xl);
 }
 
-
 .spot-card{
     display: flex;
     flex-direction: column;
     gap: var(--gap-size-s);
     border-radius: var(--br-s);
 }
+
+/* clickable болгомоор байвал: */
+/* .spot-card{ cursor: pointer; } */
 
 .spot-img{
     position: relative;
@@ -282,9 +276,9 @@ p{
     align-items: center;
     cursor: pointer;
     opacity: 0.7;
-    transition: background-color 0.5s;
-
+    transition: background-color 0.5s, opacity 0.5s;
 }
+
 .spot-img button:hover { 
     background-color: var(--primary);
     border: 1px solid var(--primary);
@@ -302,7 +296,6 @@ p{
     height: var(--svg-m);
     transform: color 0.5s;
     opacity: 0.7;
-
 }
 
 .line{
@@ -354,6 +347,8 @@ p{
   align-items: center;
   gap: var(--gap-size-s);
 }
+
+/* --- хөтөч болох --- */
 .guide{
     width: 100%;
     background-color: var(--hdr-bg-color);
@@ -392,7 +387,7 @@ p{
     text-decoration: none;
     justify-self: end;     
     margin-right: var(--m-xl);
-    transition: background-color 0.5s;
+    transition: background-color 0.5s, color 0.5s;
 }
 
 .guide-btn:hover{
@@ -400,4 +395,137 @@ p{
     color: var(--primary);
 }
 
+/* =========================
+   TABLET BREAKPOINT (≤1024px)
+   ========================= */
+@media (max-width: 1024px) {
+    main{
+        gap: var(--gap-size-l);
+    }
 
+    .search-form{
+        width: 90%;
+        padding: var(--p-sm) var(--p-md);
+    }
+
+    .rec-grid{
+        grid-template-columns: repeat(2, minmax(140px, 1fr));
+        max-width: 90vw;
+    }
+
+    .tutorial-grid{
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        max-width: 100%;
+    }
+
+    .spots-grid{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 column fix */
+        gap: var(--gap-size-l);
+        margin: 0 var(--p-md);
+    }
+
+    .guide{
+        grid-template-columns: 3fr 2fr;
+    }
+}
+
+/* =========================
+   MOBILE BREAKPOINT (≤768px)
+   ========================= */
+@media (max-width: 768px) {
+
+    main{
+        padding: 0 var(--p-md) var(--p-lg);
+    }
+
+    .uria{
+        font-size: var(--fs-l);
+        text-align: center;
+        padding: var(--p-sm) 0;
+        margin-top: var(--m-lg);
+    }
+
+    .uria-h1{
+        font-size: var(--fs-2xl);
+        padding: var(--p-md) 0;
+    }
+
+    .search-form{
+        flex-direction: column;
+        align-items: flex-end;
+        width: 100%;
+        border-radius: var(--br-m);
+        padding: var(--p-md);
+        gap: var(--gap-size-s);
+    }
+
+    .form-group{
+        width: 100%;
+    }
+
+    .recommend h3,
+    .tutorial h3,
+    .spot-header h3{
+        text-align: center;
+        margin: 0;
+        padding-left: 0;
+    }
+
+    .rec-grid{
+        grid-template-columns: repeat(2, minmax(0,1fr));
+        max-width: 100%;
+        row-gap: var(--gap-size-l);
+    }
+
+    .tutorial-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .spots-grid{
+        grid-template-columns: 1fr;
+        margin: 0;
+    }
+
+    .spot-header{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--gap-size-s);
+        padding: 0 var(--p-xs);
+    }
+
+    .spot-header h3{
+        margin: 0;
+    }
+
+    .more-spots{
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .guide{
+        grid-template-columns: 1fr;
+        row-gap: var(--gap-size-m);
+        padding: var(--p-lg) var(--p-md);
+    }
+
+    .guide-inner{
+        margin-left: 0;
+    }
+
+    .guide-btn{
+        margin-right: 0;
+        justify-self: flex-start;
+    }
+}
+
+/* маш жижиг дэлгэц (≤480px) */
+@media (max-width: 480px){
+    .rec-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .search-form{
+        gap: var(--gap-size-s);
+    }
+}
