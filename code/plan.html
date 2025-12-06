@@ -15,6 +15,7 @@
     <script type="module" src="../code/component/ag-header.js"></script>
     <script type="module" src="../code/component/spots/ag-spot-card.js"></script>
     <script type="module" src="../code/component/ag-footer.js"></script>
+    <script type="module" src="../code/component/plan/ag-shared-button.js"></script>
 </head>
 
 <body>
@@ -23,14 +24,7 @@
         <div class="plan-title">
             <div>
                 <h1>Төлөвлөгөөний гарчиг №1</h1>
-                <span class="share-button">
-                    <svg>
-                        <use href="../styles/icons.svg#default-profile"></use>
-                    </svg>
-                    <svg>
-                        <use href="../styles/icons.svg#icon-share"></use>
-                    </svg>
-                </span>
+                <ag-share-button></ag-share-button>
             </div>
         </div>
         <div class="suggestion">
@@ -70,7 +64,106 @@
         </div>
         <div class="route">
             <h2>Таны аяллын маршрут</h2>
-            <route-section></route-section>
+            <div class="route-divider">
+                <div class="divider-line-horizontal"></div>
+                <div class="divider-controls">
+                    <div class="divider-line-vertical"></div>
+                    <div class="add-dropdown">
+                        <button class="add-block-btn" id="addBlockBtn">
+                            <svg viewBox="0 0 448 512">
+                                <path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/>
+                            </svg>
+                        </button>
+                        <div class="add-menu" id="addMenu" style="display: none;">
+                            <button class="menu-item" data-type="place">
+                                <svg viewBox="0 0 384 512">
+                                    <path fill="currentColor" d="M0 188.6C0 84.4 86 0 192 0S384 84.4 384 188.6c0 119.3-120.2 262.3-170.4 316.8-11.8 12.8-31.5 12.8-43.3 0-50.2-54.5-170.4-197.5-170.4-316.8zM192 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128z"/>
+                                </svg>
+                                <span>Газар нэмэх</span>
+                            </button>
+                            <button class="menu-item" data-type="note">
+                                <svg viewBox="0 0 448 512">
+                                    <path fill="currentColor" d="M64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 213.5c0 17-6.7 33.3-18.7 45.3L322.7 461.3c-12 12-28.3 18.7-45.3 18.7L64 480z"/>
+                                </svg>
+                                <span>Тэмдэглэл нэмэх</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section>
+            <!-- Route item -->
+            <div class="route-item" draggable="true" data-place-number="1">
+                <!-- Left controls -->
+                <div class="route-controls-left">
+                    <div class="place-marker">
+                        <svg viewBox="0 0 384 512" class="marker-icon">
+                            <path fill="currentColor" d="M192 0C86 0 0 84.4 0 188.6 0 307.9 120.2 450.9 170.4 505.4 182.2 518.2 201.8 518.2 213.6 505.4 263.8 450.9 384 307.9 384 188.6 384 84.4 298 0 192 0z"/>
+                        </svg>
+                        <span class="marker-number">1</span>
+                    </div>
+                </div>
+
+                <!-- Main content -->
+                <div class="route-main">
+                    <div class="place-info">
+                        <div class="place-header">
+                            <h3 class="place-title" contenteditable="true">Чингисийн морьт хөшөө</h3>
+                            <a href="https://maps.google.com/?q=Чингисийн морьт хөшөө" target="_blank" class="map-link">
+                                <svg viewBox="0 0 384 512">
+                                    <path fill="currentColor" d="M0 188.6C0 84.4 86 0 192 0S384 84.4 384 188.6c0 119.3-120.2 262.3-170.4 316.8-11.8 12.8-31.5 12.8-43.3 0-50.2-54.5-170.4-197.5-170.4-316.8zM192 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128z"/>
+                                </svg>
+                                Газрын зураг
+                            </a>
+                        </div>
+                        <div class="place-description">
+                            <textarea placeholder="Тэмдэглэл нэмэх...">Энэ бол тухайн газрын дэлгэрэнгүй тайлбар. Анхаарах зүйлс, цагийн хуваарь, үнэ зэргийг оруулна.</textarea>
+                        </div>
+                    </div>
+
+                    <div class="place-image">
+                        <div class="image-container">
+                            <img src="../files/spot-img/11statue1.jpg" alt="Аяллын цэгийн зураг">
+                            <div class="image-overlay">
+                                <button class="change-image-btn">
+                                    <svg viewBox="0 0 640 640">
+                                        <path fill="currentColor" d="M480 272C480 317.9 465.1 360.3 440 394.7L566.6 521.4C579.1 533.9 579.1 554.2 566.6 566.7C554.1 579.2 533.8 579.2 521.3 566.7L394.7 440C360.3 465.1 317.9 480 272 480C157.1 480 64 386.9 64 272C64 157.1 157.1 64 272 64C386.9 64 480 157.1 480 272zM272 416C351.5 416 416 351.5 416 272C416 192.5 351.5 128 272 128C192.5 128 128 192.5 128 272C128 351.5 192.5 416 272 416z"/>
+                                    </svg>
+                                    Зураг солих
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Compact guide selection -->
+                    <div class="guide-selector">
+                        <select id="guideSelect" class="guide-select-dropdown">
+                            <option value="">Хөтөч сонгох...</option>
+                            <option value="g1">Дорж</option>
+                            <option value="g2">Саран</option>
+                            <option value="g3">Бат</option>
+                        </select>
+                        <div class="selected-guide" id="selectedGuide" style="display: none;">
+                            <div class="guide-mini-info">
+                                <span class="guide-name">Дорж</span>
+                                <a href="tel:+97690909909" class="guide-phone">+976 9090 9909</a>
+                            </div>
+                            <button class="change-guide-btn">Солих</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right delete button -->
+                <div class="route-actions">
+                    <button class="delete-btn">
+                        <svg>
+                            <use href="../styles/icons.svg#icon-trash"></use>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            </section>
             <route-section></route-section>
             <div class="notes">
                 <div class="notes-header">
@@ -129,6 +222,58 @@
         </div>
     </div>
     <ag-footer></ag-footer>
+
+    <script>
+        // Dropdown menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const addBtn = document.getElementById('addBlockBtn');
+            const addMenu = document.getElementById('addMenu');
+
+            if (addBtn && addMenu) {
+                addBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    addMenu.style.display = addMenu.style.display === 'none' ? 'block' : 'none';
+                });
+
+                document.addEventListener('click', () => {
+                    addMenu.style.display = 'none';
+                });
+
+                addMenu.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+            }
+
+            // Guide selector
+            const guideSelect = document.getElementById('guideSelect');
+            const selectedGuide = document.getElementById('selectedGuide');
+            const guideData = {
+                'g1': { name: 'Дорж', phone: '+976 9090 9909' },
+                'g2': { name: 'Саран', phone: '+976 9900 1122' },
+                'g3': { name: 'Бат', phone: '+976 8881 2233' }
+            };
+
+            if (guideSelect && selectedGuide) {
+                guideSelect.addEventListener('change', (e) => {
+                    const value = e.target.value;
+                    if (value && guideData[value]) {
+                        const guide = guideData[value];
+                        selectedGuide.querySelector('.guide-name').textContent = guide.name;
+                        selectedGuide.querySelector('.guide-phone').textContent = guide.phone;
+                        selectedGuide.querySelector('.guide-phone').href = `tel:${guide.phone.replace(/\s/g, '')}`;
+                        guideSelect.style.display = 'none';
+                        selectedGuide.style.display = 'flex';
+                    }
+                });
+
+                selectedGuide.querySelector('.change-guide-btn')?.addEventListener('click', () => {
+                    guideSelect.style.display = 'block';
+                    selectedGuide.style.display = 'none';
+                    guideSelect.value = '';
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
