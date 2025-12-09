@@ -98,7 +98,6 @@ class AgGuideBanner extends HTMLElement {
               justify-content: center;
               align-items: center;
           }
-
       }
       </style>
 

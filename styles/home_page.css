@@ -137,6 +137,7 @@ p {
 
 
 /* TUTORIAL SECTION */
+
 .tutorial {
     display: flex;
     flex-direction: column;
@@ -213,18 +214,36 @@ p {
 @media (max-width: 768px) {
 
     .uria {
-        font-size: var(--fs-lg);
+        font-size: var(--fs-base);
         text-align: center;
         padding: var(--p-sm) 0;
         margin-top: var(--m-lg);
     }
 
     .uria-h1 {
-        font-size: var(--fs-2xl);
+        font-size: var(--fs-xl);
         padding: var(--p-md) 0;
     }
+    /*search form*/
+    .search-form {
+        flex-direction: column;
+        width: 90%;
+        border-radius: var(--br-m);
+        padding: var(--p-md);
+        gap: var(--gap-size-s);
+        transform: none;
+    }
+    .form-group {
+        width: 100%;
+    }
 
+    #filter-submit {
+        height: var(--svg-l);
+        border-radius: var(--br-m);
+    }
+    /*tutorial*/    
     .tutorial h3 {
+        font-size: var(--fs-lg);
         text-align: center;
         margin: 0;
         padding-left: 0;
@@ -234,7 +253,16 @@ p {
         grid-template-columns: 1fr;
     }
 
+    .guide{
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-size-s);
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
 }
+
 
 /* =========================
    SMALL MOBILE (≤480px)
@@ -243,6 +271,10 @@ p {
 
     .uria-h1 {
         font-size: var(--fs-xl);
+    }
+
+    .search-form {
+            gap: var(--gap-size-s);
     }
 
 }

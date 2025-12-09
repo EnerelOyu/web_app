@@ -154,15 +154,6 @@
   </main>
   <ag-footer></ag-footer>
 
-  <script>
-    document.getElementById("searchForm").addEventListener("submit", function(event) {
-      event.preventDefault(); 
-      const area = document.getElementById("areas").value;
-      const category = document.getElementById("categories").value;
-      const url = `../code/spots.html?area=${encodeURIComponent(area)}&cate=${encodeURIComponent(category)}`;
-      window.location.href = url; 
-    });
-  </script>
 </body>
 
 </html>

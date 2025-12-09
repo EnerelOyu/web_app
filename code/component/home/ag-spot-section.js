@@ -91,22 +91,7 @@ class AgSpotSection extends HTMLElement {
           transform: translateX(4px);
         }
 
-        /* ---------- TABLET (≤1024px) ---------- */
-        @media (max-width: 1024px) {
-          .spots-grid {
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--gap-size-l);
-            margin: 0 var(--p-md);
-          }
-
-          .spot-header {
-            margin: 0 var(--p-md);
-          }
-
-          .spot-header h3 {
-            margin: 0;
-          }
-        }
+        
 
         /* ---------- MOBILE (≤768px) ---------- */
         @media (max-width: 768px) {
@@ -119,6 +104,7 @@ class AgSpotSection extends HTMLElement {
           }
 
           .spot-header h3 {
+            font-size: var(--fs-lg);
             margin: 0;
             text-align: center;
             width: 100%;

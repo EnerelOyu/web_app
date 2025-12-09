@@ -139,43 +139,6 @@
 
     </main>
     <ag-footer></ag-footer>
-    <script>
-function getQueryParams() {
-    const params = new URLSearchParams(window.location.search);
-    return {
-        area: params.get("area"),
-        cate: params.get("cate")
-    };
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const { area, cate } = getQueryParams();
-
-    if (!area && !cate) return; 
-
-    document.querySelectorAll("ag-filter").forEach(filter => {
-        const type = filter.getAttribute("ner");
-
-        if (type === "Бүс нутаг" && area) {
-            [...filter.querySelectorAll("input[type='checkbox']")].forEach(cb => {
-                if (cb.value.toLowerCase() === area.toLowerCase()) {
-                    cb.checked = true;
-                }
-            });
-            filter.update(); 
-        }
-
-        if (type === "Категори" && cate) {
-            [...filter.querySelectorAll("input[type='checkbox']")].forEach(cb => {
-                if (cb.value.toLowerCase() === cate.toLowerCase()) {
-                    cb.checked = true;
-                }
-            });
-            filter.update();
-        }
-    });
-});
-</script>
 
 </body>
 

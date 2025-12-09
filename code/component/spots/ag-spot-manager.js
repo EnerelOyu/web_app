@@ -28,16 +28,50 @@ class AgSpotManager extends HTMLElement {
   }
 
   _applyInitialFiltersFromURL() {
-    const params = new URLSearchParams(window.location.search);
+  const params = new URLSearchParams(window.location.search);
 
-    const bus = params.get("bus");
-    const cate = params.get("cate");
+  const bus = params.get("bus");
+  const cate = params.get("cate");
 
-    if (bus)  this._filters.bus  = [bus];
-    if (cate) this._filters.cate = [cate];
+  if (bus)  this._filters.bus  = [bus];
+  if (cate) this._filters.cate = [cate];
 
-    this._applyFilters();
-  }
+  // 1) эхлээд картуудыг шүүнэ
+  this._applyFilters();
+
+  // 2) дараа нь ag-filter-үүдийн checkbox-ийг URL-ийн утгатай тааруулж check хийнэ
+  const filters = document.querySelectorAll("ag-filter");
+
+  filters.forEach(filter => {
+    const type = filter.getAttribute("ner");
+    let values = [];
+
+    if (type === "Бүс нутаг") {
+      values = this._filters.bus;
+    } else if (type === "Категори") {
+      values = this._filters.cate;
+    } else {
+      return; // энэ filter-д URL-ээс утга байхгүй
+    }
+
+    if (!values || !values.length) return;
+
+    const normValues = values.map(v => this._normalize(v));
+
+    const root = filter.shadowRoot;
+    if (!root) return;
+    filter.querySelectorAll("input[type='checkbox']").forEach(cb => {
+      const cbVal = this._normalize(cb.value);
+      if (normValues.includes(cbVal)) {
+        cb.checked = true;
+      }
+    });
+
+    // checked өөрчлөгдсөн тул event-ээ гараар дуудах
+    filter.update();
+  });
+}
+
 
   _onFilterChanged(event) {
     const { type, values } = event.detail || {};
