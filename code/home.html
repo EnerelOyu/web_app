@@ -12,6 +12,9 @@
   <script type="module" src="../code/component/ag-footer.js"></script>
   <script type="module" src="../code/component/home/ag-tutorial-card.js"></script>
   <script type="module" src="../code/component/home/ag-home-search.js"></script>
+  <script type="module" src="../code/component/home/ag-spot-section.js"></script>
+  <script type="module" src="../code/component/home/ag-feature-card.js"></script>
+  <script type="module" src="../code/component/home/ag-guide-banner.js"></script>
 </head>
 
 <body>
@@ -19,227 +22,147 @@
   <main>
     <p class="uria">Аялаж зугаалмаар байвч хаашаа явах аа мэдэхгүй байна уу?</p>
     <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ,<span> ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
-    <form class="search-form" id="searchForm">
-      <div class="form-group">
-        <label for="areas">Бүс нутаг</label>
-        <select name="areas" id="areas">
-          <option value="" disabled selected>Аялах бүс нутаг аа сонгоно уу.</option>
-          <option value="Төв">Төв</option>
-          <option value="Хангай">Хангай</option>
-          <option value="Зүүн">Зүүн</option>
-          <option value="Баруун">Баруун</option>
-          <option value="Алтай">Алтай</option>
-          <option value="Говь">Говь</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="categories">Категори</label>
-        <select name="categories" id="categories">
-          <option value="" disabled selected>Сонирхож буй аяллын төрөл сонгоно уу.</option>
-          <option value="Соёл">Соёл</option>
-          <option value="Амралт сувилал">Амралт сувилал</option>
-          <option value="Адал явдалт">Адал явдалт</option>
-          <option value="Байгаль">Байгаль</option>
-          <option value="Ууланд гарах">Ууланд гарах</option>
-        </select>
-      </div>
-      <button id="filter-submit" type="submit">
-        <svg>
-          <use href="../styles/icons.svg#icon-search"></use>
-        </svg>
-      </button>
-    </form>
-    <section class="recommend">
-      <h3>Доорх боломжуудыг танд санал болгож байна.</h3>
-      <section class="rec-grid">
-        <div class="rec-icons">
-          <svg>
-            <use href="../styles/icons.svg#icon-route"></use>
-          </svg>
-          <p>Уян хатан маршрут</p>
-        </div>
-        <div class="rec-icons">
-          <svg>
-            <use href="../styles/icons.svg#icon-people"></use>
-          </svg>
-          <p>Хамтдаа төлөвлө</p>
-        </div>
-        <div class="rec-icons">
-          <svg>
-            <use href="../styles/icons.svg#icon-signal"></use>
-          </svg>
-          <p>Хадгалсан маршрут</p>
-        </div>
-        <div class="rec-icons">
-          <svg>
-            <use href="../styles/icons.svg#icon-doc"></use>
-          </svg>
-          <p>Газар нээж ол</p>
-        </div>
-      </section>
+    <ag-home-search
+      areas='["Төв","Хангай","Зүүн","Баруун","Алтай","Говь"]'
+      categories='["Соёл","Амралт сувилал","Адал явдалт","Байгаль","Ууланд гарах"]'
+      area-label="Бүс нутаг"
+      cate-label="Категори"
+    ></ag-home-search>
+
+    <section class="rec-grid">
+      <ag-feature-card icon="route"  text="Уян хатан маршрут"></ag-feature-card>
+      <ag-feature-card icon="people" text="Хамтдаа төлөвлө"></ag-feature-card>
+      <ag-feature-card icon="signal" text="Хадгалсан маршрут"></ag-feature-card>
+      <ag-feature-card icon="doc"    text="Газар нээж ол"></ag-feature-card>
     </section>
+
+
     <!--Заавар-->
     <section class="tutorial">
       <h3>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h3>
       <div class="tutorial-grid">
         <ag-tutorial-card 
-        zrg="../files/tutorial-img/tutorial-1.svg"
-        bogin="Нэг товшоод төлөвлөгөөндөө нэм."
-        urt="Сэтгэл татсан аяллын цэг бүрээ нэг товшоод маршрутдаа нэм.  Аяллын төлөвлөгөө илүү ухаалаг, илүү төгс хэлбэрээр бүтээгээрэй.">
+          zrg="../files/tutorial-img/tutorial-1.svg"
+          bogin="Нэг товшоод төлөвлөгөөндөө нэм."
+          urt="Сэтгэл татсан аяллын цэг бүрээ нэг товшоод маршрутдаа нэм. Аяллын төлөвлөгөө илүү ухаалаг, илүү төгс хэлбэрээр бүтээгээрэй.">
         </ag-tutorial-card>
         <ag-tutorial-card 
-        zrg="../files/tutorial-img/tutorial-2.svg"
-        bogin="Монголын үзэсгэлэнт газруудтай танилц."
-        urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ.  Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
+          zrg="../files/tutorial-img/tutorial-2.svg"
+          bogin="Монголын үзэсгэлэнт газруудтай танилц."
+          urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ. Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
         </ag-tutorial-card>
         <ag-tutorial-card 
-        zrg="../files/zaavar3.svg"
-        bogin="Хялбар төлөвлөгөө ба хуваалцах."
-        urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц.  Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
+          zrg="../files/zaavar3.svg"
+          bogin="Хялбар төлөвлөгөө ба хуваалцах."
+          urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц. Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
         </ag-tutorial-card>
       </div>
-
     </section>
+
     <!--Шилдэг аяллын цэгүүд-->
-    <section class="spots">
-      <div class="spot-header">
-      <h3>Шилдэг аяллын цэгүүд</h3>
-        <a href="../code/spots.html" class="more-spots">
-        <p>Бүгдийг харах</p>
-        <svg class="more-icon">
-          <use href="../styles/icons.svg#icon-arrow"></use>
-        </svg>
-      </a>
-      </div>
-      <div class="spots-grid">
-        <ag-spot
+    <ag-spot-section title="Шилдэг аяллын цэгүүд" link="../code/spots.html">
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2019-06/870d8d6123525e17e6a4c9d34b14f8c7-chinggis-khaan-sukhbaatar-square.jpg"
         ner="СҮХБААТАРЫН ТАЛБАЙ"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
         ner="Гандан Тэгчинлэн Хийд"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
         ner="Амарбаясгалант хийд"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockeditorial1596873184.jpg"
         ner="Монголын Үндэсний музейн"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-      </div>
-    </section>
-    <!--Хөтөч болох-->
-    <section class="guide">
-      <div class="guide-inner">
-        <h3>Хөтөч болж бүртгүүлэх</h3>
-        <p>Хөтөч болж өөрийн хувь нэмэрээ оруулах уу?</p>
-      </div>
-      <a class="guide-btn" href="guide_sign_up.html">Хөтөч болох</a>
-    </section>
+      </ag-spot>
+    </ag-spot-section>
+
+
+    <ag-guide-banner
+      title="Хөтөч болж бүртгүүлэх"
+      subtitle="Хөтөч болж өөрийн хувь нэмэрээ оруулах уу?"
+      href="guide_sign_up.html"
+      btn="Хөтөч болох">
+    </ag-guide-banner> 
+
 
     <!--Соёлын үзэсгэлэнт газрууд-->
-    <section class="spots">
-      <div class="spot-header">
-      <h3>Соёлын үзэсгэлэнт газрууд</h3>
-        <a href="./spots.html" class="more-spots">
-        <p>Бүгдийг харах</p>
-        <svg class="more-icon">
-          <use href="../styles/icons.svg#icon-arrow"></use>
-        </svg>
-      </a>
-      </div>
-      <div class="spots-grid">
-        <ag-spot
+    <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="../code/spots.html">
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF579068047.jpg"
         ner="эрдэнэ зуу хийд"
         bus="Хангай"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-08/shutterstock668674942.jpg"
         ner="Аглаг бүтээлийн хийд"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218476559.jpg"
         ner="Шанхын хийд"
-        bus="Хангайн"
+        bus="Хангай"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-07/shutterstock743550031.jpg"
         ner="БОГД ХААНЫ ОРДОН МУЗЕЙ"
         bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-      </div>
-    </section>
-  <!--Байгалийн үзэгслэнт-->
-    <section class="spots">
-      <div class="spot-header">
-        <h3>Байгалийн үзэсгэлэнт газрууд</h3>
-        <a href="../code/spots.html" class="more-spots">
-        <p>Бүгдийг харах</p>
-        <svg class="more-icon">
-          <use href="../styles/icons.svg#icon-arrow"></use>
-        </svg>
-      </a>
-      </div>
-      <div class="spots-grid">
-        <ag-spot
+      </ag-spot>
+    </ag-spot-section>
+
+    <!--Байгалийн үзэсгэлэнт-->
+    <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="../code/spots.html">
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
         ner="хустайн байгалийн цогцолбор"
-        bus="төв"
+        bus="Төв"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://lp-cms-production.imgix.net/2023-05/iStock-178959041.jpg"
         ner="Тэрхийн Цагаан нуур"
         bus="Хангай"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://montsame.mn/files/667399f904664.jpeg"
         ner="Алтай Таван Богд"
         bus="Баруун"
         link="../code/spot-info.html">
-        </ag-spot>
-        <ag-spot
+      </ag-spot>
+      <ag-spot
         zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
         ner="ганга нуур"
         bus="Зүүн"
         link="../code/spot-info.html">
-        </ag-spot>
-      </div>
-    </section>
+      </ag-spot>
+    </ag-spot-section>
   </main>
   <ag-footer></ag-footer>
 
-<script>
-document.getElementById("searchForm").addEventListener("submit", function(event) {
-    event.preventDefault(); 
-
-    const area = document.getElementById("areas").value;
-    const category = document.getElementById("categories").value;
-
-    const url = `../code/spots.html?area=${encodeURIComponent(area)}&cate=${encodeURIComponent(category)}`;
-
-    window.location.href = url; 
-});
-</script>
-
-
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+      event.preventDefault(); 
+      const area = document.getElementById("areas").value;
+      const category = document.getElementById("categories").value;
+      const url = `../code/spots.html?area=${encodeURIComponent(area)}&cate=${encodeURIComponent(category)}`;
+      window.location.href = url; 
+    });
+  </script>
 </body>
 
 </html>

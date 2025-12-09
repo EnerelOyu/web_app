@@ -1,49 +1,79 @@
 class AgTutorialCard extends HTMLElement {
-    static get observedAttributes(){
-        return["img", "short", "long"]
-    }
-    constructor() {
-        super();
-        this.css=`
-        p{
-        font-family: 'NunitoSans';
+  static get observedAttributes() {
+    // Одоо хэрэглэж байгаа attribute нэртэйгээ тааруулна
+    return ["zrg", "bogin", "urt"];
+  }
+
+  constructor() {
+    super();
+    this.attachShadow({ mode: "open" });
+  }
+
+  connectedCallback() {
+    this.render();
+  }
+
+  attributeChangedCallback() {
+    // attribute өөрчлөгдвөл дахин render хийнэ
+    this.render();
+  }
+
+  render() {
+    const img = this.getAttribute("zrg") || "";
+    const shortText = this.getAttribute("bogin") || "";
+    const longText = this.getAttribute("urt") || "";
+
+    this.shadowRoot.innerHTML = `
+      <style>
+        @import url('../../../styles/fonts.css');
+
+        :host {
+          display: block;
         }
-        `;
-        
-    }
 
-    connectedCallback() {
-        this.render();
-        
-    }
+        .tutorial-card {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-size-s);
+          padding: var(--p-md);
+          border-radius: var(--br-m);
+        }
 
-    render(){
-        const img = this.getAttribute("zrg") || "NULL";
-        const short = this.getAttribute("bogin") || "NULL";
-        const long = this.getAttribute("urt") || "NULL";
-        
-        this.innerHTML=`
-        <style>${this.css}</style>
-        <article class="tutorial-card">
-          <img src="${img}" alt="tutorial-1">
-          <h4>${short}</h4>
-          <p>${long}</p>
-        </article>
-        `
-    }
+        .tutorial-card img {
+          width: 100%;
+          border-radius: var(--br-m);
+          transition: all 0.3s ease;
+          display: block;
+        }
 
-    disconnectedCallback() {
-        
-    }
+        .tutorial-card:hover img {
+          transform: scale(1.03);
+        }
 
-    attributeChangedCallback(name, oldVal, newVal) {
-        
-    }
+        .tutorial-card h4 {
+          color: var(--text-color-2);
+          margin: 0.25rem 0;
+          font-family: 'Rubik';
+        }
 
-    adoptedCallback() {
-        
-    }
+        .tutorial-card:hover h4 {
+          color: var(--accent);
+        }
 
+        .tutorial-card p {
+          color: var(--text-color-3);
+          font-family: 'NunitoSans';
+          margin: 0;
+        }
+      </style>
+
+      <article class="tutorial-card">
+        <img src="${img}" alt="${shortText || "tutorial image"}">
+        <h4>${shortText}</h4>
+        <p>${longText}</p>
+      </article>
+    `;
+  }
 }
 
-window.customElements.define('ag-tutorial-card', AgTutorialCard);
+customElements.define("ag-tutorial-card", AgTutorialCard);
