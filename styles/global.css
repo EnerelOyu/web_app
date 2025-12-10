@@ -2,59 +2,87 @@
 @import url(../styles/fonts.css);
 
 :root {
-
   /* === font size === */
 
   font-size: 16px;
 
-  --fs-xs: 0.75rem;   /* 12px */
-  --fs-sm: 0.875rem;  /* 14px */
-  --fs-base: 1rem;    /* 16px */
-  --fs-lg: 1.25rem;   /* 20px */
-  --fs-xl: 1.5rem;    /* 24px */
-  --fs-2xl: 2rem;     /* 32px */
-  --fs-3xl: 3rem;     /* 48px */
+  --fs-xs: 0.75rem;
+  /* 12px */
+  --fs-sm: 0.875rem;
+  /* 14px */
+  --fs-base: 1rem;
+  /* 16px */
+  --fs-lg: 1.25rem;
+  /* 20px */
+  --fs-xl: 1.5rem;
+  /* 24px */
+  --fs-2xl: 2rem;
+  /* 32px */
+  --fs-3xl: 3rem;
+  /* 48px */
   --fs-hvr: 1.125rem;
 
   /* === svg size === */
 
   /* === svg size (responsive) === */
 
-  --svg-s: clamp(0.875rem, 1.8vw, 1.25rem); 
-  --svg-m: clamp(1.5rem, 3vw, 2.5rem);      
-  --svg-l: clamp(2rem, 4vw, 3rem);         
+  --svg-s: clamp(0.875rem, 1.8vw, 1.25rem);
+  --svg-m: clamp(1.5rem, 3vw, 2.5rem);
+  --svg-l: clamp(2rem, 4vw, 3rem);
 
 
   /* === padding size === */
 
-  --p-xxs: 0.25rem;  /* 4px */
-  --p-xs:  0.5rem;   /* 8px */
-  --p-sm:  0.75rem;  /* 12px */
-  --p-md:  1rem;     /* 16px */
-  --p-lg:  1.5rem;   /* 24px */
-  --p-xl:  2rem;     /* 32px */
-  --p-2xl: 3rem;     /* 48px */
-  --p-3xl: 4rem;     /* 64px */
+  --p-xxs: 0.25rem;
+  /* 4px */
+  --p-xs: 0.5rem;
+  /* 8px */
+  --p-sm: 0.75rem;
+  /* 12px */
+  --p-md: 1rem;
+  /* 16px */
+  --p-lg: 1.5rem;
+  /* 24px */
+  --p-xl: 2rem;
+  /* 32px */
+  --p-2xl: 3rem;
+  /* 48px */
+  --p-3xl: 4rem;
+  /* 64px */
 
-    /* === margin size === */
+  /* === margin size === */
 
-  --m-xxs: 0.25rem;  /* 4px */
-  --m-xs:  0.5rem;   /* 8px */
-  --m-sm:  0.75rem;  /* 12px */
-  --m-md:  1rem;     /* 16px */
-  --m-lg:  1.5rem;   /* 24px */
-  --m-xl:  2rem;     /* 32px */
-  --m-2xl: 3rem;     /* 48px */
-  --m-3xl: 4rem;     /* 64px */
+  --m-xxs: 0.25rem;
+  /* 4px */
+  --m-xs: 0.5rem;
+  /* 8px */
+  --m-sm: 0.75rem;
+  /* 12px */
+  --m-md: 1rem;
+  /* 16px */
+  --m-lg: 1.5rem;
+  /* 24px */
+  --m-xl: 2rem;
+  /* 32px */
+  --m-2xl: 3rem;
+  /* 48px */
+  --m-3xl: 4rem;
+  /* 64px */
 
   /* === gap size === */
-
-  --gap-size-xs: 0.313rem;  /* 5px */
-  --gap-size-s: 0.75rem;   /* 12px */
-  --gap-size-m: 1.25rem;   /* 20px */
-  --gap-size-l: 2rem;      /* 32px*/
-  --gap-size-xl: 3rem;     /* 48px */
-  --gap-size-2xl: 4rem;    /* 64px */
+  --gap-size-xxs: 0.15rem;
+  --gap-size-xs: 0.313rem;
+  /* 5px */
+  --gap-size-s: 0.75rem;
+  /* 12px */
+  --gap-size-m: 1.25rem;
+  /* 20px */
+  --gap-size-l: 2rem;
+  /* 32px*/
+  --gap-size-xl: 3rem;
+  /* 48px */
+  --gap-size-2xl: 4rem;
+  /* 64px */
 
   /* === border radius === */
 
@@ -64,68 +92,75 @@
 
   /* === logo size === */
 
- --logo-size: 3rem;  /* 64px */
+  --logo-size: 3rem;
+  /* 64px */
 
   /* === COLOR === */
+  color-scheme: light;
 
-    --text-color-0: hsl(212 50% 13%);
-    --text-color-1: hsl(212 50% 20%);
-    --text-color-2: hsl(212 50% 30%);
-    --text-color-3: hsl(212 50% 40%);
-    --text-color-4: hsl(212 50% 50%);
-    --text-color-5: hsl(212 50% 60%);
-    --text-color-6: hsl(212 50% 70%);
-    --text-color-7: hsl(212 50% 80%);
-    --text-color-8: hsl(212 50% 90%);
-    --text-color-9: hsl(212 50% 100%);
+  --text-color-0: hsl(212 50% 13%);
+  --text-color-1: hsl(212 50% 20%);
+  --text-color-2: hsl(212 50% 30%);
+  --text-color-3: hsl(212 50% 40%);
+  --text-color-4: hsl(212 50% 50%);
+  --text-color-5: hsl(212 50% 60%);
+  --text-color-6: hsl(212 50% 70%);
+  --text-color-7: hsl(212 50% 80%);
+  --text-color-8: hsl(212 50% 90%);
+  --text-color-9: hsl(212 50% 100%);
 
-    --primary: hsl(24 100% 50%);
-    --primary-1: hsl(24 100% 60%);
-    --primary-2: hsl(24 100% 70%);
-    --primary-3: hsl(24 100% 80%);
-    --primary-4: hsl(24 100% 90%);
-    --primary-5: hsl(24 100% 97%);
+  --primary: hsl(24 100% 50%);
+  --primary-1: hsl(24 100% 60%);
+  --primary-2: hsl(24 100% 70%);
+  --primary-3: hsl(24 100% 80%);
+  --primary-4: hsl(24 100% 90%);
+  --primary-5: hsl(24 100% 97%);
 
-    --secondary: hsl(30, 96%, 60%);
-    --secondary-1: hsl(30, 96%, 70%);
-    --secondary-2: hsl(30, 96%, 80%);
-    --secondary-3: hsl(30, 96%, 90%);
+  --secondary: hsl(30, 96%, 60%);
+  --secondary-1: hsl(30, 96%, 70%);
+  --secondary-2: hsl(30, 96%, 80%);
+  --secondary-3: hsl(30, 96%, 90%);
 
-    --accent: hsl(165, 95%, 20%);
-    --accent-1: hsl(165, 95%, 25%);
-    --accent-2: hsl(165, 95%, 30%);
-    --accent-3: hsl(165, 95%, 50%);
-    --accent-4: hsl(165, 95%, 60%);
-    --accent-5: hsl(165, 95%, 70%);
-    --accent-6: hsl(165, 95%, 80%);
-    --accent-7: hsl(165, 95%, 85%);
-    --accent-8: hsl(165, 95%, 90%);
-    --accent-9: hsl(165, 95%, 98%);
+  --accent: hsl(165, 95%, 20%);
+  --accent-1: hsl(165, 95%, 25%);
+  --accent-2: hsl(165, 95%, 30%);
+  --accent-3: hsl(165, 95%, 50%);
+  --accent-4: hsl(165, 95%, 60%);
+  --accent-5: hsl(165, 95%, 70%);
+  --accent-6: hsl(165, 95%, 80%);
+  --accent-7: hsl(165, 95%, 85%);
+  --accent-8: hsl(165, 95%, 90%);
+  --accent-9: hsl(165, 95%, 98%);
 
-    --bg-color: hsl(0, 0%, 100%);
-    --hdr-bg-color: hsl(212 50% 13%);
-    --ftr-bg-color: hsl(212 50% 13%);
+  --bg-color: hsl(0, 0%, 100%);
+  --hdr-bg-color: hsl(212 50% 13%);
+  --ftr-bg-color: hsl(212 50% 13%);
 
-    --vh: 1vh;
+  --logo-text: hsl(0, 0%, 100%);
+
+
+  --vh: 1vh;
   --vw: 1vw;
-  
+
   /* === Component heights === */
-  --header-height: 4rem; /* 64px */
-  --footer-height: 3rem; /* 48px */
-  
+  --header-height: 4rem;
+  /* 64px */
+  --footer-height: 3rem;
+  /* 48px */
+
   /* === Spacing in vh/vw === */
   --spacing-vh-xs: calc(2 * var(--vh));
   --spacing-vh-sm: calc(4 * var(--vh));
   --spacing-vh-md: calc(6 * var(--vh));
   --spacing-vh-lg: calc(8 * var(--vh));
   --spacing-vh-xl: calc(12 * var(--vh));
-  
+
   --spacing-vw-xs: calc(1 * var(--vw));
   --spacing-vw-sm: calc(2 * var(--vw));
   --spacing-vw-md: calc(4 * var(--vw));
   --spacing-vw-lg: calc(6 * var(--vw));
   --spacing-vw-xl: calc(8 * var(--vw));
-  
+
   /* === Container sizes === */
   --container-max-width: 90vw;
   --mobile-breakpoint: 768px;
@@ -164,4 +199,53 @@ p {
   font-size: var(--fs-base);
   padding-bottom: var(--p-xs);
   flex-direction: column;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* === TEXT COLORS (dark) === */
+  --text-color-0: hsl(212 50% 100%);    
+  --text-color-1: hsl(212 50% 90%);
+  --text-color-2: hsl(212 50% 80%);
+  --text-color-3: hsl(212 50% 70%);
+  --text-color-4: hsl(212 50% 60%);
+  --text-color-5: hsl(212 50% 50%);
+  --text-color-6: hsl(212 50% 40%);
+  --text-color-7: hsl(212 50% 30%);
+  --text-color-8: hsl(212 50% 20%);
+  --text-color-9: hsl(212 50% 13%);
+  
+  /* === PRIMARY (dark version) === */
+  --primary:   hsl(24 100% 60%);
+  --primary-1: hsl(24 100% 55%);
+  --primary-2: hsl(24 100% 50%);
+  --primary-3: hsl(24 100% 45%);
+  --primary-4: hsl(24 100% 35%);
+  --primary-5: hsl(24 90% 25%);
+
+  /* === SECONDARY (dark) === */
+  --secondary:   hsl(30 96% 60%);
+  --secondary-1: hsl(30 96% 55%);
+  --secondary-2: hsl(30 96% 50%);
+  --secondary-3: hsl(30 96% 40%);
+
+  /* === ACCENT (dark version) === */
+  --accent:   hsl(165 80% 55%);
+  --accent-1: hsl(165 80% 50%);
+  --accent-2: hsl(165 80% 45%);
+  --accent-3: hsl(165 80% 40%);
+  --accent-4: hsl(165 70% 35%);
+  --accent-5: hsl(165 60% 30%);
+  --accent-6: hsl(165 50% 25%);
+  --accent-7: hsl(165 45% 20%);
+  --accent-8: hsl(165 40% 16%);
+  --accent-9: hsl(165 35% 12%); /* dark hover / card bg */
+
+  /* === BACKGROUND (dark) === */
+  --bg-color: hsl(212 30% 7%);
+  --hdr-bg-color: hsl(212 40% 4%);
+  --ftr-bg-color: hsl(212 40% 4%);
+
+  --logo-text: hsl(0, 0%, 100%);
 }
