@@ -351,92 +351,100 @@ class PageSpots extends HTMLElement {
                 <ag-spot-manager></ag-spot-manager>
                 <p class="container-hdr">шүүсэн аяллын цэгүүд</p>
                 <div class="spots-grid">
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" , 
+                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" ,
                         bus="төв",
-                        unelgee="4.5", 
-                        ner="Цонжин Болдог", 
-                        cate="Соёл", 
+                        unelgee="4.5",
+                        ner="Цонжин Болдог",
+                        cate="Соёл",
                         activity="Морин аялал, Амьтантай ойр",
-                        une="20,000", 
-                        age="Бүх нас">
+                        une="20,000",
+                        age="Бүх нас"
+                        data-spot-id="tsonjin">
                     </ag-spot-card>
 
-                    
 
-                    <ag-spot-card 
+
+                    <ag-spot-card
                         href="../code/spot-info.html",
-                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg", 
+                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg",
                         bus="төв" ,
-                        unelgee="4.3", 
-                        ner="Амарбаясгалант хийд", 
-                        cate="Соёл", 
+                        unelgee="4.3",
+                        ner="Амарбаясгалант хийд",
+                        cate="Соёл",
                         activity="Түүхэн",
                         une="Үнэгүй",
-                        age="Бүх нас">
+                        age="Бүх нас"
+                        data-spot-id="amarbayasgalant">
                     </ag-spot-card>
 
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg", 
-                        bus="төв" , 
-                        unelgee="4.5", 
-                        ner="хустайн байгалийн цогцолбор", 
+                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg",
+                        bus="төв" ,
+                        unelgee="4.5",
+                        ner="хустайн байгалийн цогцолбор",
                         cate="Байгаль",
                         une="500,000",
                         activity="Морин аялал, Сур харваа",
-                        age="Бүх нас">
+                        age="Бүх нас"
+                        data-spot-id="khustai">
                     </ag-spot-card>
 
-                    <ag-spot-card 
-                        href="../code/spot-info.html" , 
+                    <ag-spot-card
+                        href="../code/spot-info.html" ,
                         zrg="https://montsame.mn/files/667399f904664.jpeg" ,
-                        bus="Алтай" , 
-                        unelgee="4.5" , 
-                        ner="Алтай Таван Богд" , 
+                        bus="Алтай" ,
+                        unelgee="4.5" ,
+                        ner="Алтай Таван Богд" ,
                         cate="Байгаль ,Амралт сувилал" ,
-                        une="100,000">
+                        une="100,000"
+                        data-spot-id="altai">
                     </ag-spot-card>
 
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
                         zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
-                        bus="Зүүн" , 
-                        unelgee="3" , 
-                        ner="ганга нуур" , 
+                        bus="Зүүн" ,
+                        unelgee="3" ,
+                        ner="ганга нуур" ,
                         cate="Байгаль, Амралт сувилал" ,
-                        une="20,000">
+                        une="20,000"
+                        data-spot-id="ganga">
                     </ag-spot-card>
 
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1427612316.jpg" , 
+                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1427612316.jpg" ,
                         bus="Баруун" ,
-                        unelgee="3.0" , 
-                        ner="Монгол Элс" , 
-                        cate="Байгаль" , 
-                        une="33,000">
+                        unelgee="3.0" ,
+                        ner="Монгол Элс" ,
+                        cate="Байгаль" ,
+                        une="33,000"
+                        data-spot-id="mongolels">
                     </ag-spot-card>
 
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-06/iStock-513683766.jpg" , 
+                        zrg="https://lp-cms-production.imgix.net/2023-06/iStock-513683766.jpg" ,
                         bus="Хангай" ,
-                        unelgee="5.00" , 
-                        ner="хөвсгөл нуур" , 
-                        cate="Байгаль, Амралт сувилал" , 
-                        une="15,000">
+                        unelgee="5.00" ,
+                        ner="хөвсгөл нуур" ,
+                        cate="Байгаль, Амралт сувилал" ,
+                        une="15,000"
+                        data-spot-id="khovsgol">
                     </ag-spot-card>
 
-                    <ag-spot-card 
+                    <ag-spot-card
                         href="../code/spot-info.html" ,
-                        zrg="http://www.newkhovd.mn/news-images/%D0%BC-05.jpg_medium.jpg" , 
+                        zrg="http://www.newkhovd.mn/news-images/%D0%BC-05.jpg_medium.jpg" ,
                         bus="Хангай" ,
-                        unelgee="5.00" , 
-                        ner="Мөнххайрхан уул" , 
-                        cate="Байгаль, Амралт сувилал, ууланд гарах" , 
-                        une="25,000">
+                        unelgee="5.00" ,
+                        ner="Мөнххайрхан уул" ,
+                        cate="Байгаль, Амралт сувилал, ууланд гарах" ,
+                        une="25,000"
+                        data-spot-id="munkhkhairkhan">
                     </ag-spot-card>
 
                 </div>
