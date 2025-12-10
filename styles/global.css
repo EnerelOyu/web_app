@@ -136,6 +136,8 @@
   --hdr-bg-color: hsl(212 50% 13%);
   --ftr-bg-color: hsl(212 50% 13%);
 
+  --logo-text: hsl(0, 0%, 100%);
+
 
   --vh: 1vh;
   --vw: 1vw;
