@@ -11,7 +11,6 @@ class PageHome extends HTMLElement {
     render() {
         this.innerHTML = `
         <style>
-            /* Page Home Styles */
             :host {
                 display: block;
                 width: 100%;
@@ -20,13 +19,12 @@ class PageHome extends HTMLElement {
             main {
                 width: 100%;
                 max-width: 100vw;
-                min-height: calc(100vh - var(--header-height) - var(--footer-height));
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: var(--gap-size-2xl);
-                padding: var(--p-2xl) var(--p-md);
                 animation: fadeIn 0.6s ease-out;
+                gap: var(--gap-size-m);
+                padding: 0;
             }
 
             @keyframes fadeIn {
@@ -43,7 +41,6 @@ class PageHome extends HTMLElement {
             /* Hero Section */
             .hero-section {
                 width: 100%;
-                max-width: 1200px;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -148,6 +145,7 @@ class PageHome extends HTMLElement {
             .tutorial h3 {
                 color: var(--text-color-1);
                 font-size: var(--fs-xl);
+                font-weight: bold;
                 font-family: 'Rubik';
                 text-align: center;
                 text-transform: uppercase;
@@ -164,14 +162,12 @@ class PageHome extends HTMLElement {
             /* Spot Sections */
             ag-spot-section {
                 width: 100%;
-                max-width: 1400px;
                 padding: var(--p-xl) 0;
             }
 
             /* Guide Banner */
             ag-guide-banner {
                 width: 100%;
-                max-width: 1200px;
                 padding: var(--p-2xl) 0;
             }
 
@@ -224,7 +220,7 @@ class PageHome extends HTMLElement {
 
             @media (max-width: 480px) {
                 main {
-                    padding: var(--p-md) var(--p-xs);
+                    width: 100%;
                 }
 
                 .uria-h1 {

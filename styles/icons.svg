@@ -197,7 +197,7 @@
 
 <symbol id="icon-menu" viewBox="0 0 24 24" role="img" aria-label="Menu">
   <path
-    fill="currentColor"
+    fill="hsl(24 100% 50%)"
     d="M4 7a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1zm0 5a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2H5a1 1 0 0 1-1-1z"
   />
 </symbol>

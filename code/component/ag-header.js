@@ -20,7 +20,7 @@ class AgHeader extends HTMLElement {
         display: inline-flex;
         align-items: center;
         margin-right: auto;
-        gap: var(--gap-size-xxs);
+        gap: var(--gap-size-s);
         justify-content: center;
       }
 
@@ -94,7 +94,7 @@ class AgHeader extends HTMLElement {
       .search-container {
         display: flex;
         align-items: center;
-        gap: var(--gap-size-xs);
+        gap: var(--gap-size-s);
       }
 
       .header-nav input {
@@ -105,7 +105,7 @@ class AgHeader extends HTMLElement {
         padding: 0 var(--p-md);
         color: var(--text-color-1);
         width: 200px;
-        font-family: 'Nunito Sans', sans-serif;
+        font-family: 'NunitoSans';
       }
 
       .header-nav input::placeholder {
@@ -187,7 +187,7 @@ class AgHeader extends HTMLElement {
         justify-content: center;
         width: var(--svg-m);
         height: var(--svg-m);
-        border-radius: 999px;
+        border-radius: 50%;
         border: none;
         cursor: pointer;
         background-color: var(--primary-5);
@@ -212,7 +212,6 @@ class AgHeader extends HTMLElement {
         display: none;
         background: none;
         border: none;
-        color: var(--bg-color);
         font-size: var(--fs-xl);
         cursor: pointer;
         padding: var(--p-xs);
@@ -222,6 +221,7 @@ class AgHeader extends HTMLElement {
       .mobile-menu-btn svg {
         width: var(--svg-m);
         height: var(--svg-m);
+        color: var(--primary);
       }
 
       .mobile-nav {
@@ -245,7 +245,7 @@ class AgHeader extends HTMLElement {
         padding: var(--p-sm);
         border-radius: var(--br-s);
         text-decoration: none;
-        font-family: 'Nunito Sans';
+        font-family: 'NunitoSans';
         text-transform: uppercase;
         font-size: var(--fs-sm);
       }
@@ -309,7 +309,6 @@ class AgHeader extends HTMLElement {
             </button>
           </div>
 
-          <!-- Desktop Theme toggle -->
           <button class="theme-toggle" type="button">
             <svg class="icon-moon"><use href="../styles/icons.svg#icon-moon"></use></svg>
             <svg class="icon-sun hidden"><use href="../styles/icons.svg#icon-sun"></use></svg>
@@ -321,7 +320,7 @@ class AgHeader extends HTMLElement {
         </div>
 
         <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
-          <svg><use href="../styles/icons.svg#ag-icon-menu"></use></svg>
+          <svg><use href="../styles/icons.svg#icon-menu"></use></svg>
         </button>
 
         <div class="mobile-nav">
@@ -340,22 +339,42 @@ class AgHeader extends HTMLElement {
     `;
   }
 
-  markActiveLink() {
-    let currentPath = window.location.pathname.split("/").pop();
-    if (!currentPath) currentPath = "home.html";
+markActiveLink() {
+  // URL-ийн file нэр (home.html гэх мэт)
+  let currentPath = window.location.pathname.split("/").pop();
+  if (!currentPath) currentPath = "home.html";
 
-    const links = this.querySelectorAll(".header-nav a");
-    const mobileLinks = this.querySelectorAll(".mobile-nav a");
-    const allLinks = [...links, ...mobileLinks];
+  // URL-ийн hash (#/home гэх мэт)
+  const currentHash = window.location.hash || "#/home";
 
-    allLinks.forEach(link => {
-      const href = link.getAttribute("href");
-      if (href === currentPath) {
-        link.classList.add("is-active");
-        link.setAttribute("aria-current", "page");
-      }
-    });
-  }
+  const allLinks = this.querySelectorAll(".header-nav a, .mobile-nav a");
+
+  allLinks.forEach(link => {
+    const href = link.getAttribute("href");
+    let isActive = false;
+
+    if (!href) return;
+
+    // Hash router-той линк (#/home, #/spots ...)
+    if (href.startsWith("#/")) {
+      isActive = (href === currentHash);
+    } 
+    // Энгийн файл руу заасан линк (home.html, spots.html ...)
+    else {
+      const linkPath = href.split("/").pop();
+      isActive = (linkPath === currentPath);
+    }
+
+    if (isActive) {
+      link.classList.add("is-active");
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.classList.remove("is-active");
+      link.removeAttribute("aria-current");
+    }
+  });
+}
+
 
   setupMobileMenu() {
     const btn = this.querySelector(".mobile-menu-btn");
