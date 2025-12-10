@@ -10,7 +10,7 @@ class AgSpotCard extends HTMLElement {
         gap: var(--gap-size-xs);
         border-radius: var(--br-m);
         transition: background-color 200ms;
-        padding: 0 var(--p-sm);
+        padding: 0 var(--p-xs);
         overflow: hidden;
         align-items: center;
       }
@@ -81,8 +81,7 @@ class AgSpotCard extends HTMLElement {
       .spot-info {
         display: flex;
         flex-direction: column;
-        gap: var(--gap-size-xs);
-        padding: var(--p-xs);
+        padding: 0;
       }
 
       .short-info {
@@ -92,7 +91,7 @@ class AgSpotCard extends HTMLElement {
 
       .line {
         height: 1px;
-        margin: 6px 0 4px;
+        margin: 0 ;
         background-color: var(--text-color-3);
       }
 

@@ -9,18 +9,18 @@ class AgHeader extends HTMLElement {
         top: 0;
         z-index: 1000;
         padding: var(--p-md) var(--p-sm);
-        background-color: var(--hdr-bg-color, #1a365d);
+        background-color: var(--hdr-bg-color);
         display: flex;
         align-items: center;
         min-height: 50px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 10px color-mix(in srgb, var(--text-color-0) 15%, transparent);
       }
 
       .logo {
         display: inline-flex;
         align-items: center;
         margin-right: auto;
-        gap: 8px;
+        gap: var(--gap-size-xxs);
         justify-content: center;
       }
 
@@ -34,26 +34,25 @@ class AgHeader extends HTMLElement {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 2px;
+        gap: var(--gap-size-xxs);
         margin: 0;
       }
 
       .logo-main {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: var(--gap-size-xs);
       }
 
       .logo h1 {
-        color: var(--bg-color);
+        color: var(--logo-text);
         font-size: var(--fs-2xl);
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Rubik';
         margin: 0;
-        gap:0;
-        padding:0;
+        padding: 0;
       }
 
-      .logo h1>span {
+      .logo h1 > span {
         color: var(--primary);
       }
 
@@ -61,9 +60,8 @@ class AgHeader extends HTMLElement {
         color: var(--primary-2);
         font-size: var(--fs-xs);
         font-weight: bold;
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Rubik';
         margin: 0;
-        line-height: 1.2;
       }
 
       .header-nav {
@@ -74,8 +72,8 @@ class AgHeader extends HTMLElement {
 
       .header-nav a {
         color: var(--primary-5);
-        font-size: 14px;
-        font-family: 'NunitoSans', sans-serif;
+        font-size: var(--fs-sm);
+        font-family: 'NunitoSans';
         text-transform: uppercase;
         text-decoration: none;
         transition: color 0.3s;
@@ -86,111 +84,144 @@ class AgHeader extends HTMLElement {
         color: var(--primary);
       }
 
+      .header-nav a.is-active {
+        color: var(--primary);
+        font-weight: 700;
+      }
+
+      /* === SEARCH === */
+
       .search-container {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: var(--gap-size-xs);
       }
 
       .header-nav input {
-        background-color: var(--primary-5, #2d3748);
-        border-radius: 20px;
+        background-color: var(--primary-5);
+        border-radius: var(--br-m);
         border: none;
-        height: 36px;
-        padding: 0 16px;
-        color: white;
+        height: var(--svg-m);
+        padding: 0 var(--p-md);
+        color: var(--text-color-1);
         width: 200px;
-        font-family: 'NunitoSans', sans-serif;
+        font-family: 'Nunito Sans', sans-serif;
       }
 
       .header-nav input::placeholder {
-        color: var(--text-color-2, #a0aec0);
-        font-family: 'NunitoSans', sans-serif;
+        color: var(--text-color-4);
       }
 
       .header-nav input:focus {
-        outline: 2px solid var(--primary, #48bb78);
-        outline-offset: 2px;
+        outline: 2px solid var(--primary);
       }
 
       .search-btn {
         display: inline-flex;
-        background-color: var(--primary-5, #2d3748);
+        background-color: var(--primary-5);
         border-radius: 50%;
         border: none;
         align-items: center;
         justify-content: center;
-        height: 36px;
-        width: 36px;
-        transition: all 0.3s;
+        height: var(--svg-m);
+        width: var(--svg-m);
         cursor: pointer;
+        transition: 0.3s;
       }
 
       .search-btn svg {
-        height: 18px;
-        width: 18px;
-        color: var(--primary, #48bb78);
+        width: var(--svg-s);
+        height: var(--svg-s);
+        stroke: var(--primary);
+        fill: none;
         transition: 0.3s;
       }
 
       .search-btn:hover {
-        background-color: var(--primary, #48bb78);
+        background-color: var(--primary);
       }
 
       .search-btn:hover svg {
-        color: white;
+        stroke: var(--bg-color);
       }
 
-      .header-nav a.is-active {
-        color: var(--primary, #48bb78);
-        font-weight: 700;
-      }
+      /* === USER AVATAR === */
 
-      /* User section styles */
       .user-section {
         display: flex;
         align-items: center;
-        gap: 12px;
-        margin-left: 20px;
+        gap: var(--gap-size-s);
+        margin-left: var(--m-md);
       }
 
       .user-avatar {
-        width: 40px;
-        height: 40px;
+        width: var(--svg-m);
+        height: var(--svg-m);
         border-radius: 50%;
-        background: var(--primary-5, #4a5568);
+        background: var(--primary-5);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--text-color-2, #a0aec0);
-        font-weight: normal;
-        font-size: 20px;
+        color: var(--text-color-3);
+        border: 2px dashed var(--text-color-4);
+        font-size: var(--fs-lg);
         cursor: pointer;
-        border: 2px dashed var(--text-color-3, #718096);
-        transition: all 0.3s;
+        transition: 0.3s;
       }
 
       .user-avatar::before {
         content: "?";
-        font-weight: normal;
       }
 
       .user-avatar:hover {
-        border-color: var(--primary, #48bb78);
-        background-color: var(--primary-5, #2d3748);
-        color: var(--primary, #48bb78);
+        border-color: var(--primary);
+        background-color: var(--primary-4);
+        color: var(--primary);
       }
 
-      /* Mobile menu styles */
+      /* === THEME TOGGLE === */
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: var(--svg-m);
+        height: var(--svg-m);
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        background-color: var(--primary-5);
+        color: var(--primary);
+        transition: 0.2s ease;
+      }
+
+      .theme-toggle svg {
+        width: var(--svg-s);
+        height: var(--svg-s);
+        stroke: currentColor;
+        fill: none;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      /* === MOBILE === */
+
       .mobile-menu-btn {
         display: none;
         background: none;
         border: none;
-        color: white;
-        font-size: 24px;
+        color: var(--bg-color);
+        font-size: var(--fs-xl);
         cursor: pointer;
-        padding: 8px;
-        margin-left: 16px;
+        padding: var(--p-xs);
+        margin-left: var(--m-xs);
+      }
+
+      .mobile-menu-btn svg {
+        width: var(--svg-m);
+        height: var(--svg-m);
       }
 
       .mobile-nav {
@@ -199,162 +230,49 @@ class AgHeader extends HTMLElement {
         top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--hdr-bg-color, #1a365d);
-        padding: 20px;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        background-color: var(--hdr-bg-color);
+        padding: var(--p-lg);
       }
 
       .mobile-nav.active {
         display: flex;
         flex-direction: column;
-        gap: 16px;
+        gap: var(--gap-size-s);
       }
 
       .mobile-nav a {
-        color: white;
+        color: var(--text-color-8);
+        padding: var(--p-sm);
+        border-radius: var(--br-s);
         text-decoration: none;
-        font-family: 'NunitoSans', sans-serif;
+        font-family: 'Nunito Sans';
         text-transform: uppercase;
-        padding: 12px;
-        border-radius: 6px;
-        transition: background-color 0.3s;
+        font-size: var(--fs-sm);
       }
 
       .mobile-nav a:hover,
       .mobile-nav a.is-active {
-        background-color: var(--primary, #48bb78);
-        color: white;
+        background-color: var(--primary);
+        color: var(--bg-color);
       }
 
-      .mobile-user-section {
+      .mobile-theme-toggle-wrapper {
         display: none;
-        flex-direction: column;
-        align-items: center;
-        padding: 16px;
-        border-top: 1px solid #2d3748;
-        margin-top: 16px;
+        justify-content: center;
+        margin-top: var(--m-sm);
       }
 
-      /* Responsive styles */
+      /* === RESPONSIVE === */
+
       @media (max-width: 780px) {
-        header {
-          padding: 10px 12px;
-          min-height: 60px;
-        }
-
-        .logo{
-          display: flex;
-          margin-right: auto;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .logo img {
-          width: 32px;
-          height: 32px;
-        }
-
-        .logo h1 {
-          font-size: 18px;
-        }
-
-        .logo p {
-          font-size: 9px;
-        }
-
-        .header-nav {
-          display: none;
-        }
-
-        .mobile-menu-btn {
-          display: block;
-        }
-
-        .user-section {
-          display: none;
-        }
-
-        .mobile-user-section {
-          display: flex;
-        }
-
-        .mobile-user-avatar {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: var(--primary-5, #4a5568);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--text-color-2, #a0aec0);
-          font-size: 18px;
-          border: 2px dashed var(--text-color-3, #718096);
-          margin-bottom: 8px;
-        }
-
-        .mobile-user-avatar::before {
-          content: "?";
-          font-weight: normal;
-        }
-
-        .search-container {
-          display: none;
-        }
-
-        .mobile-search {
-          display: flex;
-          gap: 8px;
-          margin-top: 16px;
-        }
-
-        .mobile-search input {
-          flex: 1;
-          background-color: #2d3748;
-          border: none;
-          border-radius: 20px;
-          padding: 12px 16px;
-          color: white;
-          font-family: 'NunitoSans', sans-serif;
-        }
-
-        .mobile-search input::placeholder {
-          color: #a0aec0;
-        }
+        .header-nav { display: none; }
+        .mobile-menu-btn { display: block; }
+        .mobile-theme-toggle-wrapper { display: flex; }
       }
 
       @media (max-width: 480px) {
-        header {
-          padding: 8px 10px;
-          min-height: 56px;
-        }
-
-        .logo-content {
-          display: none;
-        }
-
-        .logo-main {
-          display: flex;
-        }
-
-        .logo h1 {
-          font-size: 16px;
-        }
-      }
-
-      /* Animation for mobile menu */
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .mobile-nav.active {
-        animation: slideDown 0.3s ease-out;
+        .logo-content { display: none; }
+        .logo h1 { font-size: var(--fs-base); }
       }
     `;
   }
@@ -363,6 +281,7 @@ class AgHeader extends HTMLElement {
     this.render();
     this.markActiveLink();
     this.setupMobileMenu();
+    this.setupThemeToggle();
   }
 
   render() {
@@ -378,44 +297,44 @@ class AgHeader extends HTMLElement {
             <p>Discover Mongolia<br>your way</p>
           </div>
         </div>
-        
+
         <div class="header-nav">
           <a href="home.html">Нүүр Хуудас</a>
           <a href="spots.html">Аяллын Цэгүүд</a>
           <a href="plan.html">Миний Төлөвлөгөө</a>
+
           <div class="search-container">
             <input type="text" placeholder="Хайлт хийх..">
-            <button class="search-btn">
-              <svg>
-                <use href="../styles/icons.svg#icon-search"></use>
-              </svg>
+            <button class="search-btn" type="button">
+              <svg><use href="../styles/icons.svg#icon-search"></use></svg>
             </button>
           </div>
+
+          <!-- Desktop Theme toggle -->
+          <button class="theme-toggle" type="button">
+            <svg class="icon-moon"><use href="../styles/icons.svg#icon-moon"></use></svg>
+            <svg class="icon-sun hidden"><use href="../styles/icons.svg#icon-sun"></use></svg>
+          </button>
+
           <div class="user-section">
             <div class="user-avatar" title="Бүртгүүлээгүй"></div>
           </div>
         </div>
 
-        <button class="mobile-menu-btn" aria-label="Цэс нээх">
-          ☰
+        <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
+          <svg><use href="../styles/icons.svg#ag-icon-menu"></use></svg>
         </button>
 
         <div class="mobile-nav">
           <a href="home.html">Нүүр Хуудас</a>
           <a href="spots.html">Аяллын Цэгүүд</a>
           <a href="plan.html">Миний Төлөвлөгөө</a>
-          
-          <div class="mobile-search">
-            <input type="text" placeholder="Хайлт хийх..">
-            <button class="search-btn">
-              <svg>
-                <use href="../styles/icons.svg#icon-search"></use>
-              </svg>
-            </button>
-          </div>
 
-          <div class="mobile-user-section">
-            <div class="mobile-user-avatar" title="Бүртгүүлээгүй"></div>
+          <div class="mobile-theme-toggle-wrapper">
+            <button class="theme-toggle mobile-theme-toggle" type="button">
+              <svg class="icon-moon"><use href="../styles/icons.svg#icon-moon"></use></svg>
+              <svg class="icon-sun hidden"><use href="../styles/icons.svg#icon-sun"></use></svg>
+            </button>
           </div>
         </div>
       </header>
@@ -424,56 +343,97 @@ class AgHeader extends HTMLElement {
 
   markActiveLink() {
     let currentPath = window.location.pathname.split("/").pop();
-    if (!currentPath) {
-      currentPath = "home.html"; 
-    }
+    if (!currentPath) currentPath = "home.html";
 
-    const links = this.querySelectorAll(".header-nav a[href]");
-    const mobileLinks = this.querySelectorAll(".mobile-nav a[href]");
-    
+    const links = this.querySelectorAll(".header-nav a");
+    const mobileLinks = this.querySelectorAll(".mobile-nav a");
     const allLinks = [...links, ...mobileLinks];
-    
-    allLinks.forEach((link) => {
+
+    allLinks.forEach(link => {
       const href = link.getAttribute("href");
       if (href === currentPath) {
-        link.setAttribute("aria-current", "page");
         link.classList.add("is-active");
+        link.setAttribute("aria-current", "page");
       }
     });
   }
 
   setupMobileMenu() {
-    const mobileMenuBtn = this.querySelector('.mobile-menu-btn');
-    const mobileNav = this.querySelector('.mobile-nav');
+    const btn = this.querySelector(".mobile-menu-btn");
+    const nav = this.querySelector(".mobile-nav");
+    const useEl = btn.querySelector("use");
+    const MENU_ICON = "../styles/icons.svg#ag-icon-menu";
+    const CLOSE_ICON = "../styles/icons.svg#icon-close";
 
-    mobileMenuBtn.addEventListener('click', () => {
-      mobileNav.classList.toggle('active');
-      
-      if (mobileNav.classList.contains('active')) {
-        mobileMenuBtn.textContent = '✕';
-        mobileMenuBtn.setAttribute('aria-label', 'Цэс хаах');
-      } else {
-        mobileMenuBtn.textContent = '☰';
-        mobileMenuBtn.setAttribute('aria-label', 'Цэс нээх');
+    if (!btn || !nav || !useEl) return;
+
+    const setState = (isOpen) => {
+      nav.classList.toggle("active", isOpen);
+      useEl.setAttribute("href", isOpen ? CLOSE_ICON : MENU_ICON);
+      btn.setAttribute("aria-label", isOpen ? "Цэс хаах" : "Цэс нээх");
+    };
+
+    btn.addEventListener("click", () => {
+      const isOpen = !nav.classList.contains("active");
+      setState(isOpen);
+    });
+
+    // гадна талд дарахад хаах
+    document.addEventListener("click", (e) => {
+      if (!this.contains(e.target) && nav.classList.contains("active")) {
+        setState(false);
       }
     });
 
-    document.addEventListener('click', (e) => {
-      if (!this.contains(e.target) && mobileNav.classList.contains('active')) {
-        mobileNav.classList.remove('active');
-        mobileMenuBtn.textContent = '☰';
-        mobileMenuBtn.setAttribute('aria-label', 'Цэс нээх');
-      }
-    });
-
-    const mobileLinks = this.querySelectorAll('.mobile-nav a');
+    // mobile линк дарахад хаах
+    const mobileLinks = this.querySelectorAll(".mobile-nav a");
     mobileLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        mobileNav.classList.remove('active');
-        mobileMenuBtn.textContent = '☰';
-        mobileMenuBtn.setAttribute('aria-label', 'Цэс нээх');
-      });
+      link.addEventListener("click", () => setState(false));
     });
+  }
+
+  /* === THEME TOGGLE LOGIC === */
+  setupThemeToggle() {
+    const html = document.documentElement;
+    const STORAGE_KEY = "ayalgo-theme";
+    const buttons = this.querySelectorAll(".theme-toggle");
+
+    if (!buttons.length) return;
+
+    const getInitial = () => {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === "light" || saved === "dark") return saved;
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    };
+
+    const updateIcons = (theme) => {
+      buttons.forEach(btn => {
+        const sun = btn.querySelector(".icon-sun");
+        const moon = btn.querySelector(".icon-moon");
+        if (!sun || !moon) return;
+
+        if (theme === "dark") {
+          sun.classList.remove("hidden");
+          moon.classList.add("hidden");
+        } else {
+          sun.classList.add("hidden");
+          moon.classList.remove("hidden");
+        }
+      });
+    };
+
+    const applyTheme = (theme) => {
+      html.dataset.theme = theme;
+      localStorage.setItem(STORAGE_KEY, theme);
+      updateIcons(theme);
+    };
+
+    const toggle = () => {
+      applyTheme(html.dataset.theme === "dark" ? "light" : "dark");
+    };
+
+    applyTheme(getInitial());
+    buttons.forEach(btn => btn.addEventListener("click", toggle));
   }
 }
 
