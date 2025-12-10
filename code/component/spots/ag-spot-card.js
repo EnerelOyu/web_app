@@ -146,16 +146,41 @@ class AgSpotCard extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["href", "zrg", "bus", "unelgee", "ner", "cate", "activity", "une"];
+    return ["href", "zrg", "bus", "unelgee", "ner", "cate", "activity", "une", "data-spot-id"];
   }
 
   connectedCallback() {
     this.render();
+    this.attachEventListeners();
   }
 
   attributeChangedCallback() {
     if (this.isConnected) {
       this.render();
+    }
+  }
+
+  attachEventListeners() {
+    // Get the add button (first button in shadow DOM)
+    const addButton = this.shadowRoot.querySelector('.spot-img button:nth-of-type(1)');
+
+    if (addButton) {
+      addButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const spotId = this.getAttribute('data-spot-id');
+        if (spotId && window.appState) {
+          const success = window.appState.addToPlan(spotId);
+          if (success) {
+            // Visual feedback
+            addButton.style.backgroundColor = 'var(--accent-3)';
+            setTimeout(() => {
+              addButton.style.backgroundColor = '';
+            }, 300);
+          }
+        }
+      });
     }
   }
 
