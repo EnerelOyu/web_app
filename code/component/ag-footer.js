@@ -18,6 +18,13 @@ class AgFooter extends HTMLElement {
         display: flex;
         align-items: center;
         gap: var(--gap-size-m);
+        text-decoration: none;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+
+      .footer-left:hover {
+        opacity: 0.8;
       }
 
       .footer-logo{
@@ -202,21 +209,21 @@ class AgFooter extends HTMLElement {
     this.innerHTML = `
       <style>${this.css}</style>
       <footer>
-        <div class="footer-left">
+        <a href="#/home" class="footer-left">
           <div class="footer-logo">
             <img src="../files/logo.svg" alt="AyalGO logo">
             <p>Discover Mongolia<br>your way</p>
           </div>
           <h1>Ayal<span>GO</span></h1>
-        </div>
+        </a>
 
         <div class="footer-right">
           <div class="footer-col">
             <p>Тусламж</p>
             <ul class="footer-list">
-              <li><a href="../code/spots.html">Аяллын цэг хайх</a></li>
+              <li><a href="#/spots">Аяллын цэг хайх</a></li>
               <li><a href="../code/guide_sign_up.html">Хөтөчөөр бүртгүүлэх</a></li>
-              <li><a href="#">Аяллын төлөвлөгөө яаж гаргах вэ</a></li>
+              <li><a href="#/plan">Аяллын төлөвлөгөө яаж гаргах вэ</a></li>
             </ul>
           </div>
 

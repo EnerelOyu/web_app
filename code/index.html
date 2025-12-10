@@ -3,8 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Аялал төлөвлөгч</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/home_page.css">
+    <link rel="stylesheet" href="../styles/spots.css">
+    <link rel="stylesheet" href="../styles/spot-info.css">
+    <link rel="stylesheet" href="../styles/plan.css">
+
+    <!-- Global State Management -->
+    <script type="module" src="./router/app-state.js"></script>
+
+    <!-- Router -->
+    <script type="module" src="./router/app-router.js"></script>
+
+    <!-- Page Components -->
+    <script type="module" src="./pages/page-home.js"></script>
+    <script type="module" src="./pages/page-spots.js"></script>
+    <script type="module" src="./pages/page-spot-info.js"></script>
+    <script type="module" src="./pages/page-plan.js"></script>
+
+    <!-- Header & Footer -->
+    <script type="module" src="./component/ag-header.js"></script>
+    <script type="module" src="./component/ag-footer.js"></script>
+
+    <!-- Home Components -->
+    <script type="module" src="./component/home/ag-spot.js"></script>
+    <script type="module" src="./component/home/ag-tutorial-card.js"></script>
+    <script type="module" src="./component/home/ag-home-search.js"></script>
+    <script type="module" src="./component/home/ag-spot-section.js"></script>
+    <script type="module" src="./component/home/ag-feature-card.js"></script>
+    <script type="module" src="./component/home/ag-guide-banner.js"></script>
+
+    <!-- Spots Components -->
+    <script type="module" src="./component/spots/ag-spot-card.js"></script>
+    <script type="module" src="./component/spots/ag-filter.js"></script>
+    <script type="module" src="./component/spots/ag-spot-manager.js"></script>
+    <script type="module" src="./component/ag-rating.js"></script>
+
+    <!-- Spot Info Components -->
+    <script type="module" src="./component/spot-info/ag-spot-hero.js"></script>
+    <script type="module" src="./component/spot-info/ag-spot-aside.js"></script>
+    <script type="module" src="./component/spot-info/ag-spot-review.js"></script>
+    <script type="module" src="./component/ag-guide-card.js"></script>
+    <script type="module" src="./component/ag-review-card.js"></script>
+    <script type="module" src="./component/spot-info/ag-scroll-guide.js"></script>
+
+    <!-- Plan Components -->
+    <script type="module" src="./component/plan/ag-route-item.js"></script>
+    <script type="module" src="./component/plan/ag-route-section.js"></script>
+    <script type="module" src="./component/plan/ag-guide-section.js"></script>
+    <script type="module" src="./component/plan/ag-note-area.js"></script>
+    <script type="module" src="./component/plan/ag-shared-button.js"></script>
+    <script type="module" src="./component/plan/ag-suggested-point.js"></script>
+
 </head>
 <body>
+    <ag-header></ag-header>
+
+    <div class="page-container">
+        <app-router id="main-router"></app-router>
+    </div>
+
+    <ag-footer></ag-footer>
+
+    <script>
+        // Initialize router with routes
+        window.addEventListener('DOMContentLoaded', () => {
+            const router = document.getElementById('main-router');
+
+            // Register routes
+            router.registerRoute('/home', '<page-home></page-home>');
+            router.registerRoute('/spots', '<page-spots></page-spots>');
+            router.registerRoute('/spot-info', '<page-spot-info></page-spot-info>');
+            router.registerRoute('/plan', '<page-plan></page-plan>');
+
+            // Set default route
+            if (!window.location.hash) {
+                window.location.hash = '#/home';
+            }
+        });
+    </script>
 </body>
 </html>
