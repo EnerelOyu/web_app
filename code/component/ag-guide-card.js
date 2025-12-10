@@ -163,6 +163,23 @@ class GuideCard extends HTMLElement {
     connectedCallback() {
         this.render();
         this.applyStyles();
+
+        // Автоматаар guide-id attribute-аас мэдээлэл унших
+        const guideId = this.getAttribute('guide-id');
+        if (guideId) {
+            this.setGuide(guideId);
+        }
+    }
+
+    // Attribute өөрчлөгдөх үед шинэчлэх
+    static get observedAttributes() {
+        return ['guide-id'];
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === 'guide-id' && newValue && oldValue !== newValue) {
+            this.setGuide(newValue);
+        }
     }
 
     render() {
@@ -185,7 +202,15 @@ class GuideCard extends HTMLElement {
 
     setGuide(guideId) {
         const guide = this.guides.find(g => g.id === guideId);
-        if (!guide) return;
+        if (!guide) {
+            console.warn(`Guide with ID "${guideId}" not found`);
+            return;
+        }
+
+        // Render хийгдээгүй бол render хийнэ
+        if (!this.querySelector('#guideCard')) {
+            this.render();
+        }
 
         this.querySelector('#guidePhoto').src = guide.photo;
         this.querySelector('#guidePhoto').alt = `${guide.name} хөтөч`;
@@ -193,7 +218,7 @@ class GuideCard extends HTMLElement {
         this.querySelector('#guideExperience').textContent = guide.experience;
         this.querySelector('#guideLanguages').textContent = guide.languages;
         this.querySelector('#guideBirthdate').textContent = guide.birthdate;
-        
+
         const phoneLink = this.querySelector('#guidePhone');
         phoneLink.textContent = guide.phone;
         phoneLink.href = `tel:${guide.phone.replace(/\s+/g, '')}`;
@@ -201,6 +226,13 @@ class GuideCard extends HTMLElement {
         const ratingElement = this.querySelector('#guideRating');
         if (ratingElement) {
             ratingElement.setAttribute('value', guide.rating.toString());
+        }
+    }
+
+    // Гаднаас guides өгөгдөл тохируулах
+    setGuidesData(guidesArray) {
+        if (Array.isArray(guidesArray)) {
+            this.guides = guidesArray;
         }
     }
 
