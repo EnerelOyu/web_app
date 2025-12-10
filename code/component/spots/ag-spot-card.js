@@ -8,9 +8,11 @@ class AgSpotCard extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: var(--gap-size-xs);
-        border-radius: var(--br-s);
+        border-radius: var(--br-m);
         transition: background-color 200ms;
-        padding: var(--p-xs);
+        padding: 0 var(--p-sm);
+        overflow: hidden;
+        align-items: center;
       }
 
       .spot-card:hover {
@@ -18,10 +20,11 @@ class AgSpotCard extends HTMLElement {
       }
 
       .spot-img {
+        display: block;
         position: relative;
-        display: inline-block;
+        width: 100%;
         overflow: hidden;
-        border-radius: var(--br-s);
+        border-radius: var(--br-m);
       }
 
       .spot-img img {
@@ -29,7 +32,7 @@ class AgSpotCard extends HTMLElement {
         width: 100%;
         aspect-ratio: 4 / 3;
         object-fit: cover;
-        border-radius: var(--br-s);
+        border-radius: 0;
       }
 
       .spot-img button {
@@ -79,6 +82,7 @@ class AgSpotCard extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: var(--gap-size-xs);
+        padding: var(--p-xs);
       }
 
       .short-info {
@@ -108,6 +112,7 @@ class AgSpotCard extends HTMLElement {
         font-size: var(--fs-sm);
         color: var(--text-color-3);
         text-transform: uppercase;
+        font-family: 'NunitoSans';
       }
 
       .tags {

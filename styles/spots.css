@@ -1,13 +1,14 @@
 @import url('fonts.css');
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4 {
+h1, h2, h3, h4 {
   font-family: 'Rubik';
 }
 
@@ -15,10 +16,21 @@ p {
   font-family: 'NunitoSans';
 }
 
+
+body {
+  font-family: 'NunitoSans';
+  color: var(--text-color-1);
+  background-color: var(--bg-color);
+}
+
+/* Page fade-in */
 main {
   display: grid;
-  grid-template-columns: 1fr 3fr; /* sidebar + cards */
+  grid-template-columns: 1fr 3fr;
+  animation: fadeInPage 0.6s ease-out;
 }
+
+/* =============== FILTER ASIDE (Desktop) =============== */
 
 .filter-aside {
   position: sticky;
@@ -28,9 +40,12 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+
   padding: var(--p-md) var(--p-xl);
   box-shadow: 1px 0 10px 2px var(--text-color-6);
   background-color: var(--bg-color);
+
+  animation: slideInLeft 0.7s ease-out;
 }
 
 .filter-aside h2 {
@@ -40,11 +55,14 @@ main {
   text-transform: uppercase;
 }
 
+
 .filter-section {
   display: flex;
   flex-direction: column;
   gap: var(--gap-size-m);
 }
+
+/* =============== SPOT GRID SECTION =============== */
 
 .spot-cards-container {
   height: 100vh;
@@ -72,6 +90,22 @@ main {
   gap: var(--gap-size-m);
 }
 
+/* Card fade-up animation */
+.spot-card {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: cardFadeUp 0.5s ease-out forwards;
+}
+
+/* Жаахан stagger эффект */
+.spots-grid .spot-card:nth-child(1) { animation-delay: 0.05s; }
+.spots-grid .spot-card:nth-child(2) { animation-delay: 0.1s; }
+.spots-grid .spot-card:nth-child(3) { animation-delay: 0.15s; }
+.spots-grid .spot-card:nth-child(4) { animation-delay: 0.2s; }
+.spots-grid .spot-card:nth-child(5) { animation-delay: 0.25s; }
+.spots-grid .spot-card:nth-child(6) { animation-delay: 0.3s; }
+
+/* Rating UI */
 .rating {
   display: flex;
   flex-direction: row;
@@ -96,16 +130,74 @@ main {
   color: var(--accent-1);
 }
 
+/* =============== LOADING SHIMMER =============== */
 
-/* =========================
-   TABLET (≤ 1024px)
-   ========================= */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading {
+  animation: shimmer 2s infinite;
+  background: linear-gradient(
+    to right,
+    var(--accent-9) 0%,
+    var(--accent-8) 20%,
+    var(--accent-9) 40%,
+    var(--accent-9) 100%
+  );
+  background-size: 1000px 100%;
+}
+
+/* =============== KEYFRAMES (page/filter/cards) =============== */
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes cardFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   ===============  TABLET  ≤ 1024px ========================
+   ========================================================= */
 
 @media (max-width: 1024px) {
 
   main {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
+
   .filter-aside {
     position: sticky;
     top: 0;
@@ -115,8 +207,10 @@ main {
     align-items: center;
     gap: var(--gap-size-m);
 
-    padding: var(--p-sm) var(--p-md);
+    padding: var(--p-sm) var(--p-lg);
+    background-color: var(--bg-color);
     box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    backdrop-filter: blur(8px);
   }
 
   .filter-aside h2 {
@@ -126,11 +220,18 @@ main {
   }
 
   .filter-section {
+    flex: 1;
+    display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     gap: var(--gap-size-s);
     overflow-x: auto;
     padding-bottom: var(--p-xs);
+    scrollbar-width: none;
+  }
+
+  .filter-section::-webkit-scrollbar {
+    display: none;
   }
 
   .filter-section ag-filter {
@@ -141,15 +242,12 @@ main {
   .spot-cards-container {
     height: auto;
     overflow-y: visible;
-    padding: var(--p-md);
+    padding: var(--p-md) var(--p-lg);
   }
 
   .spots-grid {
-    grid-template-columns: repeat(2, 1fr); 
-  }
-
-  .spot-card {
-    padding: var(--p-sm);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--gap-size-m);
   }
 
   .container-hdr {
@@ -158,24 +256,49 @@ main {
   }
 }
 
-/* =========================
-   MOBILE (≤ 768px)
-   ========================= */
+/* =========================================================
+   ==================  MOBILE  ≤ 768px ======================
+   ========================================================= */
 
 @media (max-width: 768px) {
 
   .filter-aside {
-    padding: var(--p-xs) var(--p-sm);
+    padding: var(--p-xs) var(--p-md);
     gap: var(--gap-size-s);
     flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filter-aside h2 {
+    font-size: var(--fs-lg);
   }
 
   .filter-section {
-    gap: var(--gap-size-xs);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: var(--gap-size-s);
+    overflow-x: auto;
+    padding-bottom: var(--p-xs);
+    scrollbar-width: none;
+  }
+
+  .filter-section::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-section ag-filter {
+    flex: 0 0 auto;
+    min-width: calc(50% - var(--gap-size-s));
+  }
+
+  .spot-cards-container {
+    padding: var(--p-sm) var(--p-md);
   }
 
   .spots-grid {
-    grid-template-columns: 1fr; 
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--gap-size-m);
   }
 
@@ -185,7 +308,7 @@ main {
 
   .spot-info h3,
   .spot-card:hover .spot-info h3 {
-    font-size: var(--fs-base); 
+    font-size: var(--fs-base);
   }
 
   .tags li {

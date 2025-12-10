@@ -29,6 +29,7 @@ class AgSpot extends HTMLElement {
 
         :host {
           display: block;
+          width: 100%;
         }
 
         .spot-card {
@@ -44,6 +45,7 @@ class AgSpot extends HTMLElement {
           margin: 0;
           overflow: hidden;
           border-radius: var(--br-s);
+          width: 100%;
         }
 
         .spot-img img {
