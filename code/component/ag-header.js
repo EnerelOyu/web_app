@@ -294,7 +294,6 @@ class AgHeader extends HTMLElement {
             <div class="logo-main">
               <h1>Ayal<span>GO</span></h1>
             </div>
-            <p>Discover Mongolia<br>your way</p>
           </div>
         </div>
 

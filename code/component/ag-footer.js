@@ -38,16 +38,8 @@ class AgFooter extends HTMLElement {
         height: var(--logo-size);
       }
 
-      .footer-logo p{
-        color:var(--primary);
-        font-size: var(--fs-xs);
-        padding: var(--p-xs) 0;
-        font-weight: bold;
-        font-family: 'Rubik';
-      }
-
       .footer-left h1{
-        color: var(--bg-color);
+        color: var(--logo-text);
         padding-left: var(--p-sm);
         font-size: var(--fs-2xl);
         font-family: 'Rubik';
@@ -212,7 +204,6 @@ class AgFooter extends HTMLElement {
         <a href="#/home" class="footer-left">
           <div class="footer-logo">
             <img src="../files/logo.svg" alt="AyalGO logo">
-            <p>Discover Mongolia<br>your way</p>
           </div>
           <h1>Ayal<span>GO</span></h1>
         </a>
