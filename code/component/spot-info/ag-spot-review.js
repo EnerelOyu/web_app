@@ -14,10 +14,6 @@ class AgSpotReviewList extends HTMLElement {
     css() {
         const styles = `
         <style>
-            .review-section {
-                padding: var(--p-lg);
-            }
-
             .reviews-container {
                 display: flex;
                 flex-direction: row;
@@ -86,6 +82,7 @@ class AgSpotReviewList extends HTMLElement {
                 font-weight: bold;
                 color: var(--text-color-1);
                 font-size: var(--fs-xs);
+                font-family: 'Rubik
             }
 
             .form-group input,
@@ -124,13 +121,14 @@ class AgSpotReviewList extends HTMLElement {
 
             .section-title {
                 font-family: 'Rubik';
-                font-size: var(--fs-xl);
-                color: var(--text-color-0);
-                margin-bottom: var(--p-lg);
+                font-size: var(--fs-lg);
+                text-transform: uppercase;
+                font-weight: 100;
+                color: var(--text-color-2);
+                margin-bottom: var(--m-sm);
             }
 
             ag-review {
-                height: 320px;
                 display: block;
             }
 
@@ -211,11 +209,11 @@ class AgSpotReviewList extends HTMLElement {
     render() {
         this.innerHTML = `
             <section class="review-section">
-                <h2 class="section-title">Газрын үнэлгээ & Сэтгэгдэл</h2>
-                
+                <h3 class="section-title">Газрын үнэлгээ & Сэтгэгдэл</h2>
+
                 <div class="reviews-container">
                     <div class="comment-form-card">
-                        <h3>Сэтгэгдэл үлдээх</h3>
+                        <h4>Сэтгэгдэл үлдээх</h3>
                         <form id="commentForm">
                             <div class="form-group">
                                 <label for="name">Нэр</label>
