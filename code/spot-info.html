@@ -14,6 +14,8 @@
     <script type="module" src="../code/component/ag-rating.js"></script>
     <script type="module" src="../code/component/ag-review-card.js"></script>
     <script type="module" src="../code/component/spot-info/ag-scroll-guide.js"></script>
+    <script type="module" src="../code/component/spot-info/ag-spot-hero.js"></script>
+    <script type="module" src="../code/component/spot-info/ag-spot-aside.js"></script>
     <title>Аяллын цэгийн мэдээлэл</title>
 </head>
 
@@ -22,72 +24,32 @@
     <main>
         <div class="main-container">
             <div class="spot-main">
-                <article class="main-info">
-                    <div class="spot-header">
-                        <h1>амарбаясгалант хийд</h1>
-                        <div class="actions">
-                            <button class="action-btn">
-                                <span>Хуваалцах</span>
-                                <svg>
-                                    <use href="../styles/icons.svg#icon-share"></use>
-                                </svg>
-                            </button>
-                            <button class="action-btn">
-                                <span>Нэмэх</span>
-                                <svg>
-                                    <use href="../styles/icons.svg#icon-add"></use>
-                                </svg>
-                            </button>
-                            <button class="action-btn">
-                                <span>Хадгалах</span>
-                                <svg>
-                                    <use href="../styles/icons.svg#icon-save"></use>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <ag-rating value="3.0" color="var(--primary)"></ag-rating>
-                    <ul class="spot-category">
-                        <li>Түүхэн</li>
-                        <li>Соёл</li>
-                    </ul>
-                    <div class="spot-schedue">
-                        <p class="status">Hээлттэй </p>
-                        <p class="time-zone">9:00AM–6:00 PM</p>
-                    </div>
-                    <div class="spot-imgs">
-                        <img class="big-img"
-                            src="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
-                            alt="main-img">
-                        <img class="small-img"
-                            src="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg" alt="img-2">
-                        <img class="small-img"
-                            src="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg" alt="img-3">
-                    </div>
-                </article>
-                <aside class="spot-aside">
-                    <img src="../files/Mongolia_blank.svg" alt="Map">
-                    <ul class="info-list">
-                        <li><span class="label">Бүс нутаг:</span><span class="value">Төв</span></li>
-                        <li><span class="label">Байршил:</span><span class="value">Сэлэнгэ аймгийн Бүрэнхаан уулын өвөрт
-                                Ивэн голын эхэнд байрлана.</span></li>
-                        <li><span class="label">Насны ангилал:</span><span class="value">18-45</span></li>
-                        <li><span class="label">Эхлэх үнэ:</span><span class="value">500,000 MNT</span></li>
-                        <li><span class="label">Цагийн хуваарь:</span>
-                            <span class="value">
-                                <ul class="schedule">
-                                    <li>Дав: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Мяг: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Лха: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Пүр: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Баа: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Бям: <span class="value">8:00AM - 18:00PM</span></li>
-                                    <li>Ням: <span class="value">8:00AM - 18:00PM</span></li>
-                                </ul>
-                            </span>
-                        </li>
-                    </ul>
-                </aside>
+                <ag-spot-hero
+                    title="АМАРБАЯСГАЛАНТ ХИЙД"
+                    rating="3.0"
+                    cate="Түүхэн, Соёл"
+                    status="Нээлттэй"
+                    time="9:00AM–6:00 PM"
+                    img1="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+                    img2="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+                    img3="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+                ></ag-spot-hero>
+                <ag-spot-aside
+                    map-src="../files/Mongolia_blank.svg"
+                    region="Төв"
+                    location="Сэлэнгэ аймгийн Бүрэнхаан уулын өвөрт Ивэн голын эхэнд байрлана."
+                    age="18-45"
+                    price="500,000 MNT"
+                    schedule="
+                        Дав: 8:00AM - 18:00PM,
+                        Мяг: 8:00AM - 18:00PM,
+                        Лха: 8:00AM - 18:00PM,
+                        Пүр: 8:00AM - 18:00PM,
+                        Баа: 8:00AM - 18:00PM,
+                        Бям: 8:00AM - 18:00PM,
+                        Ням: 8:00AM - 18:00PM
+                    "
+                ></ag-spot-aside>
             </div>
             <!--Аяллыг цэгийн танилцуулна-->
             <div class="spot-details">
