@@ -13,9 +13,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/EnerelOyu/web_app/issues"
   },
-  "homepage": "https://github.com/EnerelOyu/web_app#readme"
+  "homepage": "https://github.com/EnerelOyu/web_app#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }
