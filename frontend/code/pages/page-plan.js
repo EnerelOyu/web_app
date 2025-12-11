@@ -28,8 +28,8 @@ class PagePlan extends HTMLElement {
                     display: grid;
                     grid-template:
                         "plan-title"
-                        "suggestion"
-                        "route" / 1fr;
+                        "route"
+                        "suggestion" / 1fr;
                     min-height: calc(100vh - var(--header-height) - var(--footer-height));
                     margin: 0 auto;
                     max-width: 1200px;

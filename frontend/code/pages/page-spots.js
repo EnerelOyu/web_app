@@ -307,6 +307,18 @@ class PageSpots extends HTMLElement {
     connectedCallback() {
         this.render();
         this.attachEventListeners();
+
+        // Listen for spotData changes
+        window.addEventListener('appstatechange', (e) => {
+            if (e.detail.key === 'spotData') {
+                this.renderContent();
+            }
+        });
+
+        // Initial render if data is already loaded
+        if (window.appState && Object.keys(window.appState.spotData).length > 0) {
+            this.renderContent();
+        }
     }
 
     render() {
@@ -315,122 +327,115 @@ class PageSpots extends HTMLElement {
             <main>
             <aside class="filter-aside">
                 <h2>Аяллын цэг хайх</h2>
-                <section class="filter-section">
-                    <ag-filter ner="Категори" turul1="Соёл" turul2="Амралт сувилал" turul3="Адал явдалт" turul4="Байгаль"
-                        turul5="Ууланд гарах"></ag-filter>
-                    <ag-filter ner="Бүс нутаг" turul1="Алтай" turul2="Баруун" turul3="Говь" turul4="Зүүн" turul5="Хангай"
-                        turul6="Төв"></ag-filter>
-                    <ag-filter ner="Үйл ажиллагаа" turul1="Амьтантай ойр" turul2="Говьд тэмээ унах" turul3="Түүхэн"
-                        turul4="Морин аялал" turul5="Сур харваа" turul6=""></ag-filter>
-                    <ag-filter ner="Насны ангилал" turul1="18-аас бага" turul2="18–25" turul3="26–45" turul4="46-аас их"
-                        turul5="Бүх нас" turul6=""></ag-filter>
+                <section class="filter-section" id="filter-section">
+                    <!-- Filters will be dynamically generated -->
                 </section>
             </aside>
             <div class="spot-cards-container">
                 <ag-spot-manager></ag-spot-manager>
                 <p class="container-hdr">шүүсэн аяллын цэгүүд</p>
-                <div class="spots-grid">
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg" ,
-                        bus="төв",
-                        unelgee="4.5",
-                        ner="Цонжин Болдог",
-                        cate="Соёл",
-                        activity="Морин аялал, Амьтантай ойр",
-                        une="20,000",
-                        age="Бүх нас"
-                        data-spot-id="tsonjin">
-                    </ag-spot-card>
-
-
-
-                    <ag-spot-card
-                        href="../code/spot-info.html",
-                        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg",
-                        bus="төв" ,
-                        unelgee="4.3",
-                        ner="Амарбаясгалант хийд",
-                        cate="Соёл",
-                        activity="Түүхэн",
-                        une="Үнэгүй",
-                        age="Бүх нас"
-                        data-spot-id="amarbayasgalant">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg",
-                        bus="төв" ,
-                        unelgee="4.5",
-                        ner="хустайн байгалийн цогцолбор",
-                        cate="Байгаль",
-                        une="500,000",
-                        activity="Морин аялал, Сур харваа",
-                        age="Бүх нас"
-                        data-spot-id="khustai">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://montsame.mn/files/667399f904664.jpeg" ,
-                        bus="Алтай" ,
-                        unelgee="4.5" ,
-                        ner="Алтай Таван Богд" ,
-                        cate="Байгаль ,Амралт сувилал" ,
-                        une="100,000"
-                        data-spot-id="altai">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
-                        bus="Зүүн" ,
-                        unelgee="3" ,
-                        ner="ганга нуур" ,
-                        cate="Байгаль, Амралт сувилал" ,
-                        une="20,000"
-                        data-spot-id="ganga">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1427612316.jpg" ,
-                        bus="Баруун" ,
-                        unelgee="3.0" ,
-                        ner="Монгол Элс" ,
-                        cate="Байгаль" ,
-                        une="33,000"
-                        data-spot-id="mongolels">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="https://lp-cms-production.imgix.net/2023-06/iStock-513683766.jpg" ,
-                        bus="Хангай" ,
-                        unelgee="5.00" ,
-                        ner="хөвсгөл нуур" ,
-                        cate="Байгаль, Амралт сувилал" ,
-                        une="15,000"
-                        data-spot-id="khovsgol">
-                    </ag-spot-card>
-
-                    <ag-spot-card
-                        href="../code/spot-info.html" ,
-                        zrg="http://www.newkhovd.mn/news-images/%D0%BC-05.jpg_medium.jpg" ,
-                        bus="Хангай" ,
-                        unelgee="5.00" ,
-                        ner="Мөнххайрхан уул" ,
-                        cate="Байгаль, Амралт сувилал, ууланд гарах" ,
-                        une="25,000"
-                        data-spot-id="munkhkhairkhan">
-                    </ag-spot-card>
-
+                <div class="spots-grid" id="spots-grid">
+                    <!-- Spot cards will be dynamically generated -->
                 </div>
             </div>
-
         </main>
         `;
+    }
+
+    renderContent() {
+        this.generateFilters();
+        this.generateSpotCards();
+    }
+
+    generateFilters() {
+        const filterSection = this.querySelector('#filter-section');
+        if (!filterSection) return;
+
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Extract unique values for each filter category
+        const categories = new Set();
+        const areas = new Set();
+        const activities = new Set();
+        const ageRanges = new Set();
+
+        spots.forEach(spot => {
+            // Categories
+            if (spot.cate) {
+                spot.cate.split(',').forEach(c => categories.add(c.trim()));
+            }
+
+            // Areas
+            if (spot.region) {
+                areas.add(spot.region.trim());
+            }
+
+            // Activities
+            if (spot.activities) {
+                spot.activities.split(',').forEach(a => activities.add(a.trim()));
+            }
+
+            // Age ranges
+            if (spot.age) {
+                ageRanges.add(spot.age.trim());
+            }
+        });
+
+        // Convert Sets to sorted arrays
+        const categoriesArray = Array.from(categories).sort();
+        const areasArray = Array.from(areas).sort();
+        const activitiesArray = Array.from(activities).sort();
+        const ageRangesArray = Array.from(ageRanges).sort();
+
+        // Generate filter HTML
+        filterSection.innerHTML = `
+            ${this.createFilterElement('Категори', categoriesArray)}
+            ${this.createFilterElement('Бүс нутаг', areasArray)}
+            ${this.createFilterElement('Үйл ажиллагаа', activitiesArray)}
+            ${this.createFilterElement('Насны ангилал', ageRangesArray)}
+        `;
+    }
+
+    createFilterElement(name, values) {
+        // ag-filter component uses turul1, turul2, etc. attributes
+        const attributes = values
+            .slice(0, 6) // Max 6 values
+            .map((val, index) => `turul${index + 1}="${val}"`)
+            .join(' ');
+
+        return `<ag-filter ner="${name}" ${attributes}></ag-filter>`;
+    }
+
+    generateSpotCards() {
+        const spotsGrid = this.querySelector('#spots-grid');
+        if (!spotsGrid) return;
+
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Generate spot cards HTML
+        spotsGrid.innerHTML = spots.map(spot => {
+            const spotId = spot.id;
+            const activities = spot.activities || '';
+            const age = spot.age || 'Бүх нас';
+            const price = spot.price || '';
+
+            return `
+                <ag-spot-card
+                    href="#/spot-info"
+                    zrg="${spot.img1 || ''}"
+                    bus="${spot.region || ''}"
+                    unelgee="${spot.rating || '0'}"
+                    ner="${spot.title || ''}"
+                    cate="${spot.cate || ''}"
+                    activity="${activities}"
+                    une="${price}"
+                    age="${age}"
+                    data-spot-id="${spotId}">
+                </ag-spot-card>
+            `;
+        }).join('');
     }
 
     attachEventListeners() {
