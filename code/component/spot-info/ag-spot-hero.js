@@ -201,12 +201,6 @@ class AgSpotHero extends HTMLElement {
                 <use href="../styles/icons.svg#icon-add"></use>
               </svg>
             </button>
-            <button class="action-btn">
-              <span>Хадгалах</span>
-              <svg>
-                <use href="../styles/icons.svg#icon-save"></use>
-              </svg>
-            </button>
           </div>
         </div>
 

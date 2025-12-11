@@ -1,4 +1,3 @@
-// ag-spot-review-list.js - Газрын сэтгэгдлийн жагсаалт
 class AgSpotReviewList extends HTMLElement {
     constructor() {
         super();
