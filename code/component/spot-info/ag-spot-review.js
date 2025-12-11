@@ -6,6 +6,7 @@ class AgSpotReviewList extends HTMLElement {
     }
 
     connectedCallback() {
+        this.spotId = this.getAttribute('spot-id') || 'default';
         this.css();
         this.loadReviews();
         this.render();
@@ -82,7 +83,7 @@ class AgSpotReviewList extends HTMLElement {
                 font-weight: bold;
                 color: var(--text-color-1);
                 font-size: var(--fs-xs);
-                font-family: 'Rubik
+                font-family: 'Rubik';
             }
 
             .form-group input,
@@ -154,7 +155,8 @@ class AgSpotReviewList extends HTMLElement {
     }
 
     loadReviews() {
-        this.reviews = [
+        // Default reviews for each spot
+        const defaultReviews = [
             {
                 bogin: "Бат",
                 urt: "Гайхалтай байгалийн үзэсгэлэнт газар. Цэвэр агаар, сайхан орчин. Хүмүүс маш эелдэг, тайван. Дахин ирэх дуртай.",
@@ -204,6 +206,39 @@ class AgSpotReviewList extends HTMLElement {
                 date: "2023-12-20"
             }
         ];
+
+        // Load reviews from localStorage
+        try {
+            const storageKey = `ayalgo-reviews-${this.spotId}`;
+            const savedReviews = localStorage.getItem(storageKey);
+
+            if (savedReviews) {
+                const customReviews = JSON.parse(savedReviews);
+                // Merge custom reviews with default ones
+                this.reviews = [...customReviews, ...defaultReviews];
+            } else {
+                this.reviews = defaultReviews;
+            }
+        } catch (error) {
+            console.error('Error loading reviews from storage:', error);
+            this.reviews = defaultReviews;
+        }
+    }
+
+    // Save reviews to localStorage
+    saveReviews() {
+        try {
+            const storageKey = `ayalgo-reviews-${this.spotId}`;
+            // Save only custom reviews (first ones added by users)
+            const defaultCount = 8; // Number of default reviews
+            const customReviews = this.reviews.slice(0, this.reviews.length - defaultCount);
+
+            if (customReviews.length > 0) {
+                localStorage.setItem(storageKey, JSON.stringify(customReviews));
+            }
+        } catch (error) {
+            console.error('Error saving reviews to storage:', error);
+        }
     }
 
     render() {
@@ -257,7 +292,7 @@ class AgSpotReviewList extends HTMLElement {
     handleFormSubmit() {
         const name = this.querySelector('#name').value;
         const comment = this.querySelector('#comment').value;
-        
+
         if (name && comment) {
             const newReview = {
                 bogin: name,
@@ -267,8 +302,12 @@ class AgSpotReviewList extends HTMLElement {
             };
 
             this.reviews.unshift(newReview);
+            this.saveReviews();
             this.render();
             this.querySelector('#commentForm').reset();
+
+            // Show success message
+            alert('Сэтгэгдэл амжилттай илгээгдлээ!');
         }
     }
 }

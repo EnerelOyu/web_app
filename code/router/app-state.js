@@ -2,7 +2,7 @@
 class AppState {
     constructor() {
         // Plan data - маршрутын мэдээлэл
-        this.planItems = [];
+        this.planItems = this.loadPlanFromStorage();
 
         // Currently selected spot
         this.currentSpot = null;
@@ -385,6 +385,28 @@ class AppState {
         this.dispatchStateChange('currentSpot', this.currentSpot);
     }
 
+    // Load plan items from localStorage
+    loadPlanFromStorage() {
+        try {
+            const saved = localStorage.getItem('ayalgo-planItems');
+            if (saved) {
+                return JSON.parse(saved);
+            }
+        } catch (error) {
+            console.error('Error loading plan from storage:', error);
+        }
+        return [];
+    }
+
+    // Save plan items to localStorage
+    savePlanToStorage() {
+        try {
+            localStorage.setItem('ayalgo-planItems', JSON.stringify(this.planItems));
+        } catch (error) {
+            console.error('Error saving plan to storage:', error);
+        }
+    }
+
     // Add spot to plan
     addToPlan(spotId) {
         const spot = this.getSpot(spotId);
@@ -403,6 +425,7 @@ class AppState {
             ...spot
         });
 
+        this.savePlanToStorage();
         this.dispatchStateChange('planItems', this.planItems);
         return true;
     }
@@ -416,8 +439,16 @@ class AppState {
             this.planItems.forEach((item, idx) => {
                 item.number = idx + 1;
             });
+            this.savePlanToStorage();
             this.dispatchStateChange('planItems', this.planItems);
         }
+    }
+
+    // Clear all plan items
+    clearPlan() {
+        this.planItems = [];
+        this.savePlanToStorage();
+        this.dispatchStateChange('planItems', this.planItems);
     }
 
     // Get all plan items
