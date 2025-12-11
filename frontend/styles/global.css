@@ -1,5 +1,5 @@
 @import url("https://unpkg.com/open-props");
-@import url(../styles/fonts.css);
+@import url(fonts.css);
 
 :root {
   /* === font size === */
