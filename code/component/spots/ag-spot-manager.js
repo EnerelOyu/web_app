@@ -28,7 +28,10 @@ class AgSpotManager extends HTMLElement {
   }
 
   _applyInitialFiltersFromURL() {
-  const params = new URLSearchParams(window.location.search);
+  // Parse query params from hash (e.g., #/spots?bus=Төв&cate=Соёл)
+  const hash = window.location.hash;
+  const queryString = hash.includes('?') ? hash.split('?')[1] : '';
+  const params = new URLSearchParams(queryString);
 
   const bus = params.get("bus");
   const cate = params.get("cate");

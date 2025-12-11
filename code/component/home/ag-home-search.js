@@ -209,15 +209,17 @@ class AgHomeSearch extends HTMLElement {
 
       const params = new URLSearchParams();
 
-      if (area) params.set("bus", area);   
-      if (category) params.set("cate", category); 
+      if (area) params.set("bus", area);
+      if (category) params.set("cate", category);
 
       const query = params.toString();
-      const url = query
-        ? `../code/spots.html?${query}`
-        : `../code/spots.html`;
 
-      window.location.href = `../code/spots.html?${params.toString()}`;
+      // Use hash-based routing instead of full page navigation
+      if (query) {
+        window.location.hash = `#/spots?${query}`;
+      } else {
+        window.location.hash = '#/spots';
+      }
     });
   }
 }
