@@ -8,7 +8,7 @@ app.get('/', (req, res) => {
 
 app.get("/api/spots", (req, res)=>{
     res.json({
-  "spots": [
+    "spots": [
     {
       "spotId": 1,
       "name": "Цонжин Болдог",
