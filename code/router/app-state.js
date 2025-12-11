@@ -248,7 +248,9 @@ class AppState {
                 'Сүхбаатарын талбай': 'sukhbaatar',
                 'Аглаг бүтээлийн хийд': 'aglag',
                 'Шанхын хийд': 'shankh',
-                'Ганга нуур': 'ganga'
+                'Ганга нуур': 'ganga',
+                'Монгол Элс': 'mongolels',
+                'Мөнххайрхан уул': 'munkhkhairkhan'
             };
 
             // Transform JSON data to match existing structure
