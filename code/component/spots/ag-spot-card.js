@@ -157,13 +157,16 @@ class AgSpotCard extends HTMLElement {
   attributeChangedCallback() {
     if (this.isConnected) {
       this.render();
+      this.attachEventListeners();
     }
   }
 
   attachEventListeners() {
-    // Get the add button (first button in shadow DOM)
+    // Get buttons from shadow DOM
     const addButton = this.shadowRoot.querySelector('.spot-img button:nth-of-type(1)');
+    const shareButton = this.shadowRoot.querySelector('.spot-img button:nth-of-type(2)');
 
+    // "Нэмэх" товч
     if (addButton) {
       addButton.addEventListener('click', (e) => {
         e.preventDefault();
@@ -174,11 +177,45 @@ class AgSpotCard extends HTMLElement {
           const success = window.appState.addToPlan(spotId);
           if (success) {
             // Visual feedback
-            addButton.style.backgroundColor = 'var(--accent-3)';
+            addButton.style.backgroundColor = 'var(--accent-2)';
+            const originalSvg = addButton.innerHTML;
+            addButton.innerHTML = '<svg><use href="../styles/icons.svg#icon-check"></use></svg>';
+
             setTimeout(() => {
               addButton.style.backgroundColor = '';
-            }, 300);
+              addButton.innerHTML = originalSvg;
+            }, 1000);
           }
+        }
+      });
+    }
+
+    // "Хуваалцах" товч
+    if (shareButton) {
+      shareButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const title = this.getAttribute('ner') || 'Аялалын газар';
+        const href = this.getAttribute('href') || '';
+        const url = window.location.origin + window.location.pathname + href;
+
+        // Web Share API support check
+        if (navigator.share) {
+          navigator.share({
+            title: title,
+            text: `${title} - Ayalgo аяллын апп`,
+            url: url
+          }).catch(err => {
+            console.log('Хуваалцах үйлдэл цуцлагдлаа:', err);
+          });
+        } else {
+          // Fallback: Copy to clipboard
+          navigator.clipboard.writeText(url).then(() => {
+            alert('Холбоос хуулагдлаа!');
+          }).catch(err => {
+            console.error('Хуулахад алдаа гарлаа:', err);
+          });
         }
       });
     }

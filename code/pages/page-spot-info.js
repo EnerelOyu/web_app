@@ -333,40 +333,9 @@ class PageSpotInfo extends HTMLElement {
   }
 
   attachEventListeners() {
-    // Нэг л удаа listener нэмэхийн тулд эхлээд хуучныг цэвэрлэнэ (optional, гэхдээ сайн)
+    // Хөтөчийн scroll товчны listener
     this.onclick = (e) => {
-      // 1) "Төлөвлөгөөнд нэмэх" товч (ag-spot-hero дотор .action-btn гэсэн нэртэй гэж тооцлоо)
-      const spotHero = e.target.closest("ag-spot-hero");
-      if (spotHero) {
-        const addButton = e.target.closest(".action-btn");
-        if (addButton && addButton.textContent.includes("Нэмэх")) {
-          e.preventDefault();
-
-          const spotId = spotHero.getAttribute("data-spot-id");
-          if (spotId) {
-            const success = window.appState.addToPlan(spotId);
-
-            if (success) {
-              const originalHTML = addButton.innerHTML;
-              addButton.innerHTML = "<span>Нэмсэн!</span>";
-              addButton.style.background = "var(--accent-2)";
-
-              setTimeout(() => {
-                addButton.innerHTML = originalHTML;
-                addButton.style.background = "";
-              }, 1500);
-
-              // Төлөвлөгөө рүү шилжүүлэх
-              setTimeout(() => {
-                window.location.hash = "#/plan";
-              }, 600);
-            }
-          }
-          return; // доошоо үргэлжлүүлэхгүй
-        }
-      }
-
-      // 2) Хөтөчийн scroll товч (зүүн/баруун)
+      // Хөтөчийн scroll товч (зүүн/баруун)
       const scrollBtn = e.target.closest(".scrl");
       if (scrollBtn) {
         e.preventDefault();

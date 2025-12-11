@@ -11,10 +11,14 @@ class AgSpotHero extends HTMLElement {
 
   connectedCallback() {
     this.render();
+    this.attachEventListeners();
   }
 
   attributeChangedCallback() {
-    if (this.isConnected) this.render();
+    if (this.isConnected) {
+      this.render();
+      this.attachEventListeners();
+    }
   }
 
   render() {
@@ -222,6 +226,88 @@ class AgSpotHero extends HTMLElement {
         </div>
       </section>
     `;
+  }
+
+  attachEventListeners() {
+    const shadowRoot = this.shadowRoot;
+    const buttons = shadowRoot.querySelectorAll('.action-btn');
+
+    buttons.forEach(button => {
+      const buttonText = button.querySelector('span')?.textContent;
+
+      // "Нэмэх" товч
+      if (buttonText === 'Нэмэх') {
+        button.onclick = (e) => {
+          e.preventDefault();
+          this.handleAddToPlan(button);
+        };
+      }
+
+      // "Хуваалцах" товч
+      if (buttonText === 'Хуваалцах') {
+        button.onclick = (e) => {
+          e.preventDefault();
+          this.handleShare();
+        };
+      }
+    });
+  }
+
+  handleAddToPlan(button) {
+    const spotId = this.getAttribute('data-spot-id');
+
+    if (!spotId) {
+      console.error('Spot ID олдсонгүй');
+      return;
+    }
+
+    // Add to plan
+    const success = window.appState.addToPlan(spotId);
+
+    if (success) {
+      // Visual feedback
+      const originalHTML = button.innerHTML;
+      const originalBg = button.style.backgroundColor;
+
+      button.innerHTML = '<span>Нэмсэн!</span>';
+      button.style.backgroundColor = 'var(--accent-2)';
+      button.style.color = 'var(--accent-9)';
+
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.style.backgroundColor = originalBg;
+        button.style.color = '';
+      }, 1500);
+
+      // Navigate to plan page
+      setTimeout(() => {
+        window.location.hash = '#/plan';
+      }, 600);
+    }
+  }
+
+  handleShare() {
+    const title = this.getAttribute('title') || 'Аялалын газар';
+    const url = window.location.href;
+
+    // Web Share API support check
+    if (navigator.share) {
+      navigator.share({
+        title: title,
+        text: `${title} - Ayalgo аяллын апп`,
+        url: url
+      }).catch(err => {
+        console.log('Хуваалцах үйлдэл цуцлагдлаа:', err);
+      });
+    } else {
+      // Fallback: Copy to clipboard
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Холбоос хуулагдлаа!');
+      }).catch(err => {
+        console.error('Хуулахад алдаа гарлаа:', err);
+        alert('Хуулахад алдаа гарлаа');
+      });
+    }
   }
 }
 
