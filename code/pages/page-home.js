@@ -11,20 +11,15 @@ class PageHome extends HTMLElement {
     render() {
         this.innerHTML = `
         <style>
-            :host {
-                display: block;
-                width: 100%;
-            }
-
             main {
                 width: 100%;
-                max-width: 100vw;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 animation: fadeIn 0.6s ease-out;
                 gap: var(--gap-size-m);
                 padding: 0;
+                margin: 0;
             }
 
             @keyframes fadeIn {

@@ -18,7 +18,7 @@ class PageSpotInfo extends HTMLElement {
         align-items: flex-start;
       }
 
-      /*SECTION*/
+      /* SECTION TITLE */
 
       .page-spot-info h3 {
         font-size: var(--fs-lg);
@@ -54,7 +54,7 @@ class PageSpotInfo extends HTMLElement {
         font-family: 'NunitoSans';
       }
 
-      /* GUIDE REVIEW SECTIONS*/
+      /* GUIDE & REVIEW HORIZONTAL SCROLL SECTIONS */
 
       .page-spot-info .guide-section,
       .page-spot-info .review-section {
@@ -92,7 +92,9 @@ class PageSpotInfo extends HTMLElement {
         text-decoration: none;
       }
 
-      /*  SCROLL BUTTONS */
+      /* =====================================================
+             SCROLL BUTTONS (Left / Right)
+         ===================================================== */
 
       .page-spot-info .scrl {
         position: absolute;
@@ -179,8 +181,31 @@ class PageSpotInfo extends HTMLElement {
         gap: var(--gap-size-s);
       }
 
+      /* =====================================================
+             REVIEW CARD (Used inside ag-review-card)
+         ===================================================== */
 
-      /* MEDIA QUERY*/
+      .page-spot-info .review-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--p-md);
+        padding: var(--p-lg);
+        border-radius: var(--br-m);
+        background: var(--bg-color);
+        border: 2px solid var(--text-color-8);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        font-family: 'NunitoSans';
+        align-items: flex-start;
+        color: var(--text-color-2);
+      }
+
+      .page-spot-info .brief-review {
+        text-transform: uppercase;
+      }
+
+      /* =====================================================
+                          RESPONSIVE
+         ===================================================== */
 
       @media (max-width: 960px) {
         .page-spot-info {
