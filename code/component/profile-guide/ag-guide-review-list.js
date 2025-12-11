@@ -23,17 +23,12 @@ class AgGuideReviewList extends HTMLElement {
                 display: flex;
                 flex-direction: row;
                 gap: var(--gap-size-l);
-                align-items: stretch;
             }
 
             .comment-form-card {
                 background-color: var(--primary-5);
                 padding: var(--p-md);
                 border-radius: var(--br-s);
-                min-width: 280px;
-                max-width: 320px;
-                flex-shrink: 0;
-                height: 280px;
                 position: sticky;
                 left: 0;
                 z-index: 1;
@@ -56,7 +51,6 @@ class AgGuideReviewList extends HTMLElement {
                 scrollbar-color: var(--primary-3) var(--primary-5);
                 flex: 1;
                 min-width: 0;
-                align-items: stretch;
             }
 
             .reviews-scroll::-webkit-scrollbar {
@@ -65,12 +59,12 @@ class AgGuideReviewList extends HTMLElement {
 
             .reviews-scroll::-webkit-scrollbar-track {
                 background: var(--primary-5);
-                border-radius: 4px;
+                border-radius: var(--br-s);
             }
 
             .reviews-scroll::-webkit-scrollbar-thumb {
                 background: var(--primary-3);
-                border-radius: 4px;
+                border-radius: var(--br-s);
             }
 
             .reviews-scroll::-webkit-scrollbar-thumb:hover {
@@ -83,34 +77,32 @@ class AgGuideReviewList extends HTMLElement {
 
             .form-group label {
                 display: block;
-                margin-bottom: 4px;
+                margin-bottom: var(--m-xxs);
                 font-weight: bold;
                 color: var(--text-color-1);
                 font-size: var(--fs-xs);
+                font-family: 'Rubik';
             }
 
             .form-group input,
             .form-group textarea {
                 width: 100%;
-                padding: 6px 8px;
+                padding: var(--p-xs) var(--p-sm);
                 border: 1px solid var(--text-color-7);
                 border-radius: var(--br-s);
-                font-family: 'NunitoSans';
                 font-size: var(--fs-sm);
                 box-sizing: border-box;
             }
 
             .form-group textarea {
-                max-height: 100px;
-                min-height: 80px;
-                resize: vertical;
+                padding: var(--p-md) var(--p-sm);
             }
 
             .submit-btn {
                 background-color: var(--primary);
                 color: white;
                 border: none;
-                padding: 8px 16px;
+                padding: var(--p-xs) var(--p-sm);
                 border-radius: var(--br-s);
                 cursor: pointer;
                 font-family: 'NunitoSans';
@@ -120,7 +112,7 @@ class AgGuideReviewList extends HTMLElement {
             }
 
             .submit-btn:hover {
-                background-color: var(--primary-1);
+                background-color: var(--primary-5);
             }
 
             .section-title {
@@ -128,11 +120,6 @@ class AgGuideReviewList extends HTMLElement {
                 font-size: var(--fs-xl);
                 color: var(--text-color-0);
                 margin-bottom: var(--p-lg);
-            }
-
-            ag-review {
-                height: 200px;
-                display: block;
             }
 
             .review-card {

@@ -1,95 +1,75 @@
 class PageSpots extends HTMLElement {
     constructor() {
         super();
-        this.css=`
-        @import url('fonts.css');
-            *,
-            *::before,
-            *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            }
-
-            h1, h2, h3, h4 {
-            font-family: 'Rubik';
-            }
-
-            p {
-            font-family: 'NunitoSans';
-            }
-
-            body {
-            font-family: 'NunitoSans';
-            color: var(--text-color-1);
-            background-color: var(--bg-color);
-            }
-
-            /* Page fade-in */
+        this.css = `
             main {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            animation: fadeInPage 0.6s ease-out;
+                padding: 0;   
+                margin: 0;      
+                align-items: flex-start;  
+                display: grid;
+                grid-template-columns: 1fr 3fr;
+                animation: fadeInPage 0.6s ease-out;
+                background-color: var(--bg-color);
             }
-
-            /* =============== FILTER ASIDE (Desktop) =============== */
 
             .filter-aside {
-            position: sticky;
-            top: 0;
-            align-self: flex-start;
+                position: relative;
+                top: 0;
+                align-self: flex-start;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                padding: var(--p-md);
+                box-shadow: 1px 0 10px 2px var(--text-color-6);
+                background-color: var(--bg-color);
+                max-height: 100vh;
+                overflow-y: auto;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-
-            padding: var(--p-md) var(--p-xl);
-            box-shadow: 1px 0 10px 2px var(--text-color-6);
-            background-color: var(--bg-color);
-
-            animation: slideInLeft 0.7s ease-out;
+                animation: slideInLeft 0.7s ease-out;
             }
 
             .filter-aside h2 {
-            color: var(--text-color-1);
-            padding-bottom: var(--p-sm);
-            font-size: var(--fs-xl);
-            text-transform: uppercase;
+                color: var(--text-color-1);
+                padding-bottom: var(--p-sm);
+                font-size: var(--fs-xl);
+                text-transform: uppercase;
             }
 
-
             .filter-section {
-            display: flex;
-            flex-direction: column;
-            gap: var(--gap-size-m);
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-m);
             }
 
             /* =============== SPOT GRID SECTION =============== */
 
             .spot-cards-container {
-            height: 100vh;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: var(--gap-size-m);
-            padding: var(--p-md) var(--p-xl);
+                max-height: 100vh;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-s);
+                padding: var(--p-md);
             }
 
             .spot-cards-container a:link {
-            text-decoration: none;
+                text-decoration: none;
             }
 
             .container-hdr {
-            color: var(--text-color-1);
-            font-size: var(--fs-base);
-            text-align: right;
-            text-transform: uppercase;
+                color: var(--text-color-1);
+                font-size: var(--fs-base);
+                text-align: right;
+                text-transform: uppercase;
+                margin: 0 0 var(--p-xs) 0;
+                padding: 0;
+
             }
 
             .spots-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: var(--gap-size-m);
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--gap-size-m);
             }
 
             /* Card fade-up animation */
@@ -228,7 +208,6 @@ class PageSpots extends HTMLElement {
                 flex-wrap: nowrap;
                 gap: var(--gap-size-s);
                 overflow-x: auto;
-                padding-bottom: var(--p-xs);
                 scrollbar-width: none;
             }
 
@@ -244,7 +223,7 @@ class PageSpots extends HTMLElement {
             .spot-cards-container {
                 height: auto;
                 overflow-y: visible;
-                padding: var(--p-md) var(--p-lg);
+                padding: 0 var(--p-lg);
             }
 
             .spots-grid {

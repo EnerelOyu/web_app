@@ -116,7 +116,7 @@ class AgHeader extends HTMLElement {
         outline: 2px solid var(--primary);
       }
 
-      .search-btn {
+      .search-btn, .user-btn{
         display: inline-flex;
         background-color: var(--primary-5);
         border-radius: 50%;
@@ -129,60 +129,42 @@ class AgHeader extends HTMLElement {
         transition: 0.3s;
       }
 
-      .search-btn svg {
+      .search-btn svg, .user-btn svg{
         width: var(--svg-s);
         height: var(--svg-s);
-        stroke: var(--primary);
-        fill: none;
         transition: 0.3s;
+        color: var(--primary);
       }
 
-      .search-btn:hover {
+      .search-btn:hover{
         background-color: var(--primary);
       }
 
       .search-btn:hover svg {
-        stroke: var(--bg-color);
+        color: var(--primary-5);
+        transform: rotate(90deg);
+
       }
 
       /* === USER AVATAR === */
 
-      .user-section {
-        display: flex;
-        align-items: center;
-        gap: var(--gap-size-s);
-        margin-left: var(--m-md);
+      .user-btn{
+        border: 2px dotted var(--primary);
       }
 
-      .user-avatar {
-        width: var(--svg-m);
-        height: var(--svg-m);
-        border-radius: 50%;
-        background: var(--primary-5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--text-color-3);
-        border: 2px dashed var(--text-color-4);
-        font-size: var(--fs-lg);
-        cursor: pointer;
-        transition: 0.3s;
+      .user-btn:hover {
+        transform: scale(1.08);
+        background-color: var(--primary);
       }
 
-      .user-avatar::before {
-        content: "?";
-      }
-
-      .user-avatar:hover {
-        border-color: var(--primary);
-        background-color: var(--primary-4);
-        color: var(--primary);
+      .user-btn:hover svg{
+        color: var(--primary-5);
       }
 
       /* === THEME TOGGLE === */
 
       .theme-toggle {
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         width: var(--svg-m);
@@ -192,7 +174,8 @@ class AgHeader extends HTMLElement {
         cursor: pointer;
         background-color: var(--primary-5);
         color: var(--primary);
-        transition: 0.2s ease;
+        transition: 0.3s;
+
       }
 
       .theme-toggle svg {
@@ -201,10 +184,21 @@ class AgHeader extends HTMLElement {
         stroke: currentColor;
         fill: none;
       }
+      
+      .theme-toggle:hover{
+        background-color: var(--primary);
+      }
+      
+      .theme-toggle:hover svg{
+        color: var(--primary-5);
+        transform: rotate(90deg);
+
+      }
 
       .hidden {
-        display: none !important;
+        display: none;
       }
+
 
       /* === MOBILE === */
 
@@ -314,9 +308,9 @@ class AgHeader extends HTMLElement {
             <svg class="icon-sun hidden"><use href="../styles/icons.svg#icon-sun"></use></svg>
           </button>
 
-          <div class="user-section">
-            <div class="user-avatar" title="Бүртгүүлээгүй"></div>
-          </div>
+          <button class="user-btn">
+            <svg><use href="../styles/icons.svg#icon-user"></use></svg>
+          </button>
         </div>
 
         <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
@@ -324,9 +318,9 @@ class AgHeader extends HTMLElement {
         </button>
 
         <div class="mobile-nav">
-          <a href="home.html">Нүүр Хуудас</a>
-          <a href="spots.html">Аяллын Цэгүүд</a>
-          <a href="plan.html">Миний Төлөвлөгөө</a>
+          <a href="#/home">Нүүр Хуудас</a>
+          <a href="#/spots">Аяллын Цэгүүд</a>
+          <a href="#/plan">Миний Төлөвлөгөө</a>
 
           <div class="mobile-theme-toggle-wrapper">
             <button class="theme-toggle mobile-theme-toggle" type="button">
@@ -340,47 +334,37 @@ class AgHeader extends HTMLElement {
   }
 
 markActiveLink() {
-  // URL-ийн file нэр (home.html гэх мэт)
-  let currentPath = window.location.pathname.split("/").pop();
-  if (!currentPath) currentPath = "home.html";
+  const update = () => {
+    const currentHash = window.location.hash || "#/home";
+    const links = this.querySelectorAll(".header-nav a, .mobile-nav a");
 
-  // URL-ийн hash (#/home гэх мэт)
-  const currentHash = window.location.hash || "#/home";
+    links.forEach(link => {
+      const href = link.getAttribute("href") || "";
+      const isActive = href === currentHash;
 
-  const allLinks = this.querySelectorAll(".header-nav a, .mobile-nav a");
+      if (isActive) {
+        link.classList.add("is-active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("is-active");
+        link.removeAttribute("aria-current");
+      }
+    });
+  };
 
-  allLinks.forEach(link => {
-    const href = link.getAttribute("href");
-    let isActive = false;
+  // Эхний удаа дуудах
+  update();
 
-    if (!href) return;
-
-    // Hash router-той линк (#/home, #/spots ...)
-    if (href.startsWith("#/")) {
-      isActive = (href === currentHash);
-    } 
-    // Энгийн файл руу заасан линк (home.html, spots.html ...)
-    else {
-      const linkPath = href.split("/").pop();
-      isActive = (linkPath === currentPath);
-    }
-
-    if (isActive) {
-      link.classList.add("is-active");
-      link.setAttribute("aria-current", "page");
-    } else {
-      link.classList.remove("is-active");
-      link.removeAttribute("aria-current");
-    }
-  });
+  // Hash өөрчлөгдөх болгонд дахин шалгана
+  window.addEventListener("hashchange", update);
 }
-
 
   setupMobileMenu() {
     const btn = this.querySelector(".mobile-menu-btn");
     const nav = this.querySelector(".mobile-nav");
     const useEl = btn.querySelector("use");
-    const MENU_ICON = "../styles/icons.svg#ag-icon-menu";
+
+    const MENU_ICON = "../styles/icons.svg#icon-menu";
     const CLOSE_ICON = "../styles/icons.svg#icon-close";
 
     if (!btn || !nav || !useEl) return;
@@ -410,7 +394,6 @@ markActiveLink() {
     });
   }
 
-  /* === THEME TOGGLE LOGIC === */
   setupThemeToggle() {
     const html = document.documentElement;
     const STORAGE_KEY = "ayalgo-theme";

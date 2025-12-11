@@ -39,18 +39,22 @@ class AgRating extends HTMLElement {
       .rating {
         display: flex;
         align-items: center;
-        gap: 4px;
+        gap: var(--gap-size-xxs);
+      }
+
+      .stars{
+        display: flex;
       }
 
       .stars .star {
-        width: 16px;
-        height: 16px;
+        width: var(--svg-s);
+        height: var(--svg-s);
         color: ${color};
         fill: currentColor;
       }
 
       .rating-num {
-        font-size: 14px;
+        font-size: var(--fs-sm);
         font-family: 'NunitoSans';
         color: ${color};
       }

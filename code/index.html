@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../styles/home_page.css">
     <link rel="stylesheet" href="../styles/spots.css">
     <link rel="stylesheet" href="../styles/spot-info.css">
-    <link rel="stylesheet" href="../styles/plan.css">
 
     <!-- Global State Management -->
     <script type="module" src="./router/app-state.js"></script>
@@ -77,10 +76,8 @@
             router.registerRoute('/spot-info', '<page-spot-info></page-spot-info>');
             router.registerRoute('/plan', '<page-plan></page-plan>');
 
-            // Set default route
-            if (!window.location.hash) {
-                window.location.hash = '#/home';
-            }
+            router.onRouteChange();
+
         });
     </script>
 </body>

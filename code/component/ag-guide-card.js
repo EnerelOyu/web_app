@@ -83,6 +83,7 @@ class GuideCard extends HTMLElement {
                 font-size: var(--fs-sm);
                 color: var(--text-color-3);
                 line-height: 1.5;
+                font-family: 'Rubik';
             }
 
             .guide-meta strong {
