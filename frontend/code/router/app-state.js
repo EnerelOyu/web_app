@@ -26,7 +26,7 @@ class AppState {
                 cate: 'Түүхэн, Соёл',
                 status: 'Нээлттэй',
                 time: '9:00AM–6:00 PM',
-                img1: 'https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg',
+                img1: '../frontend/files/spot-img/12Landscape1.jpg',
                 img2: 'https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg',
                 img3: 'https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg',
                 region: 'Төв',
