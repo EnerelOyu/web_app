@@ -272,7 +272,7 @@ class PageSpotInfo extends HTMLElement {
           ></ag-spot-hero>
 
           <ag-spot-aside
-            map-src="../files/Mongolia_blank.svg"
+            map-src="${spot.mapSrc || '../files/Mongolia_blank.svg'}"
             region="${spot.region}"
             location="${spot.location}"
             age="${spot.age}"

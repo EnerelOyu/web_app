@@ -69,7 +69,8 @@ class AppState {
                     price: spot.priceText,
                     schedule: spot.scheduleFull || spot.openingHours,
                     description: spot.descriptionLong,
-                    activities: spot.activities.join(', ')
+                    activities: spot.activities.join(', '),
+                    mapSrc: spot.mapSrc
                 };
             });
 
