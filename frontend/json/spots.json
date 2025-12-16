@@ -28,9 +28,9 @@
       "spotId": 2,
       "name": "Амарбаясгалант хийд",
       "area": "Хангай",
-      "category": "Түүхэн",
+      "category": "Соёл",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.3,
       "price": 500000,
@@ -97,9 +97,9 @@
       "spotId": 5,
       "name": "Шар Нохой хад",
       "area": "Төв",
-      "category": "Байгаль, Түүхэн",
+      "category": "Байгаль",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.2,
       "price": 5000,
@@ -120,9 +120,9 @@
       "spotId": 6,
       "name": "Улаанбаатар Хүрээ музей",
       "area": "Төв",
-      "category": "Түүхэн",
+      "category": "Соёл",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.0,
       "price": 0,
@@ -143,9 +143,9 @@
       "spotId": 7,
       "name": "Гандан Тэгчинлэн Хийд",
       "area": "Төв",
-      "category": "Түүхэн",
+      "category": "Соёл",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.9,
       "price": 5000,
@@ -166,10 +166,9 @@
       "spotId": 8,
       "name": "Богд хан уул",
       "area": "Төв",
-      "category": "Байгаль, Түүхэн",
+      "category": "Байгаль",
       "activities": [
-        "Ууланд гарах",
-        "Түүхэн"
+        "Уулын авиралт"
       ],
       "rating": 4.8,
       "price": 0,
@@ -192,7 +191,7 @@
       "area": "Хангай",
       "category": "Байгаль",
       "activities": [
-        "Амралт сувилал"
+        null
       ],
       "rating": 5.0,
       "price": 30000,
@@ -213,9 +212,9 @@
       "spotId": 10,
       "name": "Орхон хүрхрээ",
       "area": "Хангай",
-      "category": "Байгаль, Түүхэн",
+      "category": "Байгаль",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.7,
       "price": 15000,
@@ -236,9 +235,9 @@
       "spotId": 11,
       "name": "Эрдэнэзуу хийд",
       "area": "Хангай",
-      "category": "Түүхэн",
+      "category": "Соёл",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.6,
       "price": 10000,
@@ -261,7 +260,7 @@
       "area": "Хангай",
       "category": "Байгаль",
       "activities": [
-        "Ууланд гарах"
+        "Уулын авиралт"
       ],
       "rating": 4.4,
       "price": 10000,
@@ -307,7 +306,7 @@
       "area": "Алтай",
       "category": "Адал явдалт",
       "activities": [
-        "Ууланд гарах"
+        "Уулын авиралт"
       ],
       "rating": 4.9,
       "price": 80000,
@@ -330,7 +329,7 @@
       "area": "Говь",
       "category": "Байгаль",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.8,
       "price": 60000,
@@ -353,7 +352,7 @@
       "area": "Говь",
       "category": "Байгаль",
       "activities": [
-        "Говьд тэмээ унах"
+        null
       ],
       "rating": 4.9,
       "price": 40000,
@@ -376,7 +375,7 @@
       "area": "Говь",
       "category": "Байгаль",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.6,
       "price": 20000,
@@ -399,8 +398,7 @@
       "area": "Зүүн",
       "category": "Байгаль",
       "activities": [
-        "Ууланд гарах",
-        "Түүхэн"
+        "Ууланд гарах"
       ],
       "rating": 4.7,
       "price": 50000,
@@ -423,7 +421,7 @@
       "area": "Хангай",
       "category": "Соёл",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.3,
       "price": 5000,
@@ -446,7 +444,7 @@
       "area": "Говь",
       "category": "Байгаль",
       "activities": [
-        "Түүхэн"
+        null
       ],
       "rating": 4.4,
       "price": 25000,
