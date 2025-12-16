@@ -5,7 +5,7 @@ class AgFilter extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["ner", "turul1", "turul2", "turul3", "turul4", "turul5", "turul6"];
+    return ["ner"];
   }
 
   connectedCallback() {
@@ -19,17 +19,21 @@ class AgFilter extends HTMLElement {
     }
   }
 
+  // Статик шүүлтийн өгөгдөл
+  getFilterChoices(filterName) {
+    const filterData = {
+      'Категори': ['Соёл', 'Амралт сувилал', 'Адал явдалт', 'Байгаль', 'Ууланд гарах'],
+      'Бүс нутаг': ['Төв', 'Хангай', 'Зүүн', 'Баруун', 'Алтай', 'Говь'],
+      'Үйл ажиллагаа': ['Морин аялал', 'Амьтантай ойр', 'Загасчлал', 'Явган аялал', 'Уулын авиралт', 'Баярын наадам'],
+      'Насны ангилал': ['Бүх нас', '18–25']
+    };
+
+    return filterData[filterName] || [];
+  }
+
   render() {
     const group = this.getAttribute("ner") || "Ангилал";
-
-    const choices = [
-      this.getAttribute("turul1"),
-      this.getAttribute("turul2"),
-      this.getAttribute("turul3"),
-      this.getAttribute("turul4"),
-      this.getAttribute("turul5"),
-      this.getAttribute("turul6"),
-    ].filter(Boolean);
+    const choices = this.getFilterChoices(group);
 
     this.shadowRoot.innerHTML = `
       <style>

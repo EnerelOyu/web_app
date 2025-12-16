@@ -395,49 +395,12 @@ class PageSpots extends HTMLElement {
         const filterSection = this.querySelector('#filter-section');
         if (!filterSection) return;
 
-        const spots = window.appState.getAllSpots();
-        if (!spots || spots.length === 0) return;
-
-        // Extract unique values for each filter category
-        const categories = new Set();
-        const areas = new Set();
-        const activities = new Set();
-        const ageRanges = new Set();
-
-        spots.forEach(spot => {
-            // Categories
-            if (spot.cate) {
-                spot.cate.split(',').forEach(c => categories.add(c.trim()));
-            }
-
-            // Areas
-            if (spot.region) {
-                areas.add(spot.region.trim());
-            }
-
-            // Activities
-            if (spot.activities) {
-                spot.activities.split(',').forEach(a => activities.add(a.trim()));
-            }
-
-            // Age ranges
-            if (spot.age) {
-                ageRanges.add(spot.age.trim());
-            }
-        });
-
-        // Convert Sets to sorted arrays
-        const categoriesArray = Array.from(categories).sort();
-        const areasArray = Array.from(areas).sort();
-        const activitiesArray = Array.from(activities).sort();
-        const ageRangesArray = Array.from(ageRanges).sort();
-
-        // Generate filter HTML
+        // Generate static filter HTML
         filterSection.innerHTML = `
-            ${this.createFilterElement('Категори', categoriesArray)}
-            ${this.createFilterElement('Бүс нутаг', areasArray)}
-            ${this.createFilterElement('Үйл ажиллагаа', activitiesArray)}
-            ${this.createFilterElement('Насны ангилал', ageRangesArray)}
+            ${this.createFilterElement('Категори')}
+            ${this.createFilterElement('Бүс нутаг')}
+            ${this.createFilterElement('Үйл ажиллагаа')}
+            ${this.createFilterElement('Насны ангилал')}
         `;
 
         // Pre-select filters based on activeFilters after rendering
@@ -446,14 +409,9 @@ class PageSpots extends HTMLElement {
         });
     }
 
-    createFilterElement(name, values) {
-        // ag-filter component uses turul1, turul2, etc. attributes
-        const attributes = values
-            .slice(0, 6) // Max 6 values
-            .map((val, index) => `turul${index + 1}="${val}"`)
-            .join(' ');
-
-        return `<ag-filter ner="${name}" ${attributes}></ag-filter>`;
+    createFilterElement(name) {
+        // ag-filter component now uses static data internally
+        return `<ag-filter ner="${name}"></ag-filter>`;
     }
 
     generateSpotCards() {
