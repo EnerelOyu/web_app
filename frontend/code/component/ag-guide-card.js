@@ -1,38 +1,6 @@
 class GuideCard extends HTMLElement {
     constructor() {
         super();
-        this.guides = [
-            {
-                id: 'g1',
-                name: 'Дорж',
-                phone: '+97690909909',
-                experience: '5 жил',
-                languages: 'Монгол, Англи',
-                birthdate: '1990-05-15',
-                photo: '../files/guide-img/guide1.svg',
-                rating: 4.5
-            },
-            {
-                id: 'g2',
-                name: 'Саран',
-                phone: '+97699001122',
-                experience: '3 жил',
-                languages: 'Монгол, Англи, Орос',
-                birthdate: '1992-08-20',
-                photo: '../files/guide-img/guide2.svg',
-                rating: 4.8
-            },
-            {
-                id: 'g3',
-                name: 'Бат',
-                phone: '+97688812233',
-                experience: '7 жил',
-                languages: 'Монгол, Япон',
-                birthdate: '1988-12-10',
-                photo: '../files/guide-img/guide3.svg',
-                rating: 4.2
-            }
-        ];
     }
 
     applyStyles() {
@@ -202,7 +170,8 @@ class GuideCard extends HTMLElement {
     }
 
     setGuide(guideId) {
-        const guide = this.guides.find(g => g.id === guideId);
+        // Get guide from app-state
+        const guide = window.appState?.getGuide(guideId);
         if (!guide) {
             console.warn(`Guide with ID "${guideId}" not found`);
             return;
@@ -213,12 +182,12 @@ class GuideCard extends HTMLElement {
             this.render();
         }
 
-        this.querySelector('#guidePhoto').src = guide.photo;
-        this.querySelector('#guidePhoto').alt = `${guide.name} хөтөч`;
-        this.querySelector('#guideName').textContent = guide.name;
+        this.querySelector('#guidePhoto').src = guide.profileImg || '../files/guide-img/guide-01.jpg';
+        this.querySelector('#guidePhoto').alt = `${guide.fullName} хөтөч`;
+        this.querySelector('#guideName').textContent = guide.fullName;
         this.querySelector('#guideExperience').textContent = guide.experience;
-        this.querySelector('#guideLanguages').textContent = guide.languages;
-        this.querySelector('#guideBirthdate').textContent = guide.birthdate;
+        this.querySelector('#guideLanguages').textContent = guide.languages.join(', ');
+        this.querySelector('#guideBirthdate').textContent = '-'; // birthdate хадгалагдаагүй
 
         const phoneLink = this.querySelector('#guidePhone');
         phoneLink.textContent = guide.phone;
@@ -226,14 +195,8 @@ class GuideCard extends HTMLElement {
 
         const ratingElement = this.querySelector('#guideRating');
         if (ratingElement) {
-            ratingElement.setAttribute('value', guide.rating.toString());
-        }
-    }
-
-    // Гаднаас guides өгөгдөл тохируулах
-    setGuidesData(guidesArray) {
-        if (Array.isArray(guidesArray)) {
-            this.guides = guidesArray;
+            // Rating guides.json-д байхгүй тул default 4.5
+            ratingElement.setAttribute('value', '4.5');
         }
     }
 

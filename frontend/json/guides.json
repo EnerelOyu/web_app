@@ -7,13 +7,13 @@
       "phone": "99112233",
       "email": "enkh.bat@example.com",
       "area": "Төв",
-      "category": "Байгалийн үзэсгэлэнт газар",
+      "category": "Байгаль",
       "language": [
         "Монгол",
         "Англи"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-01.jpg"
     },
     {
       "guideId": "g2",
@@ -21,13 +21,13 @@
       "firstName": "Саруул",
       "phone": "88112233",
       "email": "sar.dorj@example.com",
-      "area": "Улаанбаатар",
-      "category": "Хотын аялал",
+      "area": "Төв",
+      "category": "Соёл",
       "language": [
         "Монгол"
       ],
       "experienceLevel": "1 жил ба түүнээс доош",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-02.jpg"
     },
     {
       "guideId": "g3",
@@ -35,14 +35,14 @@
       "firstName": "Одмаа",
       "phone": "99117788",
       "email": "odmaa.suren@example.com",
-      "area": "Хөвсгөл",
-      "category": "Нуурын аялал",
+      "area": "Хангай",
+      "category": "Байгаль",
       "language": [
         "Монгол",
         "Орос"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-03.jpg"
     },
     {
       "guideId": "g4",
@@ -50,13 +50,13 @@
       "firstName": "Хульжиг",
       "phone": "95112233",
       "email": "nar.kh@example.com",
-      "area": "Архангай",
-      "category": "Адал явдалт аялал",
+      "area": "Хангай",
+      "category": "Адал явдалт",
       "language": [
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-04.jpg"
     },
     {
       "guideId": "g5",
@@ -64,14 +64,14 @@
       "firstName": "Соёлмаа",
       "phone": "90123456",
       "email": "soyol.erd@example.com",
-      "area": "Өмнөговь",
-      "category": "Цөлийн аялал",
+      "area": "Говь",
+      "category": "Байгаль",
       "language": [
         "Монгол",
         "Англи"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-05.jpg"
     },
     {
       "guideId": "g6",
@@ -79,14 +79,14 @@
       "firstName": "Тулга",
       "phone": "99120011",
       "email": "tulga.munkh@example.com",
-      "area": "Баян-Өлгий",
-      "category": "Ууланд авирах аялал",
+      "area": "Алтай",
+      "category": "Ууланд гарах",
       "language": [
         "Монгол",
         "Орос"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-06.jpg"
     },
     {
       "guideId": "g7",
@@ -94,13 +94,13 @@
       "firstName": "Сарнаа",
       "phone": "88002233",
       "email": "sar.oyun@example.com",
-      "area": "Сэлэнгэ",
-      "category": "Түүх соёлын дурсгалт газар",
+      "area": "Хангай",
+      "category": "Соёл",
       "language": [
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-01.jpg"
     },
     {
       "guideId": "g8",
@@ -108,13 +108,13 @@
       "firstName": "Тэмүүлэн",
       "phone": "99001122",
       "email": "temu.bold@example.com",
-      "area": "Хэнтий",
-      "category": "Түүхэн газар",
+      "area": "Зүүн",
+      "category": "Соёл",
       "language": [
         "Монгол"
       ],
       "experienceLevel": "1 жил ба түүнээс доош",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-02.jpg"
     },
     {
       "guideId": "g9",
@@ -122,13 +122,13 @@
       "firstName": "Хонгор",
       "phone": "99119900",
       "email": "hongor.sar@example.com",
-      "area": "Дундговь",
-      "category": "Геологийн тогтоц",
+      "area": "Говь",
+      "category": "Байгаль",
       "language": [
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-03.jpg"
     },
     {
       "guideId": "g10",
@@ -136,14 +136,14 @@
       "firstName": "Номин",
       "phone": "98112233",
       "email": "nom.khishig@example.com",
-      "area": "Увс",
-      "category": "Байгалийн аялал",
+      "area": "Баруун",
+      "category": "Амралт сувилал",
       "language": [
         "Монгол",
         "Англи"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": null
+      "profileImgUrl": "../files/guide-img/guide-04.jpg"
     }
   ]
 }
