@@ -19,7 +19,7 @@
       "imgMainUrl": "../files/spot-img/spot01-1.jpg",
       "img2Url": "../files/spot-img/spot01-2.jpg",
       "img3Url": "../files/spot-img/spot01-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "Зуны цагийн хуваарь: 09:00 - 20:00 цаг хүртэл; Өвөл цагийн хуваарь: 10:00 - 18:00 цаг хүртэл",
       "descriptionLong": "“Цонжин болдог” хэмээх түүхэн үйл явдалтай холбоотой Улаанбаатар хотоос 53 км зайд байгалийн сайхан цогцолсон Туул голын ойролцоо Төв аймгийн Эрдэнэ сумын нутаг газарт байрладаг цогцолбор юм. Монгол орны ихэнх түүх соёлын дурсгалт болон байгалийн үзэсгэлэнт газруудад хүрэхийн тулд замын хүнд нөхцөлд 300-аас дээш км замыг туулж байж хүрдэгтэй харьцуулахад энэ нь маш том давуу тал юм. Цогцолборын нийт талбай нь 212 га бөгөөд цогцолборын төвд Чингис хааны морьт хөшөө байрлана.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -42,7 +42,7 @@
       "imgMainUrl": "../files/spot-img/spot02-1.jpg",
       "img2Url": "../files/spot-img/spot02-2.jpg",
       "img3Url": "../files/spot-img/spot02-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "Долоо хоногийн бүх өдөр: 08–18 цаг",
       "descriptionLong": "Амарбаясгалант хийд нь Монголын шашин, соёлын үнэт өв юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -65,7 +65,7 @@
       "imgMainUrl": "../files/spot-img/spot03-1.jpg",
       "img2Url": "../files/spot-img/spot03-2.jpg",
       "img3Url": "../files/spot-img/spot03-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Хустайн байгалийн цогцолборт газар нь тахийг сэргээн нутагшуулснаараа алдартай.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -88,7 +88,7 @@
       "imgMainUrl": "../files/spot-img/spot04-1.jpg",
       "img2Url": "../files/spot-img/spot04-2.jpg",
       "img3Url": "../files/spot-img/spot04-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Горхи-Тэрэлж нь Улаанбаатар хотын ойролцоох аялал жуулчлалын бүс.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -111,7 +111,7 @@
       "imgMainUrl": "../files/spot-img/spot05-1.jpg",
       "img2Url": "../files/spot-img/spot05-2.jpg",
       "img3Url": "../files/spot-img/spot05-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Шар Нохой хад нь өвөрмөц хэлбэр бүхий байгалийн тогтоцтой хад юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -134,7 +134,7 @@
       "imgMainUrl": "../files/spot-img/spot06-1.jpg",
       "img2Url": "../files/spot-img/spot06-2.jpg",
       "img3Url": "../files/spot-img/spot06-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Улаанбаатар Хүрээ музей нь нийслэлийн түүхийг харуулсан сонирхолтой музей юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -157,7 +157,7 @@
       "imgMainUrl": "../files/spot-img/spot07-1.jpg",
       "img2Url": "../files/spot-img/spot07-2.jpg",
       "img3Url": "../files/spot-img/spot07-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Гандан Тэгчэнлин хийд нь Монголын хамгийн том буддын хийдүүдийн нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -180,7 +180,7 @@
       "imgMainUrl": "../files/spot-img/spot08-1.jpg",
       "img2Url": "../files/spot-img/spot08-2.jpg",
       "img3Url": "../files/spot-img/spot08-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Богд хан уул нь дэлхийн хамгийн эрт дархлагдсан уулуудын нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -203,7 +203,7 @@
       "imgMainUrl": "../files/spot-img/spot09-1.jpg",
       "img2Url": "../files/spot-img/spot09-2.jpg",
       "img3Url": "../files/spot-img/spot09-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хөвсгөл нуур нь Монголын \"далай\" хэмээн алдаршсан гайхамшигт нуур.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -226,7 +226,7 @@
       "imgMainUrl": "../files/spot-img/spot10-1.jpg",
       "img2Url": "../files/spot-img/spot10-2.jpg",
       "img3Url": "../files/spot-img/spot10-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Орхон хүрхрээ нь Орхон голын доод хэсэгт орших байгалийн сонин тогтоцтой хүрхрээ.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -249,7 +249,7 @@
       "imgMainUrl": "../files/spot-img/spot11-1.jpg",
       "img2Url": "../files/spot-img/spot11-2.jpg",
       "img3Url": "../files/spot-img/spot11-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Эрдэнэзуу хийд нь Монголын буддын шашны анхны томоохон хийдүүдийн нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -272,7 +272,7 @@
       "imgMainUrl": "../files/spot-img/spot12-1.jpg",
       "img2Url": "../files/spot-img/spot12-2.jpg",
       "img3Url": "../files/spot-img/spot12-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хорго галт уул нь сүүлийн мөстлөгийн үеийн идэвхтэй байсан галт уулын үлдэц.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -295,7 +295,7 @@
       "imgMainUrl": "../files/spot-img/spot13-1.jpg",
       "img2Url": "../files/spot-img/spot13-2.jpg",
       "img3Url": "../files/spot-img/spot13-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тэрхийн цагаан нуур нь галт уулын тогоонд үүссэн цэнгэг уст нуур юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -318,7 +318,7 @@
       "imgMainUrl": "../files/spot-img/spot14-1.jpg",
       "img2Url": "../files/spot-img/spot14-2.jpg",
       "img3Url": "../files/spot-img/spot14-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-altai.svg",
       "scheduleFull": "",
       "descriptionLong": "Алтай Таван богд нь адал явдалт болон өндөр уулын аялалд тохиромжтой бүс.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -341,7 +341,7 @@
       "imgMainUrl": "../files/spot-img/spot15-1.jpg",
       "img2Url": "../files/spot-img/spot15-2.jpg",
       "img3Url": "../files/spot-img/spot15-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Говь гурван сайхан нь Говийн бүсийн онцлог тогтоцтой уулс юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -364,7 +364,7 @@
       "imgMainUrl": "../files/spot-img/spot16-1.jpg",
       "img2Url": "../files/spot-img/spot16-2.jpg",
       "img3Url": "../files/spot-img/spot16-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Хонгорын элс нь дуут элсээрээ алдартай том элсэн манхан.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -387,7 +387,7 @@
       "imgMainUrl": "../files/spot-img/spot17-1.jpg",
       "img2Url": "../files/spot-img/spot17-2.jpg",
       "img3Url": "../files/spot-img/spot17-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Ёлын ам нь гүн хавцал, заримдаа жилийн турш мөстэй байдаг онцлогтой.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -410,7 +410,7 @@
       "imgMainUrl": "../files/spot-img/spot18-1.jpg",
       "img2Url": "../files/spot-img/spot18-2.jpg",
       "img3Url": "../files/spot-img/spot18-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-zuun.svg",
       "scheduleFull": "",
       "descriptionLong": "Бурхан Халдун уул нь Чингис хааны домогтой холбогддог ариун хайрхан.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -433,7 +433,7 @@
       "imgMainUrl": "../files/spot-img/spot19-1.jpg",
       "img2Url": "../files/spot-img/spot19-2.jpg",
       "img3Url": "../files/spot-img/spot19-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/spot-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тайхар чулуу нь эртний бичээс, домог түүхтэй нүсэр хад юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -456,7 +456,7 @@
       "imgMainUrl": "../files/spot-img/spot20-1.jpg",
       "img2Url": "../files/spot-img/spot20-2.jpg",
       "img3Url": "../files/spot-img/spot20-3.jpg",
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Хэрмэн цав нь газрын хөрс эвдрэлээс үүссэн гайхалтай геологийн тогтоцтой бүс.",
       "infoPageHref": "../code/index.html#/spot-info"
