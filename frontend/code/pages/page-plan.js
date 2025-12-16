@@ -328,7 +328,9 @@ class PagePlan extends HTMLElement {
             routeItem.setAttribute('number', item.number);
             routeItem.setAttribute('title', item.title);
             routeItem.setAttribute('description', item.description || '');
-            routeItem.setAttribute('image', item.img1);
+            routeItem.setAttribute('img1', item.img1 || item.image || '');
+            routeItem.setAttribute('img2', item.img2 || item.img1 || item.image || '');
+            routeItem.setAttribute('img3', item.img3 || item.img1 || item.image || '');
             routeItem.setAttribute('map-query', item.title);
             routeItem.setAttribute('draggable', 'true');
             routeItem.setAttribute('data-spot-id', item.id);
@@ -359,6 +361,50 @@ class PagePlan extends HTMLElement {
                 window.appState.removeFromPlan(spotId);
             }
         });
+
+        // Handle add-item events from route-section (Газар нэмэх, Тэмдэглэл нэмэх)
+        this.addEventListener('add-item', (e) => {
+            const { type } = e.detail;
+
+            if (type === 'place') {
+                this.showAddPlaceDialog();
+            } else if (type === 'note') {
+                this.showAddNoteDialog();
+            }
+        });
+    }
+
+    // Газар нэмэх dialog харуулах
+    showAddPlaceDialog() {
+        // Spots хуудас руу шилжүүлэх эсвэл popup харуулах
+        const confirmed = confirm('Аяллын цэг нэмэхийн тулд "Аяллын Цэгүүд" хуудас руу шилжих үү?');
+        if (confirmed) {
+            window.location.hash = '#/spots';
+        }
+    }
+
+    // Тэмдэглэл нэмэх dialog харуулах
+    showAddNoteDialog() {
+        const noteText = prompt('Тэмдэглэл оруулна уу:');
+
+        if (noteText && noteText.trim()) {
+            // Create note element
+            const routeSection = this.querySelector('#route-section');
+            if (!routeSection) return;
+
+            // Count existing notes to set number
+            const existingNotes = routeSection.querySelectorAll('ag-note-item');
+            const noteNumber = existingNotes.length + 1;
+
+            const noteElement = document.createElement('ag-note-item');
+            noteElement.setAttribute('note-text', noteText.trim());
+            noteElement.setAttribute('number', noteNumber);
+
+            // Add note to the end of route section
+            routeSection.appendChild(noteElement);
+
+            alert('Тэмдэглэл амжилттай нэмэгдлээ!');
+        }
     }
 }
 

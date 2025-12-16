@@ -276,8 +276,8 @@ class AppState {
                 };
             });
 
-            // Merge with temporary data (for compatibility)
-            this.spotData = { ...this.tempSpotData, ...this.spotData };
+            // Merge with temporary data (JSON data takes priority)
+            this.spotData = { ...this.spotData };
 
             this.dispatchStateChange('spotData', this.spotData);
         } catch (error) {

@@ -5,7 +5,7 @@ class AgRouteItem extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['number', 'title', 'description', 'image', 'map-query'];
+        return ['number', 'title', 'description', 'image', 'img1', 'img2', 'img3', 'map-query'];
     }
 
     connectedCallback() {
@@ -36,7 +36,24 @@ class AgRouteItem extends HTMLElement {
     }
 
     get image() {
-        return this.getAttribute('image') || '';
+        return this.getAttribute('image') || this.img1 || '';
+    }
+
+    get img1() {
+        return this.getAttribute('img1') || this.getAttribute('image') || '';
+    }
+
+    get img2() {
+        return this.getAttribute('img2') || this.img1;
+    }
+
+    get img3() {
+        return this.getAttribute('img3') || this.img1;
+    }
+
+    get images() {
+        const imgs = [this.img1, this.img2, this.img3].filter(img => img);
+        return imgs.length > 0 ? imgs : [this.image || ''];
     }
 
     get mapQuery() {
@@ -307,7 +324,21 @@ class AgRouteItem extends HTMLElement {
                     overflow: hidden;
                 }
 
-                .image-container img {
+                .image-slider {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    transition: transform 0.3s ease;
+                }
+
+                .image-slide {
+                    min-width: 100%;
+                    height: 100%;
+                    flex-shrink: 0;
+                }
+
+                .image-slide img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
@@ -325,10 +356,90 @@ class AgRouteItem extends HTMLElement {
                     justify-content: center;
                     opacity: 0;
                     transition: opacity 0.2s;
+                    z-index: 2;
                 }
 
                 .image-container:hover .image-overlay {
                     opacity: 1;
+                }
+
+                /* Slide Navigation */
+                .slide-nav {
+                    position: absolute;
+                    bottom: 8px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    display: flex;
+                    gap: 6px;
+                    z-index: 3;
+                    opacity: 0;
+                    transition: opacity 0.2s;
+                }
+
+                .image-container:hover .slide-nav {
+                    opacity: 1;
+                }
+
+                .slide-dot {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.5);
+                    border: none;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    padding: 0;
+                }
+
+                .slide-dot.active {
+                    background: var(--bg-color, #fff);
+                    width: 24px;
+                    border-radius: 4px;
+                }
+
+                .slide-arrow {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: rgba(255, 255, 255, 0.9);
+                    border: none;
+                    border-radius: var(--br-circle, 50%);
+                    width: 32px;
+                    height: 32px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                    z-index: 3;
+                    opacity: 0;
+                }
+
+                .image-container:hover .slide-arrow {
+                    opacity: 1;
+                }
+
+                .slide-arrow:hover {
+                    background: var(--primary, #ff6b00);
+                    transform: translateY(-50%) scale(1.1);
+                }
+
+                .slide-arrow svg {
+                    width: 16px;
+                    height: 16px;
+                    fill: var(--text-color-1, #333);
+                }
+
+                .slide-arrow:hover svg {
+                    fill: var(--bg-color, #fff);
+                }
+
+                .slide-arrow.prev {
+                    left: 8px;
+                }
+
+                .slide-arrow.next {
+                    right: 8px;
                 }
 
                 .change-image-btn {
@@ -584,7 +695,32 @@ class AgRouteItem extends HTMLElement {
 
                 <div class="place-media">
                     <div class="image-container">
-                        <img src="${this.image}" alt="${this.title}">
+                        <div class="image-slider">
+                            ${this.images.map(img => `
+                                <div class="image-slide">
+                                    <img src="${img}" alt="${this.title}">
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        ${this.images.length > 1 ? `
+                            <button class="slide-arrow prev">
+                                <svg viewBox="0 0 320 512">
+                                    <path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
+                                </svg>
+                            </button>
+                            <button class="slide-arrow next">
+                                <svg viewBox="0 0 320 512">
+                                    <path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
+                                </svg>
+                            </button>
+                            <div class="slide-nav">
+                                ${this.images.map((_, index) => `
+                                    <button class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+
                         <div class="image-overlay">
                             <button class="change-image-btn">
                                 <svg viewBox="0 0 512 512">
@@ -630,6 +766,46 @@ class AgRouteItem extends HTMLElement {
             'g2': { name: 'Саран', phone: '+976 9900 1122' },
             'g3': { name: 'Бат', phone: '+976 8881 2233' }
         };
+
+        // Image Slider
+        let currentSlide = 0;
+        const slider = shadow.querySelector('.image-slider');
+        const slides = shadow.querySelectorAll('.image-slide');
+        const dots = shadow.querySelectorAll('.slide-dot');
+        const prevBtn = shadow.querySelector('.slide-arrow.prev');
+        const nextBtn = shadow.querySelector('.slide-arrow.next');
+
+        const updateSlider = (index) => {
+            if (!slider || slides.length === 0) return;
+
+            currentSlide = index;
+            if (currentSlide < 0) currentSlide = slides.length - 1;
+            if (currentSlide >= slides.length) currentSlide = 0;
+
+            slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentSlide);
+            });
+        };
+
+        prevBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSlider(currentSlide - 1);
+        });
+
+        nextBtn?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            updateSlider(currentSlide + 1);
+        });
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const index = parseInt(dot.dataset.index);
+                updateSlider(index);
+            });
+        });
 
         // Guide selector
         const select = shadow.querySelector('.guide-select-dropdown');
