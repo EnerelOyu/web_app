@@ -305,6 +305,16 @@ class PageSpots extends HTMLElement {
     }
 
     connectedCallback() {
+        this.activeFilters = {
+            'Категори': [],
+            'Бүс нутаг': [],
+            'Үйл ажиллагаа': [],
+            'Насны ангилал': []
+        };
+
+        // Read URL query parameters from home search
+        this.readSearchParams();
+
         this.render();
         this.attachEventListeners();
 
@@ -312,13 +322,47 @@ class PageSpots extends HTMLElement {
         window.addEventListener('appstatechange', (e) => {
             if (e.detail.key === 'spotData') {
                 this.renderContent();
+                // Apply initial filters from URL
+                if (this.hasActiveFilters()) {
+                    this.applyFilters();
+                }
             }
         });
 
         // Initial render if data is already loaded
         if (window.appState && Object.keys(window.appState.spotData).length > 0) {
             this.renderContent();
+            // Apply initial filters from URL
+            if (this.hasActiveFilters()) {
+                this.applyFilters();
+            }
         }
+    }
+
+    readSearchParams() {
+        const hash = window.location.hash;
+        const queryIndex = hash.indexOf('?');
+
+        if (queryIndex === -1) return;
+
+        const queryString = hash.substring(queryIndex + 1);
+        const params = new URLSearchParams(queryString);
+
+        // Map URL params to filter names
+        const area = params.get('bus');        // 'bus' -> 'Бүс нутаг'
+        const category = params.get('cate');    // 'cate' -> 'Категори'
+
+        if (area) {
+            this.activeFilters['Бүс нутаг'] = [area];
+        }
+
+        if (category) {
+            this.activeFilters['Категори'] = [category];
+        }
+    }
+
+    hasActiveFilters() {
+        return Object.values(this.activeFilters).some(arr => arr.length > 0);
     }
 
     render() {
@@ -395,6 +439,11 @@ class PageSpots extends HTMLElement {
             ${this.createFilterElement('Үйл ажиллагаа', activitiesArray)}
             ${this.createFilterElement('Насны ангилал', ageRangesArray)}
         `;
+
+        // Pre-select filters based on activeFilters after rendering
+        requestAnimationFrame(() => {
+            this.preselectFilters();
+        });
     }
 
     createFilterElement(name, values) {
@@ -451,6 +500,118 @@ class PageSpots extends HTMLElement {
                 }
             }
         });
+
+        // Handle filter changes
+        this.addEventListener('filter-changed', (e) => {
+            const { type, values } = e.detail;
+            this.activeFilters[type] = values;
+            this.applyFilters();
+        });
+    }
+
+    preselectFilters() {
+        const filterSection = this.querySelector('#filter-section');
+        if (!filterSection) return;
+
+        const agFilters = filterSection.querySelectorAll('ag-filter');
+
+        agFilters.forEach(filter => {
+            const filterName = filter.getAttribute('ner');
+            const activeValues = this.activeFilters[filterName] || [];
+
+            if (activeValues.length === 0) return;
+
+            // Access shadow DOM
+            const shadowRoot = filter.shadowRoot;
+            if (!shadowRoot) return;
+
+            const checkboxes = shadowRoot.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                if (activeValues.includes(cb.value)) {
+                    cb.checked = true;
+                }
+            });
+        });
+    }
+
+    applyFilters() {
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Filter spots based on active filters
+        const filteredSpots = spots.filter(spot => {
+            // Check category filter
+            const categoryFilter = this.activeFilters['Категори'];
+            if (categoryFilter.length > 0) {
+                const spotCategories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
+                if (!categoryFilter.some(filter => spotCategories.includes(filter))) {
+                    return false;
+                }
+            }
+
+            // Check area filter
+            const areaFilter = this.activeFilters['Бүс нутаг'];
+            if (areaFilter.length > 0) {
+                if (!areaFilter.includes(spot.region)) {
+                    return false;
+                }
+            }
+
+            // Check activity filter
+            const activityFilter = this.activeFilters['Үйл ажиллагаа'];
+            if (activityFilter.length > 0) {
+                const spotActivities = spot.activities ? spot.activities.split(',').map(a => a.trim()) : [];
+                if (!activityFilter.some(filter => spotActivities.includes(filter))) {
+                    return false;
+                }
+            }
+
+            // Check age range filter
+            const ageFilter = this.activeFilters['Насны ангилал'];
+            if (ageFilter.length > 0) {
+                if (!ageFilter.includes(spot.age)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
+
+        // Update the spots grid with filtered results
+        this.displayFilteredSpots(filteredSpots);
+    }
+
+    displayFilteredSpots(spots) {
+        const spotsGrid = this.querySelector('#spots-grid');
+        if (!spotsGrid) return;
+
+        if (spots.length === 0) {
+            spotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: var(--p-xl); color: var(--text-color-3);">Шүүлтэд тохирох газар олдсонгүй.</p>';
+            return;
+        }
+
+        // Generate spot cards HTML
+        spotsGrid.innerHTML = spots.map(spot => {
+            const spotId = spot.id;
+            const activities = spot.activities || '';
+            const age = spot.age || 'Бүх нас';
+            const price = spot.price || '';
+
+            return `
+                <ag-spot-card
+                    href="#/spot-info"
+                    zrg="${spot.img1 || ''}"
+                    bus="${spot.region || ''}"
+                    unelgee="${spot.rating || '0'}"
+                    ner="${spot.title || ''}"
+                    cate="${spot.cate || ''}"
+                    activity="${activities}"
+                    une="${price}"
+                    age="${age}"
+                    data-spot-id="${spotId}">
+                </ag-spot-card>
+            `;
+        }).join('');
     }
 }
 

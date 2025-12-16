@@ -238,19 +238,23 @@ class AppState {
                 'Амарбаясгалант хийд': 'amarbayasgalant',
                 'Хустайн байгалийн цогцолборт газар': 'khustai',
                 'Горхи-Тэрэлж Үндэсний Парк': 'terelj',
+                'Шар Нохой хад': 'sharnohoi',
+                'Улаанбаатар Хүрээ музей': 'ulaanbaatarkhurree',
                 'Гандан Тэгчинлэн Хийд': 'gandan',
                 'Богд хан уул': 'bogdkhan',
                 'Хөвсгөл нуур': 'khovsgol',
+                'Орхон хүрхрээ': 'orkhon',
                 'Эрдэнэзуу хийд': 'erdenezuu',
+                'Хорго галт уул': 'khorgo',
                 'Тэрхийн цагаан нуур': 'terkhiin',
                 'Алтай Таван богд': 'altai',
                 'Алтай Таван Богд': 'altai',
-                'Сүхбаатарын талбай': 'sukhbaatar',
-                'Аглаг бүтээлийн хийд': 'aglag',
-                'Шанхын хийд': 'shankh',
-                'Ганга нуур': 'ganga',
-                'Монгол Элс': 'mongolels',
-                'Мөнххайрхан уул': 'munkhkhairkhan'
+                'Говь гурван сайхан': 'gobi',
+                'Хонгорын элс': 'khongor',
+                'Ёлын ам': 'yol',
+                'Бурхан Халдун уул': 'burkhankhalduun',
+                'Тайхар чулуу': 'taikhar',
+                'Хэрмэн цав': 'khermen'
             };
 
             // Transform JSON data to match existing structure
