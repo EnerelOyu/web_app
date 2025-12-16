@@ -12,7 +12,6 @@ main{
     margin: var(--m-md);
     min-height: 70vh;
     position: relative;
-
 }
 .container{
     display: grid;
@@ -20,73 +19,11 @@ main{
     gap: var(--gap-size-2xl);
     align-items: center;
 }
-
-
-.profile-card{
-    display: inline-flex;
-    flex-direction: column;
-    border-style: dashed;
-    justify-content: center;
-    align-items: center;
-    padding: var(--p-2xl) var(--p-xl);
-    border-radius: var(--br-m);
-    gap: var(--gap-size-s);
-    border-color: var(--text-color-2);
-}
-
 h1{
     text-transform: uppercase;
     font-family: 'Rubik';
     color: var(--text-color-1);
 }
-
-.guide-info{
-    margin-top: var(--m-md);
-}
-
-.profile-card svg{
-    width: var(--svg-m);
-    height: var(--svg-m);
-    color: var(--primary);
-}
-
-.profile-card p{
-    text-transform: uppercase;
-    font-family: 'NunitoSans';
-    font-size: var(--fs-sm);
-    color: var(--text-color-2);
-}
-
-.upload-btn, .submit-btn{
-    background-color: var(--primary);
-    color: var(--primary-5);
-    text-transform: uppercase;
-    font-size: var(--fs-xs);
-    font-family: 'NunitoSans';
-    border-radius: var(--br-m);
-    border: none;
-    padding: var(--p-xxs) var(--p-xs);
-    transition: background-color 200ms;
-    box-shadow:  5px 5px 10px rgba(0, 0, 0, 0.3);
-}
-
-.upload-btn:hover, .submit-btn:hover{
-    background-color: var(--primary-5);
-    color: var(--primary);
-}
-
-form{
-    display: flex;
-    flex-direction: column;
-    gap: var(--gap-size-m);
-}
-
-label{
-    text-transform: uppercase;
-    font-family: 'NunitoSans';
-    color: var(--text-color-2);
-}
-
 input, select{
     background-color: var(--primary-5);
     border-radius: var(--br-s);
@@ -95,15 +32,53 @@ input, select{
     font-family: 'NunitoSans';
     color: var(--text-color-3);
 }
-
-input::placeholder{
-    font-family: 'NunitoSans';
-    color: var(--text-color-3);
-}
-
 .submit-btn{
     position: absolute;
     right: var(--m-lg);
     bottom: var(--m-lg);
 
+}
+
+@media (max-width: 1024px) {
+  .container{
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gap-size-xl);
+  }
+
+  main{
+    margin: var(--m-sm);
+  }
+}
+
+@media (max-width: 768px) {
+  .container{
+    grid-template-columns: 1fr;
+    gap: var(--gap-size-l);
+  }
+
+  main{
+    margin: var(--m-xs);
+  }
+
+  h1{
+    font-size: var(--fs-lg);
+    text-align: center;
+  }
+
+  .submit-btn{
+    position: static;       
+    width: 100%;
+    margin-top: var(--m-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  main{
+    gap: var(--gap-size-s);
+  }
+
+  input, select{
+    padding: var(--p-sm);
+    font-size: var(--fs-sm);
+  }
 }

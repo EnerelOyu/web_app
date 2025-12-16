@@ -56,6 +56,12 @@
     <script type="module" src="./component/plan/ag-shared-button.js"></script>
     <script type="module" src="./component/plan/ag-suggested-point.js"></script>
 
+    <!-- Guide Sign Up Components -->
+    <script type="module" src="./component/ag-image-upload.js"></script>
+    <script type="module" src="./component/guide-signup/ag-guide-basic-form.js"></script>
+    <script type="module" src="./component/guide-signup/ag-guide-preferences.js"></script>
+    <script type="module" src="./pages/page-guide-signup.js"></script>
+
 </head>
 <body>
     <ag-header></ag-header>
@@ -69,13 +75,12 @@
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const router = document.getElementById('main-router');
-
             router.registerRoute('/home', '<page-home></page-home>');
             router.registerRoute('/spots', '<page-spots></page-spots>');
             router.registerRoute('/spot-info', '<page-spot-info></page-spot-info>');
             router.registerRoute('/plan', '<page-plan></page-plan>');
+            router.registerRoute('/guide-signup', '<page-guide-signup></page-guide-signup>');
             router.onRouteChange();
-
         });
     </script>
 </body>

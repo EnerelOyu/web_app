@@ -308,7 +308,7 @@ class PageHome extends HTMLElement {
             <ag-guide-banner
                 title="Хөтөч болж бүртгүүлэх"
                 subtitle="Хөтөч болж өөрийн хувь нэмэрээ оруулах уу?"
-                href="../code/guide_sign_up.html"
+                href="#/guide-signup"
                 btn="Хөтөч болох">
             </ag-guide-banner>
 
