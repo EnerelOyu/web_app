@@ -213,7 +213,7 @@ class AgFooter extends HTMLElement {
             <p>Тусламж</p>
             <ul class="footer-list">
               <li><a href="#/spots">Аяллын цэг хайх</a></li>
-              <li><a href="../code/guide_sign_up.html">Хөтөчөөр бүртгүүлэх</a></li>
+              <li><a href="#/guide-signup">Хөтөчөөр бүртгүүлэх</a></li>
               <li><a href="#/plan">Аяллын төлөвлөгөө яаж гаргах вэ</a></li>
             </ul>
           </div>
