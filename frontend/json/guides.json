@@ -13,7 +13,7 @@
         "Англи"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": "../files/guide-img/guide-01.jpg"
+      "profileImgUrl": "../files/guide-img/guide1.svg"
     },
     {
       "guideId": "g2",
@@ -27,7 +27,7 @@
         "Монгол"
       ],
       "experienceLevel": "1 жил ба түүнээс доош",
-      "profileImgUrl": "../files/guide-img/guide-02.jpg"
+      "profileImgUrl": "../files/guide-img/guide2.svg"
     },
     {
       "guideId": "g3",
@@ -42,7 +42,7 @@
         "Орос"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": "../files/guide-img/guide-03.jpg"
+      "profileImgUrl": "../files/guide-img/guide3.svg"
     },
     {
       "guideId": "g4",
@@ -56,7 +56,7 @@
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": "../files/guide-img/guide-04.jpg"
+      "profileImgUrl": "../files/guide-img/guide4.svg"
     },
     {
       "guideId": "g5",
@@ -71,7 +71,7 @@
         "Англи"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": "../files/guide-img/guide-05.jpg"
+      "profileImgUrl": "../files/guide-img/guide1.svg"
     },
     {
       "guideId": "g6",
@@ -86,7 +86,7 @@
         "Орос"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": "../files/guide-img/guide-06.jpg"
+      "profileImgUrl": "../files/guide-img/guide2.svg"
     },
     {
       "guideId": "g7",
@@ -100,7 +100,7 @@
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": "../files/guide-img/guide-01.jpg"
+      "profileImgUrl": "../files/guide-img/guide2.svg"
     },
     {
       "guideId": "g8",
@@ -114,7 +114,7 @@
         "Монгол"
       ],
       "experienceLevel": "1 жил ба түүнээс доош",
-      "profileImgUrl": "../files/guide-img/guide-02.jpg"
+      "profileImgUrl": "../files/guide-img/guide2.svg"
     },
     {
       "guideId": "g9",
@@ -128,7 +128,7 @@
         "Монгол"
       ],
       "experienceLevel": "1 - 5 жил",
-      "profileImgUrl": "../files/guide-img/guide-03.jpg"
+      "profileImgUrl": "../files/guide-img/guide3.svg"
     },
     {
       "guideId": "g10",
@@ -143,7 +143,7 @@
         "Англи"
       ],
       "experienceLevel": "5 -аас дээш жил",
-      "profileImgUrl": "../files/guide-img/guide-04.jpg"
+      "profileImgUrl": "../files/guide-img/guide4.svg"
     }
   ]
 }

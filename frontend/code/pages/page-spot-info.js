@@ -254,6 +254,9 @@ class PageSpotInfo extends HTMLElement {
       window.appState.currentSpot ||
       window.appState.getSpot("amarbayasgalant");
 
+    const allGuides = window.appState.getAllGuides();
+    const filteredGuides = allGuides.filter(guide => guide.area === spot.region);
+
     this.innerHTML = `
       <style>${this.css}</style>
       <section class="page-spot-info">
@@ -270,7 +273,6 @@ class PageSpotInfo extends HTMLElement {
             img3="${spot.img3}"
             data-spot-id="${spot.id}"
           ></ag-spot-hero>
-
           <ag-spot-aside
             map-src="${spot.mapSrc || '../files/Mongolia_blank.svg'}"
             region="${spot.region}"
@@ -299,12 +301,7 @@ class PageSpotInfo extends HTMLElement {
               </button>
 
               <div class="guides">
-                <a href="#/guide-profile?g=g1"><ag-guide-card guide-id="g1"></ag-guide-card></a>
-                <a href="#/guide-profile?g=g2"><ag-guide-card guide-id="g2"></ag-guide-card></a>
-                <a href="#/guide-profile?g=g3"><ag-guide-card guide-id="g3"></ag-guide-card></a>
-                <a href="#/guide-profile?g=g2"><ag-guide-card guide-id="g2"></ag-guide-card></a>
-                <a href="#/guide-profile?g=g1"><ag-guide-card guide-id="g1"></ag-guide-card></a>
-                <a href="#/guide-profile?g=g3"><ag-guide-card guide-id="g3"></ag-guide-card></a>
+                ${filteredGuides.slice(0, 10).map(guide => `<a href="#/guide-profile?g=${guide.id}"><ag-guide-card guide-id="${guide.id}"></ag-guide-card></a>`).join('')}
               </div>
 
               <button class="scrl scrl-right" data-scroll="right">
