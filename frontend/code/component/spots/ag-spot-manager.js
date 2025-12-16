@@ -5,10 +5,10 @@ class AgSpotManager extends HTMLElement {
     this._cards = [];
     //filteruudiig hadgala
     this._filters = {
-      bus: [],       
-      cate: [],      
-      activity: [],  
-      age: [],      
+      bus: [],
+      cate: [],
+      activity: [],
+      rating: [],
     };
 
     this._onFilterChanged = this._onFilterChanged.bind(this);
@@ -87,8 +87,8 @@ class AgSpotManager extends HTMLElement {
       this._filters.cate = arr;
     } else if (type === "Үйл ажиллагаа") {
       this._filters.activity = arr;
-    } else if (type === "Насны ангилал") {
-      this._filters.age = arr;
+    } else if (type === "Үнэлгээ") {
+      this._filters.rating = arr;
     }
 
     this._applyFilters();
@@ -100,13 +100,13 @@ class AgSpotManager extends HTMLElement {
     const busFilters = (this._filters.bus||[]).map(v => this._normalize(v)).filter(Boolean);
     const cateFilters = (this._filters.cate||[]).map(v => this._normalize(v)).filter(Boolean);
     const activityFilters = (this._filters.activity||[]).map(v => this._normalize(v)).filter(Boolean);
-    const ageFilters = (this._filters.age||[]).map(v => this._normalize(v)).filter(Boolean);
+    const ratingFilters = (this._filters.rating||[]).filter(Boolean);
 
     this._cards.forEach(card => {
       const busVal = this._normalize(card.getAttribute("bus"));
       const cateVal = this._normalize(card.getAttribute("cate"));
       const activityVal = this._normalize(card.getAttribute("activity"));
-      const ageVal = this._normalize(card.getAttribute("age"));
+      const ratingVal = parseFloat(card.getAttribute("unelgee")) || 0;
 
       const matchBus = busFilters.length === 0 || (busVal && busFilters.some(f => busVal.includes(f)));
 
@@ -114,9 +114,20 @@ class AgSpotManager extends HTMLElement {
 
       const matchActivity = activityFilters.length === 0 || (activityVal && activityFilters.some(f => activityVal.includes(f)));
 
-      const matchAge = ageFilters.length === 0 || (ageVal && ageFilters.some(f => ageVal.includes(f)));
+      const matchRating = ratingFilters.length === 0 || ratingFilters.some(range => {
+        if (range === '5') {
+          return ratingVal === 5;
+        } else if (range === '5-4') {
+          return ratingVal >= 4 && ratingVal < 5;
+        } else if (range === '4-3') {
+          return ratingVal >= 3 && ratingVal < 4;
+        } else if (range === '3-аас бага') {
+          return ratingVal < 3;
+        }
+        return false;
+      });
 
-      const visible = matchBus && matchCate && matchActivity && matchAge;
+      const visible = matchBus && matchCate && matchActivity && matchRating;
 
       card.style.display = visible ? "" : "none";
     });

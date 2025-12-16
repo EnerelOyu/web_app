@@ -309,7 +309,7 @@ class PageSpots extends HTMLElement {
             'Категори': [],
             'Бүс нутаг': [],
             'Үйл ажиллагаа': [],
-            'Насны ангилал': []
+            'Үнэлгээ': []
         };
 
         // Read URL query parameters from home search
@@ -400,7 +400,7 @@ class PageSpots extends HTMLElement {
             ${this.createFilterElement('Категори')}
             ${this.createFilterElement('Бүс нутаг')}
             ${this.createFilterElement('Үйл ажиллагаа')}
-            ${this.createFilterElement('Насны ангилал')}
+            ${this.createFilterElement('Үнэлгээ')}
         `;
 
         // Pre-select filters based on activeFilters after rendering
@@ -524,10 +524,25 @@ class PageSpots extends HTMLElement {
                 }
             }
 
-            // Check age range filter
-            const ageFilter = this.activeFilters['Насны ангилал'];
-            if (ageFilter.length > 0) {
-                if (!ageFilter.includes(spot.age)) {
+            // Check rating filter
+            const ratingFilter = this.activeFilters['Үнэлгээ'];
+            if (ratingFilter.length > 0) {
+                const spotRating = parseFloat(spot.rating) || 0;
+
+                const matchesRating = ratingFilter.some(range => {
+                    if (range === '5') {
+                        return spotRating === 5;
+                    } else if (range === '5-4') {
+                        return spotRating >= 4 && spotRating < 5;
+                    } else if (range === '4-3') {
+                        return spotRating >= 3 && spotRating < 4;
+                    } else if (range === '3-аас бага') {
+                        return spotRating < 3;
+                    }
+                    return false;
+                });
+
+                if (!matchesRating) {
                     return false;
                 }
             }
