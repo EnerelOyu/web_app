@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/global.css">
     <link rel="stylesheet" href="../styles/spot-info.css">
-    <link rel="stylesheet" href="../styles/icons.svg">
-    <script type="module" src="../code/component/ag-header.js"></script>
+    <script type="module" src="./router/app-state.js"></script>
     <script type="module" src="../code/component/ag-guide-card.js"></script>
     <script type="module" src="../code/component/ag-footer.js"></script>
     <script type="module" src="../code/component/spot-info/ag-spot-review.js"></script>
@@ -17,6 +16,66 @@
     <script type="module" src="../code/component/spot-info/ag-spot-hero.js"></script>
     <script type="module" src="../code/component/spot-info/ag-spot-aside.js"></script>
     <script type="module" src="../code/component/ag-review-card.js"></script>
+    <script>
+        // Dynamically load guides
+        document.addEventListener('DOMContentLoaded', async () => {
+            const guidesContainer = document.querySelector('.guides');
+            if (!guidesContainer) return;
+
+            // Wait for appState to load
+            let attempts = 0;
+            const maxAttempts = 10;
+            const checkAppState = () => {
+                if (window.appState && window.appState.guideData && Object.keys(window.appState.guideData).length > 0) {
+                    loadGuides();
+                } else if (attempts < maxAttempts) {
+                    attempts++;
+                    setTimeout(checkAppState, 500);
+                }
+            };
+
+            const loadGuides = () => {
+                const allGuides = window.appState.getAllGuides();
+                
+                // Get spot region from the aside component
+                const spotAside = document.querySelector('ag-spot-aside');
+                const spotRegion = spotAside ? spotAside.getAttribute('region') : null;
+                
+                // Filter guides by region (show guides from same region or nearby)
+                let relevantGuides = allGuides;
+                if (spotRegion) {
+                    const regionMapping = {
+                        'Төв': ['Төв', 'Хангай'],
+                        'Сэлэнгэ': ['Төв', 'Хангай', 'Сэлэнгэ'],
+                        'Хангай': ['Төв', 'Хангай', 'Архангай'],
+                        'Говь': ['Говь', 'Дундговь'],
+                        'Зүүн': ['Зүүн', 'Дорнод'],
+                        'Баруун': ['Баруун', 'Увс'],
+                        'Алтай': ['Алтай', 'Баян-Өлгий']
+                    };
+                    
+                    const relevantRegions = regionMapping[spotRegion] || [spotRegion];
+                    relevantGuides = allGuides.filter(guide => relevantRegions.includes(guide.area));
+                }
+                
+                // Sort guides by creation date (newest first)
+                relevantGuides.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+
+                guidesContainer.innerHTML = '';
+
+                relevantGuides.forEach(guide => {
+                    const link = document.createElement('a');
+                    link.href = '../code/profile-guide.html';
+                    const card = document.createElement('ag-guide-card');
+                    card.setAttribute('guide-id', guide.id);
+                    link.appendChild(card);
+                    guidesContainer.appendChild(link);
+                });
+            };
+
+            checkAppState();
+        });
+    </script>
     <title>Аяллын цэгийн мэдээлэл</title>
 </head>
 
@@ -28,7 +87,7 @@
                 time="9:00AM–6:00 PM" img1="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
                 img2="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
                 img3="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"></ag-spot-hero>
-            <ag-spot-aside map-src="../files/Mongolia_blank.svg" region="Төв"
+            <ag-spot-aside map-src="../files/Mongolia_blank.svg" region="Сэлэнгэ"
                 location="Сэлэнгэ аймгийн Бүрэнхаан уулын өвөрт Ивэн голын эхэнд байрлана." age="18-45"
                 price="500,000 MNT" schedule="
                         Дав: 8:00AM - 18:00PM,

@@ -39,13 +39,45 @@ class PageGuideSignup extends HTMLElement {
       return;
     }
 
-    this.dispatchEvent(
-      new CustomEvent("guide-signup-submit", {
-        detail: payload,
-        bubbles: true,
-        composed: true,
-      })
-    );
+    // Map to database fields
+    const guideData = {
+      lastName: payload.basic.lastName,
+      firstName: payload.basic.firstName,
+      phone: payload.basic.phone || null,
+      email: payload.basic.email,
+      area: payload.preferences.region !== 'default' ? payload.preferences.region : null,
+      category: payload.preferences.category !== 'default' ? payload.preferences.category : null,
+      languages: payload.preferences.language !== 'default' ? payload.preferences.language : null,
+      experienceLevel: payload.preferences.experience !== 'default' ? payload.preferences.experience : null,
+      profileImgUrl: null // TODO: handle image upload
+    };
+
+    // Send to backend
+    fetch('http://localhost:3000/api/guides', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(guideData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(`Хөтөч амжилттай бүртгэгдлээ! ID: ${data.guideId}`);
+        // Refresh guide data
+        if (window.appState && window.appState.loadGuideData) {
+          window.appState.loadGuideData();
+        }
+        // Redirect to guides page to see all guides including the new one
+        window.location.hash = '#/guides';
+      } else {
+        alert('Алдаа гарлаа: ' + data.error);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('Сүлжээний алдаа гарлаа.');
+    });
   }
 
   render() {

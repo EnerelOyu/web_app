@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import db, { initDB } from './database/db.js'
+import db, { initDB, insertGuide, getAllGuides } from './database/db.js'
 
 const app = express()
 const port = 3000
@@ -623,6 +623,28 @@ app.get("/api/spots", (req, res)=>{
 }
 )
 })
+
+// Guides endpoints
+app.post('/api/guides', (req, res) => {
+  try {
+    const guideData = req.body;
+    const result = insertGuide(guideData);
+    res.status(201).json({ success: true, id: result.id, guideId: result.guideId });
+  } catch (error) {
+    console.error('Error inserting guide:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/guides', (req, res) => {
+  try {
+    const guides = getAllGuides();
+    res.json({ guides });
+  } catch (error) {
+    console.error('Error fetching guides:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 //app.post("/api/posts", )
 app.listen(port, () => {

@@ -85,6 +85,7 @@ export const initDB = () => {
   db.exec(`
     CREATE TABLE IF NOT EXISTS guides (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      guideId TEXT UNIQUE NOT NULL,
       lastName TEXT NOT NULL,
       firstName TEXT NOT NULL,
       phone TEXT,
@@ -107,6 +108,37 @@ export const initDB = () => {
   `);
 
   console.log('✅ Database schema бэлэн боллоо!');
+};
+
+// Guides functions
+export const insertGuide = (guideData) => {
+  // Generate guideId
+  const countStmt = db.prepare('SELECT COUNT(*) as count FROM guides');
+  const { count } = countStmt.get();
+  const guideId = `g${count + 1}`;
+
+  const stmt = db.prepare(`
+    INSERT INTO guides (guideId, lastName, firstName, phone, email, area, category, languages, experienceLevel, profileImgUrl)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  const result = stmt.run(
+    guideId,
+    guideData.lastName,
+    guideData.firstName,
+    guideData.phone,
+    guideData.email,
+    guideData.area,
+    guideData.category,
+    guideData.languages,
+    guideData.experienceLevel,
+    guideData.profileImgUrl
+  );
+  return { id: result.lastInsertRowid, guideId };
+};
+
+export const getAllGuides = () => {
+  const stmt = db.prepare('SELECT * FROM guides ORDER BY createdAt DESC');
+  return stmt.all();
 };
 
 export default db;

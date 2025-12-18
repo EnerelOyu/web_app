@@ -85,8 +85,39 @@ class AppState {
         }
     }
 
-    // Load guide data from JSON file
+    // Load guide data from API
     async loadGuideData() {
+        try {
+            const response = await fetch('http://localhost:3000/api/guides');
+            const data = await response.json();
+
+            data.guides.forEach(guide => {
+                this.guideData[guide.guideId] = {
+                    id: guide.guideId,
+                    lastName: guide.lastName,
+                    firstName: guide.firstName,
+                    fullName: `${guide.lastName} ${guide.firstName}`,
+                    phone: guide.phone,
+                    email: guide.email,
+                    area: guide.area,
+                    category: guide.category,
+                    languages: guide.languages ? guide.languages.split(',').map(l => l.trim()) : [],
+                    experience: guide.experienceLevel,
+                    profileImg: guide.profileImgUrl,
+                    createdAt: guide.createdAt
+                };
+            });
+
+            this.dispatchStateChange('guideData', this.guideData);
+        } catch (error) {
+            console.error('Error loading guide data:', error);
+            // Fallback to JSON
+            this.loadGuideDataFromJSON();
+        }
+    }
+
+    // Fallback load from JSON
+    async loadGuideDataFromJSON() {
         try {
             const response = await fetch('../json/guides.json');
             const data = await response.json();
@@ -103,13 +134,14 @@ class AppState {
                     category: guide.category,
                     languages: guide.language,
                     experience: guide.experienceLevel,
-                    profileImg: guide.profileImgUrl
+                    profileImg: guide.profileImgUrl,
+                    createdAt: new Date().toISOString() // fallback
                 };
             });
 
             this.dispatchStateChange('guideData', this.guideData);
         } catch (error) {
-            console.error('Error loading guide data:', error);
+            console.error('Error loading guide data from JSON:', error);
         }
     }
 
