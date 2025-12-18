@@ -1,10 +1,18 @@
 import express from 'express'
+import cors from 'cors'
+import db, { initDB } from './database/db.js'
+
 const app = express()
 const port = 3000
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+// Middleware
+app.use(cors())
+app.use(express.json())
+
+// Initialize database
+initDB()
+
+console.log('✅ Database connected successfully')
 
 app.get("/api/spots", (req, res)=>{
     res.json({
