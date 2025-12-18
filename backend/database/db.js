@@ -25,7 +25,7 @@ export const initDB = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       area TEXT NOT NULL,
-      category TEXT NOT NULL,
+      category TEXT DEFAULT '',
       activities TEXT,
       rating REAL DEFAULT 0,
       price INTEGER DEFAULT 0,
@@ -37,6 +37,7 @@ export const initDB = () => {
       imgMainUrl TEXT,
       img2Url TEXT,
       img3Url TEXT,
+      mapSrc TEXT,
       descriptionLong TEXT,
       reviewCount INTEGER DEFAULT 0,
       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -106,6 +107,51 @@ export const initDB = () => {
     CREATE INDEX IF NOT EXISTS idx_reviews_spotId ON reviews(spotId);
     CREATE INDEX IF NOT EXISTS idx_plans_userId ON plans(userId);
   `);
+  // Categories lookup
+db.exec(`
+  CREATE TABLE IF NOT EXISTS categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+  );
+`);
+
+// Activities lookup
+db.exec(`
+  CREATE TABLE IF NOT EXISTS activities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT UNIQUE NOT NULL
+  );
+`);
+
+// Spot ↔ category link
+db.exec(`
+  CREATE TABLE IF NOT EXISTS spot_categories (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    spotId INTEGER NOT NULL,
+    categoryId INTEGER NOT NULL,
+    FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE,
+    FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE,
+    UNIQUE(spotId, categoryId)
+  );
+`);
+
+// Spot ↔ activity link
+db.exec(`
+  CREATE TABLE IF NOT EXISTS spot_activities (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    spotId INTEGER NOT NULL,
+    activityId INTEGER NOT NULL,
+    FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE,
+    FOREIGN KEY (activityId) REFERENCES activities(id) ON DELETE CASCADE,
+    UNIQUE(spotId, activityId)
+  );
+`);
+
+db.exec(`
+  CREATE INDEX IF NOT EXISTS idx_spot_categories_spotId ON spot_categories(spotId);
+  CREATE INDEX IF NOT EXISTS idx_spot_activities_spotId ON spot_activities(spotId);
+`);
+
 
   console.log('Database schema бэлэн боллоо!');
 };

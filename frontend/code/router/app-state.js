@@ -76,8 +76,8 @@ class AppState {
             // Merge with temporary data (JSON data takes priority)
             this.spotData = { ...this.spotData };
 
-            console.log('✅ Spot data ачаалагдлаа:', Object.keys(this.spotData).length, 'газар');
-            console.log('📋 Бүс нутгууд:', [...new Set(Object.values(this.spotData).map(s => s.region))].sort());
+            console.log('Spot data ачаалагдлаа:', Object.keys(this.spotData).length, 'газар');
+            console.log('Бүс нутгууд:', [...new Set(Object.values(this.spotData).map(s => s.region))].sort());
 
             this.dispatchStateChange('spotData', this.spotData);
         } catch (error) {
@@ -118,7 +118,6 @@ class AppState {
         }
     }
 
-    // Fallback load from JSON
     async loadGuideDataFromJSON() {
         try {
             const response = await fetch('../json/guides.json');
