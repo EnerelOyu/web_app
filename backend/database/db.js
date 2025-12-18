@@ -17,7 +17,7 @@ db.pragma('journal_mode = WAL');
 
 // Database schema үүсгэх
 export const initDB = () => {
-  console.log('🗄️  Database schema үүсгэж байна...');
+  console.log('Database schema үүсгэж байна...');
 
   // Spots table
   db.exec(`
@@ -107,7 +107,7 @@ export const initDB = () => {
     CREATE INDEX IF NOT EXISTS idx_plans_userId ON plans(userId);
   `);
 
-  console.log('✅ Database schema бэлэн боллоо!');
+  console.log('Database schema бэлэн боллоо!');
 };
 
 // Guides functions

@@ -22,14 +22,13 @@ class AppState {
     // Load spot data from JSON file
     async loadSpotData() {
         try {
-            const response = await fetch('../json/spots.json');
+            const response = await fetch('http://localhost:3000/api/spots');
             const data = await response.json();
 
-            // ID mapping for compatibility with existing code
             const idMapping = {
-                'Цонжин Болдог': 'tsonjin',
-                'Амарбаясгалант хийд': 'amarbayasgalant',
-                'Хустайн байгалийн цогцолборт газар': 'khustai',
+                'Цонжин Болдог': '1',
+                'Амарбаясгалант хийд': '2',
+                'Хустайн байгалийн цогцолборт газар': '3',
                 'Горхи-Тэрэлж Үндэсний Парк': 'terelj',
                 'Шар Нохой хад': 'sharnohoi',
                 'Улаанбаатар Хүрээ музей': 'ulaanbaatarkhurree',

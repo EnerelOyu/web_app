@@ -5,18 +5,17 @@ import db, { initDB, insertGuide, getAllGuides } from './database/db.js'
 const app = express()
 const port = 3000
 
-// Middleware
 app.use(cors())
 app.use(express.json())
 
 // Initialize database
 initDB()
 
-console.log('✅ Database connected successfully')
+console.log('Database connected successfully')
 
 app.get("/api/spots", (req, res)=>{
     res.json({
-    "spots": [
+  "spots": [
     {
       "spotId": 1,
       "name": "Цонжин Болдог",
@@ -31,36 +30,35 @@ app.get("/api/spots", (req, res)=>{
       "priceText": "20,000₮",
       "ageRange": "Бүх нас",
       "detailLocation": "Төв аймгийн Эрдэнэ сумын нутагт байрладаг.",
-      "openingHours": "09:00–18:00",
+      "openingHours": "10:00 - 18:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Цонжин Болдог нь Монголын аялал жуулчлалын чухал цэгүүдийн нэг.",
+      "imgMainUrl": "../files/spot-img/spot01-1.jpg",
+      "img2Url": "../files/spot-img/spot01-2.jpg",
+      "img3Url": "../files/spot-img/spot01-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
+      "scheduleFull": "10:00 - 18:00 цаг хүртэл",
+      "descriptionLong": "“Цонжин болдог” хэмээх түүхэн үйл явдалтай холбоотой Улаанбаатар хотоос 53 км зайд байгалийн сайхан цогцолсон Туул голын ойролцоо Төв аймгийн Эрдэнэ сумын нутаг газарт байрладаг цогцолбор юм. Монгол орны ихэнх түүх соёлын дурсгалт болон байгалийн үзэсгэлэнт газруудад хүрэхийн тулд замын хүнд нөхцөлд 300-аас дээш км замыг туулж байж хүрдэгтэй харьцуулахад энэ нь маш том давуу тал юм. Цогцолборын нийт талбай нь 212 га бөгөөд цогцолборын төвд Чингис хааны морьт хөшөө байрлана.",
       "infoPageHref": "../code/index.html#/spot-info"
     },
     {
       "spotId": 2,
       "name": "Амарбаясгалант хийд",
-      "area": "Сэлэнгэ",
-      "category": "Түүхэн, Соёл",
+      "area": "Хангай",
+      "category": "Соёл",
       "activities": [
-        "Уран барилга",
-        "Түүхийн аялал"
+        null
       ],
       "rating": 4.3,
       "price": 500000,
       "priceText": "500,000₮",
-      "ageRange": "18–45",
+      "ageRange": "Бүх нас",
       "detailLocation": "Сэлэнгэ аймгийн Баруунбүрэн сумын нутаг.",
       "openingHours": "09:00–18:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot02-1.jpg",
+      "img2Url": "../files/spot-img/spot02-2.jpg",
+      "img3Url": "../files/spot-img/spot02-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "Долоо хоногийн бүх өдөр: 08–18 цаг",
       "descriptionLong": "Амарбаясгалант хийд нь Монголын шашин, соёлын үнэт өв юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -71,8 +69,7 @@ app.get("/api/spots", (req, res)=>{
       "area": "Төв",
       "category": "Байгаль",
       "activities": [
-        "Зэрлэг адуу харах",
-        "Аялал"
+        "Амьтантай ойр"
       ],
       "rating": 4.7,
       "price": 15000,
@@ -81,10 +78,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Төв аймгийн Аргалант сумын нутаг.",
       "openingHours": "08:00–20:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1586769852836-e9b73c556b36",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot03-1.jpg",
+      "img2Url": "../files/spot-img/spot03-2.jpg",
+      "img3Url": "../files/spot-img/spot03-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Хустайн байгалийн цогцолборт газар нь тахийг сэргээн нутагшуулснаараа алдартай.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -95,7 +92,6 @@ app.get("/api/spots", (req, res)=>{
       "area": "Төв",
       "category": "Байгаль",
       "activities": [
-        "Агаарт гарах",
         "Морин аялал"
       ],
       "rating": 4.8,
@@ -105,10 +101,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Налайх дүүргээс хойд зүгт байрладаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot04-1.jpg",
+      "img2Url": "../files/spot-img/spot04-2.jpg",
+      "img3Url": "../files/spot-img/spot04-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Горхи-Тэрэлж нь Улаанбаатар хотын ойролцоох аялал жуулчлалын бүс.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -119,8 +115,7 @@ app.get("/api/spots", (req, res)=>{
       "area": "Төв",
       "category": "Байгаль",
       "activities": [
-        "Гэрэл зураг авах",
-        "Хадан аялал"
+        null
       ],
       "rating": 4.2,
       "price": 5000,
@@ -129,10 +124,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Горхи-Тэрэлжийн бүсэд байрладаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1542744095-291d1f67b221",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot05-1.jpg",
+      "img2Url": "../files/spot-img/spot05-2.jpg",
+      "img3Url": "../files/spot-img/spot05-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Шар Нохой хад нь өвөрмөц хэлбэр бүхий байгалийн тогтоцтой хад юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -140,11 +135,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 6,
       "name": "Улаанбаатар Хүрээ музей",
-      "area": "Улаанбаатар",
-      "category": "Түүхэн",
+      "area": "Төв",
+      "category": "Соёл",
       "activities": [
-        "Музейн үзмэр",
-        "Түүхийн аялал"
+        null
       ],
       "rating": 4.0,
       "price": 0,
@@ -153,10 +147,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Улаанбаатар хотын төв хэсэгт байрладаг.",
       "openingHours": "10:00–18:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1583508915901-b5f84c1dcde1",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot06-1.jpg",
+      "img2Url": "../files/spot-img/spot06-2.jpg",
+      "img3Url": "../files/spot-img/spot06-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Улаанбаатар Хүрээ музей нь нийслэлийн түүхийг харуулсан сонирхолтой музей юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -164,11 +158,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 7,
       "name": "Гандан Тэгчинлэн Хийд",
-      "area": "Улаанбаатар",
-      "category": "Соёл, Шашин",
+      "area": "Төв",
+      "category": "Соёл",
       "activities": [
-        "Шашны зан үйл",
-        "Сүм үзэх"
+        null
       ],
       "rating": 4.9,
       "price": 5000,
@@ -177,10 +170,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Баянгол дүүрэг, 16-р хороо.",
       "openingHours": "07:00–20:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1524492514791-505e3bfb9c51",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot07-1.jpg",
+      "img2Url": "../files/spot-img/spot07-2.jpg",
+      "img3Url": "../files/spot-img/spot07-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Гандан Тэгчэнлин хийд нь Монголын хамгийн том буддын хийдүүдийн нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -188,11 +181,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 8,
       "name": "Богд хан уул",
-      "area": "Улаанбаатар",
-      "category": "Байгаль ба түүх",
+      "area": "Төв",
+      "category": "Байгаль",
       "activities": [
-        "Ууланд алхах",
-        "Пикник"
+        "Уулын авиралт"
       ],
       "rating": 4.8,
       "price": 0,
@@ -201,10 +193,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Улаанбаатар хотын баруун-өмнөд хэсэгт байрладаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1519817650390-64a93db511aa",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot08-1.jpg",
+      "img2Url": "../files/spot-img/spot08-2.jpg",
+      "img3Url": "../files/spot-img/spot08-3.jpg",
+      "mapSrc": "../files/map/map-tuv.svg",
       "scheduleFull": "",
       "descriptionLong": "Богд хан уул нь дэлхийн хамгийн эрт дархлагдсан уулуудын нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -212,12 +204,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 9,
       "name": "Хөвсгөл нуур",
-      "area": "Хөвсгөл",
-      "category": "Байгалийн үзэсгэлэнт",
+      "area": "Хангай",
+      "category": "Байгаль",
       "activities": [
-        "Зугаалга",
-        "Усан аялал",
-        "Зураг авалт"
+        null
       ],
       "rating": 5.0,
       "price": 30000,
@@ -226,10 +216,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Хөвсгөл аймгийн Хатгал тосгоны орчим.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot09-1.jpg",
+      "img2Url": "../files/spot-img/spot09-2.jpg",
+      "img3Url": "../files/spot-img/spot09-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хөвсгөл нуур нь Монголын \"далай\" хэмээн алдаршсан гайхамшигт нуур.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -237,11 +227,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 10,
       "name": "Орхон хүрхрээ",
-      "area": "Өвөрхангай",
+      "area": "Хангай",
       "category": "Байгаль",
       "activities": [
-        "Хүрхрээ үзэх",
-        "Аялах"
+        null
       ],
       "rating": 4.7,
       "price": 15000,
@@ -250,10 +239,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Өвөрхангай аймгийн Бат-Өлзий сумын нутаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot10-1.jpg",
+      "img2Url": "../files/spot-img/spot10-2.jpg",
+      "img3Url": "../files/spot-img/spot10-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Орхон хүрхрээ нь Орхон голын доод хэсэгт орших байгалийн сонин тогтоцтой хүрхрээ.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -261,11 +250,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 11,
       "name": "Эрдэнэзуу хийд",
-      "area": "Өвөрхангай",
-      "category": "Түүхэн, Соёл",
+      "area": "Хангай",
+      "category": "Соёл",
       "activities": [
-        "Сүм хийд үзэх",
-        "Түүхийн аялал"
+        null
       ],
       "rating": 4.6,
       "price": 10000,
@@ -274,10 +262,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Өвөрхангай аймгийн Хар хорин суманд байрладаг.",
       "openingHours": "09:00–18:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1524492514791-505e3bfb9c51",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot11-1.jpg",
+      "img2Url": "../files/spot-img/spot11-2.jpg",
+      "img3Url": "../files/spot-img/spot11-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Эрдэнэзуу хийд нь Монголын буддын шашны анхны томоохон хийдүүдийн нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -285,11 +273,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 12,
       "name": "Хорго галт уул",
-      "area": "Архангай",
+      "area": "Хангай",
       "category": "Байгаль",
       "activities": [
-        "Галт уулын тогоо үзэх",
-        "Алхалт"
+        "Уулын авиралт"
       ],
       "rating": 4.4,
       "price": 10000,
@@ -298,10 +285,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Архангай аймгийн Тариат сумын нутаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1519681393784-d120267933ba",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot12-1.jpg",
+      "img2Url": "../files/spot-img/spot12-2.jpg",
+      "img3Url": "../files/spot-img/spot12-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хорго галт уул нь сүүлийн мөстлөгийн үеийн идэвхтэй байсан галт уулын үлдэц.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -309,11 +296,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 13,
       "name": "Тэрхийн цагаан нуур",
-      "area": "Архангай",
-      "category": "Байгалийн үзэсгэлэнт",
+      "area": "Хангай",
+      "category": "Байгаль",
       "activities": [
-        "Зугаалга",
-        "Зургийн аялал"
+        "Амралт сувилал"
       ],
       "rating": 4.5,
       "price": 12000,
@@ -322,10 +308,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Архангай аймгийн Тариат сумын орчим.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot13-1.jpg",
+      "img2Url": "../files/spot-img/spot13-2.jpg",
+      "img3Url": "../files/spot-img/spot13-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тэрхийн цагаан нуур нь галт уулын тогоонд үүссэн цэнгэг уст нуур юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -333,24 +319,22 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 14,
       "name": "Алтай Таван богд",
-      "area": "Баян-Өлгий",
-      "category": "Адал явдалт, Байгаль",
+      "area": "Алтай",
+      "category": "Адал явдалт",
       "activities": [
-        "Ууланд авирах",
-        "Трэкинг",
-        "Мөсөрхүү аялал"
+        "Уулын авиралт"
       ],
       "rating": 4.9,
       "price": 80000,
       "priceText": "80,000₮",
-      "ageRange": "18–55",
+      "ageRange": "18–25",
       "detailLocation": "Баян-Өлгий аймгийн нутагт, Монгол Алтайн нуруунд байрладаг.",
       "openingHours": "06:00–20:00",
       "status": "Улирлын",
-      "imgMainUrl": "https://images.unsplash.com/photo-1477414348463-c0eb7f1359b6",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot14-1.jpg",
+      "img2Url": "../files/spot-img/spot14-2.jpg",
+      "img3Url": "../files/spot-img/spot14-3.jpg",
+      "mapSrc": "../files/map/map-altai.svg",
       "scheduleFull": "",
       "descriptionLong": "Алтай Таван богд нь адал явдалт болон өндөр уулын аялалд тохиромжтой бүс.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -358,11 +342,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 15,
       "name": "Говь гурван сайхан",
-      "area": "Өмнөговь",
-      "category": "Байгалийн цогцолбор",
+      "area": "Говь",
+      "category": "Байгаль",
       "activities": [
-        "Цөлд аялах",
-        "Хадны зураг үзэх"
+        null
       ],
       "rating": 4.8,
       "price": 60000,
@@ -371,10 +354,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Өмнөговь аймгийн нутаг, дунд болон баруун хэсэг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1508261306211-45a1c5c2a5c5",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot15-1.jpg",
+      "img2Url": "../files/spot-img/spot15-2.jpg",
+      "img3Url": "../files/spot-img/spot15-3.jpg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Говь гурван сайхан нь Говийн бүсийн онцлог тогтоцтой уулс юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -382,11 +365,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 16,
       "name": "Хонгорын элс",
-      "area": "Өмнөговь",
-      "category": "Цөл, Байгаль",
+      "area": "Говь",
+      "category": "Байгаль",
       "activities": [
-        "Элсэн довцог дээр алхах",
-        "Тэмээ унах"
+        null
       ],
       "rating": 4.9,
       "price": 40000,
@@ -395,10 +377,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Өмнөговь аймгийн Сэврэй, Номгон сумдын зааг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1542367592-8849eb950fd8",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot16-1.jpg",
+      "img2Url": "../files/spot-img/spot16-2.jpg",
+      "img3Url": "../files/spot-img/spot16-3.jpg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Хонгорын элс нь дуут элсээрээ алдартай том элсэн манхан.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -406,11 +388,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 17,
       "name": "Ёлын ам",
-      "area": "Өмнөговь",
-      "category": "Хавцал, Байгаль",
+      "area": "Говь",
+      "category": "Байгаль",
       "activities": [
-        "Хавцалд алхах",
-        "Мөсөн гол үзэх"
+        null
       ],
       "rating": 4.6,
       "price": 20000,
@@ -419,10 +400,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Говь гурван сайханы байгалийн цогцолборт газарт байрладаг.",
       "openingHours": "08:00–19:00",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1500534314211-0a24cd03f2c0",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot17-1.jpg",
+      "img2Url": "../files/spot-img/spot17-2.jpg",
+      "img3Url": "../files/spot-img/spot17-3.jpg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Ёлын ам нь гүн хавцал, заримдаа жилийн турш мөстэй байдаг онцлогтой.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -430,23 +411,22 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 18,
       "name": "Бурхан Халдун уул",
-      "area": "Хэнтий",
-      "category": "Түүхэн, Байгаль",
+      "area": "Зүүн",
+      "category": "Байгаль",
       "activities": [
-        "Ууланд авирах",
-        "Түүхийн аялал"
+        "Ууланд гарах"
       ],
       "rating": 4.7,
       "price": 50000,
       "priceText": "50,000₮",
-      "ageRange": "18–55",
+      "ageRange": "18–25",
       "detailLocation": "Хэнтий аймгийн Батширээт, Өмнөдэлгэр сумдын зааг.",
       "openingHours": "06:00–18:00",
       "status": "Улирлын",
-      "imgMainUrl": "https://images.unsplash.com/photo-1519817650390-64a93db511aa",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot18-1.jpg",
+      "img2Url": "../files/spot-img/spot18-2.jpg",
+      "img3Url": "../files/spot-img/spot18-3.jpg",
+      "mapSrc": "../files/map/map-zuun.svg",
       "scheduleFull": "",
       "descriptionLong": "Бурхан Халдун уул нь Чингис хааны домогтой холбогддог ариун хайрхан.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -454,11 +434,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 19,
       "name": "Тайхар чулуу",
-      "area": "Архангай",
-      "category": "Домогт газар",
+      "area": "Хангай",
+      "category": "Соёл",
       "activities": [
-        "Домог сонсох",
-        "Зураг авах"
+        null
       ],
       "rating": 4.3,
       "price": 5000,
@@ -467,10 +446,10 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Архангай аймгийн Ихтамир сумын нутаг.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1526498460520-4c246339dccb",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot19-1.jpg",
+      "img2Url": "../files/spot-img/spot19-2.jpg",
+      "img3Url": "../files/spot-img/spot19-3.jpg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тайхар чулуу нь эртний бичээс, домог түүхтэй нүсэр хад юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -478,11 +457,10 @@ app.get("/api/spots", (req, res)=>{
     {
       "spotId": 20,
       "name": "Хэрмэн цав",
-      "area": "Дундговь",
-      "category": "Геологийн сонин тогтоц",
+      "area": "Говь",
+      "category": "Байгаль",
       "activities": [
-        "Цав үзэх",
-        "Зураг авалт"
+        null
       ],
       "rating": 4.4,
       "price": 25000,
@@ -491,132 +469,12 @@ app.get("/api/spots", (req, res)=>{
       "detailLocation": "Дундговь аймгийн Говь-Угтаал орчим.",
       "openingHours": "24/7",
       "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
+      "imgMainUrl": "../files/spot-img/spot20-1.jpg",
+      "img2Url": "../files/spot-img/spot20-2.jpg",
+      "img3Url": "../files/spot-img/spot20-3.jpg",
+      "mapSrc": "../files/map/map-govi.svg",
       "scheduleFull": "",
       "descriptionLong": "Хэрмэн цав нь газрын хөрс эвдрэлээс үүссэн гайхалтай геологийн тогтоцтой бүс.",
-      "infoPageHref": "../code/index.html#/spot-info"
-    },
-    {
-      "spotId": 21,
-      "name": "Сүхбаатарын талбай",
-      "area": "Улаанбаатар",
-      "category": "Хотын соёл",
-      "activities": [
-        "Хотын аялал",
-        "Үйл ажиллагаа үзэх"
-      ],
-      "rating": 4.5,
-      "price": 0,
-      "priceText": "Үнэгүй",
-      "ageRange": "Бүх нас",
-      "detailLocation": "Улаанбаатар хотын төв талбай.",
-      "openingHours": "24/7",
-      "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1534143046043-9e9a97e9b1c5",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Сүхбаатарын талбай нь нийслэл хотын төв цэг, олон нийтийн арга хэмжээний гол талбар.",
-      "infoPageHref": "../code/index.html#/spot-info"
-    },
-    {
-      "spotId": 22,
-      "name": "Зайсан толгой",
-      "area": "Улаанбаатар",
-      "category": "Хотын үзэмж",
-      "activities": [
-        "Хотыг дээрээс харах",
-        "Кафе, ресторан"
-      ],
-      "rating": 4.6,
-      "price": 0,
-      "priceText": "Үнэгүй",
-      "ageRange": "Бүх нас",
-      "detailLocation": "Улаанбаатар хотын Хан-Уул дүүрэг.",
-      "openingHours": "24/7",
-      "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Зайсан толгойгоос Улаанбаатар хотыг бүхэлд нь харж болно.",
-      "infoPageHref": "../code/index.html#/spot-info"
-    },
-    {
-      "spotId": 23,
-      "name": "Цагаан суварга",
-      "area": "Дундговь",
-      "category": "Цөл, Геологийн тогтоц",
-      "activities": [
-        "Цөлд алхах",
-        "Зураг авалт"
-      ],
-      "rating": 4.7,
-      "price": 30000,
-      "priceText": "30,000₮",
-      "ageRange": "Бүх нас",
-      "detailLocation": "Дундговь аймгийн Өлзийт сумын нутаг.",
-      "openingHours": "24/7",
-      "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1542367592-8849eb950fd8",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Цагаан суварга нь салхины элэгдлээр үүссэн цагаан өнгийн хадан хананууд юм.",
-      "infoPageHref": "../code/index.html#/spot-info"
-    },
-    {
-      "spotId": 24,
-      "name": "Дадал - Чингис хааны төрсөн нутаг",
-      "area": "Хэнтий",
-      "category": "Түүхэн газар",
-      "activities": [
-        "Түүхийн аялал",
-        "Байгальтай хосолсон аялал"
-      ],
-      "rating": 4.6,
-      "price": 40000,
-      "priceText": "40,000₮",
-      "ageRange": "Бүх нас",
-      "detailLocation": "Хэнтий аймгийн Дадал сум.",
-      "openingHours": "08:00–20:00",
-      "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Дадал сум нь Чингис хааны төрсөн нутаг хэмээн алдаршсан түүхэн бүс.",
-      "infoPageHref": "../code/index.html#/spot-info"
-    },
-    {
-      "spotId": 25,
-      "name": "Увс нуур",
-      "area": "Увс",
-      "category": "Байгалийн цогцолбор",
-      "activities": [
-        "Шувуу ажиглах",
-        "Нуурын аялал"
-      ],
-      "rating": 4.8,
-      "price": 35000,
-      "priceText": "35,000₮",
-      "ageRange": "Бүх нас",
-      "detailLocation": "Увс аймгийн баруун хэсэгт.",
-      "openingHours": "24/7",
-      "status": "Нээлттэй",
-      "imgMainUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
-      "img2Url": null,
-      "img3Url": null,
-      "mapSrc": "../files/Mongolia_blank.svg",
-      "scheduleFull": "",
-      "descriptionLong": "Увс нуур, түүний орчмын экосистем нь ЮНЕСКО-ийн дэлхийн өвд бүртгэгдсэн.",
       "infoPageHref": "../code/index.html#/spot-info"
     }
   ]
@@ -624,7 +482,7 @@ app.get("/api/spots", (req, res)=>{
 )
 })
 
-// Guides endpoints
+// frontend-ээс guide мэдээлэл ирэхэд DB-д хадгална
 app.post('/api/guides', (req, res) => {
   try {
     const guideData = req.body;
@@ -635,7 +493,7 @@ app.post('/api/guides', (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
-
+//DB-д байгаа бүх guide жагсаалтыг авч буцаана
 app.get('/api/guides', (req, res) => {
   try {
     const guides = getAllGuides();
@@ -646,7 +504,6 @@ app.get('/api/guides', (req, res) => {
   }
 });
 
-//app.post("/api/posts", )
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
