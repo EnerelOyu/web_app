@@ -42,7 +42,7 @@
       "imgMainUrl": "../files/spot-img/spot02-1.jpg",
       "img2Url": "../files/spot-img/spot02-2.jpg",
       "img3Url": "../files/spot-img/spot02-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "Долоо хоногийн бүх өдөр: 08–18 цаг",
       "descriptionLong": "Амарбаясгалант хийд нь Монголын шашин, соёлын үнэт өв юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -203,7 +203,7 @@
       "imgMainUrl": "../files/spot-img/spot09-1.jpg",
       "img2Url": "../files/spot-img/spot09-2.jpg",
       "img3Url": "../files/spot-img/spot09-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хөвсгөл нуур нь Монголын \"далай\" хэмээн алдаршсан гайхамшигт нуур.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -226,7 +226,7 @@
       "imgMainUrl": "../files/spot-img/spot10-1.jpg",
       "img2Url": "../files/spot-img/spot10-2.jpg",
       "img3Url": "../files/spot-img/spot10-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Орхон хүрхрээ нь Орхон голын доод хэсэгт орших байгалийн сонин тогтоцтой хүрхрээ.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -249,7 +249,7 @@
       "imgMainUrl": "../files/spot-img/spot11-1.jpg",
       "img2Url": "../files/spot-img/spot11-2.jpg",
       "img3Url": "../files/spot-img/spot11-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Эрдэнэзуу хийд нь Монголын буддын шашны анхны томоохон хийдүүдийн нэг.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -272,7 +272,7 @@
       "imgMainUrl": "../files/spot-img/spot12-1.jpg",
       "img2Url": "../files/spot-img/spot12-2.jpg",
       "img3Url": "../files/spot-img/spot12-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Хорго галт уул нь сүүлийн мөстлөгийн үеийн идэвхтэй байсан галт уулын үлдэц.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -295,7 +295,7 @@
       "imgMainUrl": "../files/spot-img/spot13-1.jpg",
       "img2Url": "../files/spot-img/spot13-2.jpg",
       "img3Url": "../files/spot-img/spot13-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тэрхийн цагаан нуур нь галт уулын тогоонд үүссэн цэнгэг уст нуур юм.",
       "infoPageHref": "../code/index.html#/spot-info"
@@ -433,7 +433,7 @@
       "imgMainUrl": "../files/spot-img/spot19-1.jpg",
       "img2Url": "../files/spot-img/spot19-2.jpg",
       "img3Url": "../files/spot-img/spot19-3.jpg",
-      "mapSrc": "../files/map/spot-hangai.svg",
+      "mapSrc": "../files/map/map-hangai.svg",
       "scheduleFull": "",
       "descriptionLong": "Тайхар чулуу нь эртний бичээс, домог түүхтэй нүсэр хад юм.",
       "infoPageHref": "../code/index.html#/spot-info"

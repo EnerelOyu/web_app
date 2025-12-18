@@ -16,10 +16,11 @@ class AgHeader extends HTMLElement {
         box-shadow: 0 2px 10px color-mix(in srgb, var(--text-color-0) 15%, transparent);
       }
 
+      /* === LOGO хэсэг === */
       .logo {
         display: inline-flex;
         align-items: center;
-        margin-right: auto;
+        margin-right: auto; /* бусдыг баруун тийш түлхэнэ */
         gap: var(--gap-size-s);
         justify-content: center;
       }
@@ -52,6 +53,7 @@ class AgHeader extends HTMLElement {
         padding: 0;
       }
 
+      /* "GO" хэсгийг primary өнгөөр тодруулж байна */
       .logo h1 > span {
         color: var(--primary);
       }
@@ -64,6 +66,7 @@ class AgHeader extends HTMLElement {
         margin: 0;
       }
 
+      /* === DESKTOP NAV === */
       .header-nav {
         display: flex;
         gap: var(--gap-size-s);
@@ -84,13 +87,13 @@ class AgHeader extends HTMLElement {
         color: var(--primary);
       }
 
+      /* идэвхтэй хуудасны линкийг ялгаж харуулна */
       .header-nav a.is-active {
         color: var(--primary);
         font-weight: 700;
       }
 
-      /* === SEARCH === */
-
+      /* === SEARCH хэсэг === */
       .search-container {
         display: flex;
         align-items: center;
@@ -116,6 +119,7 @@ class AgHeader extends HTMLElement {
         outline: 2px solid var(--primary);
       }
 
+      /* search, user товчнуудын ерөнхий хэлбэр */
       .search-btn, .user-btn{
         display: inline-flex;
         background-color: var(--primary-5);
@@ -136,6 +140,7 @@ class AgHeader extends HTMLElement {
         color: var(--primary);
       }
 
+      /* search hover үед background өнгө солигдож, icon эргэнэ */
       .search-btn:hover{
         background-color: var(--primary);
       }
@@ -143,11 +148,9 @@ class AgHeader extends HTMLElement {
       .search-btn:hover svg {
         color: var(--primary-5);
         transform: rotate(90deg);
-
       }
 
-      /* === USER AVATAR === */
-
+      /* === USER ICON === */
       .user-btn{
         border: 2px dotted var(--primary);
       }
@@ -162,7 +165,6 @@ class AgHeader extends HTMLElement {
       }
 
       /* === THEME TOGGLE === */
-
       .theme-toggle {
         display: flex;
         align-items: center;
@@ -175,7 +177,6 @@ class AgHeader extends HTMLElement {
         background-color: var(--primary-5);
         color: var(--primary);
         transition: 0.3s;
-
       }
 
       .theme-toggle svg {
@@ -192,18 +193,16 @@ class AgHeader extends HTMLElement {
       .theme-toggle:hover svg{
         color: var(--primary-5);
         transform: rotate(90deg);
-
       }
 
+      /* icon нуух зориулалттай utility class */
       .hidden {
         display: none;
       }
 
-
-      /* === MOBILE === */
-
+      /* === MOBILE MENU BUTTON === */
       .mobile-menu-btn {
-        display: none;
+        display: none; /* default: desktop дээр нуусан */
         background: none;
         border: none;
         font-size: var(--fs-xl);
@@ -218,16 +217,18 @@ class AgHeader extends HTMLElement {
         color: var(--primary);
       }
 
+      /* MOBILE NAV (dropdown) */
       .mobile-nav {
         display: none;
         position: absolute;
-        top: 100%;
+        top: 100%;  /* header-ийн доор гарна */
         left: 0;
         right: 0;
         background-color: var(--hdr-bg-color);
         padding: var(--p-lg);
       }
 
+      /* active үед л харагдана */
       .mobile-nav.active {
         display: flex;
         flex-direction: column;
@@ -250,32 +251,33 @@ class AgHeader extends HTMLElement {
         color: var(--bg-color);
       }
 
+      /* mobile дээр theme toggle-ийг dropdown дотор тусад нь харуулах wrapper */
       .mobile-theme-toggle-wrapper {
         display: none;
         justify-content: center;
         margin-top: var(--m-sm);
       }
 
-      /* === RESPONSIVE === */
-
+      /* === RESPONSIVE BREAKPOINTS === */
       @media (max-width: 780px) {
-        .header-nav { display: none; }
-        .mobile-menu-btn { display: block; }
+        .header-nav { display: none; }           /* desktop nav-ийг нуух */
+        .mobile-menu-btn { display: block; }     /* hamburger show */
         .mobile-theme-toggle-wrapper { display: flex; }
       }
 
       @media (max-width: 480px) {
-        .logo-content { display: none; }
+        .logo-content { display: none; }         /* жижиг дэлгэц дээр текстээ нуух */
         .logo h1 { font-size: var(--fs-base); }
       }
     `;
   }
 
   connectedCallback() {
-    this.render();
-    this.markActiveLink();
-    this.setupMobileMenu();
-    this.setupThemeToggle();
+    this.render();            // HTML/CSS-ийг зурна
+    this.markActiveLink();    // одоо байгаа hash дээр тулгуурлаад active линк тэмдэглэнэ
+    this.setupMobileMenu();   // mobile menu нээх/хаах логик
+    this.setupThemeToggle();  // light/dark theme солих логик
+    this.setupSearch();       // хайлт хийх логик
   }
 
   render() {
@@ -303,20 +305,24 @@ class AgHeader extends HTMLElement {
             </button>
           </div>
 
+          <!-- Theme toggle: moon/sun icon-ийг theme-ээс хамаарч нуух/харуулах -->
           <button class="theme-toggle" type="button">
             <svg class="icon-moon"><use href="../styles/icons.svg#icon-moon"></use></svg>
             <svg class="icon-sun hidden"><use href="../styles/icons.svg#icon-sun"></use></svg>
           </button>
 
+          <!-- user profile / login товч -->
           <button class="user-btn">
             <svg><use href="../styles/icons.svg#icon-user"></use></svg>
           </button>
         </div>
 
+        <!-- Mobile menu (hamburger) -->
         <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
           <svg><use href="../styles/icons.svg#icon-menu"></use></svg>
         </button>
 
+        <!-- Mobile dropdown nav -->
         <div class="mobile-nav">
           <a href="#/home">Нүүр Хуудас</a>
           <a href="#/spots">Аяллын Цэгүүд</a>
@@ -333,31 +339,29 @@ class AgHeader extends HTMLElement {
     `;
   }
 
-markActiveLink() {
-  const update = () => {
-    const currentHash = window.location.hash || "#/home";
-    const links = this.querySelectorAll(".header-nav a, .mobile-nav a");
+  markActiveLink() {
+    // hash өөрчлөгдөх бүр active классыг шинэчилнэ
+    const update = () => {
+      const currentHash = window.location.hash || "#/home";
+      const links = this.querySelectorAll(".header-nav a, .mobile-nav a");
 
-    links.forEach(link => {
-      const href = link.getAttribute("href") || "";
-      const isActive = href === currentHash;
+      links.forEach(link => {
+        const href = link.getAttribute("href") || "";
+        const isActive = href === currentHash;
 
-      if (isActive) {
-        link.classList.add("is-active");
-        link.setAttribute("aria-current", "page");
-      } else {
-        link.classList.remove("is-active");
-        link.removeAttribute("aria-current");
-      }
-    });
-  };
+        if (isActive) {
+          link.classList.add("is-active");
+          link.setAttribute("aria-current", "page"); 
+        } else {
+          link.classList.remove("is-active");
+          link.removeAttribute("aria-current");
+        }
+      });
+    };
 
-  // Эхний удаа дуудах
-  update();
-
-  // Hash өөрчлөгдөх болгонд дахин шалгана
-  window.addEventListener("hashchange", update);
-}
+    update(); // эхний удаа
+    window.addEventListener("hashchange", update); // дараа нь hash солигдох бүр
+  }
 
   setupMobileMenu() {
     const btn = this.querySelector(".mobile-menu-btn");
@@ -370,8 +374,8 @@ markActiveLink() {
     if (!btn || !nav || !useEl) return;
 
     const setState = (isOpen) => {
-      nav.classList.toggle("active", isOpen);
-      useEl.setAttribute("href", isOpen ? CLOSE_ICON : MENU_ICON);
+      nav.classList.toggle("active", isOpen); // dropdown харагдуулах/нуух
+      useEl.setAttribute("href", isOpen ? CLOSE_ICON : MENU_ICON); // icon солих
       btn.setAttribute("aria-label", isOpen ? "Цэс хаах" : "Цэс нээх");
     };
 
@@ -387,7 +391,7 @@ markActiveLink() {
       }
     });
 
-    // mobile линк дарахад хаах
+    // mobile нав доторх линк дарвал автоматаар хаах
     const mobileLinks = this.querySelectorAll(".mobile-nav a");
     mobileLinks.forEach(link => {
       link.addEventListener("click", () => setState(false));
@@ -401,12 +405,14 @@ markActiveLink() {
 
     if (!buttons.length) return;
 
+    // Эхний theme-ээ: localStorage байвал тэрийг, байхгүй бол OS preference ашиглана
     const getInitial = () => {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved === "light" || saved === "dark") return saved;
       return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     };
 
+    // Moon/Sun icon-ийг theme-ээс хамаарч харуулах/нуух
     const updateIcons = (theme) => {
       buttons.forEach(btn => {
         const sun = btn.querySelector(".icon-sun");
@@ -423,8 +429,9 @@ markActiveLink() {
       });
     };
 
+    // Theme-ээ DOM дээр болон localStorage-д хадгалж, icon-ийг шинэчилнэ
     const applyTheme = (theme) => {
-      html.dataset.theme = theme;
+      html.dataset.theme = theme;           
       localStorage.setItem(STORAGE_KEY, theme);
       updateIcons(theme);
     };
@@ -435,6 +442,162 @@ markActiveLink() {
 
     applyTheme(getInitial());
     buttons.forEach(btn => btn.addEventListener("click", toggle));
+  }
+
+  setupSearch() {
+    const searchInput = this.querySelector('.search-container input');
+    const searchBtn = this.querySelector('.search-btn');
+
+    if (!searchInput || !searchBtn) return;
+
+    // Текстийг нэг стандартад оруулах 
+    const normalizeStr = (str) => {
+      if (!str) return '';
+      return String(str).toLowerCase().trim();
+    };
+
+    // Map-д давхардалгүй хадгалах helper
+    const addFilterValue = (map, value) => {
+      if (!value) return;
+      const cleaned = typeof value === 'string' ? value.trim() : value;
+      const normalized = normalizeStr(cleaned);
+      if (normalized && !map.has(normalized)) {
+        map.set(normalized, cleaned);
+      }
+    };
+
+    // activities, cate гэх мэт нь array/эсвэл string байж болох тул массив болгоно
+    const toArray = (value) => {
+      if (!value) return [];
+      if (Array.isArray(value)) return value;
+      if (typeof value === 'string') {
+        return value.split(',').map(part => part.trim()).filter(Boolean);
+      }
+      return [];
+    };
+
+    // Spots доторх бүх region/cate/activities-ийн боломжит утгуудыг Map болгон цуглуулна
+    const buildFilterMaps = (spots) => {
+      const categoryMap = new Map();
+      const regionMap = new Map();
+      const activityMap = new Map();
+
+      spots.forEach(spot => {
+        addFilterValue(regionMap, spot.region);
+        toArray(spot.cate).forEach(value => addFilterValue(categoryMap, value));
+        toArray(spot.activities).forEach(value => addFilterValue(activityMap, value));
+      });
+
+      return { categoryMap, regionMap, activityMap };
+    };
+
+    // хэрэглэгчийн бичсэн хайлт нь category/region/activity-тай яг таарч байна уу гэдгийг шалгана
+    const findFilterMatch = (normalizedQuery, maps) => {
+      if (!normalizedQuery) return null;
+      if (maps.categoryMap.has(normalizedQuery)) {
+        return { type: 'category', value: maps.categoryMap.get(normalizedQuery) };
+      }
+      if (maps.regionMap.has(normalizedQuery)) {
+        return { type: 'region', value: maps.regionMap.get(normalizedQuery) };
+      }
+      if (maps.activityMap.has(normalizedQuery)) {
+        return { type: 'activity', value: maps.activityMap.get(normalizedQuery) };
+      }
+      return null;
+    };
+
+    const performSearch = () => {
+      const rawQuery = searchInput.value.trim();
+      const normalizedQuery = normalizeStr(rawQuery);
+
+      // хоосон бол анхааруулна
+      if (!rawQuery) {
+        alert('Хайлтын утга оруулна уу!');
+        return;
+      }
+
+      // appState бэлэн эсэх шалгах (data source)
+      if (!window.appState) {
+        return;
+      }
+
+      // бүх spot-оо авч хайлт хийнэ
+      const allSpots = window.appState.getAllSpots();
+
+      // Хэрэв хэрэглэгч яг filter-ийн нэр бичсэн бол:
+      const filterMaps = buildFilterMaps(allSpots);
+      const filterMatch = findFilterMatch(normalizedQuery, filterMaps);
+
+      if (filterMatch) {
+        // URL query param үүсгэж spots page руу фильтертэй очно
+        const params = new URLSearchParams();
+
+        if (filterMatch.type === 'category') {
+          params.set('cate', filterMatch.value);
+        } else if (filterMatch.type === 'region') {
+          params.set('bus', filterMatch.value);
+        } else if (filterMatch.type === 'activity') {
+          params.set('activity', filterMatch.value);
+        }
+
+        // өмнөх хайлтын sessionStorage-ийг цэвэрлэнэ
+        sessionStorage.removeItem('searchResults');
+        sessionStorage.removeItem('searchQuery');
+
+        // фильтертэй hash руу шилжинэ
+        window.location.hash = `#/spots?${params.toString()}`;
+        searchInput.value = '';
+        return;
+      }
+
+      // Ерөнхий хайлт: нэр/бүс/байршил/категори дотор includes хийх
+      const results = allSpots.filter(spot => {
+        const title = normalizeStr(spot.title);
+        const region = normalizeStr(spot.region);
+        const location = normalizeStr(spot.location);
+        const category = normalizeStr(spot.cate);
+
+        return (
+          title.includes(normalizedQuery) ||
+          region.includes(normalizedQuery) ||
+          location.includes(normalizedQuery) ||
+          category.includes(normalizedQuery)
+        );
+      });
+
+      // олдоогүй бол анхааруулна
+      if (results.length === 0) {
+        alert('Хайлт олдсонгүй.');
+        return;
+      }
+
+      // яг 1 ширхэг олдвол шууд тухайн spot-ийн detail page руу оруулна
+      if (results.length === 1) {
+        const selectedSpotId = results[0].id;
+        if (typeof window.appState.setCurrentSpot === 'function') {
+          window.appState.setCurrentSpot(selectedSpotId);
+        }
+        window.location.hash = `#/spot-info?s=${selectedSpotId}`;
+        searchInput.value = '';
+        return;
+      }
+
+      // олон үр дүн бол sessionStorage-д хадгалаад spots page дээр жагсааж харуулах
+      sessionStorage.setItem('searchResults', JSON.stringify(results));
+      sessionStorage.setItem('searchQuery', normalizedQuery);
+      window.location.hash = '#/spots';
+      searchInput.value = '';
+    };
+
+    // товч дарж хайх
+    searchBtn.addEventListener('click', performSearch);
+
+    // Enter дарж хайх
+    searchInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        performSearch();
+      }
+    });
   }
 }
 
