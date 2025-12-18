@@ -93,6 +93,15 @@ class AppState {
             const response = await fetch('http://localhost:3000/api/guides');
             const data = await response.json();
 
+            const regionMap = {
+                tuv: 'Төв',
+                zuun: 'Зүүн',
+                baruun: 'Баруун',
+                hangai: 'Хангай',
+                altai: 'Алтай',
+                govi: 'Говь'
+            };
+
             data.guides.forEach(guide => {
                 this.guideData[guide.guideId] = {
                     id: guide.guideId,
@@ -101,12 +110,11 @@ class AppState {
                     fullName: `${guide.lastName} ${guide.firstName}`,
                     phone: guide.phone,
                     email: guide.email,
-                    area: guide.area,
+                    area: guide.area ? regionMap[guide.area] || guide.area : null,
                     category: guide.category,
                     languages: guide.languages ? guide.languages.split(',').map(l => l.trim()) : [],
                     experience: guide.experienceLevel,
-                    profileImg: guide.profileImgUrl,
-                    createdAt: guide.createdAt
+                    profileImg: guide.profileImgUrl ? (guide.profileImgUrl.startsWith('../') ? guide.profileImgUrl.replace('../', '/') : guide.profileImgUrl) : null,
                 };
             });
 
@@ -136,8 +144,7 @@ class AppState {
                     category: guide.category,
                     languages: guide.language,
                     experience: guide.experienceLevel,
-                    profileImg: guide.profileImgUrl,
-                    createdAt: new Date().toISOString() // fallback
+                    profileImg: guide.profileImgUrl ? (guide.profileImgUrl.startsWith('../') ? guide.profileImgUrl.replace('../', '/') : guide.profileImgUrl) : null,
                 };
             });
 

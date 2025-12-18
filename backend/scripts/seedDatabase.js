@@ -296,3 +296,5 @@ guidesData.forEach(guide => {
 console.log('✅ Database seeded successfully!');
 
 db.close();
+
+taskkill /PID <PID> /F

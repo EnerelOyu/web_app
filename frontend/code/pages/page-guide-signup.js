@@ -39,26 +39,24 @@ class PageGuideSignup extends HTMLElement {
       return;
     }
 
-    // Map to database fields
-    const guideData = {
-      lastName: payload.basic.lastName,
-      firstName: payload.basic.firstName,
-      phone: payload.basic.phone || null,
-      email: payload.basic.email,
-      area: payload.preferences.region !== 'default' ? payload.preferences.region : null,
-      category: payload.preferences.category !== 'default' ? payload.preferences.category : null,
-      languages: payload.preferences.language !== 'default' ? payload.preferences.language : null,
-      experienceLevel: payload.preferences.experience !== 'default' ? payload.preferences.experience : null,
-      profileImgUrl: null // TODO: handle image upload
-    };
+    // Create FormData for file upload
+    const formData = new FormData();
+    formData.append('lastName', payload.basic.lastName);
+    formData.append('firstName', payload.basic.firstName);
+    formData.append('phone', payload.basic.phone || '');
+    formData.append('email', payload.basic.email);
+    formData.append('area', payload.preferences.region !== 'default' ? payload.preferences.region : '');
+    formData.append('category', payload.preferences.category !== 'default' ? payload.preferences.category : '');
+    formData.append('languages', payload.preferences.language !== 'default' ? payload.preferences.language : '');
+    formData.append('experienceLevel', payload.preferences.experience !== 'default' ? payload.preferences.experience : '');
+    if (payload.imageFile) {
+      formData.append('profileImage', payload.imageFile);
+    }
 
     // Send to backend
     fetch('http://localhost:3000/api/guides', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(guideData)
+      body: formData
     })
     .then(response => response.json())
     .then(data => {

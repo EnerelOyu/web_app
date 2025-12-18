@@ -15,7 +15,10 @@ class GuideCard extends HTMLElement {
                 border: 2px solid var(--text-color-8);
                 box-shadow: 0 4px 16px rgba(0,0,0,0.08);
                 align-items: flex-start;
-                animation: fadeIn 0.3s ease;
+                height: 350px;
+                width: 300px;
+                box-sizing: border-box;
+                flex-shrink: 0;
             }
             .guide-card img {
                 width: fit content;

@@ -1,5 +1,5 @@
 {
-    "guides": [
+  "guides": [
     {
       "guideId": "g1",
       "lastName": "Бат",
@@ -144,6 +144,34 @@
       ],
       "experienceLevel": "5 -аас дээш жил",
       "profileImgUrl": "../files/guide-img/guide4.svg"
+    },
+    {
+      "guideId": "g33",
+      "lastName": "Ананда",
+      "firstName": "Эрдэнэбулган",
+      "phone": "99820735",
+      "email": "anandaebu5@gmail.com",
+      "area": "Төв",
+      "category": "Байгаль",
+      "language": [
+        "Англи"
+      ],
+      "experienceLevel": "1 жил ба түүнээс доош",
+      "profileImgUrl": null
+    },
+    {
+      "guideId": "g34",
+      "lastName": "ana",
+      "firstName": "ebu",
+      "phone": "99820735",
+      "email": "anandaebu5@gmail.com",
+      "area": "Төв",
+      "category": "Байгаль",
+      "language": [
+        "Япон"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": null
     }
   ]
 }
