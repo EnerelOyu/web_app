@@ -68,11 +68,6 @@ const seedSpot = (spot) => {
   });
 };
 
-<<<<<<< HEAD
-db.close();
-
-taskkill /PID <PID> /F
-=======
 const run = () => {
   initDB();
   db.exec('DELETE FROM spot_categories; DELETE FROM spot_activities; DELETE FROM spots; VACUUM;');
@@ -84,4 +79,3 @@ const run = () => {
 };
 
 run();
->>>>>>> ce25b65cdd8230bfd5fe9b4dd22a29c4a2a41c11
