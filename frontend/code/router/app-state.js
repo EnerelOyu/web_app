@@ -77,6 +77,9 @@ class AppState {
             // Merge with temporary data (JSON data takes priority)
             this.spotData = { ...this.spotData };
 
+            console.log('✅ Spot data ачаалагдлаа:', Object.keys(this.spotData).length, 'газар');
+            console.log('📋 Бүс нутгууд:', [...new Set(Object.values(this.spotData).map(s => s.region))].sort());
+
             this.dispatchStateChange('spotData', this.spotData);
         } catch (error) {
             console.error('Error loading spot data:', error);

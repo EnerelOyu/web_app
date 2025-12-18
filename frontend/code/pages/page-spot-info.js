@@ -2,7 +2,6 @@ class PageSpotInfo extends HTMLElement {
   constructor() {
     super();
 
-    // spot-info.css-ийг компонент дотроо scope-лосон хувилбар
     this.css = `
       .page-spot-info {
         display: flex;

@@ -312,6 +312,20 @@ class PageSpots extends HTMLElement {
             'Үнэлгээ': []
         };
 
+        // Check for search results from header search
+        this.searchResults = null;
+        this.searchQuery = null;
+        const storedResults = sessionStorage.getItem('searchResults');
+        const storedQuery = sessionStorage.getItem('searchQuery');
+
+        if (storedResults && storedQuery) {
+            this.searchResults = JSON.parse(storedResults);
+            this.searchQuery = storedQuery;
+            // Clear from sessionStorage
+            sessionStorage.removeItem('searchResults');
+            sessionStorage.removeItem('searchQuery');
+        }
+
         // Read URL query parameters from home search
         this.readSearchParams();
 
@@ -322,8 +336,10 @@ class PageSpots extends HTMLElement {
         window.addEventListener('appstatechange', (e) => {
             if (e.detail.key === 'spotData') {
                 this.renderContent();
-                // Apply initial filters from URL
-                if (this.hasActiveFilters()) {
+                // Apply initial filters from URL or show search results
+                if (this.searchResults) {
+                    this.displaySearchResults();
+                } else if (this.hasActiveFilters()) {
                     this.applyFilters();
                 }
             }
@@ -332,8 +348,10 @@ class PageSpots extends HTMLElement {
         // Initial render if data is already loaded
         if (window.appState && Object.keys(window.appState.spotData).length > 0) {
             this.renderContent();
-            // Apply initial filters from URL
-            if (this.hasActiveFilters()) {
+            // Apply initial filters from URL or show search results
+            if (this.searchResults) {
+                this.displaySearchResults();
+            } else if (this.hasActiveFilters()) {
                 this.applyFilters();
             }
         }
@@ -351,6 +369,7 @@ class PageSpots extends HTMLElement {
         // Map URL params to filter names
         const area = params.get('bus');        // 'bus' -> 'Бүс нутаг'
         const category = params.get('cate');    // 'cate' -> 'Категори'
+        const activity = params.get('activity'); // 'activity' -> 'Үйл ажиллагаа'
 
         if (area) {
             this.activeFilters['Бүс нутаг'] = [area];
@@ -358,6 +377,10 @@ class PageSpots extends HTMLElement {
 
         if (category) {
             this.activeFilters['Категори'] = [category];
+        }
+
+        if (activity) {
+            this.activeFilters['Үйл ажиллагаа'] = [activity];
         }
     }
 
@@ -565,6 +588,46 @@ class PageSpots extends HTMLElement {
 
         // Generate spot cards HTML
         spotsGrid.innerHTML = spots.map(spot => {
+            const spotId = spot.id;
+            const activities = spot.activities || '';
+            const age = spot.age || 'Бүх нас';
+            const price = spot.price || '';
+
+            return `
+                <ag-spot-card
+                    href="#/spot-info"
+                    zrg="${spot.img1 || ''}"
+                    bus="${spot.region || ''}"
+                    unelgee="${spot.rating || '0'}"
+                    ner="${spot.title || ''}"
+                    cate="${spot.cate || ''}"
+                    activity="${activities}"
+                    une="${price}"
+                    age="${age}"
+                    data-spot-id="${spotId}">
+                </ag-spot-card>
+            `;
+        }).join('');
+    }
+
+    displaySearchResults() {
+        const spotsGrid = this.querySelector('#spots-grid');
+        const containerHdr = this.querySelector('.container-hdr');
+
+        if (!spotsGrid || !this.searchResults) return;
+
+        // Update header to show search query
+        if (containerHdr) {
+            containerHdr.textContent = `"${this.searchQuery}" хайлтын үр дүн: ${this.searchResults.length} газар олдлоо`;
+        }
+
+        if (this.searchResults.length === 0) {
+            spotsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: var(--p-xl); color: var(--text-color-3);">Хайлтын илэрц олдсонгүй.</p>';
+            return;
+        }
+
+        // Display search results
+        spotsGrid.innerHTML = this.searchResults.map(spot => {
             const spotId = spot.id;
             const activities = spot.activities || '';
             const age = spot.age || 'Бүх нас';

@@ -47,14 +47,26 @@ class AgSpotHero extends HTMLElement {
           display: block;
         }
 
-        /* ----- Header + actions (spot-info.css-ээс авсан) ----- */
+        /* =====================================================
+           MAIN INFO - Үндсэн мэдээлэл контейнер
+           ===================================================== */
+
+        .main-info {
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-size-s);
+        }
+
+        /* =====================================================
+           HEADER - Гарчиг болон товчлууруud
+           ===================================================== */
 
         .spot-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
           gap: var(--gap-size-m);
-          margin-bottom: var(--m-sm);
+          margin-bottom: var(--gap-size-xs);
         }
 
         .spot-header h1 {
@@ -62,9 +74,13 @@ class AgSpotHero extends HTMLElement {
           color: var(--text-color-1);
           font-size: var(--fs-xl);
           text-transform: uppercase;
+          margin: 0;
+          line-height: 1.2;
         }
 
-        /* Top action buttons */
+        /* =====================================================
+           ACTION BUTTONS - Хуваалцах, Нэмэх товчлууруud
+           ===================================================== */
 
         .actions {
           display: flex;
@@ -86,32 +102,64 @@ class AgSpotHero extends HTMLElement {
           font-family: 'NunitoSans';
           font-size: var(--fs-xs);
           text-transform: uppercase;
-          transition: background-color 200ms, color 200ms;
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
         }
 
         .action-btn svg {
           width: var(--svg-s);
           height: var(--svg-s);
           fill: currentColor;
+          transition: fill 0.3s ease;
         }
 
         .action-btn:hover {
           background-color: var(--primary);
           color: var(--primary-5);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+        }
+
+        .action-btn:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         }
 
         .action-btn:hover svg {
           fill: var(--primary-5);
         }
 
-        /* Spot categories & schedule */
+        /* =====================================================
+           RATING - Үнэлгээний компонент
+           ===================================================== */
+
+        ag-rating {
+          margin: var(--gap-size-xs) 0;
+        }
+
+        /* =====================================================
+           CATEGORIES & SCHEDULE ROW - Ангилал ба цагийн хуваарь
+           ===================================================== */
+
+        .category-schedule-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: var(--gap-size-m);
+          margin: 0;
+          flex-wrap: wrap;
+        }
+
+        /* =====================================================
+           CATEGORIES - Ангилал тагууд
+           ===================================================== */
 
         .spot-category {
           display: flex;
           flex-wrap: wrap;
           gap: var(--gap-size-xs);
           padding: 0;
-          margin: var(--m-sm) 0;
+          margin: 0;
         }
 
         .spot-category li {
@@ -121,8 +169,19 @@ class AgSpotHero extends HTMLElement {
           color: var(--accent-2);
           background-color: var(--accent-9);
           font-family: 'NunitoSans';
-          font-size: var(--fs-base);
+          font-size: var(--fs-sm);
+          transition: all 0.3s ease;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
+        .spot-category li:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* =====================================================
+           SCHEDULE - Цагийн хуваарь болон төлөв
+           ===================================================== */
 
         .spot-schedue {
           display: flex;
@@ -130,7 +189,8 @@ class AgSpotHero extends HTMLElement {
           gap: var(--gap-size-xs);
           font-size: var(--fs-xs);
           font-family: 'NunitoSans';
-          margin-bottom: var(--m-md);
+          margin: 0;
+          flex-shrink: 0;
         }
 
         .spot-schedue .status {
@@ -138,13 +198,23 @@ class AgSpotHero extends HTMLElement {
           color: var(--accent-9);
           padding: var(--p-xs);
           border-radius: var(--br-s);
+          font-weight: 600;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+          transition: all 0.3s ease;
+        }
+
+        .spot-schedue .status:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         .spot-schedue .time-zone {
           color: var(--accent-2);
         }
 
-        /* ----------- Images ----------- */
+        /* =====================================================
+           IMAGES - Зургийн grid бүтэц
+           ===================================================== */
 
         .spot-imgs {
           display: grid;
@@ -158,33 +228,130 @@ class AgSpotHero extends HTMLElement {
           object-fit: cover;
           width: 100%;
           height: 100%;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .spot-imgs img:hover {
+          transform: scale(1.02);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+          cursor: pointer;
         }
 
         .big-img {
-          grid-row: 1 / 3; /* 2 мөр дамнаж том зураг */
+          grid-row: 1 / 3;
+          min-height: 300px;
         }
 
-        /* Media query – зөвхөн hero-т хамаатай хэсгийг авсан */
+        .small-img {
+          min-height: 140px;
+        }
 
+        /* =====================================================
+           RESPONSIVE DESIGN - Хариуцлагатай дизайн
+           ===================================================== */
+
+        /* Tablet - 768px ба түүнээс бага */
+        @media (max-width: 768px) {
+          .main-info {
+            gap: var(--gap-size-xs);
+          }
+
+          .spot-header {
+            gap: var(--gap-size-s);
+          }
+
+          .spot-header h1 {
+            font-size: var(--fs-lg);
+          }
+
+          .spot-category li {
+            font-size: var(--fs-xs);
+          }
+
+          .big-img {
+            min-height: 250px;
+          }
+
+          .small-img {
+            min-height: 120px;
+          }
+        }
+
+        /* Mobile - 600px ба түүнээс бага */
         @media (max-width: 600px) {
+          .main-info {
+            gap: var(--gap-size-xs);
+          }
+
           .spot-header {
             flex-direction: column;
             align-items: flex-start;
+            gap: var(--gap-size-xs);
+            margin-bottom: var(--gap-size-xs);
+          }
+
+          .spot-header h1 {
+            font-size: var(--fs-md);
           }
 
           .actions {
             width: 100%;
             justify-content: flex-start;
-            flex-wrap: wrap;
+          }
+
+          .action-btn {
+            font-size: var(--fs-2xs);
+            padding: calc(var(--p-xs) * 0.8);
+          }
+
+          .category-schedule-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--gap-size-xs);
+            margin: var(--gap-size-2xs) 0 var(--gap-size-xs) 0;
+          }
+
+          .spot-category li {
+            padding: calc(var(--p-xs) * 0.8);
           }
 
           .spot-imgs {
             grid-template-columns: 1fr;
             grid-template-rows: auto;
+            gap: var(--gap-size-2xs);
+            margin-top: var(--gap-size-xs);
           }
 
           .big-img {
             grid-row: auto;
+            min-height: 200px;
+          }
+
+          .small-img {
+            min-height: 150px;
+          }
+        }
+
+        /* Small mobile - 400px ба түүнээс бага */
+        @media (max-width: 400px) {
+          .spot-header h1 {
+            font-size: var(--fs-base);
+          }
+
+          .action-btn span {
+            display: none;
+          }
+
+          .action-btn {
+            padding: var(--p-xs);
+          }
+
+          .big-img {
+            min-height: 180px;
+          }
+
+          .small-img {
+            min-height: 120px;
           }
         }
       </style>
@@ -210,13 +377,15 @@ class AgSpotHero extends HTMLElement {
 
         <ag-rating value="${rating}" color="var(--primary)"></ag-rating>
 
-        <ul class="spot-category">
-          ${cateHtml}
-        </ul>
+        <div class="category-schedule-row">
+          <ul class="spot-category">
+            ${cateHtml}
+          </ul>
 
-        <div class="spot-schedue">
-          <p class="status">${status}</p>
-          <p class="time-zone">${time}</p>
+          <div class="spot-schedue">
+            <p class="status">${status}</p>
+            <p class="time-zone">${time}</p>
+          </div>
         </div>
 
         <div class="spot-imgs">
