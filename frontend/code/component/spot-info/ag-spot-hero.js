@@ -219,7 +219,7 @@ class AgSpotHero extends HTMLElement {
         .spot-imgs {
           display: grid;
           grid-template-columns: 2fr 1fr;
-          grid-template-rows: repeat(2, 1fr);
+          grid-template-rows: repeat(2, var(--spot-hero-img-height));
           gap: var(--gap-size-xs);
         }
 
@@ -228,6 +228,7 @@ class AgSpotHero extends HTMLElement {
           object-fit: cover;
           width: 100%;
           height: 100%;
+          aspect-ratio: 4 / 3;
           transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
@@ -239,11 +240,6 @@ class AgSpotHero extends HTMLElement {
 
         .big-img {
           grid-row: 1 / 3;
-          min-height: 300px;
-        }
-
-        .small-img {
-          min-height: 140px;
         }
 
         /* =====================================================
@@ -252,6 +248,10 @@ class AgSpotHero extends HTMLElement {
 
         /* Tablet - 768px ба түүнээс бага */
         @media (max-width: 768px) {
+          :host {
+            --spot-hero-img-height: clamp(150px, 38vw, 240px);
+          }
+
           .main-info {
             gap: var(--gap-size-xs);
           }
@@ -268,17 +268,14 @@ class AgSpotHero extends HTMLElement {
             font-size: var(--fs-xs);
           }
 
-          .big-img {
-            min-height: 250px;
-          }
-
-          .small-img {
-            min-height: 120px;
-          }
         }
 
         /* Mobile - 600px ба түүнээс бага */
         @media (max-width: 600px) {
+          :host {
+            --spot-hero-img-height: clamp(130px, 45vw, 220px);
+          }
+
           .main-info {
             gap: var(--gap-size-xs);
           }
@@ -324,16 +321,20 @@ class AgSpotHero extends HTMLElement {
 
           .big-img {
             grid-row: auto;
-            min-height: 200px;
           }
 
-          .small-img {
-            min-height: 150px;
+          .spot-imgs img {
+            height: auto;
+            aspect-ratio: 4 / 3;
           }
         }
 
         /* Small mobile - 400px ба түүнээс бага */
         @media (max-width: 400px) {
+          :host {
+            --spot-hero-img-height: clamp(120px, 60vw, 180px);
+          }
+
           .spot-header h1 {
             font-size: var(--fs-base);
           }
@@ -346,13 +347,6 @@ class AgSpotHero extends HTMLElement {
             padding: var(--p-xs);
           }
 
-          .big-img {
-            min-height: 180px;
-          }
-
-          .small-img {
-            min-height: 120px;
-          }
         }
       </style>
 
@@ -431,9 +425,9 @@ class AgSpotHero extends HTMLElement {
     }
 
     // Add to plan
-    const success = window.appState.addToPlan(spotId);
+    const result = window.appState.addToPlan(spotId);
 
-    if (success) {
+    if (result === true) {
       // Visual feedback
       const originalHTML = button.innerHTML;
       const originalBg = button.style.backgroundColor;
@@ -452,6 +446,20 @@ class AgSpotHero extends HTMLElement {
       setTimeout(() => {
         window.location.hash = '#/plan';
       }, 600);
+    } else if (result === 'exists') {
+      // Already exists - show feedback without navigation
+      const originalHTML = button.innerHTML;
+      const originalBg = button.style.backgroundColor;
+
+      button.innerHTML = '<span>Аль хэдийн байна</span>';
+      button.style.backgroundColor = 'var(--text-color-6)';
+      button.style.color = 'var(--text-color-1)';
+
+      setTimeout(() => {
+        button.innerHTML = originalHTML;
+        button.style.backgroundColor = originalBg;
+        button.style.color = '';
+      }, 2000);
     }
   }
 

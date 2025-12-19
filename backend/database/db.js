@@ -22,7 +22,7 @@ export const initDB = () => {
   // Spots table
   db.exec(`
     CREATE TABLE IF NOT EXISTS spots (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      spotId INTEGER PRIMARY KEY,
       name TEXT NOT NULL,
       area TEXT NOT NULL,
       category TEXT DEFAULT '',
@@ -54,7 +54,7 @@ export const initDB = () => {
       comment TEXT NOT NULL,
       rating REAL NOT NULL,
       createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-      FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE
+      FOREIGN KEY (spotId) REFERENCES spots(spotId) ON DELETE CASCADE
     )
   `);
 
@@ -77,7 +77,7 @@ export const initDB = () => {
       spotId INTEGER NOT NULL,
       addedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (planId) REFERENCES plans(id) ON DELETE CASCADE,
-      FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE,
+      FOREIGN KEY (spotId) REFERENCES spots(spotId) ON DELETE CASCADE,
       UNIQUE(planId, spotId)
     )
   `);
@@ -129,7 +129,7 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     spotId INTEGER NOT NULL,
     categoryId INTEGER NOT NULL,
-    FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE,
+    FOREIGN KEY (spotId) REFERENCES spots(spotId) ON DELETE CASCADE,
     FOREIGN KEY (categoryId) REFERENCES categories(id) ON DELETE CASCADE,
     UNIQUE(spotId, categoryId)
   );
@@ -141,7 +141,7 @@ db.exec(`
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     spotId INTEGER NOT NULL,
     activityId INTEGER NOT NULL,
-    FOREIGN KEY (spotId) REFERENCES spots(id) ON DELETE CASCADE,
+    FOREIGN KEY (spotId) REFERENCES spots(spotId) ON DELETE CASCADE,
     FOREIGN KEY (activityId) REFERENCES activities(id) ON DELETE CASCADE,
     UNIQUE(spotId, activityId)
   );

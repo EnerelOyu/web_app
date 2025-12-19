@@ -82,6 +82,7 @@ class AgSpotCard extends HTMLElement {
         display: flex;
         flex-direction: column;
         padding: 0;
+        width: 100%;
       }
 
       .short-info {
@@ -165,34 +166,54 @@ class AgSpotCard extends HTMLElement {
     // Get buttons from shadow DOM
     const addButton = this.shadowRoot.querySelector('.spot-img button:nth-of-type(1)');
     const shareButton = this.shadowRoot.querySelector('.spot-img button:nth-of-type(2)');
+    const notifyPlanUpdate = (status, spotId) => {
+      this.dispatchEvent(new CustomEvent('plan-add-result', {
+        detail: { status, spotId },
+        bubbles: true,
+        composed: true
+      }));
+    };
 
-    // "Нэмэх" товч
+    // "Нэмэх" товч - remove old listeners before adding new ones
     if (addButton) {
-      addButton.addEventListener('click', (e) => {
+      // Clone button to remove all existing event listeners
+      const newAddButton = addButton.cloneNode(true);
+      addButton.parentNode.replaceChild(newAddButton, addButton);
+
+      newAddButton.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         const spotId = this.getAttribute('data-spot-id');
         if (spotId && window.appState) {
-          const success = window.appState.addToPlan(spotId);
-          if (success) {
+          const result = window.appState.addToPlan(spotId);
+          if (result === true) {
             // Visual feedback
-            addButton.style.backgroundColor = 'var(--accent-2)';
-            const originalSvg = addButton.innerHTML;
-            addButton.innerHTML = '<svg><use href="../styles/icons.svg#icon-check"></use></svg>';
+            newAddButton.style.backgroundColor = 'var(--accent-2)';
+            const originalSvg = newAddButton.innerHTML;
+            newAddButton.innerHTML = '<svg><use href="../styles/icons.svg#icon-check"></use></svg>';
 
             setTimeout(() => {
-              addButton.style.backgroundColor = '';
-              addButton.innerHTML = originalSvg;
+              newAddButton.style.backgroundColor = '';
+              newAddButton.innerHTML = originalSvg;
             }, 1000);
+            notifyPlanUpdate('added', spotId);
+          } else if (result === 'exists') {
+            notifyPlanUpdate('exists', spotId);
+          } else {
+            notifyPlanUpdate('error', spotId);
           }
         }
       });
     }
 
-    // "Хуваалцах" товч
+    // "Хуваалцах" товч - remove old listeners before adding new ones
     if (shareButton) {
-      shareButton.addEventListener('click', (e) => {
+      // Clone button to remove all existing event listeners
+      const newShareButton = shareButton.cloneNode(true);
+      shareButton.parentNode.replaceChild(newShareButton, shareButton);
+
+      newShareButton.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
 

@@ -5,7 +5,17 @@ class PageHome extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.setupToast();
         this.attachEventListeners();
+    }
+
+    setupToast() {
+        // Create toast element if it doesn't exist
+        if (!document.querySelector('ag-toast')) {
+            const toast = document.createElement('ag-toast');
+            document.body.appendChild(toast);
+        }
+        this.toast = document.querySelector('ag-toast');
     }
 
     render() {
@@ -279,28 +289,28 @@ class PageHome extends HTMLElement {
             <!-- Featured Spots -->
             <ag-spot-section title="Шилдэг аяллын цэгүүд" link="#/spots">
                 <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2019-06/870d8d6123525e17e6a4c9d34b14f8c7-chinggis-khaan-sukhbaatar-square.jpg"
-                    ner="СҮХБААТАРЫН ТАЛБАЙ"
-                    bus="Төв"
-                    data-spot-id="sukhbaatar">
-                </ag-spot>
-                <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
                     ner="Гандан Тэгчинлэн Хийд"
                     bus="Төв"
-                    data-spot-id="gandan">
+                    data-spot-id="7">
                 </ag-spot>
                 <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
                     ner="Амарбаясгалант хийд"
-                    bus="Төв"
-                    data-spot-id="amarbayasgalant">
+                    bus="Хангай"
+                    data-spot-id="2">
                 </ag-spot>
                 <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
-                    ner="Хустайн байгалийн цогцолбор"
+                    ner="Хустайн байгалийн цогцолборт газар"
                     bus="Төв"
-                    data-spot-id="khustai">
+                    data-spot-id="3">
+                </ag-spot>
+                <ag-spot
+                    zrg="../files/spot-img/spot04-1.jpg"
+                    ner="Горхи-Тэрэлж Үндэсний Парк"
+                    bus="Төв"
+                    data-spot-id="4">
                 </ag-spot>
             </ag-spot-section>
 
@@ -316,55 +326,55 @@ class PageHome extends HTMLElement {
             <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="#/spots">
                 <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF579068047.jpg"
-                    ner="Эрдэнэ Зуу хийд"
+                    ner="Эрдэнэзуу хийд"
                     bus="Хангай"
-                    data-spot-id="erdenezuu">
+                    data-spot-id="11">
                 </ag-spot>
                 <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-08/shutterstock668674942.jpg"
-                    ner="Аглаг бүтээлийн хийд"
-                    bus="Төв"
-                    data-spot-id="aglag">
-                </ag-spot>
-                <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218476559.jpg"
-                    ner="Шанхын хийд"
+                    zrg="../files/spot-img/spot02-1.jpg"
+                    ner="Амарбаясгалант хийд"
                     bus="Хангай"
-                    data-spot-id="shankh">
+                    data-spot-id="2">
                 </ag-spot>
                 <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstock743550031.jpg"
-                    ner="Богд Хааны Ордон Музей"
+                    zrg="../files/spot-img/spot07-1.jpg"
+                    ner="Гандан Тэгчинлэн Хийд"
                     bus="Төв"
-                    data-spot-id="bogdkhan">
+                    data-spot-id="7">
+                </ag-spot>
+                <ag-spot
+                    zrg="../files/spot-img/spot08-1.jpg"
+                    ner="Богд хан уул"
+                    bus="Төв"
+                    data-spot-id="8">
                 </ag-spot>
             </ag-spot-section>
 
             <!-- Nature Spots -->
             <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="#/spots">
                 <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
-                    ner="Хустайн байгалийн цогцолбор"
+                    zrg="../files/spot-img/spot03-1.jpg"
+                    ner="Хустайн байгалийн цогцолборт газар"
                     bus="Төв"
-                    data-spot-id="khustai">
+                    data-spot-id="3">
                 </ag-spot>
                 <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-05/iStock-178959041.jpg"
-                    ner="Тэрхийн Цагаан нуур"
+                    zrg="../files/spot-img/spot13-1.jpg"
+                    ner="Тэрхийн цагаан нуур"
                     bus="Хангай"
-                    data-spot-id="terkhiin">
+                    data-spot-id="13">
                 </ag-spot>
                 <ag-spot
-                    zrg="https://montsame.mn/files/667399f904664.jpeg"
-                    ner="Алтай Таван Богд"
-                    bus="Баруун"
-                    data-spot-id="altai">
+                    zrg="../files/spot-img/spot14-1.jpg"
+                    ner="Алтай Таван богд"
+                    bus="Алтай"
+                    data-spot-id="14">
                 </ag-spot>
                 <ag-spot
-                    zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
-                    ner="Ганга нуур"
-                    bus="Зүүн"
-                    data-spot-id="ganga">
+                    zrg="../files/spot-img/spot09-1.jpg"
+                    ner="Хөвсгөл нуур"
+                    bus="Хангай"
+                    data-spot-id="9">
                 </ag-spot>
             </ag-spot-section>
         </main>
@@ -372,15 +382,57 @@ class PageHome extends HTMLElement {
     }
 
     attachEventListeners() {
-        // Handle spot clicks - navigate to spot info
+        // Handle clicks on ag-spot elements
         this.addEventListener('click', (e) => {
             const spot = e.target.closest('ag-spot');
-            if (spot) {
-                const spotId = spot.getAttribute('data-spot-id');
-                if (spotId) {
-                    window.appState.setCurrentSpot(spotId);
-                    window.location.hash = '#/spot-info';
+            if (!spot) return;
+
+            const spotId = spot.getAttribute('data-spot-id');
+            if (!spotId) return;
+
+            // Check if the click was on the add button (inside shadow DOM)
+            // We need to check the original event target's composition path
+            const path = e.composedPath();
+            const isAddButton = path.some(el =>
+                el.tagName === 'BUTTON' &&
+                el.getAttribute?.('aria-label') === 'Маршрутдаа нэмэх'
+            );
+
+            if (isAddButton) {
+                // Add to plan
+                e.preventDefault();
+                e.stopPropagation();
+
+                const result = window.appState.addToPlan(spotId);
+
+                if (result === true) {
+                    // Successfully added - show success feedback
+                    const button = path.find(el =>
+                        el.tagName === 'BUTTON' &&
+                        el.getAttribute?.('aria-label') === 'Маршрутдаа нэмэх'
+                    );
+                    if (button) {
+                        // Visual feedback
+                        button.style.backgroundColor = 'var(--accent-3)';
+                        setTimeout(() => {
+                            button.style.backgroundColor = '';
+                        }, 500);
+                    }
+
+                    // Show success toast notification
+                    if (this.toast) {
+                        this.toast.show('Төлөвлөгөөнд нэмэгдлээ!', 'success', 3000);
+                    }
+                } else if (result === 'exists') {
+                    // Already exists - show info toast
+                    if (this.toast) {
+                        this.toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
+                    }
                 }
+            } else {
+                // Navigate to spot info page
+                window.appState.setCurrentSpot(spotId);
+                window.location.hash = '#/spot-info';
             }
         });
     }

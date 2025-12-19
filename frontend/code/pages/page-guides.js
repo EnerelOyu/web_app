@@ -52,7 +52,7 @@ class PageGuides extends HTMLElement {
 
         guides.forEach(guide => {
             const link = document.createElement('a');
-            link.href = '#'; // Could link to profile
+            link.href = `#/guide-profile?g=${guide.id}`;
             link.className = 'guide-link';
 
             const card = document.createElement('ag-guide-card');

@@ -44,16 +44,16 @@ const mapSpotRow = (spotRow) => {
     SELECT a.name FROM activities a
     JOIN spot_activities sa ON sa.activityId = a.id
     WHERE sa.spotId = ?
-  `).all(spotRow.id).map(r => r.name);
+  `).all(spotRow.spotId).map(r => r.name);
 
   const categories = db.prepare(`
     SELECT c.name FROM categories c
     JOIN spot_categories sc ON sc.categoryId = c.id
     WHERE sc.spotId = ?
-  `).all(spotRow.id).map(r => r.name);
+  `).all(spotRow.spotId).map(r => r.name);
 
   return {
-    spotId: spotRow.id,
+    spotId: spotRow.spotId,
     name: spotRow.name,
     area: spotRow.area,
     category: categories.length > 0 ? categories.join(', ') : spotRow.category,
@@ -78,7 +78,8 @@ const mapSpotRow = (spotRow) => {
 app.post('/api/guides', upload.single('profileImage'), (req, res) => {
   try {
     const guideData = req.body;
-    let profileImgUrl = null;
+    const defaultProfileImg = '/files/guide-img/default-profile.svg';
+    let profileImgUrl = defaultProfileImg;
     if (req.file) {
       profileImgUrl = `/files/guide-img/${req.file.filename}`;
     }
@@ -150,7 +151,7 @@ app.get('/api/guides', (req, res) => {
 
 app.get('/api/spots', (req, res) => {
   try {
-    const rows = db.prepare('SELECT * FROM spots ORDER BY id').all();
+    const rows = db.prepare('SELECT * FROM spots ORDER BY spotId').all();
     const payload = rows.map(mapSpotRow);
     res.json({ spots: payload });
   } catch (err) {

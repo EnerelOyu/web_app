@@ -304,6 +304,14 @@ class PageSpots extends HTMLElement {
         `;
     }
 
+    setupToast() {
+        if (!document.querySelector('ag-toast')) {
+            const toast = document.createElement('ag-toast');
+            document.body.appendChild(toast);
+        }
+        this.toast = document.querySelector('ag-toast');
+    }
+
     connectedCallback() {
         this.activeFilters = {
             'Категори': [],
@@ -330,6 +338,7 @@ class PageSpots extends HTMLElement {
         this.readSearchParams();
 
         this.render();
+        this.setupToast();
         this.attachEventListeners();
 
         // Listen for spotData changes
@@ -487,6 +496,18 @@ class PageSpots extends HTMLElement {
             const { type, values } = e.detail;
             this.activeFilters[type] = values;
             this.applyFilters();
+        });
+
+        this.addEventListener('plan-add-result', (e) => {
+            if (!this.toast) return;
+            const status = e.detail ? e.detail.status : null;
+            if (status === 'added') {
+                this.toast.show('Төлөвлөгөөнд нэмэгдлээ!', 'success', 3000);
+            } else if (status === 'exists') {
+                this.toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
+            } else {
+                this.toast.show('Төлөвлөгөөнд нэмэх үед алдаа гарлаа', 'error', 3000);
+            }
         });
     }
 

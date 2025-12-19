@@ -14,7 +14,7 @@ class PageSpotInfo extends HTMLElement {
         display: grid;
         grid-template-columns: 2fr 1fr;
         gap: var(--gap-size-m);
-        align-items: flex-start;
+        align-items: stretch;
       }
 
       /* SECTION TITLE */
@@ -59,7 +59,7 @@ class PageSpotInfo extends HTMLElement {
       .page-spot-info .review-section {
         display: flex;
         flex-direction: column;
-        gap: var(--m-sm);
+        gap: var(--m-md);
       }
 
       .page-spot-info .guide-scroll-container {
@@ -67,6 +67,7 @@ class PageSpotInfo extends HTMLElement {
         display: grid;
         justify-content: center;
         align-items: center;
+        padding: var(--p-sm) 0;
       }
 
       .page-spot-info .guides,
@@ -76,7 +77,8 @@ class PageSpotInfo extends HTMLElement {
         overflow-x: auto;
         scroll-behavior: smooth;
         margin: 0 var(--m-lg);
-        padding: var(--p-xs) 0;
+        padding: var(--p-md) 0;
+        align-items: stretch;
       }
 
       .page-spot-info .guides::-webkit-scrollbar,
@@ -89,7 +91,9 @@ class PageSpotInfo extends HTMLElement {
       .page-spot-info .reviews a:link,
       .page-spot-info .reviews a:visited {
         text-decoration: none;
+        flex-shrink: 0;
       }
+
 
       /* =====================================================
              SCROLL BUTTONS (Left / Right)
@@ -230,6 +234,19 @@ class PageSpotInfo extends HTMLElement {
       @media (max-width: 600px) {
         .page-spot-info .scrl {
           display: none;
+        }
+
+        .page-spot-info .guides,
+        .page-spot-info .reviews {
+          padding: var(--p-sm) 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .page-spot-info .intro p,
+        .page-spot-info .guides,
+        .page-spot-info .reviews {
+          margin: 0 var(--m-xs);
         }
       }
     `;

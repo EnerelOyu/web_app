@@ -25,33 +25,9 @@ class AppState {
             const response = await fetch('http://localhost:3000/api/spots');
             const data = await response.json();
 
-            const idMapping = {
-                'Цонжин Болдог': '1',
-                'Амарбаясгалант хийд': '2',
-                'Хустайн байгалийн цогцолборт газар': '3',
-                'Горхи-Тэрэлж Үндэсний Парк': 'terelj',
-                'Шар Нохой хад': 'sharnohoi',
-                'Улаанбаатар Хүрээ музей': 'ulaanbaatarkhurree',
-                'Гандан Тэгчинлэн Хийд': 'gandan',
-                'Богд хан уул': 'bogdkhan',
-                'Хөвсгөл нуур': 'khovsgol',
-                'Орхон хүрхрээ': 'orkhon',
-                'Эрдэнэзуу хийд': 'erdenezuu',
-                'Хорго галт уул': 'khorgo',
-                'Тэрхийн цагаан нуур': 'terkhiin',
-                'Алтай Таван богд': 'altai',
-                'Алтай Таван Богд': 'altai',
-                'Говь гурван сайхан': 'gobi',
-                'Хонгорын элс': 'khongor',
-                'Ёлын ам': 'yol',
-                'Бурхан Халдун уул': 'burkhankhalduun',
-                'Тайхар чулуу': 'taikhar',
-                'Хэрмэн цав': 'khermen'
-            };
-
             // Transform JSON data to match existing structure
             data.spots.forEach(spot => {
-                const id = idMapping[spot.name] || this.generateSpotId(spot.name);
+                const id = spot.spotId;
                 this.spotData[id] = {
                     id: id,
                     title: spot.name.toUpperCase(),
@@ -93,15 +69,6 @@ class AppState {
             const response = await fetch('http://localhost:3000/api/guides');
             const data = await response.json();
 
-            const regionMap = {
-                tuv: 'Төв',
-                zuun: 'Зүүн',
-                baruun: 'Баруун',
-                hangai: 'Хангай',
-                altai: 'Алтай',
-                govi: 'Говь'
-            };
-
             data.guides.forEach(guide => {
                 this.guideData[guide.guideId] = {
                     id: guide.guideId,
@@ -110,13 +77,15 @@ class AppState {
                     fullName: `${guide.lastName} ${guide.firstName}`,
                     phone: guide.phone,
                     email: guide.email,
-                    area: guide.area ? regionMap[guide.area] || guide.area : null,
+                    area: guide.area,
                     category: guide.category,
                     languages: guide.languages ? guide.languages.split(',').map(l => l.trim()) : [],
                     experience: guide.experienceLevel,
-                    profileImg: guide.profileImgUrl ? (guide.profileImgUrl.startsWith('../') ? guide.profileImgUrl.replace('../', '/') : guide.profileImgUrl) : null,
+                    profileImg: guide.profileImgUrl || '../files/guide-img/default-profile.svg',
                 };
             });
+
+            console.log('Guide data ачаалагдлаа:', Object.keys(this.guideData).length, 'хөтөч');
 
             this.dispatchStateChange('guideData', this.guideData);
         } catch (error) {
@@ -143,58 +112,16 @@ class AppState {
                     category: guide.category,
                     languages: guide.language,
                     experience: guide.experienceLevel,
-                    profileImg: guide.profileImgUrl ? (guide.profileImgUrl.startsWith('../') ? guide.profileImgUrl.replace('../', '/') : guide.profileImgUrl) : null,
+                    profileImg: guide.profileImgUrl || '../files/guide-img/default-profile.svg',
                 };
             });
+
+            console.log('Guide data (JSON) ачаалагдлаа:', Object.keys(this.guideData).length, 'хөтөч');
 
             this.dispatchStateChange('guideData', this.guideData);
         } catch (error) {
             console.error('Error loading guide data from JSON:', error);
         }
-    }
-
-    // Generate spot ID from name
-    generateSpotId(name) {
-        // Remove special characters and convert to lowercase
-        return name
-            .toLowerCase()
-            .replace(/\s+/g, '')
-            .replace(/[ө]/g, 'o')
-            .replace(/[ү]/g, 'u')
-            .replace(/[а]/g, 'a')
-            .replace(/[б]/g, 'b')
-            .replace(/[в]/g, 'v')
-            .replace(/[г]/g, 'g')
-            .replace(/[д]/g, 'd')
-            .replace(/[е]/g, 'e')
-            .replace(/[ё]/g, 'yo')
-            .replace(/[ж]/g, 'j')
-            .replace(/[з]/g, 'z')
-            .replace(/[и]/g, 'i')
-            .replace(/[й]/g, 'i')
-            .replace(/[к]/g, 'k')
-            .replace(/[л]/g, 'l')
-            .replace(/[м]/g, 'm')
-            .replace(/[н]/g, 'n')
-            .replace(/[о]/g, 'o')
-            .replace(/[п]/g, 'p')
-            .replace(/[р]/g, 'r')
-            .replace(/[с]/g, 's')
-            .replace(/[т]/g, 't')
-            .replace(/[у]/g, 'u')
-            .replace(/[ф]/g, 'f')
-            .replace(/[х]/g, 'h')
-            .replace(/[ц]/g, 'ts')
-            .replace(/[ч]/g, 'ch')
-            .replace(/[ш]/g, 'sh')
-            .replace(/[щ]/g, 'sh')
-            .replace(/[ъ]/g, '')
-            .replace(/[ы]/g, 'i')
-            .replace(/[ь]/g, '')
-            .replace(/[э]/g, 'e')
-            .replace(/[ю]/g, 'yu')
-            .replace(/[я]/g, 'ya')
-            .substring(0, 20); // Limit length
     }
 
     // Get spot by ID
@@ -253,8 +180,8 @@ class AppState {
         // Check if already exists
         const exists = this.planItems.some(item => item.id === spotId);
         if (exists) {
-            alert('Энэ газар аль хэдийн төлөвлөгөөнд байна!');
-            return false;
+            // Return 'exists' status to show different toast message
+            return 'exists';
         }
 
         this.planItems.push({
@@ -270,7 +197,10 @@ class AppState {
 
     // Remove from plan
     removeFromPlan(spotId) {
-        const index = this.planItems.findIndex(item => item.id === spotId);
+        // Convert spotId to string for comparison since getAttribute returns string
+        const spotIdStr = String(spotId);
+        const index = this.planItems.findIndex(item => String(item.id) === spotIdStr);
+
         if (index > -1) {
             this.planItems.splice(index, 1);
             // Renumber items
@@ -279,7 +209,9 @@ class AppState {
             });
             this.savePlanToStorage();
             this.dispatchStateChange('planItems', this.planItems);
+            return true;
         }
+        return false;
     }
 
     // Clear all plan items

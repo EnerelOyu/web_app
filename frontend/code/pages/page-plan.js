@@ -226,58 +226,58 @@ class PagePlan extends HTMLElement {
                     </a>
                     <div class="TL">
                         <ag-spot-card
-                            zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF1229637994.jpg"
-                            bus="төв"
+                            zrg="../files/spot-img/spot01-1.jpg"
+                            bus="Төв"
                             unelgee="4.5"
                             ner="Цонжин Болдог"
                             cate="Соёл"
                             activity="Морин аялал, Амьтантай ойр"
-                            une="20,000"
+                            une="20,000₮"
                             age="Бүх нас"
-                            data-spot-id="tsonjin">
+                            data-spot-id="1">
                         </ag-spot-card>
                         <ag-spot-card
-                            zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
-                            bus="төв"
+                            zrg="../files/spot-img/spot07-1.jpg"
+                            bus="Төв"
                             unelgee="4.5"
                             ner="Гандан Тэгчинлэн Хийд"
                             cate="Соёл"
                             activity="Түүхэн"
-                            une="50,000"
+                            une="5,000₮"
                             age="Бүх нас"
-                            data-spot-id="gandan">
+                            data-spot-id="7">
                         </ag-spot-card>
                         <ag-spot-card
-                            zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
-                            bus="төв"
+                            zrg="../files/spot-img/spot02-1.jpg"
+                            bus="Хангай"
                             unelgee="4.3"
                             ner="Амарбаясгалант хийд"
                             cate="Соёл"
                             activity="Түүхэн"
-                            une="Үнэгүй"
+                            une="500,000₮"
                             age="Бүх нас"
-                            data-spot-id="amarbayasgalant">
+                            data-spot-id="2">
                         </ag-spot-card>
                         <ag-spot-card
-                            zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
-                            bus="төв"
+                            zrg="../files/spot-img/spot03-1.jpg"
+                            bus="Төв"
                             unelgee="4.5"
                             ner="Хустайн байгалийн цогцолбор"
                             cate="Байгаль"
-                            une="500,000"
+                            une="15,000₮"
                             activity="Морин аялал, Сур харваа"
                             age="Бүх нас"
-                            data-spot-id="khustai">
+                            data-spot-id="3">
                         </ag-spot-card>
                         <ag-spot-card
-                            zrg="https://montsame.mn/files/667399f904664.jpeg"
+                            zrg="../files/spot-img/spot14-1.jpg"
                             bus="Алтай"
                             unelgee="4.5"
                             ner="Алтай Таван Богд"
                             cate="Байгаль, Амралт сувилал"
-                            une="100,000"
+                            une="80,000₮"
                             age="Бүх нас"
-                            data-spot-id="altai">
+                            data-spot-id="14">
                         </ag-spot-card>
                     </div>
                 </div>
@@ -359,6 +359,21 @@ class PagePlan extends HTMLElement {
             const spotId = item.getAttribute('data-spot-id');
             if (spotId) {
                 window.appState.removeFromPlan(spotId);
+            }
+        });
+
+        // Handle plan-add-result events from ag-spot-card
+        this.addEventListener('plan-add-result', (e) => {
+            const toast = document.querySelector('ag-toast');
+            if (!toast) return;
+
+            const status = e.detail ? e.detail.status : null;
+            if (status === 'added') {
+                toast.show('Төлөвлөгөөнд нэмэгдлээ!', 'success', 3000);
+            } else if (status === 'exists') {
+                toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
+            } else {
+                toast.show('Төлөвлөгөөнд нэмэх үед алдаа гарлаа', 'error', 3000);
             }
         });
 

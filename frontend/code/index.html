@@ -21,10 +21,14 @@
     <script type="module" src="./pages/page-spot-info.js"></script>
     <script type="module" src="./pages/page-plan.js"></script>
     <script type="module" src="./pages/page-guides.js"></script>
+    <script type="module" src="./pages/page-guide-profile.js"></script>
 
     <!-- Header & Footer -->
     <script type="module" src="./component/ag-header.js"></script>
     <script type="module" src="./component/ag-footer.js"></script>
+
+    <!-- Shared Components -->
+    <script type="module" src="./component/shared/ag-toast.js"></script>
 
     <!-- Home Components -->
     <script type="module" src="./component/home/ag-spot.js"></script>
@@ -82,6 +86,7 @@
             router.registerRoute('/plan', '<page-plan></page-plan>');
             router.registerRoute('/guides', '<page-guides></page-guides>');
             router.registerRoute('/guide-signup', '<page-guide-signup></page-guide-signup>');
+            router.registerRoute('/guide-profile', '<page-guide-profile></page-guide-profile>');
             router.onRouteChange();
         });
     </script>

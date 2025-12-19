@@ -54,6 +54,7 @@ class AgSpotAside extends HTMLElement {
 
         :host {
           display: block;
+          height: 100%;
         }
 
         .spot-aside {
@@ -68,6 +69,8 @@ class AgSpotAside extends HTMLElement {
           background: var(--bg-color);
           border: 2px solid var(--text-color-8);
           box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+          height: 100%;
+          box-sizing: border-box;
         }
 
         .spot-aside img {
