@@ -16,6 +16,7 @@ class AgNoteItem extends HTMLElement {
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
             this.render();
+            this.attachEventListeners();
         }
     }
 

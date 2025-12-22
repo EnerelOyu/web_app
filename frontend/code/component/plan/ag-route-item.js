@@ -5,7 +5,7 @@ class AgRouteItem extends HTMLElement {
     }
 
     static get observedAttributes() {
-        return ['number', 'title', 'description', 'image', 'img1', 'img2', 'img3', 'map-query'];
+        return ['number', 'title', 'description', 'image', 'img1', 'img2', 'img3', 'map-query', 'region', 'selected-guide'];
     }
 
     connectedCallback() {
@@ -14,8 +14,23 @@ class AgRouteItem extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue !== newValue) {
+        if (oldValue === newValue) return;
+
+        // Only re-render for visual attributes, not for region/selected-guide
+        if (name === 'region') {
+            // Region changed, reload guides
+            if (this.shadowRoot.querySelector('.guide-select-dropdown')) {
+                this.loadGuidesForRegion();
+            }
+        } else if (name === 'selected-guide') {
+            // Selected guide changed, show the guide
+            if (this.shadowRoot.querySelector('.guide-select-dropdown')) {
+                this.updateSelectedGuideDisplay();
+            }
+        } else {
+            // For other attributes, re-render
             this.render();
+            this.attachEventListeners();
         }
     }
 
@@ -58,6 +73,18 @@ class AgRouteItem extends HTMLElement {
 
     get mapQuery() {
         return this.getAttribute('map-query') || this.title;
+    }
+
+    get region() {
+        return this.getAttribute('region') || '';
+    }
+
+    get selectedGuide() {
+        return this.getAttribute('selected-guide') || '';
+    }
+
+    set selectedGuide(value) {
+        this.setAttribute('selected-guide', value);
     }
 
     render() {
@@ -761,11 +788,9 @@ class AgRouteItem extends HTMLElement {
 
     attachEventListeners() {
         const shadow = this.shadowRoot;
-        const guideData = {
-            'g1': { name: 'Дорж', phone: '+976 9090 9909' },
-            'g2': { name: 'Саран', phone: '+976 9900 1122' },
-            'g3': { name: 'Бат', phone: '+976 8881 2233' }
-        };
+
+        // Load guides dynamically from backend
+        this.loadGuidesForRegion();
 
         // Image Slider
         let currentSlide = 0;
@@ -807,27 +832,7 @@ class AgRouteItem extends HTMLElement {
             });
         });
 
-        // Guide selector
-        const select = shadow.querySelector('.guide-select-dropdown');
-        const selectedGuide = shadow.querySelector('.selected-guide');
-
-        select?.addEventListener('change', (e) => {
-            const value = e.target.value;
-            if (value && guideData[value]) {
-                const guide = guideData[value];
-                selectedGuide.querySelector('.guide-name').textContent = guide.name;
-                selectedGuide.querySelector('.guide-phone').textContent = guide.phone;
-                selectedGuide.querySelector('.guide-phone').href = `tel:${guide.phone.replace(/\s/g, '')}`;
-                select.style.display = 'none';
-                selectedGuide.classList.add('show');
-            }
-        });
-
-        shadow.querySelector('.change-guide-btn')?.addEventListener('click', () => {
-            select.style.display = 'block';
-            selectedGuide.classList.remove('show');
-            select.value = '';
-        });
+        // Guide selector - will be initialized after guides are loaded
 
         // Delete button
         shadow.querySelector('.delete-btn')?.addEventListener('click', () => {
@@ -850,6 +855,150 @@ class AgRouteItem extends HTMLElement {
                 }
             }));
         });
+    }
+
+    // Load guides for the region dynamically
+    async loadGuidesForRegion() {
+        const shadow = this.shadowRoot;
+        const select = shadow.querySelector('.guide-select-dropdown');
+        const selectedGuideDiv = shadow.querySelector('.selected-guide');
+
+        if (!select || !this.region) return;
+
+        // Clear existing options except placeholder
+        select.innerHTML = '<option value="">Хөтөч сонгох...</option>';
+
+        try {
+            // Get guides from appState
+            const allGuides = window.appState?.getAllGuides() || [];
+
+            // If guides not loaded yet, wait for appstatechange event
+            if (allGuides.length === 0) {
+                select.innerHTML = '<option value="">Хөтөч ачааллаж байна...</option>';
+                select.disabled = true;
+
+                // Listen for guide data load
+                const handleGuideLoad = (e) => {
+                    if (e.detail.key === 'guideData') {
+                        window.removeEventListener('appstatechange', handleGuideLoad);
+                        this.loadGuidesForRegion();
+                    }
+                };
+                window.addEventListener('appstatechange', handleGuideLoad);
+                return;
+            }
+
+            // Filter guides by region
+            const regionGuides = allGuides.filter(guide => guide.area === this.region);
+
+            if (regionGuides.length === 0) {
+                select.innerHTML = '<option value="">Энэ бүс нутагт хөтөч байхгүй</option>';
+                select.disabled = true;
+                return;
+            }
+
+            // Populate dropdown with filtered guides
+            regionGuides.forEach(guide => {
+                const option = document.createElement('option');
+                option.value = guide.id;
+                option.textContent = `${guide.lastName} ${guide.firstName}`;
+                select.appendChild(option);
+            });
+
+            // Setup guide selector event listeners
+            this.setupGuideSelector(regionGuides);
+
+            // If there's a previously selected guide, show it
+            if (this.selectedGuide) {
+                const savedGuide = regionGuides.find(g => g.id === this.selectedGuide);
+                if (savedGuide) {
+                    this.showSelectedGuide(savedGuide);
+                }
+            }
+
+        } catch (error) {
+            console.error('Error loading guides:', error);
+            select.innerHTML = '<option value="">Алдаа гарлаа</option>';
+            select.disabled = true;
+        }
+    }
+
+    // Setup guide selector event listeners
+    setupGuideSelector(guides) {
+        const shadow = this.shadowRoot;
+        const select = shadow.querySelector('.guide-select-dropdown');
+        const selectedGuideDiv = shadow.querySelector('.selected-guide');
+
+        // Clone to remove old event listeners
+        const newSelect = select.cloneNode(true);
+        select.parentNode.replaceChild(newSelect, select);
+
+        newSelect.addEventListener('change', (e) => {
+            const selectedId = e.target.value;
+            if (selectedId) {
+                const guide = guides.find(g => g.id === selectedId);
+                if (guide) {
+                    this.showSelectedGuide(guide);
+                    // Save selected guide
+                    this.selectedGuide = guide.id;
+                    this.saveSelectedGuide();
+                }
+            }
+        });
+
+        // Change guide button
+        const changeBtn = selectedGuideDiv.querySelector('.change-guide-btn');
+        if (changeBtn) {
+            const newChangeBtn = changeBtn.cloneNode(true);
+            changeBtn.parentNode.replaceChild(newChangeBtn, changeBtn);
+
+            newChangeBtn.addEventListener('click', () => {
+                newSelect.style.display = 'block';
+                selectedGuideDiv.classList.remove('show');
+                newSelect.value = '';
+            });
+        }
+    }
+
+    // Show selected guide info
+    showSelectedGuide(guide) {
+        const shadow = this.shadowRoot;
+        const select = shadow.querySelector('.guide-select-dropdown');
+        const selectedGuideDiv = shadow.querySelector('.selected-guide');
+
+        selectedGuideDiv.querySelector('.guide-name').textContent = `${guide.lastName} ${guide.firstName}`;
+        selectedGuideDiv.querySelector('.guide-phone').textContent = guide.phone;
+        selectedGuideDiv.querySelector('.guide-phone').href = `tel:${guide.phone.replace(/\s/g, '')}`;
+
+        select.style.display = 'none';
+        selectedGuideDiv.classList.add('show');
+    }
+
+    // Save selected guide to localStorage
+    saveSelectedGuide() {
+        const spotId = this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
+        if (spotId && this.selectedGuide) {
+            const savedGuides = JSON.parse(localStorage.getItem('ayalgo-selected-guides') || '{}');
+            savedGuides[spotId] = this.selectedGuide;
+            localStorage.setItem('ayalgo-selected-guides', JSON.stringify(savedGuides));
+        }
+    }
+
+    // Update selected guide display when attribute changes
+    async updateSelectedGuideDisplay() {
+        if (!this.selectedGuide || !this.region) return;
+
+        try {
+            const allGuides = window.appState?.getAllGuides() || [];
+            const regionGuides = allGuides.filter(guide => guide.area === this.region);
+            const savedGuide = regionGuides.find(g => g.id === this.selectedGuide);
+
+            if (savedGuide) {
+                this.showSelectedGuide(savedGuide);
+            }
+        } catch (error) {
+            console.error('Error updating selected guide display:', error);
+        }
     }
 }
 

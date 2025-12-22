@@ -30,12 +30,12 @@ class PagePlan extends HTMLElement {
                         "plan-title"
                         "route"
                         "suggestion" / 1fr;
-                    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+                    min-height: calc(100 * var(--vh) - var(--header-height) - var(--footer-height));
                     margin: 0 auto;
                     max-width: 1200px;
                     width: 100%;
                     row-gap: var(--gap-size-xl);
-                    padding: var(--p-xl) var(--p-md);
+                    padding-inline: var(--spacing-vw-sm);
                 }
 
                 /* Plan Title Section */
@@ -45,9 +45,9 @@ class PagePlan extends HTMLElement {
                     grid-template: "h1" "btn" / 1fr;
                     justify-items: center;
                     align-items: center;
-                    background: url("../files/spot-img/14Landscape3.png") no-repeat center / cover;
+                    background: url("../files/spot-img/spot04-1.jpg") no-repeat center / cover;
                     width: 100%;
-                    padding: var(--p-2xl) var(--p-md);
+                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
                     border-radius: var(--br-m);
                 }
 
@@ -59,19 +59,40 @@ class PagePlan extends HTMLElement {
                     justify-items: center;
                     background-color: var(--bg-color);
                     border-radius: var(--br-m);
-                    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 3px 9px var(--text-color-1);
                     width: 100%;
                     max-width: 800px;
-                    padding: var(--p-xl) var(--p-md);
+                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
                 }
 
-                .plan-title h1 {
+                .plan-title-input {
                     grid-area: h1;
                     text-align: center;
                     font-family: 'Rubik';
                     font-size: clamp(1.5rem, 4vw, 3rem);
+                    font-weight: 700;
                     margin: 0;
+                    padding: var(--p-sm);
                     color: var(--text-color-0);
+                    background: transparent;
+                    border: 2px solid transparent;
+                    border-radius: var(--br-s);
+                    resize: none;
+                    overflow: hidden;
+                    transition: all 0.2s ease;
+                    width: 100%;
+                    box-sizing: border-box;
+                }
+
+                .plan-title-input:focus {
+                    outline: none;
+                    border-color: var(--primary);
+                    background: rgba(255, 255, 255, 0.9);
+                }
+
+                .plan-title-input::placeholder {
+                    color: var(--text-color-5);
+                    opacity: 0.7;
                 }
 
                 /* Suggestion Section */
@@ -83,10 +104,10 @@ class PagePlan extends HTMLElement {
                         "list  list" 1fr / 1fr auto;
                     overflow: hidden;
                     width: 100%;
-                    padding: var(--p-xl) var(--p-md);
+                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
                     background-color: var(--bg-color);
                     border-radius: var(--br-m);
-                    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+                    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
                 }
 
                 .suggestion h3 {
@@ -162,24 +183,7 @@ class PagePlan extends HTMLElement {
                 /* Responsive Design */
                 @media (max-width: 768px) {
                     .main-container {
-                        padding: var(--p-lg) var(--p-sm);
-                        row-gap: var(--gap-size-l);
-                    }
-
-                    .plan-title {
-                        padding: var(--p-xl) var(--p-sm);
-                    }
-
-                    .plan-title > div {
-                        padding: var(--p-lg) var(--p-sm);
-                    }
-
-                    .plan-title h1 {
-                        font-size: clamp(1.25rem, 3vw, 2rem);
-                    }
-
-                    .suggestion {
-                        padding: var(--p-lg) var(--p-sm);
+                        padding-inline: var(--p-md);
                     }
 
                     .TL {
@@ -188,18 +192,6 @@ class PagePlan extends HTMLElement {
                 }
 
                 @media (max-width: 480px) {
-                    .main-container {
-                        padding: var(--p-md) var(--p-xs);
-                    }
-
-                    .plan-title {
-                        padding: var(--p-lg) var(--p-xs);
-                    }
-
-                    .suggestion {
-                        padding: var(--p-md) var(--p-xs);
-                    }
-
                     .more-spots {
                         margin-right: 0;
                     }
@@ -210,7 +202,11 @@ class PagePlan extends HTMLElement {
                 <!-- Plan Title -->
                 <div class="plan-title">
                     <div>
-                        <h1>Төлөвлөгөөний гарчиг №1</h1>
+                        <textarea
+                            id="plan-title-input"
+                            class="plan-title-input"
+                            placeholder="Төлөвлөгөөний гарчиг оруулна уу..."
+                            rows="1">Төлөвлөгөөний гарчиг №1</textarea>
                         <ag-share-button></ag-share-button>
                     </div>
                 </div>
@@ -291,6 +287,9 @@ class PagePlan extends HTMLElement {
 
         // Initial render of plan items
         this.updatePlanItems();
+
+        // Setup plan title textarea
+        this.setupPlanTitle();
     }
 
     updatePlanItems() {
@@ -334,6 +333,13 @@ class PagePlan extends HTMLElement {
             routeItem.setAttribute('map-query', item.title);
             routeItem.setAttribute('draggable', 'true');
             routeItem.setAttribute('data-spot-id', item.id);
+            routeItem.setAttribute('region', item.region || '');
+
+            // Load saved guide selection
+            const savedGuides = JSON.parse(localStorage.getItem('ayalgo-selected-guides') || '{}');
+            if (savedGuides[item.id]) {
+                routeItem.setAttribute('selected-guide', savedGuides[item.id]);
+            }
 
             routeSection.appendChild(routeItem);
         });
@@ -354,11 +360,11 @@ class PagePlan extends HTMLElement {
         });
 
         // Handle route item delete
-        this.addEventListener('delete-item', (e) => {
+        this.addEventListener('delete-item', async (e) => {
             const item = e.detail.item;
             const spotId = item.getAttribute('data-spot-id');
             if (spotId) {
-                window.appState.removeFromPlan(spotId);
+                await window.appState.removeFromPlan(spotId);
             }
         });
 
@@ -379,46 +385,133 @@ class PagePlan extends HTMLElement {
 
         // Handle add-item events from route-section (Газар нэмэх, Тэмдэглэл нэмэх)
         this.addEventListener('add-item', (e) => {
-            const { type } = e.detail;
+            const { type, divider } = e.detail;
 
             if (type === 'place') {
-                this.showAddPlaceDialog();
+                this.showAddPlaceDialog(divider);
             } else if (type === 'note') {
-                this.showAddNoteDialog();
+                this.showAddNoteDialog(divider);
             }
         });
     }
 
     // Газар нэмэх dialog харуулах
-    showAddPlaceDialog() {
-        // Spots хуудас руу шилжүүлэх эсвэл popup харуулах
-        const confirmed = confirm('Аяллын цэг нэмэхийн тулд "Аяллын Цэгүүд" хуудас руу шилжих үү?');
-        if (confirmed) {
-            window.location.hash = '#/spots';
+    showAddPlaceDialog(divider) {
+        const routeSection = this.querySelector('#route-section');
+        if (!routeSection) return;
+
+        // Get available spots from appState
+        const allSpots = window.appState?.getAllSpots() || [];
+        const planItems = window.appState?.getPlanItems() || [];
+        const planSpotIds = planItems.map(item => String(item.id));
+
+        // Filter out spots already in plan
+        const availableSpots = allSpots.filter(spot => !planSpotIds.includes(String(spot.id)));
+
+        if (availableSpots.length === 0) {
+            const toast = document.querySelector('ag-toast');
+            if (toast) {
+                toast.show('Бүх газрыг аль хэдийн нэмсэн байна!', 'info', 3000);
+            }
+            return;
+        }
+
+        // Create a simple selection dialog
+        const spotNames = availableSpots.map((spot, idx) => `${idx + 1}. ${spot.title || spot.name}`).join('\n');
+        const selection = prompt(`Нэмэх газраа сонгоно уу (1-${availableSpots.length}):\n\n${spotNames}`);
+
+        if (selection) {
+            const index = parseInt(selection) - 1;
+            if (index >= 0 && index < availableSpots.length) {
+                const selectedSpot = availableSpots[index];
+
+                // Add to plan via appState (now async)
+                window.appState.addToPlan(selectedSpot.id).then(result => {
+                    const toast = document.querySelector('ag-toast');
+                    if (!toast) return;
+
+                    if (result === true) {
+                        toast.show(`${selectedSpot.title || selectedSpot.name} нэмэгдлээ!`, 'success', 3000);
+                    } else if (result === 'exists') {
+                        toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
+                    } else {
+                        toast.show('Төлөвлөгөөнд нэмэх үед алдаа гарлаа', 'error', 3000);
+                    }
+                });
+            }
         }
     }
 
     // Тэмдэглэл нэмэх dialog харуулах
-    showAddNoteDialog() {
-        const noteText = prompt('Тэмдэглэл оруулна уу:');
+    showAddNoteDialog(divider) {
+        const routeSection = this.querySelector('#route-section');
+        if (!routeSection) return;
 
-        if (noteText && noteText.trim()) {
-            // Create note element
-            const routeSection = this.querySelector('#route-section');
-            if (!routeSection) return;
+        // Count existing notes to set number
+        const existingNotes = routeSection.querySelectorAll('ag-note-item');
+        const noteNumber = existingNotes.length + 1;
 
-            // Count existing notes to set number
-            const existingNotes = routeSection.querySelectorAll('ag-note-item');
-            const noteNumber = existingNotes.length + 1;
+        // Create empty note element immediately
+        const noteElement = document.createElement('ag-note-item');
+        noteElement.setAttribute('note-text', 'Энд тэмдэглэл бичнэ үү...');
+        noteElement.setAttribute('number', noteNumber);
 
-            const noteElement = document.createElement('ag-note-item');
-            noteElement.setAttribute('note-text', noteText.trim());
-            noteElement.setAttribute('number', noteNumber);
-
-            // Add note to the end of route section
+        // If divider is provided, insert after it; otherwise append to end
+        if (divider && divider.parentElement) {
+            divider.parentElement.insertBefore(noteElement, divider.nextSibling);
+        } else {
             routeSection.appendChild(noteElement);
+        }
 
-            alert('Тэмдэглэл амжилттай нэмэгдлээ!');
+        // Focus on the note for editing
+        setTimeout(() => {
+            const editBtn = noteElement.shadowRoot?.querySelector('.edit');
+            if (editBtn) {
+                editBtn.click();
+            }
+        }, 100);
+
+        // Show toast notification
+        const toast = document.querySelector('ag-toast');
+        if (toast) {
+            toast.show('Тэмдэглэл нэмэгдлээ! Засахын тулд дарна уу.', 'success', 3000);
+        }
+    }
+
+    // Setup plan title textarea
+    setupPlanTitle() {
+        const titleInput = this.querySelector('#plan-title-input');
+        if (!titleInput) return;
+
+        // Auto-resize textarea
+        const autoResize = () => {
+            titleInput.style.height = 'auto';
+            titleInput.style.height = titleInput.scrollHeight + 'px';
+        };
+
+        // Initial resize
+        autoResize();
+
+        // Resize on input
+        titleInput.addEventListener('input', autoResize);
+
+        // Save to backend on blur (when user clicks away)
+        titleInput.addEventListener('blur', async () => {
+            const title = titleInput.value.trim();
+            if (title) {
+                // Save to localStorage
+                localStorage.setItem('ayalgo-plan-title', title);
+
+                // TODO: Save to backend DB when we add plan title field to schema
+                // For now, just save locally
+            }
+        });
+
+        // Load saved title
+        const savedTitle = localStorage.getItem('ayalgo-plan-title');
+        if (savedTitle) {
+            titleInput.value = savedTitle;
+            autoResize();
         }
     }
 }

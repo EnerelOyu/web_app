@@ -267,11 +267,16 @@ class AgRouteSection extends HTMLElement {
             const menuItem = e.target.closest('.menu-item');
             if (menuItem) {
                 const type = menuItem.dataset.type;
+                const divider = e.target.closest('.route-divider');
+
                 this.dispatchEvent(new CustomEvent('add-item', {
                     bubbles: true,
                     composed: true,
-                    detail: { type }
+                    detail: { type, divider }
                 }));
+
+                // Close menu
+                shadow.querySelectorAll('.add-menu').forEach(menu => menu.classList.remove('show'));
             }
         });
 

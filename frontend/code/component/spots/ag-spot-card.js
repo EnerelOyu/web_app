@@ -180,13 +180,13 @@ class AgSpotCard extends HTMLElement {
       const newAddButton = addButton.cloneNode(true);
       addButton.parentNode.replaceChild(newAddButton, addButton);
 
-      newAddButton.addEventListener('click', (e) => {
+      newAddButton.addEventListener('click', async (e) => {
         e.preventDefault();
         e.stopPropagation();
 
         const spotId = this.getAttribute('data-spot-id');
         if (spotId && window.appState) {
-          const result = window.appState.addToPlan(spotId);
+          const result = await window.appState.addToPlan(spotId);
           if (result === true) {
             // Visual feedback
             newAddButton.style.backgroundColor = 'var(--accent-2)';
