@@ -5,7 +5,18 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import multer from 'multer'
-import db, { initDB, insertGuide, getAllGuides } from './database/db.js'
+import db, {
+  initDB,
+  insertGuide,
+  getAllGuides,
+  createPlan,
+  getPlanByUserId,
+  addSpotToPlan,
+  removeSpotFromPlan,
+  getPlanSpots,
+  updatePlanNotes,
+  clearPlan
+} from './database/db.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -157,6 +168,144 @@ app.get('/api/spots', (req, res) => {
   } catch (err) {
     console.error('Error reading spots:', err);
     res.status(500).json({ error: 'Failed to load spots' });
+  }
+});
+
+// ===== PLAN API ENDPOINTS =====
+
+// Get or create plan for user
+app.get('/api/plans/:userId', (req, res) => {
+  try {
+    const { userId } = req.params;
+    let plan = getPlanByUserId(userId);
+
+    // Create plan if doesn't exist
+    if (!plan) {
+      const result = createPlan(userId);
+      plan = { id: result.planId, userId, notes: '', createdAt: new Date().toISOString() };
+    }
+
+    res.json({ plan });
+  } catch (error) {
+    console.error('Error getting plan:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Get all spots in a plan
+app.get('/api/plans/:userId/spots', (req, res) => {
+  try {
+    const { userId } = req.params;
+    let plan = getPlanByUserId(userId);
+
+    if (!plan) {
+      return res.json({ spots: [] });
+    }
+
+    const spots = getPlanSpots(plan.id);
+    const payload = spots.map(mapSpotRow);
+
+    res.json({ spots: payload });
+  } catch (error) {
+    console.error('Error getting plan spots:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Add spot to plan
+app.post('/api/plans/:userId/spots', (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { spotId } = req.body;
+
+    if (!spotId) {
+      return res.status(400).json({ success: false, error: 'spotId is required' });
+    }
+
+    // Get or create plan
+    let plan = getPlanByUserId(userId);
+    if (!plan) {
+      const result = createPlan(userId);
+      plan = { id: result.planId };
+    }
+
+    // Add spot to plan
+    const result = addSpotToPlan(plan.id, spotId);
+
+    if (!result.success && result.error === 'exists') {
+      return res.status(409).json({ success: false, error: 'exists', message: 'Spot already in plan' });
+    }
+
+    res.status(201).json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Error adding spot to plan:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Remove spot from plan
+app.delete('/api/plans/:userId/spots/:spotId', (req, res) => {
+  try {
+    const { userId, spotId } = req.params;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const removed = removeSpotFromPlan(plan.id, spotId);
+
+    if (removed) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Spot not found in plan' });
+    }
+  } catch (error) {
+    console.error('Error removing spot from plan:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Update plan notes
+app.put('/api/plans/:userId/notes', (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { notes } = req.body;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const updated = updatePlanNotes(plan.id, notes || '');
+
+    if (updated) {
+      res.json({ success: true });
+    } else {
+      res.status(500).json({ success: false, error: 'Failed to update notes' });
+    }
+  } catch (error) {
+    console.error('Error updating plan notes:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Clear all spots from plan
+app.delete('/api/plans/:userId/spots', (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const deletedCount = clearPlan(plan.id);
+
+    res.json({ success: true, deletedCount });
+  } catch (error) {
+    console.error('Error clearing plan:', error);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 

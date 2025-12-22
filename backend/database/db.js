@@ -187,4 +187,75 @@ export const getAllGuides = () => {
   return stmt.all();
 };
 
+// Plan functions
+export const createPlan = (userId) => {
+  const stmt = db.prepare(`
+    INSERT INTO plans (userId)
+    VALUES (?)
+  `);
+  const result = stmt.run(userId);
+  return { planId: result.lastInsertRowid };
+};
+
+export const getPlanByUserId = (userId) => {
+  const stmt = db.prepare('SELECT * FROM plans WHERE userId = ? ORDER BY createdAt DESC LIMIT 1');
+  return stmt.get(userId);
+};
+
+export const addSpotToPlan = (planId, spotId) => {
+  try {
+    const stmt = db.prepare(`
+      INSERT INTO plan_spots (planId, spotId)
+      VALUES (?, ?)
+    `);
+    const result = stmt.run(planId, spotId);
+    return { success: true, id: result.lastInsertRowid };
+  } catch (error) {
+    // UNIQUE constraint failure - spot already in plan
+    if (error.code === 'SQLITE_CONSTRAINT_UNIQUE' || error.message.includes('UNIQUE')) {
+      return { success: false, error: 'exists' };
+    }
+    throw error;
+  }
+};
+
+export const removeSpotFromPlan = (planId, spotId) => {
+  const stmt = db.prepare(`
+    DELETE FROM plan_spots
+    WHERE planId = ? AND spotId = ?
+  `);
+  const result = stmt.run(planId, spotId);
+  return result.changes > 0;
+};
+
+export const getPlanSpots = (planId) => {
+  const stmt = db.prepare(`
+    SELECT s.*, ps.addedAt
+    FROM spots s
+    JOIN plan_spots ps ON s.spotId = ps.spotId
+    WHERE ps.planId = ?
+    ORDER BY ps.addedAt ASC
+  `);
+  return stmt.all(planId);
+};
+
+export const updatePlanNotes = (planId, notes) => {
+  const stmt = db.prepare(`
+    UPDATE plans
+    SET notes = ?, updatedAt = CURRENT_TIMESTAMP
+    WHERE id = ?
+  `);
+  const result = stmt.run(notes, planId);
+  return result.changes > 0;
+};
+
+export const clearPlan = (planId) => {
+  const stmt = db.prepare(`
+    DELETE FROM plan_spots
+    WHERE planId = ?
+  `);
+  const result = stmt.run(planId);
+  return result.changes;
+};
+
 export default db;
