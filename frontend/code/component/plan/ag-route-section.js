@@ -93,7 +93,8 @@ class AgRouteSection extends HTMLElement {
                     justify-content: center;
                     cursor: pointer;
                     transition: all 0.2s ease;
-                    opacity: 0.7;
+                    opacity: 0;
+                    visibility: hidden;
                 }
 
                 .add-block-btn svg {
@@ -104,6 +105,7 @@ class AgRouteSection extends HTMLElement {
 
                 .route-divider:hover .add-block-btn {
                     opacity: 1;
+                    visibility: visible;
                     border-color: var(--primary, #ff6b00);
                     box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
                 }
@@ -220,8 +222,25 @@ class AgRouteSection extends HTMLElement {
     attachEventListeners() {
         const shadow = this.shadowRoot;
 
-        // Listen for delete events from route items
+        // Listen for delete events from route items and note items
         this.addEventListener('delete-item', (e) => {
+            const item = e.detail.item;
+            const nextSibling = item.nextElementSibling;
+
+            // Remove the item
+            item.remove();
+
+            // Remove the travel divider if it exists
+            if (nextSibling && nextSibling.tagName === 'AG-TRAVEL-DIVIDER') {
+                nextSibling.remove();
+            }
+
+            // Update numbering
+            this.updateRouteNumbering();
+        });
+
+        // Listen for delete events from note items
+        this.addEventListener('delete-note', (e) => {
             const item = e.detail.item;
             const nextSibling = item.nextElementSibling;
 
@@ -291,9 +310,9 @@ class AgRouteSection extends HTMLElement {
     }
 
     initializeDragAndDrop() {
-        // Drag start
+        // Drag start - handle both route-item and note-item
         this.addEventListener('dragstart', (e) => {
-            const item = e.target.closest('ag-route-item');
+            const item = e.target.closest('ag-route-item, ag-note-item');
             if (item) {
                 this.draggedItem = item;
                 item.classList.add('dragging');
@@ -301,9 +320,9 @@ class AgRouteSection extends HTMLElement {
             }
         });
 
-        // Drag end
+        // Drag end - handle both route-item and note-item
         this.addEventListener('dragend', (e) => {
-            const item = e.target.closest('ag-route-item');
+            const item = e.target.closest('ag-route-item, ag-note-item');
             if (item) {
                 item.classList.remove('dragging');
                 this.draggedItem = null;
@@ -313,10 +332,10 @@ class AgRouteSection extends HTMLElement {
             }
         });
 
-        // Drag over
+        // Drag over - handle both route-item and note-item
         this.addEventListener('dragover', (e) => {
             e.preventDefault();
-            const item = e.target.closest('ag-route-item');
+            const item = e.target.closest('ag-route-item, ag-note-item');
 
             if (item && this.draggedItem && this.draggedItem !== item) {
                 e.dataTransfer.dropEffect = 'move';
@@ -347,10 +366,10 @@ class AgRouteSection extends HTMLElement {
             }
         });
 
-        // Drop
+        // Drop - handle both route-item and note-item
         this.addEventListener('drop', (e) => {
             e.preventDefault();
-            const item = e.target.closest('ag-route-item');
+            const item = e.target.closest('ag-route-item, ag-note-item');
 
             if (item && this.draggedItem && this.draggedItem !== item) {
                 const rect = item.getBoundingClientRect();
@@ -398,8 +417,15 @@ class AgRouteSection extends HTMLElement {
     }
 
     updateRouteNumbering() {
+        // Update route-item numbers
         const routeItems = this.querySelectorAll('ag-route-item');
         routeItems.forEach((item, index) => {
+            item.setAttribute('number', index + 1);
+        });
+
+        // Update note-item numbers
+        const noteItems = this.querySelectorAll('ag-note-item');
+        noteItems.forEach((item, index) => {
             item.setAttribute('number', index + 1);
         });
 
@@ -408,11 +434,12 @@ class AgRouteSection extends HTMLElement {
     }
 
     async updateTravelDividers() {
-        const routeItems = Array.from(this.querySelectorAll('ag-route-item'));
+        // Get all items (both route-items and note-items) in order
+        const allItems = Array.from(this.querySelectorAll('ag-route-item, ag-note-item'));
 
-        for (let i = 0; i < routeItems.length; i++) {
-            const currentItem = routeItems[i];
-            const nextItem = routeItems[i + 1];
+        for (let i = 0; i < allItems.length; i++) {
+            const currentItem = allItems[i];
+            const nextItem = allItems[i + 1];
 
             // Get or create divider between current and next item
             let divider = currentItem.nextElementSibling;
@@ -425,8 +452,14 @@ class AgRouteSection extends HTMLElement {
                     currentItem.after(divider);
                 }
 
-                // Calculate distance between items
-                await this.calculateDistance(divider);
+                // Only calculate distance if both items are route-items
+                if (currentItem.tagName === 'AG-ROUTE-ITEM' && nextItem.tagName === 'AG-ROUTE-ITEM') {
+                    await this.calculateDistance(divider);
+                } else {
+                    // For note-items or mixed items, show simple divider without distance
+                    divider.setAttribute('time', '');
+                    divider.setAttribute('distance', '');
+                }
             } else {
                 // Last item - remove divider if exists
                 if (divider && divider.tagName === 'AG-TRAVEL-DIVIDER') {

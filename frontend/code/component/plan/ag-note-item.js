@@ -11,6 +11,8 @@ class AgNoteItem extends HTMLElement {
     connectedCallback() {
         this.render();
         this.attachEventListeners();
+        // Make note item draggable
+        this.setAttribute('draggable', 'true');
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
@@ -110,6 +112,26 @@ class AgNoteItem extends HTMLElement {
                     font-family: 'NunitoSans', sans-serif;
                     white-space: pre-wrap;
                     word-break: break-word;
+                    width: 100%;
+                    border: 1px solid transparent;
+                    padding: var(--p-xs, 0.5rem);
+                    border-radius: var(--br-s, 8px);
+                    background: transparent;
+                    resize: vertical;
+                    min-height: 60px;
+                    transition: all 0.2s ease;
+                }
+
+                .note-text:hover {
+                    border-color: var(--text-color-7, #ddd);
+                    background: var(--text-color-9, #fafafa);
+                }
+
+                .note-text:focus {
+                    outline: none;
+                    border-color: var(--primary, #ff6b00);
+                    background: var(--bg-color, #fff);
+                    box-shadow: 0 0 0 3px var(--primary-5, rgba(255, 107, 0, 0.1));
                 }
 
                 .note-actions {
@@ -185,7 +207,7 @@ class AgNoteItem extends HTMLElement {
                             Тэмдэглэл #${this.number}
                         </h3>
                     </div>
-                    <p class="note-text">${this.noteText}</p>
+                    <textarea class="note-text" placeholder="Тэмдэглэл бичих...">${this.noteText}</textarea>
                 </div>
                 <div class="note-actions">
                     <button class="action-btn edit" title="Засах">
@@ -206,13 +228,42 @@ class AgNoteItem extends HTMLElement {
     attachEventListeners() {
         const shadow = this.shadowRoot;
 
-        // Edit button
+        // Textarea auto-resize and save
+        const textarea = shadow.querySelector('.note-text');
+        if (textarea) {
+            // Auto-resize function
+            const autoResize = () => {
+                textarea.style.height = 'auto';
+                textarea.style.height = textarea.scrollHeight + 'px';
+            };
+
+            // Initial resize
+            autoResize();
+
+            // Resize on input
+            textarea.addEventListener('input', autoResize);
+
+            // Save on blur
+            textarea.addEventListener('blur', () => {
+                const newText = textarea.value.trim();
+                if (newText) {
+                    this.setAttribute('note-text', newText);
+                }
+            });
+
+            // Prevent drag when interacting with textarea
+            textarea.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        // Edit button - focus textarea
         const editBtn = shadow.querySelector('.edit');
         editBtn?.addEventListener('click', (e) => {
             e.stopPropagation();
-            const newText = prompt('Тэмдэглэл засах:', this.noteText);
-            if (newText !== null && newText.trim()) {
-                this.setAttribute('note-text', newText.trim());
+            if (textarea) {
+                textarea.focus();
+                textarea.select();
             }
         });
 
