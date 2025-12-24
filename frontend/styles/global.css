@@ -195,7 +195,7 @@ h4 {
 }
 
 p {
-  font-family: 'Nunito Sans';
+  font-family: 'NunitoSans';
   font-size: var(--fs-base);
   padding-bottom: var(--p-xs);
   flex-direction: column;

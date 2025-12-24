@@ -43,6 +43,29 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+const buildBaseUrl = (req) => `${req.protocol}://${req.get('host')}`;
+
+const normalizeAssetPath = (assetPath) => {
+  if (!assetPath) return assetPath;
+  if (assetPath.startsWith('/files/guide-img/')) {
+    return assetPath.replace('/files/guide-img/', '/assets/images/guide-img/');
+  }
+  if (assetPath.startsWith('./assets/')) return assetPath.slice(1);
+  if (assetPath.startsWith('../assets/')) return assetPath.slice(2);
+  if (assetPath.startsWith('assets/')) return `/${assetPath}`;
+  return assetPath;
+};
+
+const toAbsoluteUrl = (req, assetPath) => {
+  if (!assetPath) return assetPath;
+  if (/^https?:\/\//i.test(assetPath)) return assetPath;
+  const normalized = normalizeAssetPath(assetPath);
+  if (normalized.startsWith('/')) {
+    return `${buildBaseUrl(req)}${normalized}`;
+  }
+  return normalized;
+};
+
 // Static files - serve frontend static assets
 app.use('/assets', express.static(path.join(__dirname, '..', 'frontend', 'assets')))
 // Serve frontend SPA
@@ -51,7 +74,7 @@ app.use(express.static(path.join(__dirname, '..', 'frontend')))
 // Initialize database
 initDB();
 
-const mapSpotRow = (spotRow) => {
+const mapSpotRow = (spotRow, req) => {
   // fetch activities + categories
   const activities = db.prepare(`
     SELECT a.name FROM activities a
@@ -78,10 +101,10 @@ const mapSpotRow = (spotRow) => {
     detailLocation: spotRow.detailLocation,
     openingHours: spotRow.openingHours,
     status: spotRow.status,
-    imgMainUrl: spotRow.imgMainUrl,
-    img2Url: spotRow.img2Url,
-    img3Url: spotRow.img3Url,
-    mapSrc: spotRow.mapSrc,
+    imgMainUrl: toAbsoluteUrl(req, spotRow.imgMainUrl),
+    img2Url: toAbsoluteUrl(req, spotRow.img2Url),
+    img3Url: toAbsoluteUrl(req, spotRow.img3Url),
+    mapSrc: toAbsoluteUrl(req, spotRow.mapSrc),
     descriptionLong: spotRow.descriptionLong,
     infoPageHref: '../code/index.html#/spot-info'
   };
@@ -91,10 +114,10 @@ const mapSpotRow = (spotRow) => {
 app.post('/api/guides', upload.single('profileImage'), (req, res) => {
   try {
     const guideData = req.body;
-    const defaultProfileImg = '/files/guide-img/default-profile.svg';
+    const defaultProfileImg = '/assets/images/guide-img/default-profile.svg';
     let profileImgUrl = defaultProfileImg;
     if (req.file) {
-      profileImgUrl = `/files/guide-img/${req.file.filename}`;
+      profileImgUrl = `/assets/images/guide-img/${req.file.filename}`;
     }
 
     const result = insertGuide({ ...guideData, profileImgUrl });
@@ -155,7 +178,14 @@ app.post('/api/guides', upload.single('profileImage'), (req, res) => {
 app.get('/api/guides', (req, res) => {
   try {
     const guides = getAllGuides();
-    res.json({ guides });
+    const payload = guides.map((guide) => ({
+      ...guide,
+      profileImgUrl: toAbsoluteUrl(
+        req,
+        guide.profileImgUrl || '/assets/images/guide-img/default-profile.svg'
+      )
+    }));
+    res.json({ guides: payload });
   } catch (error) {
     console.error('Error fetching guides:', error);
     res.status(500).json({ success: false, error: error.message });
@@ -165,7 +195,7 @@ app.get('/api/guides', (req, res) => {
 app.get('/api/spots', (req, res) => {
   try {
     const rows = db.prepare('SELECT * FROM spots ORDER BY spotId').all();
-    const payload = rows.map(mapSpotRow);
+    const payload = rows.map((row) => mapSpotRow(row, req));
     res.json({ spots: payload });
   } catch (err) {
     console.error('Error reading spots:', err);
@@ -205,7 +235,7 @@ app.get('/api/plans/:userId/spots', (req, res) => {
     }
 
     const spots = getPlanSpots(plan.id);
-    const payload = spots.map(mapSpotRow);
+    const payload = spots.map((row) => mapSpotRow(row, req));
 
     res.json({ spots: payload });
   } catch (error) {

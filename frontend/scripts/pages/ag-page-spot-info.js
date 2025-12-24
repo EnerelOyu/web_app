@@ -3,7 +3,7 @@ class PageSpotInfo extends HTMLElement {
     super();
 
     this.css = `
-      @import url('/styles/fonts.css');
+      @import url('./styles/fonts.css');
 
       .page-spot-info {
         display: flex;
@@ -292,7 +292,7 @@ class PageSpotInfo extends HTMLElement {
             data-spot-id="${spot.id}"
           ></ag-spot-hero>
           <ag-spot-aside
-            map-src="${spot.mapSrc || '../assets/images/Mongolia_blank.svg'}"
+            map-src="${spot.mapSrc || './assets/images/Mongolia_blank.svg'}"
             region="${spot.region}"
             location="${spot.location}"
             age="${spot.age}"
