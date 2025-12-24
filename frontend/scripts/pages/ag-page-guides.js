@@ -6,6 +6,11 @@ class PageGuides extends HTMLElement {
     connectedCallback() {
         this.render();
         this.loadGuides();
+        window.addEventListener('appstatechange', (e) => {
+            if (e.detail.key === 'guideData') {
+                this.loadGuides();
+            }
+        });
     }
 
     render() {
@@ -57,7 +62,7 @@ class PageGuides extends HTMLElement {
             link.href = `#/guide-profile?g=${guide.id}`;
             link.className = 'guide-link';
 
-            const card = document.createElement('app-guide-card');
+            const card = document.createElement('ag-guide-card');
             card.setAttribute('guide-id', guide.id);
 
             link.appendChild(card);

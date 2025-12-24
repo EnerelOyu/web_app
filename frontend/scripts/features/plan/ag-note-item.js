@@ -51,6 +51,14 @@ class AgNoteItem extends HTMLElement {
                     position: relative;
                 }
 
+                :host([draggable="true"]) .note-container {
+                    cursor: grab;
+                }
+
+                :host([draggable="true"]) .note-container:active {
+                    cursor: grabbing;
+                }
+
                 .note-container:hover {
                     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
                     border-color: var(--primary-5, rgba(255, 107, 0, 0.2));
@@ -138,6 +146,14 @@ class AgNoteItem extends HTMLElement {
                     display: flex;
                     gap: var(--gap-size-xs, 0.5rem);
                     align-items: flex-start;
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s ease;
+                }
+
+                .note-container:hover .note-actions {
+                    opacity: 1;
+                    pointer-events: auto;
                 }
 
                 .action-btn {
@@ -151,6 +167,14 @@ class AgNoteItem extends HTMLElement {
                     align-items: center;
                     justify-content: center;
                     color: var(--text-color-3, #666);
+                }
+
+                .action-btn.drag {
+                    cursor: grab;
+                }
+
+                .action-btn.drag:active {
+                    cursor: grabbing;
                 }
 
                 .action-btn:hover {
@@ -170,7 +194,7 @@ class AgNoteItem extends HTMLElement {
                 }
 
                 /* Dragging state */
-                :host([dragging]) .note-container {
+                :host(.dragging) .note-container {
                     opacity: 0.5;
                     transform: scale(0.98);
                 }
@@ -185,6 +209,8 @@ class AgNoteItem extends HTMLElement {
                         grid-column: 2 / 3;
                         justify-content: flex-end;
                         margin-top: var(--m-xs, 0.5rem);
+                        opacity: 1;
+                        pointer-events: auto;
                     }
 
                     .note-number {
@@ -210,6 +236,11 @@ class AgNoteItem extends HTMLElement {
                     <textarea class="note-text" placeholder="Тэмдэглэл бичих...">${this.noteText}</textarea>
                 </div>
                 <div class="note-actions">
+                    <button class="action-btn drag" title="Зөөх">
+                        <svg viewBox="0 0 320 512">
+                            <path fill="currentColor" d="M96 0C78.3 0 64 14.3 64 32l0 64c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32L96 0zM96 192c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-32 0zM64 416c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-32 0c-17.7 0-32 14.3-32 32l0 64zM224 0c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-32 0zM192 224c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-32 0c-17.7 0-32 14.3-32 32l0 64zM224 384c-17.7 0-32 14.3-32 32l0 64c0 17.7 14.3 32 32 32l32 0c17.7 0 32-14.3 32-32l0-64c0-17.7-14.3-32-32-32l-32 0z"/>
+                        </svg>
+                    </button>
                     <button class="action-btn edit" title="Засах">
                         <svg viewBox="0 0 512 512">
                             <path fill="currentColor" d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z"/>
@@ -250,11 +281,6 @@ class AgNoteItem extends HTMLElement {
                     this.setAttribute('note-text', newText);
                 }
             });
-
-            // Prevent drag when interacting with textarea
-            textarea.addEventListener('mousedown', (e) => {
-                e.stopPropagation();
-            });
         }
 
         // Edit button - focus textarea
@@ -271,14 +297,12 @@ class AgNoteItem extends HTMLElement {
         const deleteBtn = shadow.querySelector('.delete');
         deleteBtn?.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (confirm('Энэ тэмдэглэлийг устгах уу?')) {
-                this.dispatchEvent(new CustomEvent('delete-note', {
-                    bubbles: true,
-                    composed: true,
-                    detail: { item: this }
-                }));
-                this.remove();
-            }
+            this.dispatchEvent(new CustomEvent('delete-note', {
+                bubbles: true,
+                composed: true,
+                detail: { item: this }
+            }));
+            this.remove();
         });
     }
 }

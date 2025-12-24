@@ -92,7 +92,7 @@ class AgRouteItem extends HTMLElement {
             <style>
                 :host {
                     display: grid;
-                    grid-template-columns: auto auto 1fr auto;
+                    grid-template-columns: auto 1fr auto;
                     gap: var(--gap-size-m, 1rem);
                     align-items: start;
                     background-color: var(--bg-color, #fff);
@@ -132,16 +132,20 @@ class AgRouteItem extends HTMLElement {
                     justify-content: center;
                     flex-shrink: 0;
                 }
+                .place-two {
+                    display: flex;
+                    flex-direction: column;
+                }
 
                 .marker-icon {
                     width: 100%;
                     height: 100%;
-                    fill: var(--primary, #ff6b00);
+                    color: var(--primary);
                 }
 
                 .marker-number {
                     position: absolute;
-                    top: 25%;
+                    top: 40%;
                     left: 50%;
                     transform: translate(-50%, -50%);
                     color: var(--bg-color, #fff);
@@ -150,74 +154,29 @@ class AgRouteItem extends HTMLElement {
                     font-family: 'Rubik', sans-serif;
                 }
 
-                /* Left Controls - Hidden Until Hover */
-                .route-controls-left {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    gap: var(--gap-size-xs, 0.5rem);
-                    opacity: 0;
-                    transition: opacity 0.2s ease;
-                }
-
-                :host(:hover) .route-controls-left {
-                    opacity: 1;
-                }
-
-                .drag-handle {
+                .drag-handle-inline {
                     background: none;
                     border: none;
                     cursor: grab;
-                    padding: var(--p-xs, 0.5rem);
-                    transition: opacity 0.2s;
+                    padding: var(--p-xxs, 0.25rem);
+                    transition: opacity 0.2s ease;
+                    opacity: 0;
+                    align-self: flex-start;
+                    margin-top: var(--m-xs, 0.5rem);
                 }
 
-                .drag-handle svg {
+                :host(:hover) .drag-handle-inline {
+                    opacity: 1;
+                }
+
+                .drag-handle-inline svg {
                     width: 18px;
                     height: 18px;
-                    fill: var(--text-color-4, #888);
+                    color: var(--primary);
                 }
 
-                .drag-handle:active {
+                .drag-handle-inline:active {
                     cursor: grabbing;
-                }
-
-                .item-checkbox {
-                    cursor: pointer;
-                    display: flex;
-                    align-items: center;
-                }
-
-                .checkbox-input {
-                    display: none;
-                }
-
-                .checkbox-box {
-                    width: 24px;
-                    height: 24px;
-                    border: 2px solid var(--text-color-6, #ccc);
-                    border-radius: var(--br-s, 8px);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    transition: all 0.2s;
-                }
-
-                .checkbox-box svg {
-                    width: 14px;
-                    height: 14px;
-                    fill: var(--bg-color, #fff);
-                    opacity: 0;
-                    transition: opacity 0.2s;
-                }
-
-                .checkbox-input:checked + .checkbox-box {
-                    background: var(--primary, #ff6b00);
-                    border-color: var(--primary, #ff6b00);
-                }
-
-                .checkbox-input:checked + .checkbox-box svg {
-                    opacity: 1;
                 }
 
                 /* Route Main */
@@ -369,6 +328,8 @@ class AgRouteItem extends HTMLElement {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
+                    -webkit-user-drag: none;
+                    user-select: none;
                 }
 
                 /* Slide Navigation */
@@ -536,6 +497,8 @@ class AgRouteItem extends HTMLElement {
                     padding: var(--p-xs, 0.5rem);
                     opacity: 0;
                     transition: opacity 0.2s ease;
+                    justify-self: end;
+                    align-self: start;
                 }
 
                 :host(:hover) .route-actions {
@@ -548,22 +511,29 @@ class AgRouteItem extends HTMLElement {
                     padding: var(--p-xs, 0.5rem);
                     border-radius: var(--br-s, 8px);
                     cursor: pointer;
-                    color: var(--text-color-5, #999);
+                    color: var(--text-color-5);
                     transition: all 0.2s ease;
                 }
 
                 .delete-btn:hover {
-                    background: var(--accent-8, #fee);
-                    color: var(--accent, #f44);
+                    background: var(--primary-8);
+                    color: var(--primary);
                 }
 
                 .delete-btn svg {
                     width: 18px;
                     height: 18px;
                     fill: currentColor;
+                    display: block;
                 }
 
                 /* Responsive */
+                @media (hover: none) {
+                    .route-actions {
+                        opacity: 1;
+                    }
+                }
+
                 @media (max-width: 768px) {
                     :host {
                         grid-template-columns: auto 1fr;
@@ -577,21 +547,16 @@ class AgRouteItem extends HTMLElement {
                         align-self: start;
                     }
 
-                    .route-controls-left {
-                        flex-direction: row;
-                        justify-content: flex-start;
-                        gap: var(--gap-size-m, 1rem);
-                        opacity: 1;
-                        grid-column: 2;
-                        grid-row: 1;
-                    }
-
                     .route-main {
                         grid-column: 2;
                         grid-row: 2;
                         grid-template-areas: "text" "image";
                         grid-template-columns: 1fr;
                         gap: var(--gap-size-s, 0.75rem);
+                    }
+
+                    .drag-handle-inline {
+                        opacity: 1;
                     }
 
                     .image-container {
@@ -635,15 +600,14 @@ class AgRouteItem extends HTMLElement {
                 }
             </style>
 
+            <div class="place-two">
             <div class="place-marker">
                 <svg class="marker-icon" aria-hidden="true" focusable="false">
                     <use href="/styles/icons.svg#icon-marker"></use>
                 </svg>
                 <span class="marker-number">${this.number}</span>
-            </div>
-
-            <div class="route-controls-left">
-                <button class="drag-handle" title="Эрэмбэ солих">
+            </div>    
+                <button class="drag-handle-inline" title="Эрэмбэ солих">
                     <svg aria-hidden="true" focusable="false">
                         <use href="/styles/icons.svg#icon-grip"></use>
                     </svg>
@@ -672,7 +636,7 @@ class AgRouteItem extends HTMLElement {
                         <div class="image-slider">
                             ${this.images.map(img => `
                                 <div class="image-slide">
-                                    <img src="${img}" alt="${this.title}">
+                                    <img src="${img}" alt="${this.title}" draggable="false">
                                 </div>
                             `).join('')}
                         </div>
@@ -716,7 +680,7 @@ class AgRouteItem extends HTMLElement {
 
             <div class="route-actions">
                 <button class="delete-btn" title="Устгах">
-                    <svg viewBox="0 0 448 512">
+                    <svg viewBox="0 0 448 512" width="18" height="18" aria-hidden="true" focusable="false">
                         <path fill="currentColor" d="M166.2-16c-13.3 0-25.3 8.3-30 20.8L120 48 24 48C10.7 48 0 58.7 0 72S10.7 96 24 96l400 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-96 0-16.2-43.2C307.1-7.7 295.2-16 281.8-16L166.2-16zM32 144l0 304c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-304-48 0 0 304c0 8.8-7.2 16-16 16L96 464c-8.8 0-16-7.2-16-16l0-304-48 0zm160 72c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 176c0 13.3 10.7 24 24 24s24-10.7 24-24l0-176zm112 0c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 176c0 13.3 10.7 24 24 24s24-10.7 24-24l0-176z"/>
                     </svg>
                 </button>
@@ -783,6 +747,13 @@ class AgRouteItem extends HTMLElement {
 
         // Details link
         shadow.querySelector('.details-link')?.addEventListener('click', () => {
+            const spotId = this.getAttribute('data-spot-id') || this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
+            if (spotId && window.appState?.setCurrentSpot) {
+                window.appState.setCurrentSpot(spotId);
+                window.location.hash = '#/spot-info';
+                return;
+            }
+
             this.dispatchEvent(new CustomEvent('show-details', {
                 bubbles: true,
                 composed: true,

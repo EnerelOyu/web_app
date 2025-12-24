@@ -4,6 +4,9 @@ class AgRouteSection extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.draggedItem = null;
         this.dropIndicator = null;
+        this.isUpdatingDividers = false;
+        this.pendingRouteUpdate = false;
+        this.suppressSlotChange = false;
     }
 
     connectedCallback() {
@@ -77,10 +80,20 @@ class AgRouteSection extends HTMLElement {
                     height: 100%;
                 }
 
-                /* Add Dropdown */
-                .add-dropdown {
-                    position: relative;
-                    z-index: 10;
+                /* Add Control */
+                .add-control {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--gap-size-xs, 0.5rem);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s ease;
+                    z-index: 2;
+                }
+
+                .route-divider:hover .add-control {
+                    opacity: 1;
+                    pointer-events: auto;
                 }
 
                 .add-block-btn {
@@ -95,8 +108,6 @@ class AgRouteSection extends HTMLElement {
                     justify-content: center;
                     cursor: pointer;
                     transition: all 0.2s ease;
-                    opacity: 0;
-                    visibility: hidden;
                 }
 
                 .add-block-btn svg {
@@ -105,64 +116,52 @@ class AgRouteSection extends HTMLElement {
                     fill: currentColor;
                 }
 
-                .route-divider:hover .add-block-btn {
-                    opacity: 1;
-                    visibility: visible;
-                    border-color: var(--primary, #ff6b00);
-                    box-shadow: 0 2px 8px rgba(255, 107, 0, 0.2);
-                }
-
                 .add-block-btn:hover {
                     background: var(--primary, #ff6b00);
                     color: var(--bg-color, #fff);
-                    transform: scale(1.1);
+                    transform: scale(1.05);
                 }
 
-                .add-menu {
-                    position: absolute;
-                    top: calc(100% + 8px);
-                    left: 50%;
-                    transform: translateX(-50%);
+                .add-label-btn {
                     background: var(--bg-color, #fff);
-                    border-radius: var(--br-s, 8px);
-                    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-                    border: 1px solid var(--text-color-8, #eee);
-                    padding: var(--p-xs, 0.5rem);
-                    display: none;
-                    flex-direction: column;
-                    gap: var(--gap-size-xs, 0.25rem);
-                    min-width: 180px;
-                }
-
-                .add-menu.show {
-                    display: flex;
-                }
-
-                .menu-item {
-                    display: flex;
-                    align-items: center;
-                    gap: var(--gap-size-s, 0.75rem);
-                    padding: var(--p-sm, 0.75rem);
-                    background: none;
-                    border: none;
-                    border-radius: var(--br-s, 8px);
-                    cursor: pointer;
-                    transition: background 0.2s;
+                    border: 1px solid var(--text-color-7, #ddd);
+                    border-radius: 999px;
+                    padding: 0.35rem 0.75rem;
                     font-family: 'NunitoSans', sans-serif;
                     font-size: var(--fs-sm, 0.875rem);
-                    color: var(--text-color-1, #333);
-                    text-align: left;
+                    color: var(--text-color-2, #555);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
                 }
 
-                .menu-item:hover {
-                    background: var(--primary-5, rgba(255, 107, 0, 0.05));
+                .add-label-btn:hover {
+                    border-color: var(--primary, #ff6b00);
+                    color: var(--primary, #ff6b00);
                 }
 
-                .menu-item svg {
-                    width: 16px;
-                    height: 16px;
+                .add-toggle-btn {
+                    background: var(--bg-color, #fff);
+                    border: 1px solid var(--text-color-7, #ddd);
+                    border-radius: var(--br-s, 8px);
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    color: var(--text-color-4, #888);
+                    transition: all 0.2s ease;
+                }
+
+                .add-toggle-btn svg {
+                    width: 14px;
+                    height: 14px;
                     fill: currentColor;
-                    flex-shrink: 0;
+                }
+
+                .add-toggle-btn:hover {
+                    border-color: var(--primary, #ff6b00);
+                    color: var(--primary, #ff6b00);
                 }
 
                 /* Drop Indicator */
@@ -185,31 +184,23 @@ class AgRouteSection extends HTMLElement {
             <div id="container">
                 <h2>Таны аяллын маршрут</h2>
 
-                <!-- First divider -->
-                <div class="route-divider">
+                <!-- Start divider (shown only when empty) -->
+                <div class="route-divider route-divider--start" data-add-type="place">
                     <div class="divider-line-horizontal"></div>
                     <div class="divider-controls">
                         <div class="divider-line-vertical"></div>
-                        <div class="add-dropdown">
-                            <button class="add-block-btn">
-                                <svg viewBox="0 0 448 512">
+                        <div class="add-control">
+                            <button class="add-block-btn" data-action="add" aria-label="Газар нэмэх">
+                                <svg viewBox="0 0 448 512" aria-hidden="true">
                                     <path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/>
                                 </svg>
                             </button>
-                            <div class="add-menu">
-                                <button class="menu-item" data-type="place">
-                                    <svg viewBox="0 0 384 512">
-                                        <path fill="currentColor" d="M0 188.6C0 84.4 86 0 192 0S384 84.4 384 188.6c0 119.3-120.2 262.3-170.4 316.8-11.8 12.8-31.5 12.8-43.3 0-50.2-54.5-170.4-197.5-170.4-316.8zM192 256a64 64 0 1 0 0-128 64 64 0 1 0 0 128z"/>
-                                    </svg>
-                                    <span>Газар нэмэх</span>
-                                </button>
-                                <button class="menu-item" data-type="note">
-                                    <svg viewBox="0 0 448 512">
-                                        <path fill="currentColor" d="M64 480c-35.3 0-64-28.7-64-64L0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 213.5c0 17-6.7 33.3-18.7 45.3L322.7 461.3c-12 12-28.3 18.7-45.3 18.7L64 480z"/>
-                                    </svg>
-                                    <span>Тэмдэглэл нэмэх</span>
-                                </button>
-                            </div>
+                            <button class="add-label-btn" data-action="add">Газар нэмэх</button>
+                            <button class="add-toggle-btn" data-action="toggle" aria-label="Нэмэх төрлийг солих">
+                                <svg viewBox="0 0 512 512" aria-hidden="true">
+                                    <path fill="currentColor" d="M304 48c0-26.5 21.5-48 48-48l80 0c26.5 0 48 21.5 48 48l0 80c0 26.5-21.5 48-48 48-16.9 0-31.7-8.7-40.1-21.9l-82.7 82.7c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l82.7-82.7C312.7 79.7 304 64.9 304 48zM208 464c0 26.5-21.5 48-48 48l-80 0c-26.5 0-48-21.5-48-48l0-80c0-26.5 21.5-48 48-48 16.9 0 31.7 8.7 40.1 21.9l82.7-82.7c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-82.7 82.7c12.7 8.4 21.9 23.2 21.9 40.1l0 80z"/>
+                                </svg>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -258,47 +249,40 @@ class AgRouteSection extends HTMLElement {
             this.updateRouteNumbering();
         });
 
-        // Dropdown menu toggles
-        shadow.addEventListener('click', (e) => {
-            const addBtn = e.target.closest('.add-block-btn');
+        const setDividerType = (divider, type) => {
+            if (!divider) return;
+            divider.dataset.addType = type;
+            const labelBtn = divider.querySelector('.add-label-btn');
+            const addBtn = divider.querySelector('.add-block-btn');
+            if (labelBtn) {
+                labelBtn.textContent = type === 'note' ? 'Тэмдэглэл нэмэх' : 'Газар нэмэх';
+            }
             if (addBtn) {
-                e.stopPropagation();
-                const dropdown = addBtn.nextElementSibling;
-                const isOpen = dropdown.classList.contains('show');
-
-                // Close all dropdowns
-                shadow.querySelectorAll('.add-menu').forEach(menu => menu.classList.remove('show'));
-
-                // Toggle current dropdown
-                if (!isOpen) {
-                    dropdown.classList.add('show');
-                }
+                addBtn.setAttribute('aria-label', type === 'note' ? 'Тэмдэглэл нэмэх' : 'Газар нэмэх');
             }
-        });
+        };
 
-        // Close dropdowns when clicking outside
         shadow.addEventListener('click', (e) => {
-            if (!e.target.closest('.add-dropdown')) {
-                shadow.querySelectorAll('.add-menu').forEach(menu => menu.classList.remove('show'));
+            const actionBtn = e.target.closest('[data-action]');
+            if (!actionBtn) return;
+
+            const divider = e.target.closest('.route-divider');
+            if (!divider) return;
+
+            const action = actionBtn.dataset.action;
+            const currentType = divider.dataset.addType || 'place';
+
+            if (action === 'toggle') {
+                const nextType = currentType === 'place' ? 'note' : 'place';
+                setDividerType(divider, nextType);
+                return;
             }
-        });
 
-        // Menu item clicks
-        shadow.addEventListener('click', (e) => {
-            const menuItem = e.target.closest('.menu-item');
-            if (menuItem) {
-                const type = menuItem.dataset.type;
-                const divider = e.target.closest('.route-divider');
-
-                this.dispatchEvent(new CustomEvent('add-item', {
-                    bubbles: true,
-                    composed: true,
-                    detail: { type, divider }
-                }));
-
-                // Close menu
-                shadow.querySelectorAll('.add-menu').forEach(menu => menu.classList.remove('show'));
-            }
+            this.dispatchEvent(new CustomEvent('add-item', {
+                bubbles: true,
+                composed: true,
+                detail: { type: currentType, divider }
+            }));
         });
 
         // Drag and drop
@@ -307,6 +291,17 @@ class AgRouteSection extends HTMLElement {
         // Observe slot changes
         const slot = shadow.querySelector('slot');
         slot?.addEventListener('slotchange', () => {
+            if (this.suppressSlotChange) return;
+            this.scheduleRouteUpdate();
+        });
+    }
+
+    scheduleRouteUpdate() {
+        if (this.pendingRouteUpdate || this.isUpdatingDividers) return;
+        this.pendingRouteUpdate = true;
+        requestAnimationFrame(() => {
+            this.pendingRouteUpdate = false;
+            if (this.isUpdatingDividers) return;
             this.updateRouteNumbering();
         });
     }
@@ -319,6 +314,7 @@ class AgRouteSection extends HTMLElement {
                 this.draggedItem = item;
                 item.classList.add('dragging');
                 e.dataTransfer.effectAllowed = 'move';
+                e.dataTransfer.setData('text/plain', '');
             }
         });
 
@@ -419,55 +415,67 @@ class AgRouteSection extends HTMLElement {
     }
 
     updateRouteNumbering() {
+        if (this.isUpdatingDividers) return;
         // Update route-item numbers
-        const routeItems = this.querySelectorAll('app-route-item');
+        const routeItems = this.querySelectorAll('ag-route-item');
         routeItems.forEach((item, index) => {
             item.setAttribute('number', index + 1);
         });
 
         // Update note-item numbers
-        const noteItems = this.querySelectorAll('app-note-item');
+        const noteItems = this.querySelectorAll('ag-note-item');
         noteItems.forEach((item, index) => {
             item.setAttribute('number', index + 1);
         });
+
+        this.updateStartDividerVisibility();
 
         // Update travel dividers - recalculate distances
         this.updateTravelDividers();
     }
 
+    updateStartDividerVisibility() {
+        const startDivider = this.shadowRoot?.querySelector('.route-divider--start');
+        if (!startDivider) return;
+        const itemCount = this.querySelectorAll('ag-route-item, ag-note-item').length;
+        if (itemCount === 0) {
+            startDivider.removeAttribute('hidden');
+        } else {
+            startDivider.setAttribute('hidden', '');
+        }
+    }
+
     async updateTravelDividers() {
-        // Get all items (both route-items and note-items) in order
-        const allItems = Array.from(this.querySelectorAll('app-route-item, ag-note-item'));
+        if (this.isUpdatingDividers) return;
+        this.isUpdatingDividers = true;
 
-        for (let i = 0; i < allItems.length; i++) {
-            const currentItem = allItems[i];
-            const nextItem = allItems[i + 1];
+        try {
+            this.suppressSlotChange = true;
+            requestAnimationFrame(() => {
+                this.suppressSlotChange = false;
+            });
 
-            // Get or create divider between current and next item
-            let divider = currentItem.nextElementSibling;
+            // Ensure a single divider between items by resetting existing ones
+            this.querySelectorAll('ag-travel-divider').forEach(divider => divider.remove());
 
-            if (nextItem) {
-                // There should be a divider
-                if (!divider || divider.tagName !== 'AG-TRAVEL-DIVIDER') {
-                    // Create new divider
-                    divider = document.createElement('app-travel-divider');
-                    currentItem.after(divider);
-                }
+            // Get all items (both route-items and note-items) in order
+            const allItems = Array.from(this.querySelectorAll('ag-route-item, ag-note-item'));
 
-                // Only calculate distance if both items are route-items
-                if (currentItem.tagName === 'AG-ROUTE-ITEM' && nextItem.tagName === 'AG-ROUTE-ITEM') {
-                    await this.calculateDistance(divider);
-                } else {
-                    // For note-items or mixed items, show simple divider without distance
+            for (let i = 0; i < allItems.length; i++) {
+                const currentItem = allItems[i];
+                const nextItem = allItems[i + 1];
+
+                if (nextItem) {
+                    const divider = document.createElement('ag-travel-divider');
                     divider.setAttribute('time', '');
                     divider.setAttribute('distance', '');
-                }
-            } else {
-                // Last item - remove divider if exists
-                if (divider && divider.tagName === 'AG-TRAVEL-DIVIDER') {
-                    divider.remove();
+                    currentItem.after(divider);
+                } else {
+                    // Last item - no divider
                 }
             }
+        } finally {
+            this.isUpdatingDividers = false;
         }
     }
 

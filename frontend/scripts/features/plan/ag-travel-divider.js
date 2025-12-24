@@ -3,6 +3,7 @@ class AgTravelDivider extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
+        this.addType = 'place';
     }
 
     static get observedAttributes() {
@@ -11,11 +12,13 @@ class AgTravelDivider extends HTMLElement {
 
     connectedCallback() {
         this.render();
+        this.attachEventListeners();
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue !== newValue) {
             this.render();
+            this.attachEventListeners();
         }
     }
 
@@ -75,14 +78,6 @@ class AgTravelDivider extends HTMLElement {
                     transition: opacity 0.2s;
                 }
 
-                :host(:hover) .divider-line-horizontal {
-                    opacity: 1;
-                }
-
-                :host(:hover) .divider-line-vertical {
-                    opacity: 0.6;
-                }
-
                 .divider-controls {
                     position: relative;
                     display: flex;
@@ -91,72 +86,112 @@ class AgTravelDivider extends HTMLElement {
                     height: 100%;
                 }
 
-                .travel-info {
+                .add-prompt {
                     display: flex;
                     align-items: center;
                     gap: var(--gap-size-s, 0.75rem);
-                    flex: 1;
+                    background: var(--bg-color, #fff);
+                    border: 1px solid var(--text-color-7, #ddd);
+                    border-radius: 999px;
+                    padding: 0.25rem 0.5rem 0.25rem 0.6rem;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: opacity 0.2s ease;
+                    z-index: 2;
                 }
 
-                .travel-mode-btn {
+                :host(:hover) .divider-line-horizontal {
+                    opacity: 1;
+                }
+
+                :host(:hover) .divider-line-vertical {
+                    opacity: 0.6;
+                }
+
+                :host(:hover) .add-prompt {
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+
+                .prompt-text {
+                    font-family: 'NunitoSans', sans-serif;
+                    font-size: var(--fs-sm, 0.875rem);
+                    color: var(--text-color-3, #666);
+                    white-space: nowrap;
+                }
+
+                .add-block-btn {
+                    background: var(--bg-color, #fff);
+                    color: var(--primary, #ff6b00);
+                    border: 1px solid var(--text-color-7, #ddd);
+                    border-radius: var(--br-circle, 50%);
+                    width: 28px;
+                    height: 28px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+
+                .add-block-btn svg {
+                    width: 14px;
+                    height: 14px;
+                    fill: currentColor;
+                }
+
+                .add-block-btn:hover {
+                    background: var(--primary, #ff6b00);
+                    color: var(--bg-color, #fff);
+                    transform: scale(1.05);
+                }
+
+                .add-label-btn {
+                    background: var(--bg-color, #fff);
+                    border: 1px solid var(--text-color-7, #ddd);
+                    border-radius: 999px;
+                    padding: 0.3rem 0.65rem;
+                    font-family: 'NunitoSans', sans-serif;
+                    font-size: var(--fs-sm, 0.875rem);
+                    color: var(--text-color-2, #555);
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                }
+
+                .add-label-btn:hover {
+                    border-color: var(--primary, #ff6b00);
+                    color: var(--primary, #ff6b00);
+                }
+
+                .add-toggle-btn {
                     background: var(--bg-color, #fff);
                     border: 1px solid var(--text-color-7, #ddd);
                     border-radius: var(--br-s, 8px);
-                    padding: var(--p-xs, 0.5rem) var(--p-sm, 0.75rem);
+                    width: 26px;
+                    height: 26px;
                     display: flex;
                     align-items: center;
-                    gap: var(--gap-size-xs, 0.25rem);
+                    justify-content: center;
                     cursor: pointer;
-                    transition: all 0.2s;
-                    font-size: var(--fs-sm, 0.875rem);
-                    color: var(--text-color-2, #555);
-                    font-family: 'NunitoSans', sans-serif;
+                    color: var(--text-color-4, #888);
+                    transition: all 0.2s ease;
                 }
 
-                .travel-mode-btn:hover {
-                    border-color: var(--primary, #ff6b00);
-                    background: var(--primary-5, rgba(255, 107, 0, 0.05));
-                }
-
-                .travel-icon {
-                    width: 18px;
-                    height: 18px;
-                    fill: var(--text-color-3, #666);
-                }
-
-                .travel-text {
-                    color: var(--text-color-2, #555);
-                    font-weight: 500;
-                }
-
-                .caret-icon {
+                .add-toggle-btn svg {
                     width: 12px;
                     height: 12px;
-                    fill: var(--text-color-4, #888);
-                    margin-left: var(--p-xxs, 0.125rem);
+                    fill: currentColor;
                 }
 
-                .directions-link {
-                    color: var(--text-color-3, #666);
-                    font-size: var(--fs-sm, 0.875rem);
-                    text-decoration: none;
-                    font-weight: 500;
-                    transition: color 0.2s;
-                }
-
-                .directions-link:hover {
+                .add-toggle-btn:hover {
+                    border-color: var(--primary, #ff6b00);
                     color: var(--primary, #ff6b00);
-                    text-decoration: underline;
                 }
 
                 @media (max-width: 768px) {
-                    .travel-mode-btn {
-                        font-size: var(--fs-xs, 0.75rem);
-                        padding: var(--p-xxs, 0.25rem) var(--p-xs, 0.5rem);
-                    }
-
-                    .travel-text {
-                        font-size: var(--fs-xs, 0.75rem);
+                    .prompt-text {
+                        display: none;
                     }
                 }
             </style>
@@ -164,20 +199,53 @@ class AgTravelDivider extends HTMLElement {
             <div class="divider-line-horizontal"></div>
             <div class="divider-controls">
                 <div class="divider-line-vertical"></div>
-                <div class="travel-info">
-                    <button class="travel-mode-btn" title="Зам харах">
-                        <svg viewBox="0 0 512 512" class="travel-icon">
-                            <path fill="currentColor" d="M135.2 117.4l-26.1 74.6 293.8 0-26.1-74.6C372.3 104.6 360.2 96 346.6 96L165.4 96c-13.6 0-25.7 8.6-30.2 21.4zM39.6 196.8L74.8 96.3C88.3 57.8 124.6 32 165.4 32l181.2 0c40.8 0 77.1 25.8 90.6 64.3l35.2 100.5c23.2 9.6 39.6 32.5 39.6 59.2l0 192c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32l0-32-320 0 0 32c0 17.7-14.3 32-32 32l-32 0c-17.7 0-32-14.3-32-32L0 256c0-26.7 16.4-49.6 39.6-59.2zM128 304a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zm288 32a32 32 0 1 0 0-64 32 32 0 1 0 0 64z"/>
-                        </svg>
-                        <span class="travel-text">${this.travelText}</span>
-                        <svg viewBox="0 0 384 512" class="caret-icon">
-                            <path fill="currentColor" d="M352 160c12.9 0 24.6 7.8 29.6 19.8s2.2 25.7-6.9 34.9l-160 160c-12.5 12.5-32.8 12.5-45.3 0l-160-160c-9.2-9.2-11.9-22.9-6.9-34.9S19.1 160 32 160l320 0z"/>
+                <div class="add-prompt">
+                    <span class="prompt-text">Энд юм нэмэх үү?</span>
+                    <button class="add-block-btn" data-action="add" aria-label="Газар нэмэх">
+                        <svg viewBox="0 0 448 512" aria-hidden="true">
+                            <path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/>
                         </svg>
                     </button>
-                    <a href="https://www.google.com/maps/dir/?api=1" target="_blank" class="directions-link">Чиглэл</a>
+                    <button class="add-label-btn" data-action="add">Газар нэмэх</button>
+                    <button class="add-toggle-btn" data-action="toggle" aria-label="Нэмэх төрлийг солих">
+                        <svg viewBox="0 0 512 512" aria-hidden="true">
+                            <path fill="currentColor" d="M304 48c0-26.5 21.5-48 48-48l80 0c26.5 0 48 21.5 48 48l0 80c0 26.5-21.5 48-48 48-16.9 0-31.7-8.7-40.1-21.9l-82.7 82.7c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l82.7-82.7C312.7 79.7 304 64.9 304 48zM208 464c0 26.5-21.5 48-48 48l-80 0c-26.5 0-48-21.5-48-48l0-80c0-26.5 21.5-48 48-48 16.9 0 31.7 8.7 40.1 21.9l82.7-82.7c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-82.7 82.7c12.7 8.4 21.9 23.2 21.9 40.1l0 80z"/>
+                        </svg>
+                    </button>
                 </div>
             </div>
         `;
+    }
+
+    attachEventListeners() {
+        const shadow = this.shadowRoot;
+        const updateLabel = () => {
+            const labelBtn = shadow.querySelector('.add-label-btn');
+            const addBtn = shadow.querySelector('.add-block-btn');
+            const label = this.addType === 'note' ? 'Тэмдэглэл нэмэх' : 'Газар нэмэх';
+            if (labelBtn) labelBtn.textContent = label;
+            if (addBtn) addBtn.setAttribute('aria-label', label);
+        };
+
+        updateLabel();
+
+        shadow.addEventListener('click', (e) => {
+            const actionBtn = e.target.closest('[data-action]');
+            if (!actionBtn) return;
+
+            const action = actionBtn.dataset.action;
+            if (action === 'toggle') {
+                this.addType = this.addType === 'place' ? 'note' : 'place';
+                updateLabel();
+                return;
+            }
+
+            this.dispatchEvent(new CustomEvent('add-item', {
+                bubbles: true,
+                composed: true,
+                detail: { type: this.addType, divider: this }
+            }));
+        });
     }
 }
 

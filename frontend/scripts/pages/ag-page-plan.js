@@ -323,15 +323,7 @@ class PagePlan extends HTMLElement {
         }
 
         // Render each plan item
-        planItems.forEach((item, index) => {
-            // Add travel divider if not first item
-            if (index > 0) {
-                const divider = document.createElement('ag-travel-divider');
-                divider.setAttribute('time', '1 цаг 30 мин');
-                divider.setAttribute('distance', '87 км');
-                routeSection.appendChild(divider);
-            }
-
+        planItems.forEach((item) => {
             // Create route item
             const routeItem = document.createElement('ag-route-item');
             routeItem.setAttribute('number', item.number);
@@ -410,6 +402,18 @@ class PagePlan extends HTMLElement {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
 
+        let insertIndex = 0;
+        if (divider) {
+            let prev = divider.previousElementSibling;
+            while (prev && prev.tagName !== 'AG-ROUTE-ITEM') {
+                prev = prev.previousElementSibling;
+            }
+            if (prev) {
+                const routeItems = Array.from(routeSection.querySelectorAll('ag-route-item'));
+                insertIndex = routeItems.indexOf(prev) + 1;
+            }
+        }
+
         // Get available spots from appState
         const allSpots = window.appState?.getAllSpots() || [];
         const planItems = window.appState?.getPlanItems() || [];
@@ -441,6 +445,18 @@ class PagePlan extends HTMLElement {
                     if (!toast) return;
 
                     if (result === true) {
+                        const items = window.appState.getPlanItems();
+                        const addedIndex = items.findIndex(item => String(item.id) === String(selectedSpot.id));
+                        if (addedIndex > -1) {
+                            const [addedItem] = items.splice(addedIndex, 1);
+                            const safeIndex = Math.min(Math.max(insertIndex, 0), items.length);
+                            items.splice(safeIndex, 0, addedItem);
+                            items.forEach((item, idx) => {
+                                item.number = idx + 1;
+                            });
+                            window.appState.savePlanToStorage();
+                            window.appState.dispatchStateChange('planItems', items);
+                        }
                         toast.show(`${selectedSpot.title || selectedSpot.name} нэмэгдлээ!`, 'success', 3000);
                     } else if (result === 'exists') {
                         toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
@@ -458,11 +474,11 @@ class PagePlan extends HTMLElement {
         if (!routeSection) return;
 
         // Count existing notes to set number
-        const existingNotes = routeSection.querySelectorAll('app-note-item');
+        const existingNotes = routeSection.querySelectorAll('ag-note-item');
         const noteNumber = existingNotes.length + 1;
 
         // Create empty note element immediately
-        const noteElement = document.createElement('app-note-item');
+        const noteElement = document.createElement('ag-note-item');
         noteElement.setAttribute('note-text', 'Энд тэмдэглэл бичнэ үү...');
         noteElement.setAttribute('number', noteNumber);
 
