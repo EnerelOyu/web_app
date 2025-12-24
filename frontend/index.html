@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аялал төлөвлөгч</title>
+    <link rel="stylesheet" href="./styles/global.css">
+    <link rel="stylesheet" href="./styles/home.css">
+    <link rel="stylesheet" href="./styles/spots.css">
+    <link rel="stylesheet" href="./styles/spot-info.css">
+
+    <!-- Global State Management -->
+    <script type="module" src="./scripts/router/ag-app-state.js"></script>
+
+    <!-- Router -->
+    <script type="module" src="./scripts/router/ag-app-router.js"></script>
+
+    <!-- Page Components -->
+    <script type="module" src="./scripts/pages/ag-page-home.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-spots.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-spot-info.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-plan.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-guides.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-guide-profile.js"></script>
+    <script type="module" src="./scripts/pages/ag-page-guide-signup.js"></script>
+
+    <!-- Header & Footer -->
+    <script type="module" src="./scripts/components/common/ag-header.js"></script>
+    <script type="module" src="./scripts/components/common/ag-footer.js"></script>
+
+    <!-- Shared Components -->
+    <script type="module" src="./scripts/components/common/ag-toast.js"></script>
+    <script type="module" src="./scripts/components/common/ag-rating.js"></script>
+
+    <!-- Home Components -->
+    <script type="module" src="./scripts/features/home/ag-spot.js"></script>
+    <script type="module" src="./scripts/components/cards/ag-tutorial-card.js"></script>
+    <script type="module" src="./scripts/features/home/ag-home-search.js"></script>
+    <script type="module" src="./scripts/features/home/ag-spot-section.js"></script>
+    <script type="module" src="./scripts/components/cards/ag-feature-card.js"></script>
+    <script type="module" src="./scripts/features/home/ag-guide-banner.js"></script>
+
+    <!-- Spots Components -->
+    <script type="module" src="./scripts/components/cards/ag-spot-card.js"></script>
+    <script type="module" src="./scripts/components/ui/ag-filter.js"></script>
+    <script type="module" src="./scripts/features/spots/ag-spot-manager.js"></script>
+
+    <!-- Spot Info Components -->
+    <script type="module" src="./scripts/features/spot-info/ag-spot-hero.js"></script>
+    <script type="module" src="./scripts/features/spot-info/ag-spot-aside.js"></script>
+    <script type="module" src="./scripts/features/spot-info/ag-spot-review.js"></script>
+    <script type="module" src="./scripts/components/cards/ag-guide-card.js"></script>
+    <script type="module" src="./scripts/components/cards/ag-review-card.js"></script>
+    <script type="module" src="./scripts/components/ui/ag-scroll-guide.js"></script>
+
+    <!-- Plan Components -->
+    <script type="module" src="./scripts/features/plan/ag-route-item.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-route-section.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-travel-divider.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-guide-section.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-note-area.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-note-item.js"></script>
+    <script type="module" src="./scripts/components/ui/ag-shared-button.js"></script>
+    <script type="module" src="./scripts/features/plan/ag-suggested-point.js"></script>
+
+    <!-- Guide Sign Up Components -->
+    <script type="module" src="./scripts/components/forms/ag-image-upload.js"></script>
+    <script type="module" src="./scripts/components/forms/ag-guide-basic-form.js"></script>
+    <script type="module" src="./scripts/components/forms/ag-guide-preferences.js"></script>
+
+    <!-- Guide Profile Components -->
+    <script type="module" src="./scripts/features/guide-profile/ag-guide-review-list.js"></script>
+
+</head>
+<body>
+    <ag-header></ag-header>
+
+    <div class="page-container">
+        <ag-app-router id="main-router"></ag-app-router>
+    </div>
+
+    <ag-footer></ag-footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const router = document.getElementById('main-router');
+            router.registerRoute('/home', '<ag-page-home></ag-page-home>');
+            router.registerRoute('/spots', '<ag-page-spots></ag-page-spots>');
+            router.registerRoute('/spot-info', '<ag-page-spot-info></ag-page-spot-info>');
+            router.registerRoute('/plan', '<ag-page-plan></ag-page-plan>');
+            router.registerRoute('/guides', '<ag-page-guides></ag-page-guides>');
+            router.registerRoute('/guide-signup', '<ag-page-guide-signup></ag-page-guide-signup>');
+            router.registerRoute('/guide-profile', '<ag-page-guide-profile></ag-page-guide-profile>');
+            router.onRouteChange();
+        });
+    </script>
+</body>
+</html>

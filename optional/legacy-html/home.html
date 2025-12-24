@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Нүүр хуудас</title>
+  <link rel="stylesheet" href="../styles/home_page.css">
+  <link rel="stylesheet" href="../frontend/styles/global.css">
+  <script type="module" src="../code/component/ag-header.js"></script>
+  <script type="module" src="../code/component/home/ag-spot.js"></script>
+  <script type="module" src="../code/component/ag-footer.js"></script>
+  <script type="module" src="../code/component/home/ag-tutorial-card.js"></script>
+  <script type="module" src="../code/component/home/ag-home-search.js"></script>
+  <script type="module" src="../code/component/home/ag-spot-section.js"></script>
+  <script type="module" src="../code/component/home/ag-feature-card.js"></script>
+  <script type="module" src="../code/component/home/ag-guide-banner.js"></script>
+  <script type="module" src="../code/component/ag-theme-toggle.js"></script>
+</head>
+
+<body>
+  <ag-header></ag-header>
+  <main>
+    <p class="uria">Аялаж зугаалмаар байвч хаашаа явах аа мэдэхгүй байна уу?</p>
+    <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ, <span>ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
+    <ag-home-search
+      areas='["Төв","Хангай","Зүүн","Баруун","Алтай","Говь"]'
+      categories='["Соёл","Амралт сувилал","Адал явдалт","Байгаль","Ууланд гарах"]'
+      area-label="Бүс нутаг"
+      cate-label="Категори"
+    ></ag-home-search>
+
+    <section class="rec-grid">
+      <ag-feature-card icon="route"  text="Уян хатан маршрут"></ag-feature-card>
+      <ag-feature-card icon="people" text="Хамтдаа төлөвлө"></ag-feature-card>
+      <ag-feature-card icon="signal" text="Хадгалсан маршрут"></ag-feature-card>
+      <ag-feature-card icon="doc"    text="Газар нээж ол"></ag-feature-card>
+    </section>
+
+
+    <!--Заавар-->
+    <section class="tutorial">
+      <h3>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h3>
+      <div class="tutorial-grid">
+        <ag-tutorial-card 
+          zrg="../assets/images/tutorial-img/tutorial-1.svg"
+          bogin="Нэг товшоод төлөвлөгөөндөө нэм."
+          urt="Сэтгэл татсан аяллын цэг бүрээ нэг товшоод маршрутдаа нэм. Аяллын төлөвлөгөө илүү ухаалаг, илүү төгс хэлбэрээр бүтээгээрэй.">
+        </ag-tutorial-card>
+        <ag-tutorial-card 
+          zrg="../assets/images/tutorial-img/tutorial-2.svg"
+          bogin="Монголын үзэсгэлэнт газруудтай танилц."
+          urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ. Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
+        </ag-tutorial-card>
+        <ag-tutorial-card 
+          zrg="../assets/images/zaavar3.svg"
+          bogin="Хялбар төлөвлөгөө ба хуваалцах."
+          urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц. Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
+        </ag-tutorial-card>
+      </div>
+    </section>
+
+    <!--Шилдэг аяллын цэгүүд-->
+    <ag-spot-section title="Шилдэг аяллын цэгүүд" link="../code/spots.html">
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/870d8d6123525e17e6a4c9d34b14f8c7-chinggis-khaan-sukhbaatar-square.jpg"
+        ner="СҮХБААТАРЫН ТАЛБАЙ"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
+        ner="Гандан Тэгчинлэн Хийд"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
+        ner="Амарбаясгалант хийд"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockeditorial1596873184.jpg"
+        ner="Монголын Үндэсний музейн"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+    </ag-spot-section>
+
+
+    <ag-guide-banner
+      title="Хөтөч болж бүртгүүлэх"
+      subtitle="Хөтөч болж өөрийн хувь нэмэрээ оруулах уу?"
+      href="guide_sign_up.html"
+      btn="Хөтөч болох">
+    </ag-guide-banner> 
+
+
+    <!--Соёлын үзэсгэлэнт газрууд-->
+    <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="../code/spots.html">
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF579068047.jpg"
+        ner="эрдэнэ зуу хийд"
+        bus="Хангай"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-08/shutterstock668674942.jpg"
+        ner="Аглаг бүтээлийн хийд"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218476559.jpg"
+        ner="Шанхын хийд"
+        bus="Хангай"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-07/shutterstock743550031.jpg"
+        ner="БОГД ХААНЫ ОРДОН МУЗЕЙ"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+    </ag-spot-section>
+
+    <!--Байгалийн үзэсгэлэнт-->
+    <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="../code/spots.html">
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
+        ner="хустайн байгалийн цогцолбор"
+        bus="Төв"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://lp-cms-production.imgix.net/2023-05/iStock-178959041.jpg"
+        ner="Тэрхийн Цагаан нуур"
+        bus="Хангай"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://montsame.mn/files/667399f904664.jpeg"
+        ner="Алтай Таван Богд"
+        bus="Баруун"
+        link="../code/spot-info.html">
+      </ag-spot>
+      <ag-spot
+        zrg="https://resource4.sodonsolution.org/24tsag/image/2023/04/11/lsjspaux9r6jwurn/%D0%9D%D2%AF%D2%AF%D0%B4%D0%BB%D0%B8%D0%B9%D0%BD%20%D1%88%D1%83%D0%B2%D1%83%D1%83%D0%B4%20%D0%B8%D1%80%D0%BB%D1%8D%D1%8D.jpg"
+        ner="ганга нуур"
+        bus="Зүүн"
+        link="../code/spot-info.html">
+      </ag-spot>
+    </ag-spot-section>
+  </main>
+  <ag-footer></ag-footer>
+
+</body>
+
+
+</html>

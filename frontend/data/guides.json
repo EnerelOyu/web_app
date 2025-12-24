@@ -1,0 +1,177 @@
+{
+  "guides": [
+    {
+      "guideId": "g1",
+      "lastName": "Бат",
+      "firstName": "Энх",
+      "phone": "99112233",
+      "email": "enkh.bat@example.com",
+      "area": "Төв",
+      "category": "Байгаль",
+      "language": [
+        "Монгол",
+        "Англи"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": "/assets/images/guide-img/guide1.svg"
+    },
+    {
+      "guideId": "g2",
+      "lastName": "Дорж",
+      "firstName": "Саруул",
+      "phone": "88112233",
+      "email": "sar.dorj@example.com",
+      "area": "Төв",
+      "category": "Соёл",
+      "language": [
+        "Монгол"
+      ],
+      "experienceLevel": "1 жил ба түүнээс доош",
+      "profileImgUrl": "/assets/images/guide-img/guide2.svg"
+    },
+    {
+      "guideId": "g3",
+      "lastName": "Сүрэн",
+      "firstName": "Одмаа",
+      "phone": "99117788",
+      "email": "odmaa.suren@example.com",
+      "area": "Хангай",
+      "category": "Байгаль",
+      "language": [
+        "Монгол",
+        "Орос"
+      ],
+      "experienceLevel": "5 -аас дээш жил",
+      "profileImgUrl": "/assets/images/guide-img/guide3.svg"
+    },
+    {
+      "guideId": "g4",
+      "lastName": "Наран",
+      "firstName": "Хульжиг",
+      "phone": "95112233",
+      "email": "nar.kh@example.com",
+      "area": "Хангай",
+      "category": "Адал явдалт",
+      "language": [
+        "Монгол"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": "/assets/images/guide-img/guide4.svg"
+    },
+    {
+      "guideId": "g5",
+      "lastName": "Эрдэнэ",
+      "firstName": "Соёлмаа",
+      "phone": "90123456",
+      "email": "soyol.erd@example.com",
+      "area": "Говь",
+      "category": "Байгаль",
+      "language": [
+        "Монгол",
+        "Англи"
+      ],
+      "experienceLevel": "5 -аас дээш жил",
+      "profileImgUrl": "/assets/images/guide-img/guide1.svg"
+    },
+    {
+      "guideId": "g6",
+      "lastName": "Мөнх",
+      "firstName": "Тулга",
+      "phone": "99120011",
+      "email": "tulga.munkh@example.com",
+      "area": "Алтай",
+      "category": "Ууланд гарах",
+      "language": [
+        "Монгол",
+        "Орос"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": "/assets/images/guide-img/guide2.svg"
+    },
+    {
+      "guideId": "g7",
+      "lastName": "Оюун",
+      "firstName": "Сарнаа",
+      "phone": "88002233",
+      "email": "sar.oyun@example.com",
+      "area": "Хангай",
+      "category": "Соёл",
+      "language": [
+        "Монгол"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": "/assets/images/guide-img/guide2.svg"
+    },
+    {
+      "guideId": "g8",
+      "lastName": "Болд",
+      "firstName": "Тэмүүлэн",
+      "phone": "99001122",
+      "email": "temu.bold@example.com",
+      "area": "Зүүн",
+      "category": "Соёл",
+      "language": [
+        "Монгол"
+      ],
+      "experienceLevel": "1 жил ба түүнээс доош",
+      "profileImgUrl": "/assets/images/guide-img/guide2.svg"
+    },
+    {
+      "guideId": "g9",
+      "lastName": "Саруул",
+      "firstName": "Хонгор",
+      "phone": "99119900",
+      "email": "hongor.sar@example.com",
+      "area": "Говь",
+      "category": "Байгаль",
+      "language": [
+        "Монгол"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": "/assets/images/guide-img/guide3.svg"
+    },
+    {
+      "guideId": "g10",
+      "lastName": "Хишиг",
+      "firstName": "Номин",
+      "phone": "98112233",
+      "email": "nom.khishig@example.com",
+      "area": "Баруун",
+      "category": "Амралт сувилал",
+      "language": [
+        "Монгол",
+        "Англи"
+      ],
+      "experienceLevel": "5 -аас дээш жил",
+      "profileImgUrl": "/assets/images/guide-img/guide4.svg"
+    },
+    {
+      "guideId": "g33",
+      "lastName": "Ананда",
+      "firstName": "Эрдэнэбулган",
+      "phone": "99820735",
+      "email": "anandaebu5@gmail.com",
+      "area": "Төв",
+      "category": "Байгаль",
+      "language": [
+        "Англи"
+      ],
+      "experienceLevel": "1 жил ба түүнээс доош",
+      "profileImgUrl": null
+    },
+    {
+      "guideId": "g34",
+      "lastName": "ana",
+      "firstName": "ebu",
+      "phone": "99820735",
+      "email": "anandaebu5@gmail.com",
+      "area": "Төв",
+      "category": "Байгаль",
+      "language": [
+        "Япон"
+      ],
+      "experienceLevel": "1 - 5 жил",
+      "profileImgUrl": null
+    }
+  ]
+}

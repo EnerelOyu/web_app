@@ -24,7 +24,7 @@ const __dirname = dirname(__filename);
 // Multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    const uploadDir = path.join(__dirname, '..', 'frontend', 'files', 'guide-img');
+    const uploadDir = path.join(__dirname, '..', 'frontend', 'assets', 'images', 'guide-img');
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
@@ -43,8 +43,10 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Static files
-app.use('/files', express.static(path.join(__dirname, '..', 'frontend', 'files')))
+// Static files - serve frontend static assets
+app.use('/assets', express.static(path.join(__dirname, '..', 'frontend', 'assets')))
+// Serve frontend SPA
+app.use(express.static(path.join(__dirname, '..', 'frontend')))
 
 // Initialize database
 initDB();
@@ -126,7 +128,7 @@ app.post('/api/guides', upload.single('profileImage'), (req, res) => {
       '5++': '5 -аас дээш жил'
     };
 
-    const jsonPath = path.join(__dirname, '..', 'frontend', 'json', 'guides.json');
+    const jsonPath = path.join(__dirname, '..', 'frontend', 'data', 'guides.json');
     const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
     const newGuide = {
       guideId: result.guideId,

@@ -1,0 +1,17 @@
+{
+  "name": "ayalgo-frontend",
+  "version": "1.0.0",
+  "description": "Ayalgo Frontend - Static SPA with Web Components",
+  "main": "src/index.html",
+  "scripts": {
+    "serve": "python3 -m http.server 8080 --directory src",
+    "open": "open http://localhost:3000"
+  },
+  "keywords": [
+    "spa",
+    "web-components",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "ISC"
+}

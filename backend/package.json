@@ -1,8 +1,8 @@
 {
-  "name": "web_app",
+  "name": "ayalgo-backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Ayalgo Backend API - Express + SQLite",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
