@@ -281,7 +281,7 @@ class PageHome extends HTMLElement {
                         urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ. Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
                     </ag-tutorial-card>
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-1.svg"
+                        zrg="/assets/images/tutorial-img/tutorial-3.svg"
                         bogin="Хялбар төлөвлөгөө ба хуваалцах."
                         urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц. Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
                     </ag-tutorial-card>
