@@ -432,9 +432,9 @@ class PageHome extends HTMLElement {
                     }
                 }
             } else {
-                // Navigate to spot info page
+                // Navigate to spot info page with spotId parameter
                 window.appState.setCurrentSpot(spotId);
-                window.location.hash = '#/spot-info';
+                window.location.hash = `#/spot-info?spotId=${spotId}`;
             }
         });
     }

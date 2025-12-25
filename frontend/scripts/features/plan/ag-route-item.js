@@ -750,7 +750,7 @@ class AgRouteItem extends HTMLElement {
             const spotId = this.getAttribute('data-spot-id') || this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
             if (spotId && window.appState?.setCurrentSpot) {
                 window.appState.setCurrentSpot(spotId);
-                window.location.hash = '#/spot-info';
+                window.location.hash = `#/spot-info?spotId=${spotId}`;
                 return;
             }
 

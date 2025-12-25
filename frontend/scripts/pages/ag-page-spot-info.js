@@ -255,22 +255,49 @@ class PageSpotInfo extends HTMLElement {
   }
 
   connectedCallback() {
+    // Read spotId from URL hash
+    this.loadSpotFromURL();
+
     this.render();
     this.attachEventListeners();
 
-    // appState дотор currentSpot солигдоход реактив болгоно
+    // appState дотор currentSpot эсвэл spotData солигдоход реактив болгоно
     window.addEventListener("appstatechange", (e) => {
-      if (e.detail.key === "currentSpot") {
+      if (e.detail.key === "currentSpot" || e.detail.key === "spotData") {
         this.render();
         this.attachEventListeners();
       }
     });
   }
 
+  loadSpotFromURL() {
+    // Get spotId from URL hash: #/spot-info?spotId=7
+    const hash = window.location.hash;
+    const urlParams = new URLSearchParams(hash.split('?')[1] || '');
+    const spotId = urlParams.get('spotId');
+
+    if (spotId) {
+      window.appState.setCurrentSpot(spotId);
+    }
+  }
+
   render() {
     const spot =
       window.appState.currentSpot ||
       window.appState.getSpot("amarbayasgalant");
+
+    // If spot data is not loaded yet, show loading state
+    if (!spot) {
+      this.innerHTML = `
+        <style>${this.css}</style>
+        <div style="display: flex; justify-content: center; align-items: center; min-height: 50vh;">
+          <p style="font-family: 'NunitoSans'; font-size: var(--fs-lg); color: var(--text-color-3);">
+            Өгөгдөл ачаалж байна...
+          </p>
+        </div>
+      `;
+      return;
+    }
 
     const allGuides = window.appState.getAllGuides();
     const filteredGuides = allGuides.filter(guide => guide.area === spot.region);

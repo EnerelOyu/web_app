@@ -12,10 +12,11 @@ class PageSpots extends HTMLElement {
                 grid-template-columns: 1fr 3fr;
                 animation: fadeInPage 0.6s ease-out;
                 background-color: var(--bg-color);
+                min-height: 100%;
             }
 
             .filter-aside {
-                position: relative;
+                position: sticky;
                 top: 0;
                 align-self: flex-start;
                 display: flex;
@@ -26,7 +27,6 @@ class PageSpots extends HTMLElement {
                 background-color: var(--bg-color);
                 max-height: 100vh;
                 overflow-y: auto;
-
                 animation: slideInLeft 0.7s ease-out;
             }
 
@@ -47,12 +47,11 @@ class PageSpots extends HTMLElement {
             /* =============== SPOT GRID SECTION =============== */
 
             .spot-cards-container {
-                max-height: 100vh;
-                overflow-y: auto;
                 display: flex;
                 flex-direction: column;
                 gap: var(--gap-size-s);
                 padding: var(--p-md);
+                overflow-y: visible;
             }
 
             .spot-cards-container a:link {
@@ -224,9 +223,7 @@ class PageSpots extends HTMLElement {
             }
 
             .spot-cards-container {
-                height: auto;
-                overflow-y: visible;
-                padding: 0 var(--p-lg);
+                padding: var(--p-md) var(--p-lg);
             }
 
             .spots-grid {
@@ -465,7 +462,6 @@ class PageSpots extends HTMLElement {
 
             return `
                 <ag-spot-card
-                    href="#/spot-info"
                     zrg="${spot.img1 || ''}"
                     bus="${spot.region || ''}"
                     unelgee="${spot.rating || '0'}"
@@ -489,7 +485,7 @@ class PageSpots extends HTMLElement {
                 const spotId = spotCard.getAttribute('data-spot-id');
                 if (spotId) {
                     window.appState.setCurrentSpot(spotId);
-                    window.location.hash = '#/spot-info';
+                    window.location.hash = `#/spot-info?spotId=${spotId}`;
                 }
             }
         });
@@ -619,7 +615,6 @@ class PageSpots extends HTMLElement {
 
             return `
                 <ag-spot-card
-                    href="#/spot-info"
                     zrg="${spot.img1 || ''}"
                     bus="${spot.region || ''}"
                     unelgee="${spot.rating || '0'}"
@@ -659,7 +654,6 @@ class PageSpots extends HTMLElement {
 
             return `
                 <ag-spot-card
-                    href="#/spot-info"
                     zrg="${spot.img1 || ''}"
                     bus="${spot.region || ''}"
                     unelgee="${spot.rating || '0'}"

@@ -130,6 +130,7 @@ class AgHeader extends HTMLElement {
         justify-content: center;
         height: var(--svg-m);
         width: var(--svg-m);
+        aspect-ratio: 1;
         cursor: pointer;
         transition: 0.3s;
       }
@@ -172,6 +173,7 @@ class AgHeader extends HTMLElement {
         justify-content: center;
         width: var(--svg-m);
         height: var(--svg-m);
+        aspect-ratio: 1;
         border-radius: 50%;
         border: none;
         cursor: pointer;
@@ -578,7 +580,7 @@ class AgHeader extends HTMLElement {
         if (typeof window.appState.setCurrentSpot === 'function') {
           window.appState.setCurrentSpot(selectedSpotId);
         }
-        window.location.hash = `#/spot-info?s=${selectedSpotId}`;
+        window.location.hash = `#/spot-info?spotId=${selectedSpotId}`;
         searchInput.value = '';
         return;
       }

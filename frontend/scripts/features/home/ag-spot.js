@@ -1,7 +1,7 @@
 class AgSpot extends HTMLElement {
   static get observedAttributes() {
     // Одоо үнэхээр ашиглаж байгаа attribute-ууд
-    return ["zrg", "ner", "bus", "zam"];
+    return ["zrg", "ner", "bus"];
   }
 
   constructor() {
@@ -21,7 +21,6 @@ class AgSpot extends HTMLElement {
     const img = this.getAttribute("zrg") || "../assets/images/spot_img_eg.jpg";
     const name = this.getAttribute("ner") || "Unknown";
     const area = this.getAttribute("bus") || "Unknown";
-    const link = this.getAttribute("zam") || "../code/spot-info.html";
 
     this.shadowRoot.innerHTML = `
       <style>
@@ -130,8 +129,8 @@ class AgSpot extends HTMLElement {
           align-items: center;
           gap: var(--gap-size-s);
           color: var(--text-color-2);
-          text-decoration: none;
           transition: all 0.3s ease;
+          cursor: pointer;
         }
 
         .spot-detail p {
@@ -172,12 +171,12 @@ class AgSpot extends HTMLElement {
         <p class="spot-area">${area}</p>
         <h4 class="spot-name">${name}</h4>
         <div class="line"></div>
-        <a href="${link}" class="spot-detail">
+        <div class="spot-detail">
           <p>ДЭЛЭГРЭНГҮЙ</p>
           <svg class="more-icon" aria-hidden="true" focusable="false">
             <use href="/styles/icons.svg#icon-arrow"></use>
           </svg>
-        </a>
+        </div>
       </article>
     `;
   }

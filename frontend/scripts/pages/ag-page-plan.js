@@ -356,7 +356,7 @@ class PagePlan extends HTMLElement {
                 const spotId = spotCard.getAttribute('data-spot-id');
                 if (spotId) {
                     window.appState.setCurrentSpot(spotId);
-                    window.location.hash = '#/spot-info';
+                    window.location.hash = `#/spot-info?spotId=${spotId}`;
                 }
             }
         });

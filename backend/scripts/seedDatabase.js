@@ -6,7 +6,7 @@ import db, { initDB } from '../database/db.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const spotsJsonPath = path.join(__dirname, '..', '..', 'frontend', 'json', 'spots.json');
+const spotsJsonPath = path.join(__dirname, '..', '..', 'frontend', 'data', 'spots.json');
 
 const readSpotsJson = () => {
   const raw = fs.readFileSync(spotsJsonPath, 'utf-8');

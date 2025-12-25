@@ -31,17 +31,12 @@ class AgSpotAside extends HTMLElement {
       .map((s) => s.trim())
       .filter(Boolean);
 
-    // "Дав: 8:00AM - 18:00PM" → day / time болгож хуваана
+    // Schedule format is simple time range like "10:00–18:00 цаг хүртэл"
     const scheduleHtml = scheduleItems
     .map((item) => {
-        const index = item.indexOf(":"); // эхний :
-        const day = item.substring(0, index).trim(); // Дав
-        const time = item.substring(index + 1).trim(); // 8:00AM - 18:00PM
-
         return `
         <li>
-            <span class="value">${day}:</span>
-            <span class="value">${time}</span>
+            <span class="value">${item}</span>
         </li>
         `;
     })

@@ -167,6 +167,32 @@
 
 }
 
+/* === LAYOUT (Sticky Footer) === */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-container {
+  flex: 1 0 auto;
+}
+
+ag-header {
+  flex-shrink: 0;
+}
+
+ag-footer {
+  flex-shrink: 0;
+}
+
 h1 {
   font-family: 'Rubik';
   font-size: var(--fs-2xl);
