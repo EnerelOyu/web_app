@@ -111,10 +111,10 @@ p {
 .uria-h1 span::after {
     content: '';
     position: absolute;
-    bottom: -5px;
+    bottom: -0.3rem;
     left: 0;
     width: 0;
-    height: 3px;
+    height: 0.2rem;
     background-color: var(--secondary);
     transition: width 0.5s ease;
 }
@@ -183,11 +183,16 @@ p {
 }
 
 /* =========================
-   TABLET BREAKPOINT (≤1024px)
+   DESKTOP (default > 768px)
    ========================= */
-@media (max-width: 1024px) {
+
+/* =========================
+   MOBILE LANDSCAPE (≤768px - гар утасны хэвтээ)
+   ========================= */
+@media (max-width: 768px) and (min-width: 481px) {
     main {
         gap: var(--gap-size-l);
+        padding: 0 3% 1.5rem;
     }
 
     .search-form {
@@ -198,41 +203,58 @@ p {
     .rec-grid {
         grid-template-columns: repeat(2, 1fr);
         max-width: 90vw;
+        gap: 2%;
     }
 
     .tutorial-grid {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 100%;
-
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 95%;
+        gap: 3%;
     }
 
+    .uria {
+        font-size: var(--fs-lg);
+        padding: var(--p-sm) 2%;
+        margin-top: 1.5rem;
+    }
+
+    .uria-h1 {
+        font-size: var(--fs-2xl);
+        padding: var(--p-md) 2%;
+    }
 }
 
 /* =========================
-   MOBILE BREAKPOINT (≤768px)
+   MOBILE PORTRAIT (≤480px - гар утасны босоо)
    ========================= */
-@media (max-width: 768px) {
+@media (max-width: 480px) {
+    main {
+        gap: var(--gap-size-m);
+        padding: 0 4% 1rem;
+    }
 
     .uria {
         font-size: var(--fs-base);
         text-align: center;
-        padding: var(--p-sm) 0;
-        margin-top: var(--m-lg);
+        padding: var(--p-sm) 3%;
+        margin-top: 1rem;
     }
 
     .uria-h1 {
         font-size: var(--fs-xl);
-        padding: var(--p-md) 0;
+        padding: var(--p-md) 3%;
     }
+
     /*search form*/
     .search-form {
         flex-direction: column;
-        width: 90%;
+        width: 95%;
         border-radius: var(--br-m);
         padding: var(--p-md);
         gap: var(--gap-size-s);
         transform: none;
     }
+
     .form-group {
         width: 100%;
     }
@@ -241,7 +263,14 @@ p {
         height: var(--svg-l);
         border-radius: var(--br-m);
     }
-    /*tutorial*/    
+
+    .rec-grid {
+        grid-template-columns: 1fr;
+        max-width: 90%;
+        gap: var(--gap-size-m);
+    }
+
+    /*tutorial*/
     .tutorial h3 {
         font-size: var(--fs-lg);
         text-align: center;
@@ -251,9 +280,11 @@ p {
 
     .tutorial-grid {
         grid-template-columns: 1fr;
+        gap: var(--gap-size-m);
+        max-width: 90%;
     }
 
-    .guide{
+    .guide {
         display: flex;
         flex-direction: column;
         gap: var(--gap-size-s);
@@ -264,18 +295,4 @@ p {
 }
 
 
-/* =========================
-   SMALL MOBILE (≤480px)
-   ========================= */
-@media (max-width: 480px) {
-
-    .uria-h1 {
-        font-size: var(--fs-xl);
-    }
-
-    .search-form {
-            gap: var(--gap-size-s);
-    }
-
-}
 

@@ -276,6 +276,7 @@ class AgHeader extends HTMLElement {
   }
 
   connectedCallback() {
+    this.attachShadow({ mode: 'open' }); // Shadow DOM үүсгэх
     this.render();            // HTML/CSS-ийг зурна
     this.markActiveLink();    // одоо байгаа hash дээр тулгуурлаад active линк тэмдэглэнэ
     this.setupMobileMenu();   // mobile menu нээх/хаах логик
@@ -284,7 +285,7 @@ class AgHeader extends HTMLElement {
   }
 
   render() {
-    this.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <header>
         <div class="logo">
@@ -346,7 +347,7 @@ class AgHeader extends HTMLElement {
     // hash өөрчлөгдөх бүр active классыг шинэчилнэ
     const update = () => {
       const currentHash = window.location.hash || "#/home";
-      const links = this.querySelectorAll(".header-nav a, .mobile-nav a");
+      const links = this.shadowRoot.querySelectorAll(".header-nav a, .mobile-nav a");
 
       links.forEach(link => {
         const href = link.getAttribute("href") || "";
@@ -367,8 +368,8 @@ class AgHeader extends HTMLElement {
   }
 
   setupMobileMenu() {
-    const btn = this.querySelector(".mobile-menu-btn");
-    const nav = this.querySelector(".mobile-nav");
+    const btn = this.shadowRoot.querySelector(".mobile-menu-btn");
+    const nav = this.shadowRoot.querySelector(".mobile-nav");
     const useEl = btn.querySelector("use");
 
     const MENU_ICON = "./styles/icons.svg#icon-menu";
@@ -395,7 +396,7 @@ class AgHeader extends HTMLElement {
     });
 
     // mobile нав доторх линк дарвал автоматаар хаах
-    const mobileLinks = this.querySelectorAll(".mobile-nav a");
+    const mobileLinks = this.shadowRoot.querySelectorAll(".mobile-nav a");
     mobileLinks.forEach(link => {
       link.addEventListener("click", () => setState(false));
     });
@@ -404,7 +405,7 @@ class AgHeader extends HTMLElement {
   setupThemeToggle() {
     const html = document.documentElement;
     const STORAGE_KEY = "ayalgo-theme";
-    const buttons = this.querySelectorAll(".theme-toggle");
+    const buttons = this.shadowRoot.querySelectorAll(".theme-toggle");
 
     if (!buttons.length) return;
 
@@ -448,8 +449,8 @@ class AgHeader extends HTMLElement {
   }
 
   setupSearch() {
-    const searchInput = this.querySelector('.search-container input');
-    const searchBtn = this.querySelector('.search-btn');
+    const searchInput = this.shadowRoot.querySelector('.search-container input');
+    const searchBtn = this.shadowRoot.querySelector('.search-btn');
 
     if (!searchInput || !searchBtn) return;
 

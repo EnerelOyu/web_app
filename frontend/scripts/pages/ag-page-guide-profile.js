@@ -121,6 +121,16 @@ class PageGuideProfile extends HTMLElement {
         font-family: 'Rubik';
       }
 
+      .guide-contact-btn svg {
+        width: var(--svg-m);
+        height: var(--svg-m);
+        fill: var(--text-color-0);
+      }
+
+      .guide-contact-btn.secondary svg {
+        color: var(--primary);
+      }
+
       .guide-contact-btn:hover {
         background: var(--primary-1);
         border-color: var(--primary-1);
@@ -340,10 +350,12 @@ class PageGuideProfile extends HTMLElement {
 
             <div class="guide-contact-section">
               <a href="tel:${guide.phone ? guide.phone.replace(/\s+/g, '') : ''}" class="guide-contact-btn">
-                📞 Залгах
+                <svg><use href="/styles/icons.svg#icon-phone"></use></svg>
+                Залгах
               </a>
               <a href="mailto:${guide.email}" class="guide-contact-btn secondary">
-                ✉️ И-мэйл илгээх
+                <svg><use href="../styles/icons.svg#icon-mail"></use></svg>
+                И-мэйл илгээх
               </a>
             </div>
           </div>

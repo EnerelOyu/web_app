@@ -121,7 +121,7 @@ class AgFooter extends HTMLElement {
         width: var(--svg-s);
         color: var(--primary-5);
         fill: var(--primary-5);
-        transition: fill 0.3s color 0.3s;
+        transition: fill 0.3s, color 0.3s;
       }
 
       .footer-social svg:hover{
@@ -195,11 +195,12 @@ class AgFooter extends HTMLElement {
   }
 
   connectedCallback() {
+    this.attachShadow({ mode: 'open' }); // Shadow DOM үүсгэх
     this.render();
   }
 
   render() {
-    this.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <footer>
         <a href="#/home" class="footer-left">

@@ -1,16 +1,21 @@
 class PageHome extends HTMLElement {
+    
     constructor() {
         super();
     }
 
     connectedCallback() {
+        this.attachShadow({ mode: 'open' }); // Shadow DOM үүсгэх
         this.render();
         this.setupToast();
         this.attachEventListeners();
     }
 
+    /*
+     Амжилт/алдааны мэдэгдэл харуулахад ашиглана
+     */
     setupToast() {
-        // Create toast element if it doesn't exist
+        // Toast элемент байхгүй бол шинээр үүсгэх
         if (!document.querySelector('ag-toast')) {
             const toast = document.createElement('ag-toast');
             document.body.appendChild(toast);
@@ -19,7 +24,7 @@ class PageHome extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
         <style>
             @import url('/styles/fonts.css');
 
@@ -107,10 +112,10 @@ class PageHome extends HTMLElement {
             .uria-h1 span::after {
                 content: '';
                 position: absolute;
-                bottom: -5px;
+                bottom: -0.3rem;
                 left: 0;
                 width: 0;
-                height: 3px;
+                height: 0.2rem;
                 background-color: var(--secondary);
                 transition: width 0.5s ease;
             }
@@ -122,7 +127,7 @@ class PageHome extends HTMLElement {
             /* Search Section */
             .search-section {
                 width: 100%;
-                max-width: 1000px;
+                max-width: 90%;
                 display: flex;
                 justify-content: center;
                 padding: var(--p-lg) 0;
@@ -131,17 +136,17 @@ class PageHome extends HTMLElement {
             /* Features Grid */
             .rec-grid {
                 width: 100%;
-                max-width: 1200px;
+                max-width: 85%;
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
-                gap: var(--gap-size-l);
+                gap: var(--gap-size-m);
                 padding: var(--p-xl) 0;
             }
 
             /* Tutorial Section */
             .tutorial {
                 width: 100%;
-                max-width: 1400px;
+                max-width: 90%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -169,50 +174,53 @@ class PageHome extends HTMLElement {
             /* Spot Sections */
             ag-spot-section {
                 width: 100%;
-                padding: var(--p-xl) 0;
+                max-width: 95%;
+                padding: var(--p-xl) 2%;
             }
 
             /* Guide Banner */
             ag-guide-banner {
                 width: 100%;
+                max-width: 95%;
                 padding: var(--p-2xl) 0;
             }
 
-            /* Responsive Design */
-            @media (max-width: 1024px) {
-                main {
-                    gap: var(--gap-size-xl);
-                    padding: var(--p-xl) var(--p-md);
-                }
-
-                .rec-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                    max-width: 90vw;
-                }
-
-                .tutorial-grid {
-                    grid-template-columns: repeat(2, 1fr);
-                }
-            }
-
-            @media (max-width: 768px) {
+            /* =========================
+               MOBILE LANDSCAPE (481px - 768px - гар утасны хэвтээ)
+               ========================= */
+            @media (max-width: 768px) and (min-width: 481px) {
                 main {
                     gap: var(--gap-size-l);
-                    padding: var(--p-lg) var(--p-sm);
+                    padding: var(--p-xl) 0;
+                }
+
+                .hero-section {
+                    padding: var(--p-xl) 0;
+                }
+
+                .search-section {
+                    max-width: 95%;
+                    padding: var(--p-md) 0;
                 }
 
                 .uria {
-                    font-size: var(--fs-base);
+                    font-size: var(--fs-lg);
+                    padding: var(--p-sm) 0;
                 }
 
                 .uria-h1 {
-                    font-size: var(--fs-xl);
-                    padding: var(--p-sm) 0;
+                    font-size: var(--fs-2xl);
+                    padding: var(--p-md) 0;
                 }
 
                 .rec-grid {
                     grid-template-columns: repeat(2, 1fr);
-                    gap: var(--gap-size-m);
+                    max-width: 90%;
+                    gap: 0;
+                }
+
+                .tutorial {
+                    max-width: 95%;
                 }
 
                 .tutorial h3 {
@@ -220,23 +228,72 @@ class PageHome extends HTMLElement {
                 }
 
                 .tutorial-grid {
-                    grid-template-columns: 1fr;
+                    grid-template-columns: repeat(2, 1fr);
                     gap: var(--gap-size-m);
+                }
+
+                ag-spot-section {
+                    max-width: 95%;
                 }
             }
 
+            /* =========================
+               MOBILE PORTRAIT (≤480px - гар утасны босоо)
+               ========================= */
             @media (max-width: 480px) {
                 main {
-                    width: 100%;
+                    gap: var(--gap-size-m);
+                    padding: var(--p-md) 0;
+                }
+
+                .hero-section {
+                    padding: var(--p-lg) 0;
+                    gap: var(--gap-size-s);
+                }
+
+                .search-section {
+                    max-width: 100%;
+                    padding: var(--p-sm) 0;
+                }
+
+                .uria {
+                    font-size: var(--fs-base);
+                    padding: var(--p-sm) 0;
                 }
 
                 .uria-h1 {
                     font-size: var(--fs-lg);
+                    padding: var(--p-sm) 0;
                 }
 
                 .rec-grid {
                     grid-template-columns: 1fr;
-                    gap: var(--gap-size-s);
+                    max-width: 90%;
+                    gap: var(--gap-size-m);
+                }
+
+                .tutorial {
+                    max-width: 95%;
+                    padding: var(--p-xl) 0;
+                }
+
+                .tutorial h3 {
+                    font-size: var(--fs-base);
+                }
+
+                .tutorial-grid {
+                    grid-template-columns: 1fr;
+                    gap: var(--gap-size-m);
+                }
+
+                ag-spot-section {
+                    max-width: 100%;
+                    padding: var(--p-md) 0;
+                }
+
+                ag-guide-banner {
+                    max-width: 100%;
+                    padding: var(--p-lg) 0;
                 }
             }
         </style>
@@ -383,17 +440,25 @@ class PageHome extends HTMLElement {
         `;
     }
 
+    /**
+     * attachEventListeners - Event listener-үүдийг холбох
+     * Аяллын газар дээр дарах үйлдлүүдийг удирдана:
+     * - Газрын мэдээлэл үзэх
+     * - Төлөвлөгөөнд нэмэх
+     */
     attachEventListeners() {
-        // Handle clicks on ag-spot elements
-        this.addEventListener('click', (e) => {
+        // ag-spot элементүүд дээрх дарах үйлдлийг боловсруулах
+        this.shadowRoot.addEventListener('click', (e) => {
+            // Дарагдсан spot элементийг олох
             const spot = e.target.closest('ag-spot');
             if (!spot) return;
 
+            // Spot-ын ID авах
             const spotId = spot.getAttribute('data-spot-id');
             if (!spotId) return;
 
-            // Check if the click was on the add button (inside shadow DOM)
-            // We need to check the original event target's composition path
+            // Shadow DOM доторх "Нэмэх" товч дээр дарсан эсэхийг шалгах
+            // composedPath() ашиглан бүх элементүүдийг шалгана
             const path = e.composedPath();
             const isAddButton = path.some(el =>
                 el.tagName === 'BUTTON' &&
@@ -401,38 +466,39 @@ class PageHome extends HTMLElement {
             );
 
             if (isAddButton) {
-                // Add to plan
+                // Төлөвлөгөөнд нэмэх үйлдэл
                 e.preventDefault();
                 e.stopPropagation();
 
+                // Spot-г төлөвлөгөөнд нэмэх
                 const result = window.appState.addToPlan(spotId);
 
                 if (result === true) {
-                    // Successfully added - show success feedback
+                    // Амжилттай нэмэгдсэн - амжилтын мэдэгдэл харуулах
                     const button = path.find(el =>
                         el.tagName === 'BUTTON' &&
                         el.getAttribute?.('aria-label') === 'Маршрутдаа нэмэх'
                     );
                     if (button) {
-                        // Visual feedback
+                        // Товчны өнгө түр өөрчлөх (харааны пиидбэк)
                         button.style.backgroundColor = 'var(--accent-3)';
                         setTimeout(() => {
                             button.style.backgroundColor = '';
                         }, 500);
                     }
 
-                    // Show success toast notification
+                    // Амжилтын toast мэдэгдэл харуулах
                     if (this.toast) {
                         this.toast.show('Төлөвлөгөөнд нэмэгдлээ!', 'success', 3000);
                     }
                 } else if (result === 'exists') {
-                    // Already exists - show info toast
+                    // Аль хэдийн байгаа - мэдээллийн toast харуулах
                     if (this.toast) {
                         this.toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
                     }
                 }
             } else {
-                // Navigate to spot info page with spotId parameter
+                // Spot-ын дэлгэрэнгүй мэдээлэл рүү шилжих
                 window.appState.setCurrentSpot(spotId);
                 window.location.hash = `#/spot-info?spotId=${spotId}`;
             }
@@ -440,4 +506,5 @@ class PageHome extends HTMLElement {
     }
 }
 
+// PageHome компонентийг 'ag-page-home' нэртэй custom element болгон бүртгэх
 customElements.define('ag-page-home', PageHome);
