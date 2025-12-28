@@ -15,7 +15,9 @@ import db, {
   removeSpotFromPlan,
   getPlanSpots,
   updatePlanNotes,
-  clearPlan
+  clearPlan,
+  getReviewsBySpotId,
+  createReview
 } from './database/db.js'
 
 const __filename = fileURLToPath(import.meta.url);
@@ -337,6 +339,43 @@ app.delete('/api/plans/:userId/spots', (req, res) => {
     res.json({ success: true, deletedCount });
   } catch (error) {
     console.error('Error clearing plan:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ===== REVIEW API ENDPOINTS =====
+
+// Get all reviews for a specific spot
+app.get('/api/spots/:spotId/reviews', (req, res) => {
+  try {
+    const { spotId } = req.params;
+    const reviews = getReviewsBySpotId(spotId);
+
+    res.json({ reviews });
+  } catch (error) {
+    console.error('Error fetching reviews:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Create a new review for a spot
+app.post('/api/spots/:spotId/reviews', (req, res) => {
+  try {
+    const { spotId } = req.params;
+    const { userName, comment, rating } = req.body;
+
+    if (!userName || !comment || rating === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: 'userName, comment, and rating are required'
+      });
+    }
+
+    const result = createReview(spotId, userName, comment, rating);
+
+    res.status(201).json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Error creating review:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

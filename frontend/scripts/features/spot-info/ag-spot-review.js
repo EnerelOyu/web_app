@@ -4,10 +4,10 @@ class AgSpotReviewList extends HTMLElement {
         this.reviews = [];
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         this.spotId = this.getAttribute('spot-id') || 'default';
         this.css();
-        this.loadReviews();
+        await this.loadReviews();
         this.render();
     }
 
@@ -25,20 +25,27 @@ class AgSpotReviewList extends HTMLElement {
                 background-color: var(--primary-5);
                 padding: var(--p-md);
                 border-radius: var(--br-s);
-                min-width: 280px;
-                max-width: 320px;
+                box-shadow: var(--shadow-m);
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-s);
                 flex-shrink: 0;
-                height: 320px;
                 position: sticky;
                 left: 0;
                 z-index: 1;
             }
 
-            .comment-form-card h3 {
-                margin: 0 0 var(--p-sm) 0;
+            .comment-form-card h4 {
+                margin: 0;
                 font-size: var(--fs-md);
                 color: var(--text-color-1);
                 font-family: 'Rubik';
+            }
+
+            .comment-form-card form {
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-s);
             }
 
             .reviews-scroll {
@@ -55,17 +62,17 @@ class AgSpotReviewList extends HTMLElement {
             }
 
             .reviews-scroll::-webkit-scrollbar {
-                height: 8px;
+                height: var(--scrollbar-height);
             }
 
             .reviews-scroll::-webkit-scrollbar-track {
                 background: var(--primary-5);
-                border-radius: 4px;
+                border-radius: var(--br-xs);
             }
 
             .reviews-scroll::-webkit-scrollbar-thumb {
                 background: var(--primary-3);
-                border-radius: 4px;
+                border-radius: var(--br-xs);
             }
 
             .reviews-scroll::-webkit-scrollbar-thumb:hover {
@@ -73,12 +80,12 @@ class AgSpotReviewList extends HTMLElement {
             }
 
             .form-group {
-                margin-bottom: var(--p-sm);
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-xs);
             }
 
             .form-group label {
-                display: block;
-                margin-bottom: 4px;
                 font-weight: bold;
                 color: var(--text-color-1);
                 font-size: var(--fs-xs);
@@ -88,8 +95,8 @@ class AgSpotReviewList extends HTMLElement {
             .form-group input,
             .form-group textarea {
                 width: 100%;
-                padding: 6px 8px;
-                border: 1px solid var(--text-color-7);
+                padding: var(--p-xs) var(--p-sm);
+                border: var(--border-width) solid var(--text-color-7);
                 border-radius: var(--br-s);
                 font-family: 'NunitoSans';
                 font-size: var(--fs-sm);
@@ -97,22 +104,22 @@ class AgSpotReviewList extends HTMLElement {
             }
 
             .form-group textarea {
-              max-height: 100px;
-              min-height: 80px;
+              max-height: var(--textarea-max-height);
+              min-height: var(--textarea-min-height);
               resize: vertical;
             }
 
+
             .submit-btn {
                 background-color: var(--primary);
-                color: white;
+                color: var(--primary-5);
                 border: none;
-                padding: 8px 16px;
+                padding: var(--p-sm) var(--p-md);
                 border-radius: var(--br-s);
                 cursor: pointer;
                 font-family: 'NunitoSans';
                 font-size: var(--fs-sm);
                 transition: background-color 0.3s ease;
-                width: 100%;
             }
 
             .submit-btn:hover {
@@ -153,90 +160,70 @@ class AgSpotReviewList extends HTMLElement {
         }
     }
 
-    loadReviews() {
-        // Default reviews for each spot
-        const defaultReviews = [
-            {
-                bogin: "Бат",
-                urt: "Гайхалтай байгалийн үзэсгэлэнт газар. Цэвэр агаар, сайхан орчин. Хүмүүс маш эелдэг, тайван. Дахин ирэх дуртай.",
-                unelgee: 4.5,
-                date: "2024-01-15"
-            },
-            {
-                bogin: "Сараа",
-                urt: "Маш их тайван, амралт авахад тохиромжтой газар. Байгалийн үзэсгэлэн нүдэнд үзэсгэлэнтэй. Орчин нөхцөл маш сайн.",
-                unelgee: 5.0,
-                date: "2024-01-10"
-            },
-            {
-                bogin: "Номин",
-                urt: "Байгалийн үзэсгэлэнт газруудыг маш сайн хамгаалж байна. Цэвэрхэн, эмх цэгцтэй. Аялал жуулчлалын үйлчилгээ сайн.",
-                unelgee: 4.7,
-                date: "2024-01-08"
-            },
-            {
-                bogin: "Эрдэнэ",
-                urt: "Газрын байршил маш сайн, хүрэхэд хялбар. Байгалийн баялаг ихтэй. Хөгжүүлэлтийн боломжтой газар.",
-                unelgee: 4.3,
-                date: "2024-01-05"
-            },
-            {
-                bogin: "Түвшин",
-                urt: "Амралт зугаалгаараа ирсэн. Гайхалтай дурсагдах туршлага боллоо. Бүх зүйл маш зохион байгуулалттай.",
-                unelgee: 4.8,
-                date: "2024-01-03"
-            },
-            {
-                bogin: "Отгонбилэг",
-                urt: "Байгалийн үзэмж нь гайхалтай. Хүрээлэн буй орчин цэвэрхэн. Аялалын үйлчилгээний чанар өндөр.",
-                unelgee: 4.6,
-                date: "2023-12-28"
-            },
-            {
-                bogin: "Болд",
-                urt: "Газрын түүх соёлын өв баялаг ихтэй. Сонирхолтой мэдээллүүдийг олж мэдсэн. Дурсамжтай газар.",
-                unelgee: 4.4,
-                date: "2023-12-25"
-            },
-            {
-                bogin: "Наран",
-                urt: "Амралтын өдрүүдээр ирсэн. Маш их тайвшруулсан. Дахин ирэхээр шийдсэн. Зочид буудлын үйлчилгээ сайн.",
-                unelgee: 4.9,
-                date: "2023-12-20"
-            }
-        ];
-
-        // Load reviews from localStorage
+    async loadReviews() {
         try {
-            const storageKey = `ayalgo-reviews-${this.spotId}`;
-            const savedReviews = localStorage.getItem(storageKey);
+            // Fetch reviews from backend API
+            const response = await fetch(`http://localhost:3000/api/spots/${this.spotId}/reviews`);
 
-            if (savedReviews) {
-                const customReviews = JSON.parse(savedReviews);
-                // Merge custom reviews with default ones
-                this.reviews = [...customReviews, ...defaultReviews];
-            } else {
-                this.reviews = defaultReviews;
+            if (!response.ok) {
+                throw new Error('Failed to fetch reviews');
             }
+
+            const data = await response.json();
+
+            // Map backend data to frontend format
+            this.reviews = data.reviews.map(review => ({
+                bogin: review.userName,
+                urt: review.comment,
+                unelgee: review.rating,
+                date: review.createdAt.split('T')[0] // Extract date part from ISO string
+            }));
+
         } catch (error) {
-            console.error('Error loading reviews from storage:', error);
-            this.reviews = defaultReviews;
+            console.error('Error loading reviews from backend:', error);
+
+            // Fallback to default reviews if backend fails
+            this.reviews = [
+                {
+                    bogin: "Бат",
+                    urt: "Гайхалтай байгалийн үзэсгэлэнт газар. Цэвэр агаар, сайхан орчин. Хүмүүс маш эелдэг, тайван. Дахин ирэх дуртай.",
+                    unelgee: 4.5,
+                    date: "2024-01-15"
+                },
+                {
+                    bogin: "Сараа",
+                    urt: "Маш их тайван, амралт авахад тохиромжтой газар. Байгалийн үзэсгэлэн нүдэнд үзэсгэлэнтэй. Орчин нөхцөл маш сайн.",
+                    unelgee: 5.0,
+                    date: "2024-01-10"
+                }
+            ];
         }
     }
 
-    // Save reviews to localStorage
-    saveReviews() {
+    // Save review to backend
+    async saveReview(userName, comment, rating) {
         try {
-            const storageKey = `ayalgo-reviews-${this.spotId}`;
-            // Save only custom reviews (first ones added by users)
-            const defaultCount = 8; // Number of default reviews
-            const customReviews = this.reviews.slice(0, this.reviews.length - defaultCount);
+            const response = await fetch(`http://localhost:3000/api/spots/${this.spotId}/reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userName,
+                    comment,
+                    rating
+                })
+            });
 
-            if (customReviews.length > 0) {
-                localStorage.setItem(storageKey, JSON.stringify(customReviews));
+            if (!response.ok) {
+                throw new Error('Failed to save review');
             }
+
+            const data = await response.json();
+            return data;
         } catch (error) {
-            console.error('Error saving reviews to storage:', error);
+            console.error('Error saving review to backend:', error);
+            throw error;
         }
     }
 
@@ -252,6 +239,10 @@ class AgSpotReviewList extends HTMLElement {
                             <div class="form-group">
                                 <label for="name">Нэр</label>
                                 <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Үнэлгээ</label>
+                                <ag-star-rating-input id="rating-input" value="5"></ag-star-rating-input>
                             </div>
                             <div class="form-group">
                                 <label for="comment">Сэтгэгдэл</label>
@@ -288,25 +279,28 @@ class AgSpotReviewList extends HTMLElement {
         }
     }
 
-    handleFormSubmit() {
+    async handleFormSubmit() {
         const name = this.querySelector('#name').value;
         const comment = this.querySelector('#comment').value;
+        const ratingInput = this.querySelector('#rating-input');
+        const rating = ratingInput ? ratingInput.getValue() : 5.0;
 
         if (name && comment) {
-            const newReview = {
-                bogin: name,
-                urt: comment,
-                unelgee: 5.0,
-                date: new Date().toISOString().split('T')[0]
-            };
+            try {
+                // Save to backend
+                await this.saveReview(name, comment, rating);
 
-            this.reviews.unshift(newReview);
-            this.saveReviews();
-            this.render();
-            this.querySelector('#commentForm').reset();
+                // Reload reviews from backend
+                await this.loadReviews();
 
-            // Show success message
-            alert('Сэтгэгдэл амжилттай илгээгдлээ!');
+                // Re-render with updated reviews
+                this.render();
+
+                // Show success message
+                alert('Сэтгэгдэл амжилттай илгээгдлээ!');
+            } catch (error) {
+                alert('Сэтгэгдэл хадгалахад алдаа гарлаа. Дахин оролдоно уу.');
+            }
         }
     }
 }

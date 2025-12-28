@@ -258,4 +258,23 @@ export const clearPlan = (planId) => {
   return result.changes;
 };
 
+// Review functions
+export const getReviewsBySpotId = (spotId) => {
+  const stmt = db.prepare(`
+    SELECT * FROM reviews
+    WHERE spotId = ?
+    ORDER BY createdAt DESC
+  `);
+  return stmt.all(spotId);
+};
+
+export const createReview = (spotId, userName, comment, rating) => {
+  const stmt = db.prepare(`
+    INSERT INTO reviews (spotId, userName, comment, rating)
+    VALUES (?, ?, ?, ?)
+  `);
+  const result = stmt.run(spotId, userName, comment, rating);
+  return { id: result.lastInsertRowid };
+};
+
 export default db;
