@@ -190,7 +190,7 @@ class AgHomeSearch extends HTMLElement {
           </select>
         </div>
 
-        <button id="filter-submit" type="submit">
+        <button id="filter-submit" type="submit" aria-label="Хайх">
           <svg><use href="/styles/icons.svg#icon-search"></use></svg>
         </button>
       </form>

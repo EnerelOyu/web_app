@@ -67,7 +67,7 @@ class AgGuideBanner extends HTMLElement {
 
       .guide-btn{
           background-color: var(--primary);
-          color: var(--primary-5);
+          color: var(--text-color-0);
           border-radius: 9999px;
           padding: var(--p-md) var(--p-lg);
           text-transform: uppercase;

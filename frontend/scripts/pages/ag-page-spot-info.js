@@ -9,6 +9,40 @@ class PageSpotInfo extends HTMLElement {
       @import url('./styles/global.css');
       @import url('./styles/fonts.css');
 
+      /* ANIMATIONS */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeInLeft {
+        from {
+          opacity: 0;
+          transform: translateX(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes fadeInRight {
+        from {
+          opacity: 0;
+          transform: translateX(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
       .page-spot-info {
         display: flex;
         flex-direction: column;
@@ -21,11 +55,20 @@ class PageSpotInfo extends HTMLElement {
         grid-template-columns: 2fr 1fr;
         gap: var(--gap-size-m);
         align-items: stretch;
+        animation: fadeIn 0.6s ease-out;
+      }
+
+      .page-spot-info .spot-main > :first-child {
+        animation: fadeInLeft 0.8s ease-out;
+      }
+
+      .page-spot-info .spot-main > :last-child {
+        animation: fadeInRight 0.8s ease-out;
       }
 
       /* SECTION TITLE */
 
-      .page-spot-info h3 {
+      .page-spot-info h2 {
         font-size: var(--fs-lg);
         text-transform: uppercase;
         font-family: 'Rubik';
@@ -46,6 +89,7 @@ class PageSpotInfo extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: var(--m-sm);
+        animation: fadeIn 0.8s ease-out 0.3s backwards;
       }
 
       .page-spot-info .intro p {
@@ -61,11 +105,18 @@ class PageSpotInfo extends HTMLElement {
 
       /* GUIDE & REVIEW HORIZONTAL SCROLL SECTIONS */
 
-      .page-spot-info .guide-section,
+      .page-spot-info .guide-section {
+        display: flex;
+        flex-direction: column;
+        gap: var(--m-md);
+        animation: fadeIn 0.8s ease-out 0.5s backwards;
+      }
+
       .page-spot-info .review-section {
         display: flex;
         flex-direction: column;
         gap: var(--m-md);
+        animation: fadeIn 0.8s ease-out 0.7s backwards;
       }
 
       .page-spot-info .guide-scroll-container {
@@ -261,7 +312,12 @@ class PageSpotInfo extends HTMLElement {
 
     // appState-ийн өөрчлөлтийг сонсох - газрын өгөгдөл шинэчлэгдвэл дахин зурах
     window.addEventListener("appstatechange", (e) => {
-      if (e.detail.key === "currentSpot" || e.detail.key === "spotData") {
+      if (e.detail.key === "currentSpot") {
+        this.render();
+        this.attachEventListeners();
+      } else if (e.detail.key === "spotData") {
+        // spotData ачаалагдсан бол URL-аас дахин current spot тохируулах
+        this.loadSpotFromURL();
         this.render();
         this.attachEventListeners();
       }
@@ -349,15 +405,15 @@ class PageSpotInfo extends HTMLElement {
         <div class="spot-details">
           <!-- Танилцуулга хэсэг -->
           <section class="intro">
-            <h3>Танилцуулга</h3>
+            <h2>Танилцуулга</h2>
             <p>${spot.description}</p>
           </section>
 
           <!-- Санал болгох хөтөч хэсэг - хэвтээ гүйлгэх боломжтой -->
           <section class="guide-section">
-            <h3>Санал болгох хөтөч</h3>
+            <h2>Санал болгох хөтөч</h2>
             <div class="guide-scroll-container">
-              <button class="scrl scrl-left" data-scroll="left">
+              <button class="scrl scrl-left" data-scroll="left" aria-label="Зүүн тийш гүйлгэх">
                 <svg>
                   <use href="/styles/icons.svg#icon-leftScroll"></use>
                 </svg>
@@ -367,7 +423,7 @@ class PageSpotInfo extends HTMLElement {
                 ${filteredGuides.slice(0, 10).map(guide => `<a href="#/guide-profile?g=${guide.id}"><ag-guide-card guide-id="${guide.id}"></ag-guide-card></a>`).join('')}
               </div>
 
-              <button class="scrl scrl-right" data-scroll="right">
+              <button class="scrl scrl-right" data-scroll="right" aria-label="Баруун тийш гүйлгэх">
                 <svg>
                   <use href="/styles/icons.svg#icon-rightScroll"></use>
                 </svg>

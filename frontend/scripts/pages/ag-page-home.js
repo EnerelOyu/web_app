@@ -172,7 +172,7 @@ class PageHome extends HTMLElement {
                 padding: var(--p-2xl) 0;
             }
 
-            .tutorial h3 {
+            .tutorial h2 {
                 color: var(--text-color-1);
                 font-size: var(--fs-xl);
                 font-weight: bold;
@@ -338,7 +338,7 @@ class PageHome extends HTMLElement {
 
             <!-- Tutorial Section -->
             <section class="tutorial">
-                <h3>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h3>
+                <h2>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h2>
                 <div class="tutorial-grid">
                     <ag-tutorial-card
                         zrg="/assets/images/tutorial-img/tutorial-1.svg"

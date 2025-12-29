@@ -65,7 +65,7 @@ class AgFooter extends HTMLElement {
       }
 
       .footer-col p{
-        color: var(--primary-5);
+        color: var(--text-color-9);
         font-family: 'NunitoSans';
         text-transform: uppercase;
         font-size: var(--fs-s);
@@ -79,7 +79,7 @@ class AgFooter extends HTMLElement {
 
       .footer-list li{
         text-decoration: none;
-        color: var(--primary-5);
+        color: var(--text-color-8);
         list-style: none;
         font-family: 'NunitoSans';
         padding: var(--p-xs) 0;
@@ -93,7 +93,7 @@ class AgFooter extends HTMLElement {
 
       .footer-list li a{
         text-decoration: none;
-        color: var(--primary-5);
+        color: var(--text-color-8);
       }
 
       .footer-social{
@@ -119,8 +119,8 @@ class AgFooter extends HTMLElement {
       .footer-social svg{
         height: var(--svg-s);
         width: var(--svg-s);
-        color: var(--primary-5);
-        fill: var(--primary-5);
+        color: var(--text-color-9);
+        fill: var(--text-color-9);
         transition: fill 0.3s, color 0.3s;
       }
 
@@ -134,7 +134,7 @@ class AgFooter extends HTMLElement {
         margin-top: var(--m-md);
         text-align: center;
         font-size: var(--fs-xs);
-        color: var(--primary-5);
+        color: var(--text-color-8);
         font-family: 'NunitoSans';
         opacity: 0.8;
       }

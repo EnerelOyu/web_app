@@ -57,7 +57,7 @@ class GuideCard extends HTMLElement {
                 text-align: center;
             }
 
-            .guide-details h4 {
+            .guide-details h2 {
                 margin: 0;
                 font-size: var(--fs-sm);
                 color: var(--text-color-1);
@@ -149,7 +149,7 @@ class GuideCard extends HTMLElement {
                     padding: var(--p-sm);
                 }
 
-                .guide-details h4 {
+                .guide-details h2 {
                     font-size: var(--fs-sm);
                 }
 
@@ -189,9 +189,9 @@ class GuideCard extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>${this.getStyles()}</style>
             <div class="guide-card" id="guideCard">
-                <img id="guidePhoto" src="" alt="Guide photo">
+                <img id="guidePhoto" src="" alt="Guide photo" fetchpriority="high" loading="eager">
                 <div class="guide-details">
-                    <h4 id="guideName">Хөтөчийн нэр</h4>
+                    <h2 id="guideName">Хөтөчийн нэр</h2>
                     <div class="guide-rating">
                         <ag-rating id="guideRating"></ag-rating>
                     </div>

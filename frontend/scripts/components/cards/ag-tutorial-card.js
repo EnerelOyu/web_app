@@ -51,13 +51,14 @@ class AgTutorialCard extends HTMLElement {
           transform: scale(1.03);
         }
 
-        .tutorial-card h4 {
+        .tutorial-card h3 {
           color: var(--text-color-2);
           margin: 0.25rem 0;
           font-family: 'Rubik';
+          font-size: var(--fs-base);
         }
 
-        .tutorial-card:hover h4 {
+        .tutorial-card:hover h3 {
           color: var(--accent);
         }
 
