@@ -17,7 +17,9 @@ import db, {
   updatePlanNotes,
   clearPlan,
   getReviewsBySpotId,
-  createReview
+  createReview,
+  getReviewsByGuideId,
+  createGuideReview
 } from './database/db.js'
 
 const __filename = fileURLToPath(import.meta.url);
@@ -376,6 +378,43 @@ app.post('/api/spots/:spotId/reviews', (req, res) => {
     res.status(201).json({ success: true, id: result.id });
   } catch (error) {
     console.error('Error creating review:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ===== GUIDE REVIEW API ENDPOINTS =====
+
+// Get all reviews for a specific guide
+app.get('/api/guides/:guideId/reviews', (req, res) => {
+  try {
+    const { guideId } = req.params;
+    const reviews = getReviewsByGuideId(guideId);
+
+    res.json({ reviews });
+  } catch (error) {
+    console.error('Error fetching guide reviews:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Create a new review for a guide
+app.post('/api/guides/:guideId/reviews', (req, res) => {
+  try {
+    const { guideId } = req.params;
+    const { userName, comment, rating } = req.body;
+
+    if (!userName || !comment || rating === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: 'userName, comment, and rating are required'
+      });
+    }
+
+    const result = createGuideReview(guideId, userName, comment, rating);
+
+    res.status(201).json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Error creating guide review:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

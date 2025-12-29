@@ -58,6 +58,19 @@ export const initDB = () => {
     )
   `);
 
+  // Guide Reviews table
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS guide_reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      guideId TEXT NOT NULL,
+      userName TEXT NOT NULL,
+      comment TEXT NOT NULL,
+      rating REAL NOT NULL,
+      createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (guideId) REFERENCES guides(guideId) ON DELETE CASCADE
+    )
+  `);
+
   // Plans table
   db.exec(`
     CREATE TABLE IF NOT EXISTS plans (
@@ -105,6 +118,7 @@ export const initDB = () => {
     CREATE INDEX IF NOT EXISTS idx_spots_area ON spots(area);
     CREATE INDEX IF NOT EXISTS idx_spots_category ON spots(category);
     CREATE INDEX IF NOT EXISTS idx_reviews_spotId ON reviews(spotId);
+    CREATE INDEX IF NOT EXISTS idx_guide_reviews_guideId ON guide_reviews(guideId);
     CREATE INDEX IF NOT EXISTS idx_plans_userId ON plans(userId);
   `);
   // Categories lookup
@@ -274,6 +288,25 @@ export const createReview = (spotId, userName, comment, rating) => {
     VALUES (?, ?, ?, ?)
   `);
   const result = stmt.run(spotId, userName, comment, rating);
+  return { id: result.lastInsertRowid };
+};
+
+// Guide Review functions
+export const getReviewsByGuideId = (guideId) => {
+  const stmt = db.prepare(`
+    SELECT * FROM guide_reviews
+    WHERE guideId = ?
+    ORDER BY createdAt DESC
+  `);
+  return stmt.all(guideId);
+};
+
+export const createGuideReview = (guideId, userName, comment, rating) => {
+  const stmt = db.prepare(`
+    INSERT INTO guide_reviews (guideId, userName, comment, rating)
+    VALUES (?, ?, ?, ?)
+  `);
+  const result = stmt.run(guideId, userName, comment, rating);
   return { id: result.lastInsertRowid };
 };
 

@@ -362,14 +362,7 @@ class PageGuideProfile extends HTMLElement {
         </section>
 
         <!-- REVIEWS SECTION -->
-        <section class="guide-section-card">
-          <h3 class="guide-section-title">Сэтгэгдэл</h3>
-          <div class="guide-section-content">
-            <p style="color: var(--text-color-4); font-style: italic;">
-              Удахгүй энд хөтчийн сэтгэгдлүүд харагдах болно...
-            </p>
-          </div>
-        </section>
+        <ag-guide-review-list guide-id="${guideId}"></ag-guide-review-list>
       </div>
     `;
   }

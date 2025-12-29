@@ -2,18 +2,21 @@
 class AgGuideReviewList extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this.reviews = [];
     }
 
-    connectedCallback() {
-        this.css();
-        this.loadReviews();
+    async connectedCallback() {
+        this.guideId = this.getAttribute('guide-id') || 'default';
+        await this.loadReviews();
         this.render();
     }
 
-    css() {
-        const styles = `
-        <style>
+    getStyles() {
+        return `
+            @import url('./styles/global.css');
+            @import url('./styles/fonts.css');
+
             .review-section {
                 grid-area: rew;
                 padding: var(--p-lg);
@@ -132,88 +135,55 @@ class AgGuideReviewList extends HTMLElement {
                 flex: 1;
                 overflow: hidden;
             }
-        </style>
         `;
+    }
 
-        if (!document.querySelector('#ag-guide-review-list-styles')) {
-            const styleElement = document.createElement('style');
-            styleElement.id = 'ag-guide-review-list-styles';
-            const styleMatch = styles.match(/<style>([\s\S]*?)<\/style>/);
-            styleElement.textContent = styleMatch ? styleMatch[1] : '';
-            document.head.appendChild(styleElement);
+    async loadReviews() {
+        try {
+            // Fetch reviews from backend API
+            const response = await fetch(`http://localhost:3000/api/guides/${this.guideId}/reviews`);
+
+            if (!response.ok) {
+                throw new Error('Failed to fetch guide reviews');
+            }
+
+            const data = await response.json();
+
+            // Map backend data to frontend format
+            this.reviews = data.reviews.map(review => ({
+                bogin: review.userName,
+                urt: review.comment,
+                unelgee: review.rating,
+                date: review.createdAt.split('T')[0] // Extract date part from ISO string
+            }));
+
+        } catch (error) {
+            console.error('Error loading guide reviews from backend:', error);
+
+            // Fallback to default reviews if backend fails
+            this.reviews = [
+                {
+                    bogin: "Тэмүүжин",
+                    urt: "Хөтөч нь маш эелдэг, хариуцлагатай байсан. Мэргэжлийн өндөр түвшинд ажилладаг.",
+                    unelgee: 4.8,
+                    date: "2024-01-08"
+                },
+                {
+                    bogin: "Энхтайван",
+                    urt: "Хөтөч маш их тэвчээртэй, хүүхдүүдтэйгээ маш сайн харилцаж чадсан.",
+                    unelgee: 4.9,
+                    date: "2024-01-02"
+                }
+            ];
         }
     }
 
-    loadReviews() {
-        this.reviews = [
-            {
-                bogin: "Тэмүүжин",
-                urt: "Хөтөч нь маш эелдэг, хариуцлагатай байсан. Мэргэжлийн өндөр түвшинд ажилладаг. Дараагийн аялалдаа дахин заавал энэ хөтөчийг сонгоно.",
-                unelgee: 4.8,
-                date: "2024-01-08"
-            },
-            {
-                bogin: "Энхтайван",
-                urt: "Хөтөч маш их тэвчээртэй, хүүхдүүдтэйгээ маш сайн харилцаж чадсан. Аяллын үеэр бүх асуултанд хариулсан.",
-                unelgee: 4.9,
-                date: "2024-01-02"
-            },
-            {
-                bogin: "Жаргал",
-                urt: "Байгалийн үзэсгэлэнт газруудыг маш сайн харуулсан. Хөтөч нь маш их туршлагатай байсан. Түүх соёлын мэдлэг гүнзгий.",
-                unelgee: 4.6,
-                date: "2023-12-28"
-            },
-            {
-                bogin: "Баярмаа",
-                urt: "Хөтөч нь маш идэвхтэй, хөгжилтэй байсан. Аяллын үеэр уйтгартай мөч байсангүй. Бүх зүйл маш сайн зохион байгуулалттай.",
-                unelgee: 5.0,
-                date: "2023-12-25"
-            },
-            {
-                bogin: "Гантулга",
-                urt: "Мэргэжлийн хандалт, өндөр чадвартай. Аяллын явцад аюулгүй байдлыг маш сайн хангасан. Найдвартай хөтөч.",
-                unelgee: 4.7,
-                date: "2023-12-20"
-            },
-            {
-                bogin: "Цэцэг",
-                urt: "Хэлний чадвар сайн, олон улсын жуулчдад тохиромжтой. Харилцааны ур чадвар өндөр. Маш их таалагдлаа.",
-                unelgee: 4.8,
-                date: "2023-12-18"
-            },
-            {
-                bogin: "Бат-Эрдэнэ",
-                urt: "Байгалийн талаар гүнзгий мэдлэгтэй. Амьтны аймгийн талаар сонирхолтой баримтуудыг хуваалцсан. Сонирхолтой аялал боллоо.",
-                unelgee: 4.5,
-                date: "2023-12-15"
-            },
-            {
-                bogin: "Нандин",
-                urt: "Хөтөч нь маш анхааралтай, жуулчдын хэрэгцээг ойлгодог. Аяллын хөтөлбөрийг уян хатан зохион байгуулсан. Маш сайн.",
-                unelgee: 4.9,
-                date: "2023-12-12"
-            },
-            {
-                bogin: "Эрдэнэбат",
-                urt: "Түргэн шуурхай, үр дүнтэй ажилладаг. Цаг хугацааны удирдлага сайн. Бүх зорилгоо биелүүлсэн.",
-                unelgee: 4.6,
-                date: "2023-12-10"
-            },
-            {
-                bogin: "Сүхбат",
-                urt: "Аяллын үеэр гарч болзошгүй аливаа нөхцөл байдлыг маш сайн удирдан зохион байгуулдаг. Найдвартай, итгэлтэй хөтөч.",
-                unelgee: 4.7,
-                date: "2023-12-08"
-            }
-        ];
-    }
-
     render() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
+            <style>${this.getStyles()}</style>
             <section class="review-section">
                 <h2 class="section-title">Хүний үнэлгээ & Сэтгэгдэл</h2>
-                
+
                 <div class="reviews-container">
                     <div class="comment-form-card">
                         <h3>Сэтгэгдэл үлдээх</h3>
@@ -224,7 +194,7 @@ class AgGuideReviewList extends HTMLElement {
                             </div>
                             <div class="form-group">
                                 <label for="comment">Сэтгэгдэл</label>
-                                <textarea id="comment" placeholder="Хүний тухай сэтгэгдлээ бичнэ үү..." required></textarea>
+                                <textarea id="comment" placeholder="Хөтчийн тухай сэтгэгдлээ бичнэ үү..." required></textarea>
                             </div>
                             <button type="submit" class="submit-btn">Илгээх</button>
                         </form>
@@ -232,7 +202,7 @@ class AgGuideReviewList extends HTMLElement {
 
                     <div class="reviews-scroll">
                         ${this.reviews.map(review => `
-                            <ag-review 
+                            <ag-review
                                 bogin="${review.bogin}"
                                 urt="${review.urt}"
                                 unelgee="${review.unelgee}"
@@ -248,7 +218,7 @@ class AgGuideReviewList extends HTMLElement {
     }
 
     addEventListeners() {
-        const form = this.querySelector('#commentForm');
+        const form = this.shadowRoot.querySelector('#commentForm');
         if (form) {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -257,21 +227,53 @@ class AgGuideReviewList extends HTMLElement {
         }
     }
 
-    handleFormSubmit() {
-        const name = this.querySelector('#name').value;
-        const comment = this.querySelector('#comment').value;
-        
-        if (name && comment) {
-            const newReview = {
-                bogin: name,
-                urt: comment,
-                unelgee: 5.0,
-                date: new Date().toISOString().split('T')[0]
-            };
+    // Save review to backend
+    async saveReview(userName, comment, rating) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/guides/${this.guideId}/reviews`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userName,
+                    comment,
+                    rating
+                })
+            });
 
-            this.reviews.unshift(newReview);
-            this.render();
-            this.querySelector('#commentForm').reset();
+            if (!response.ok) {
+                throw new Error('Failed to save guide review');
+            }
+
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error saving guide review to backend:', error);
+            throw error;
+        }
+    }
+
+    async handleFormSubmit() {
+        const name = this.shadowRoot.querySelector('#name').value;
+        const comment = this.shadowRoot.querySelector('#comment').value;
+
+        if (name && comment) {
+            try {
+                // Save to backend
+                await this.saveReview(name, comment, 5.0);
+
+                // Reload reviews from backend
+                await this.loadReviews();
+
+                // Re-render with updated reviews
+                this.render();
+
+                // Show success message
+                alert('Сэтгэгдэл амжилттай илгээгдлээ!');
+            } catch (error) {
+                alert('Сэтгэгдэл хадгалахад алдаа гарлаа. Дахин оролдоно уу.');
+            }
         }
     }
 }
