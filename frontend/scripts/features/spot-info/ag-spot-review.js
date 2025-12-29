@@ -291,6 +291,11 @@ class AgSpotReviewList extends HTMLElement {
                 // Re-render with updated reviews
                 this.render();
 
+                // Dispatch event to notify parent component to update rating
+                window.dispatchEvent(new CustomEvent('spot-review-added', {
+                    detail: { spotId: this.spotId }
+                }));
+
                 // Show success message
                 alert('Сэтгэгдэл амжилттай илгээгдлээ!');
             } catch (error) {

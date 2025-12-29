@@ -2,6 +2,7 @@ class AgSpotCard extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.realRating = null;
 
     this.css = `
       .spot-card {
@@ -150,16 +151,51 @@ class AgSpotCard extends HTMLElement {
     return ["href", "zrg", "bus", "unelgee", "ner", "cate", "activity", "une", "data-spot-id"];
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    const spotId = this.getAttribute('data-spot-id');
+    if (spotId) {
+      await this.fetchAndCalculateRating(spotId);
+    }
     this.render();
     this.attachEventListeners();
   }
 
-  attributeChangedCallback() {
+  async attributeChangedCallback(name, oldValue, newValue) {
     if (this.isConnected) {
+      if (name === 'data-spot-id' && newValue && oldValue !== newValue) {
+        await this.fetchAndCalculateRating(newValue);
+      }
       this.render();
       this.attachEventListeners();
     }
+  }
+
+  async fetchSpotReviews(spotId) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/spots/${spotId}/reviews`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch spot reviews');
+      }
+      const data = await response.json();
+      return data.reviews;
+    } catch (error) {
+      console.error('Error fetching spot reviews:', error);
+      return [];
+    }
+  }
+
+  calculateAverageRating(reviews) {
+    if (!reviews || reviews.length === 0) {
+      return 0;
+    }
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const average = sum / reviews.length;
+    return Math.round(average * 10) / 10;
+  }
+
+  async fetchAndCalculateRating(spotId) {
+    const reviews = await this.fetchSpotReviews(spotId);
+    this.realRating = this.calculateAverageRating(reviews);
   }
 
   attachEventListeners() {
@@ -246,7 +282,8 @@ class AgSpotCard extends HTMLElement {
     const href = this.getAttribute("href") || "#";
     const img = this.getAttribute("zrg") || "";
     const area = this.getAttribute("bus") || "";
-    const rating = parseFloat(this.getAttribute("unelgee")) || 0;
+    // Use real rating if available, otherwise fall back to attribute
+    const rating = this.realRating !== null ? this.realRating : (parseFloat(this.getAttribute("unelgee")) || 0);
     const title = this.getAttribute("ner") || "";
     const cates = (this.getAttribute("cate") || "")
       .split(",")

@@ -1,29 +1,66 @@
 class AgSpotHero extends HTMLElement {
   static get observedAttributes() {
     // Спотын үндсэн мэдээллийг аттрибутаар өгнө
-    return ["title", "rating", "cate", "status", "time", "img1", "img2", "img3"];
+    return ["title", "rating", "cate", "status", "time", "img1", "img2", "img3", "spot-id"];
   }
 
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
+    this.realRating = null;
   }
 
-  connectedCallback() {
+  async connectedCallback() {
+    const spotId = this.getAttribute("spot-id") || this.getAttribute("data-spot-id");
+    if (spotId) {
+      await this.fetchAndCalculateRating(spotId);
+    }
     this.render();
     this.attachEventListeners();
   }
 
-  attributeChangedCallback() {
+  async attributeChangedCallback(name, oldValue, newValue) {
     if (this.isConnected) {
+      if (name === "spot-id" && newValue && oldValue !== newValue) {
+        await this.fetchAndCalculateRating(newValue);
+      }
       this.render();
       this.attachEventListeners();
     }
   }
 
+  async fetchSpotReviews(spotId) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/spots/${spotId}/reviews`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch spot reviews');
+      }
+      const data = await response.json();
+      return data.reviews;
+    } catch (error) {
+      console.error('Error fetching spot reviews:', error);
+      return [];
+    }
+  }
+
+  calculateAverageRating(reviews) {
+    if (!reviews || reviews.length === 0) {
+      return 0;
+    }
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const average = sum / reviews.length;
+    return Math.round(average * 10) / 10;
+  }
+
+  async fetchAndCalculateRating(spotId) {
+    const reviews = await this.fetchSpotReviews(spotId);
+    this.realRating = this.calculateAverageRating(reviews);
+  }
+
   render() {
     const title = this.getAttribute("title") || "";
-    const rating = this.getAttribute("rating") || "0";
+    // Use real rating if available, otherwise fall back to attribute
+    const rating = this.realRating !== null ? this.realRating : (this.getAttribute("rating") || "0");
 
     const cates = (this.getAttribute("cate") || "")
       .split(",")

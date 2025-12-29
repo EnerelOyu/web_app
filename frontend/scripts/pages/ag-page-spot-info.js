@@ -268,6 +268,20 @@ class PageSpotInfo extends HTMLElement {
         this.attachEventListeners();
       }
     });
+
+    // Listen for new review added event to update rating
+    window.addEventListener("spot-review-added", async () => {
+      // Re-fetch and update the spot hero rating
+      const spotHero = this.shadowRoot.querySelector('#current-spot-hero');
+      if (spotHero) {
+        const spotId = spotHero.getAttribute('spot-id');
+        if (spotId) {
+          await spotHero.fetchAndCalculateRating(spotId);
+          spotHero.render();
+          spotHero.attachEventListeners();
+        }
+      }
+    });
   }
 
   loadSpotFromURL() {
@@ -316,6 +330,7 @@ class PageSpotInfo extends HTMLElement {
             img1="${spot.img1}"
             img2="${spot.img2}"
             img3="${spot.img3}"
+            spot-id="${spot.id}"
             data-spot-id="${spot.id}"
           ></ag-spot-hero>
           <ag-spot-aside
