@@ -5,15 +5,13 @@ class PageHome extends HTMLElement {
     }
 
     connectedCallback() {
-        this.attachShadow({ mode: 'open' }); // Shadow DOM үүсгэх
+        this.attachShadow({ mode: 'open' }); 
         this.render();
         this.setupToast();
         this.attachEventListeners();
     }
 
-    /*
-     Амжилт/алдааны мэдэгдэл харуулахад ашиглана
-     */
+    //plan -д spot нэмэгдсэн амжилт/алдааны мэдэгдэл харуулахад ашиглана
     setupToast() {
         // Toast элемент байхгүй бол шинээр үүсгэх
         if (!document.querySelector('ag-toast')) {
@@ -236,9 +234,7 @@ class PageHome extends HTMLElement {
                 }
             }
 
-            /* =========================
-               MOBILE PORTRAIT (≤480px - гар утасны босоо)
-               ========================= */
+            /* MOBILE (≤480px - гар утасны босоо) */
             @media (max-width: 480px) {
                 main {
                     gap: var(--gap-size-m);
@@ -304,7 +300,7 @@ class PageHome extends HTMLElement {
                 <h1 class="uria-h1">ХАЙ, НЭЭЖ ОЛ, <span>ХЯЛБАР ТӨЛӨВЛӨ.</span></h1>
             </section>
 
-            <!-- Search Section -->
+            <!-- Хайлтын Section -->
             <section class="search-section">
                 <ag-home-search
                     areas='["Төв","Хангай","Зүүн","Баруун","Алтай","Говь"]'
@@ -345,7 +341,7 @@ class PageHome extends HTMLElement {
             </section>
 
             <!-- Featured Spots -->
-            <ag-spot-section title="Шилдэг аяллын цэгүүд" link="#/spots">
+            <ag-spot-section title="Шилдэг аяллын цэгүүд" link="#/spots?rating=5">
                 <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
                     ner="Гандан Тэгчинлэн Хийд"
@@ -381,7 +377,7 @@ class PageHome extends HTMLElement {
             </ag-guide-banner>
 
             <!-- Cultural Spots -->
-            <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="#/spots">
+            <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="#/spots?cate=Соёл">
                 <ag-spot
                     zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF579068047.jpg"
                     ner="Эрдэнэзуу хийд"
@@ -409,7 +405,7 @@ class PageHome extends HTMLElement {
             </ag-spot-section>
 
             <!-- Nature Spots -->
-            <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="#/spots">
+            <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="#/spots?cate=Байгаль">
                 <ag-spot
                     zrg="/assets/images/spot-img/spot03-1.jpg"
                     ner="Хустайн байгалийн цогцолборт газар"
@@ -439,9 +435,7 @@ class PageHome extends HTMLElement {
         `;
     }
 
-    /**
-     * attachEventListeners - Event listener-үүдийг холбох
-     * Аяллын газар дээр дарах үйлдлүүдийг удирдана:
+    /* ag-spot дээр дарах үйлдлүүдийг удирдана:
      * - Газрын мэдээлэл үзэх
      * - Төлөвлөгөөнд нэмэх
      */
@@ -505,5 +499,4 @@ class PageHome extends HTMLElement {
     }
 }
 
-// PageHome компонентийг 'ag-page-home' нэртэй custom element болгон бүртгэх
 customElements.define('ag-page-home', PageHome);

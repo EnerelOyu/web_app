@@ -401,6 +401,7 @@ class PageSpots extends HTMLElement {
         const area = params.get('bus');        // 'bus' -> 'Бүс нутаг'
         const category = params.get('cate');    // 'cate' -> 'Категори'
         const activity = params.get('activity'); // 'activity' -> 'Үйл ажиллагаа'
+        const rating = params.get('rating');    // 'rating' -> 'Үнэлгээ'
 
         if (area) {
             this.activeFilters['Бүс нутаг'] = [area];
@@ -412,6 +413,10 @@ class PageSpots extends HTMLElement {
 
         if (activity) {
             this.activeFilters['Үйл ажиллагаа'] = [activity];
+        }
+
+        if (rating) {
+            this.activeFilters['Үнэлгээ'] = [rating];
         }
     }
 

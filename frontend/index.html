@@ -4,95 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Аялал төлөвлөгч</title>
-    <link rel="stylesheet" href="./styles/fonts.css">
-    <link rel="stylesheet" href="./styles/global.css">
-    <link rel="stylesheet" href="./styles/home.css">
-    <link rel="stylesheet" href="./styles/spots.css">
-    <link rel="stylesheet" href="./styles/spot-info.css">
 
-    <!-- Global State Management -->
+    <!-- Үндсэн CSS файлууд - Фонт болон хувьсагчдыг тодорхойлно -->
+    <link rel="stylesheet" href="./styles/fonts.css">       
+    <link rel="stylesheet" href="./styles/global.css">      
+
+    <!-- Хуудас бүрийн CSS - Тухайн хуудасны онцгой загварчлал -->
+    <link rel="stylesheet" href="./styles/home.css">       
+    <link rel="stylesheet" href="./styles/spots.css">        
+    <link rel="stylesheet" href="./styles/spot-info.css">    
+
     <script type="module" src="./scripts/router/ag-app-state.js"></script>
 
-    <!-- Router -->
+    <!-- router -->
     <script type="module" src="./scripts/router/ag-app-router.js"></script>
 
-    <!-- Page Components -->
-    <script type="module" src="./scripts/pages/ag-page-home.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-spots.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-spot-info.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-plan.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-guides.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-guide-profile.js"></script>
-    <script type="module" src="./scripts/pages/ag-page-guide-signup.js"></script>
+    <!-- page component -->
+    <script type="module" src="./scripts/pages/ag-page-home.js"></script>            <!-- Нүүр хуудас - Hero, онцлох газрууд, туторал -->
+    <script type="module" src="./scripts/pages/ag-page-spots.js"></script>           <!-- Газруудын жагсаалт - шүүлтүүр, хайлт -->
+    <script type="module" src="./scripts/pages/ag-page-spot-info.js"></script>       <!-- Газрын дэлгэрэнгүй - зураг, тайлбар, үнэлгээ -->
+    <script type="module" src="./scripts/pages/ag-page-plan.js"></script>            <!-- Аяллын төлөвлөгөө - маршрут, хөтөч, тэмдэглэл -->
+    <script type="module" src="./scripts/pages/ag-page-guides.js"></script>          <!-- Хөтөчдийн жагсаалт -->
+    <script type="module" src="./scripts/pages/ag-page-guide-profile.js"></script>   <!-- Хөтөчийн профайл - мэдээлэл, үнэлгээ -->
+    <script type="module" src="./scripts/pages/ag-page-guide-signup.js"></script>    <!-- Хөтөч бүртгүүлэх хуудас -->
 
-    <!-- Header & Footer -->
-    <script type="module" src="./scripts/components/common/ag-header.js"></script>
-    <script type="module" src="./scripts/components/common/ag-footer.js"></script>
+    <!-- header & footer  -->
+    <script type="module" src="./scripts/components/common/ag-header.js"></script>    <!-- Дээд хэсэг - лого, навигаци -->
+    <script type="module" src="./scripts/components/common/ag-footer.js"></script>    <!-- Доод хэсэг - холбоос, мэдээлэл -->
 
-    <!-- Shared Components -->
-    <script type="module" src="./scripts/components/common/ag-toast.js"></script>
-    <script type="module" src="./scripts/components/common/ag-rating.js"></script>
-    <script type="module" src="./scripts/components/forms/ag-star-rating-input.js"></script>
+    <!-- Олон хуудсанд дахин ашиглагдах нийтлэг элементүүд -->
+    <script type="module" src="./scripts/components/common/ag-toast.js"></script>             <!-- Мэдэгдлийн цонх -->
+    <script type="module" src="./scripts/components/common/ag-rating.js"></script>            <!-- Одоор үнэлгээ харуулах -->
+    <script type="module" src="./scripts/components/forms/ag-star-rating-input.js"></script>  <!-- Одоор үнэлгээ оруулах -->
 
-    <!-- Home Components -->
-    <script type="module" src="./scripts/features/home/ag-spot.js"></script>
-    <script type="module" src="./scripts/components/cards/ag-tutorial-card.js"></script>
-    <script type="module" src="./scripts/features/home/ag-home-search.js"></script>
-    <script type="module" src="./scripts/features/home/ag-spot-section.js"></script>
-    <script type="module" src="./scripts/components/cards/ag-feature-card.js"></script>
-    <script type="module" src="./scripts/features/home/ag-guide-banner.js"></script>
+    <!-- home page ийн элементүүд -->
+    <script type="module" src="./scripts/features/home/ag-spot.js"></script>             <!-- Онцлох газрын дэлгэрэнгүй карт -->
+    <script type="module" src="./scripts/components/cards/ag-tutorial-card.js"></script> <!-- Заавар зөвлөмжийн карт -->
+    <script type="module" src="./scripts/features/home/ag-home-search.js"></script>      <!-- Нүүр хуудасны хайлтын талбар -->
+    <script type="module" src="./scripts/features/home/ag-spot-section.js"></script>     <!-- Газруудын ангиллын секц -->
+    <script type="module" src="./scripts/components/cards/ag-feature-card.js"></script>  <!-- Онцлох функцийн карт -->
+    <script type="module" src="./scripts/features/home/ag-guide-banner.js"></script>     <!-- Хөтөч болох урилгын баннер -->
 
-    <!-- Spots Components -->
-    <script type="module" src="./scripts/components/cards/ag-spot-card.js"></script>
-    <script type="module" src="./scripts/components/ui/ag-filter.js"></script>
-    <script type="module" src="./scripts/features/spots/ag-spot-manager.js"></script>
+    <!-- spots page ийн элементүүд -->
+    <script type="module" src="./scripts/components/cards/ag-spot-card.js"></script>     <!-- Газрын товч мэдээллийн карт -->
+    <script type="module" src="./scripts/components/ui/ag-filter.js"></script>           <!-- Шүүлтүүрийн компонент -->
+    <script type="module" src="./scripts/features/spots/ag-spot-manager.js"></script>    <!-- Газруудыг удирдах систем -->
 
-    <!-- Spot Info Components -->
-    <script type="module" src="./scripts/features/spot-info/ag-spot-hero.js"></script>
-    <script type="module" src="./scripts/features/spot-info/ag-spot-aside.js"></script>
-    <script type="module" src="./scripts/features/spot-info/ag-spot-review.js"></script>
-    <script type="module" src="./scripts/components/cards/ag-guide-card.js"></script>
-    <script type="module" src="./scripts/components/cards/ag-review-card.js"></script>
-    <script type="module" src="./scripts/components/ui/ag-scroll-guide.js"></script>
+    <!-- spot info page ийн элементүүд -->
+    <script type="module" src="./scripts/features/spot-info/ag-spot-hero.js"></script>    <!-- Газрын толгой хэсэг - зураг, нэр, үнэлгээ -->
+    <script type="module" src="./scripts/features/spot-info/ag-spot-aside.js"></script>   <!-- Хажуугийн мэдээлэл - хаяг, цаг, төлбөр -->
+    <script type="module" src="./scripts/features/spot-info/ag-spot-review.js"></script>  <!-- Газрын үнэлгээний систем -->
+    <script type="module" src="./scripts/components/cards/ag-guide-card.js"></script>     <!-- Хөтөчийн товч карт -->
+    <script type="module" src="./scripts/components/cards/ag-review-card.js"></script>    <!-- Үнэлгээний карт -->
+    <script type="module" src="./scripts/components/ui/ag-scroll-guide.js"></script>      <!-- Хөтөчдийн горизонтал жагсаалт -->
 
-    <!-- Plan Components -->
-    <script type="module" src="./scripts/features/plan/ag-route-item.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-route-section.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-travel-divider.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-guide-section.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-note-area.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-note-item.js"></script>
-    <script type="module" src="./scripts/components/ui/ag-shared-button.js"></script>
-    <script type="module" src="./scripts/features/plan/ag-suggested-point.js"></script>
+    <!-- plan page ийн элементүүд -->
+    <script type="module" src="./scripts/features/plan/ag-route-item.js"></script>       <!-- Маршрутын нэг газар -->
+    <script type="module" src="./scripts/features/plan/ag-route-section.js"></script>    <!-- Маршрутын бүлэг -->
+    <script type="module" src="./scripts/features/plan/ag-travel-divider.js"></script>   <!-- Зайн мэдээлэл харуулах хуваагч -->
+    <script type="module" src="./scripts/features/plan/ag-guide-section.js"></script>    <!-- Хөтөч сонгох хэсэг -->
+    <script type="module" src="./scripts/features/plan/ag-note-area.js"></script>        <!-- Тэмдэглэлийн талбар -->
+    <script type="module" src="./scripts/features/plan/ag-note-item.js"></script>        <!-- Нэг тэмдэглэл -->
+    <script type="module" src="./scripts/components/ui/ag-shared-button.js"></script>    <!-- Хуваалцах товч -->
+    <script type="module" src="./scripts/features/plan/ag-suggested-point.js"></script>  <!-- Санал болгох газар -->
 
-    <!-- Guide Sign Up Components -->
-    <script type="module" src="./scripts/components/forms/ag-image-upload.js"></script>
-    <script type="module" src="./scripts/components/forms/ag-guide-basic-form.js"></script>
-    <script type="module" src="./scripts/components/forms/ag-guide-preferences.js"></script>
+    <!-- guide sign up ийн элементүүд -->
+    <script type="module" src="./scripts/components/forms/ag-image-upload.js"></script>        <!-- Зураг оруулах компонент -->
+    <script type="module" src="./scripts/components/forms/ag-guide-basic-form.js"></script>    <!-- Үндсэн мэдээллийн форм -->
+    <script type="module" src="./scripts/components/forms/ag-guide-preferences.js"></script>   <!-- Хөтөчийн сонголт, туршлага -->
 
-    <!-- Guide Profile Components -->
-    <script type="module" src="./scripts/features/guide-profile/ag-guide-review-list.js"></script>
+    <!-- guide profile ийн элементүүд -->
+    <script type="module" src="./scripts/features/guide-profile/ag-guide-review-list.js"></script>  <!-- Хөтөчийн үнэлгээний жагсаалт -->
 
 </head>
 <body>
     <ag-header></ag-header>
-
+    <!-- үндсэн page container router-ээр page үүдийг солина-->
     <div class="page-container">
         <ag-app-router id="main-router"></ag-app-router>
     </div>
-
     <ag-footer></ag-footer>
 
+    <!--  Хуудас бүхэлдээ ачаалагдсаны дараа чиглүүлэгчийг эхлүүлнэ -->
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const router = document.getElementById('main-router');
-            router.registerRoute('/home', '<ag-page-home></ag-page-home>');
-            router.registerRoute('/spots', '<ag-page-spots></ag-page-spots>');
-            router.registerRoute('/spot-info', '<ag-page-spot-info></ag-page-spot-info>');
-            router.registerRoute('/plan', '<ag-page-plan></ag-page-plan>');
-            router.registerRoute('/guides', '<ag-page-guides></ag-page-guides>');
-            router.registerRoute('/guide-signup', '<ag-page-guide-signup></ag-page-guide-signup>');
-            router.registerRoute('/guide-profile', '<ag-page-guide-profile></ag-page-guide-profile>');
+
+            // router-ын бүртгэл - URL болон харгалзах хуудсыг холбох
+            router.registerRoute('/home', '<ag-page-home></ag-page-home>');                        // Нүүр хуудас
+            router.registerRoute('/spots', '<ag-page-spots></ag-page-spots>');                     // Газруудын жагсаалт
+            router.registerRoute('/spot-info', '<ag-page-spot-info></ag-page-spot-info>');         // Газрын дэлгэрэнгүй
+            router.registerRoute('/plan', '<ag-page-plan></ag-page-plan>');                        // Аяллын төлөвлөгөө
+            router.registerRoute('/guides', '<ag-page-guides></ag-page-guides>');                  // Хөтөчдийн жагсаалт
+            router.registerRoute('/guide-signup', '<ag-page-guide-signup></ag-page-guide-signup>'); // Хөтөч бүртгүүлэх
+            router.registerRoute('/guide-profile', '<ag-page-guide-profile></ag-page-guide-profile>'); // Хөтөчийн профайл
+
+            // Эхний хуудсыг харуулах
             router.onRouteChange();
         });
     </script>

@@ -21,7 +21,6 @@ class PageGuides extends HTMLElement {
                 page-guides {
                     display: block;
                     padding: var(--m-lg);
-                    
                 }
 
                 .guides-container {
