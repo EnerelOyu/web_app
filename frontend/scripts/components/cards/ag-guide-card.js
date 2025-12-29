@@ -164,13 +164,13 @@ class GuideCard extends HTMLElement {
         `;
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         this.render();
 
         // Автоматаар guide-id attribute-аас мэдээлэл унших
         const guideId = this.getAttribute('guide-id');
         if (guideId) {
-            this.setGuide(guideId);
+            await this.setGuide(guideId);
         }
     }
 
@@ -179,9 +179,9 @@ class GuideCard extends HTMLElement {
         return ['guide-id'];
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    async attributeChangedCallback(name, oldValue, newValue) {
         if (name === 'guide-id' && newValue && oldValue !== newValue) {
-            this.setGuide(newValue);
+            await this.setGuide(newValue);
         }
     }
 
@@ -197,14 +197,36 @@ class GuideCard extends HTMLElement {
                     </div>
                     <p class="guide-meta"><strong>Туршлага:</strong> <span id="guideExperience"></span></p>
                     <p class="guide-meta"><strong>Хэл:</strong> <span id="guideLanguages"></span></p>
-                    <p class="guide-meta"><strong>Төрсөн огноо:</strong> <span id="guideBirthdate"></span></p>
                     <p class="guide-meta"><strong>Утас:</strong> <a id="guidePhone" href="#"></a></p>
                 </div>
             </div>
         `;
     }
 
-    setGuide(guideId) {
+    async fetchGuideReviews(guideId) {
+        try {
+            const response = await fetch(`http://localhost:3000/api/guides/${guideId}/reviews`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch guide reviews');
+            }
+            const data = await response.json();
+            return data.reviews;
+        } catch (error) {
+            console.error('Error fetching guide reviews:', error);
+            return [];
+        }
+    }
+
+    calculateAverageRating(reviews) {
+        if (!reviews || reviews.length === 0) {
+            return 0;
+        }
+        const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+        const average = sum / reviews.length;
+        return Math.round(average * 10) / 10;
+    }
+
+    async setGuide(guideId) {
         // Get guide from app-state
         const guide = window.appState?.getGuide(guideId);
         if (!guide) {
@@ -225,16 +247,18 @@ class GuideCard extends HTMLElement {
         this.shadowRoot.querySelector('#guideName').textContent = guide.fullName;
         this.shadowRoot.querySelector('#guideExperience').textContent = guide.experience;
         this.shadowRoot.querySelector('#guideLanguages').textContent = guide.languages.join(', ');
-        this.shadowRoot.querySelector('#guideBirthdate').textContent = '-'; // birthdate хадгалагдаагүй
 
         const phoneLink = this.shadowRoot.querySelector('#guidePhone');
         phoneLink.textContent = guide.phone;
         phoneLink.href = `tel:${guide.phone.replace(/\s+/g, '')}`;
 
+        // Fetch reviews and calculate average rating
+        const reviews = await this.fetchGuideReviews(guideId);
+        const averageRating = this.calculateAverageRating(reviews);
+
         const ratingElement = this.shadowRoot.querySelector('#guideRating');
         if (ratingElement) {
-            // Rating guides.json-д байхгүй тул default 4.5
-            ratingElement.setAttribute('value', '4.5');
+            ratingElement.setAttribute('value', averageRating || 0);
         }
     }
 

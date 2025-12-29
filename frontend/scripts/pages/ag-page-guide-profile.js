@@ -1,9 +1,11 @@
 class PageGuideProfile extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: 'open' });
 
     this.css = `
-      @import url('/styles/fonts.css');
+      @import url('./styles/global.css');
+      @import url('./styles/fonts.css');
 
       .page-guide-profile {
         display: flex;
@@ -186,7 +188,7 @@ class PageGuideProfile extends HTMLElement {
         padding: var(--p-sm) var(--p-md);
         border-radius: var(--br-s);
         background: transparent;
-        border: 2px solid var(--text-color-6);
+        border: none;
         color: var(--text-color-2);
         font-size: var(--fs-md);
         cursor: pointer;
@@ -198,7 +200,6 @@ class PageGuideProfile extends HTMLElement {
 
       .back-button:hover {
         background: var(--text-color-9);
-        border-color: var(--text-color-4);
         transform: translateX(-4px);
       }
 
@@ -255,25 +256,54 @@ class PageGuideProfile extends HTMLElement {
     `;
   }
 
-  connectedCallback() {
-    this.render();
+  async connectedCallback() {
+    await this.render();
 
     // Listen for app state changes
-    window.addEventListener("appstatechange", (e) => {
+    window.addEventListener("appstatechange", async (e) => {
       if (e.detail.key === "guideData") {
-        this.render();
+        await this.render();
       }
+    });
+
+    // Listen for new review added event to update rating
+    window.addEventListener("guide-review-added", async (e) => {
+      // Re-render to update the rating display
+      await this.render();
     });
   }
 
-  render() {
+  async fetchGuideReviews(guideId) {
+    try {
+      const response = await fetch(`http://localhost:3000/api/guides/${guideId}/reviews`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch guide reviews');
+      }
+      const data = await response.json();
+      return data.reviews;
+    } catch (error) {
+      console.error('Error fetching guide reviews:', error);
+      return [];
+    }
+  }
+
+  calculateAverageRating(reviews) {
+    if (!reviews || reviews.length === 0) {
+      return { average: 0, count: 0 };
+    }
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    const average = sum / reviews.length;
+    return { average: Math.round(average * 10) / 10, count: reviews.length };
+  }
+
+  async render() {
     // Get guide ID from URL
     const queryString = window.location.hash.split('?')[1] || '';
     const urlParams = new URLSearchParams(queryString);
     const guideId = urlParams.get('g');
 
     if (!guideId) {
-      this.innerHTML = `
+      this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
         <div class="page-guide-profile">
           <p>Хөтөч олдсонгүй.</p>
@@ -285,7 +315,7 @@ class PageGuideProfile extends HTMLElement {
     const guide = window.appState?.getGuide(guideId);
 
     if (!guide) {
-      this.innerHTML = `
+      this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
         <div class="page-guide-profile">
           <a href="#/spots" class="back-button">← Буцах</a>
@@ -295,7 +325,11 @@ class PageGuideProfile extends HTMLElement {
       return;
     }
 
-    this.innerHTML = `
+    // Fetch guide reviews and calculate average rating
+    const reviews = await this.fetchGuideReviews(guideId);
+    const { average, count } = this.calculateAverageRating(reviews);
+
+    this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <div class="page-guide-profile">
         <a href="javascript:history.back()" class="back-button">← Буцах</a>
@@ -312,8 +346,8 @@ class PageGuideProfile extends HTMLElement {
             <h1 class="guide-profile-name">${guide.fullName}</h1>
 
             <div class="guide-profile-rating">
-              <ag-rating value="4.5"></ag-rating>
-              <span style="color: var(--text-color-3); font-size: var(--fs-sm);">(48 үнэлгээ)</span>
+              <ag-rating value="${average || 0}"></ag-rating>
+              <span style="color: var(--text-color-3); font-size: var(--fs-sm);">(${count} үнэлгээ)</span>
             </div>
 
             <div class="guide-profile-meta">

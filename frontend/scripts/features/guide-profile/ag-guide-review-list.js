@@ -193,6 +193,10 @@ class AgGuideReviewList extends HTMLElement {
                                 <input type="text" id="name" required>
                             </div>
                             <div class="form-group">
+                                <label>Үнэлгээ</label>
+                                <ag-star-rating-input id="rating-input" value="5"></ag-star-rating-input>
+                            </div>
+                            <div class="form-group">
                                 <label for="comment">Сэтгэгдэл</label>
                                 <textarea id="comment" placeholder="Хөтчийн тухай сэтгэгдлээ бичнэ үү..." required></textarea>
                             </div>
@@ -257,17 +261,24 @@ class AgGuideReviewList extends HTMLElement {
     async handleFormSubmit() {
         const name = this.shadowRoot.querySelector('#name').value;
         const comment = this.shadowRoot.querySelector('#comment').value;
+        const ratingInput = this.shadowRoot.querySelector('#rating-input');
+        const rating = ratingInput ? ratingInput.getValue() : 5.0;
 
         if (name && comment) {
             try {
                 // Save to backend
-                await this.saveReview(name, comment, 5.0);
+                await this.saveReview(name, comment, rating);
 
                 // Reload reviews from backend
                 await this.loadReviews();
 
                 // Re-render with updated reviews
                 this.render();
+
+                // Dispatch event to notify parent component to update rating
+                window.dispatchEvent(new CustomEvent('guide-review-added', {
+                    detail: { guideId: this.guideId }
+                }));
 
                 // Show success message
                 alert('Сэтгэгдэл амжилттай илгээгдлээ!');
