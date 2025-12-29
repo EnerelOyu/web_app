@@ -181,8 +181,7 @@ class PageHome extends HTMLElement {
             /* Guide Banner */
             ag-guide-banner {
                 width: 100%;
-                max-width: 95%;
-                padding: var(--p-2xl) 0;
+                padding: 0;
             }
 
             /* =========================

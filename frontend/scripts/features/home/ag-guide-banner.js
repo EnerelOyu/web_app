@@ -39,15 +39,14 @@ class AgGuideBanner extends HTMLElement {
           display: grid;
           grid-template-columns: 2fr 1fr;
           align-items: center;
-          padding: var(--p-lg) 0;
+          padding: var(--p-2xl) var(--p-xl);
       }
 
       .guide-inner{
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-          margin: var(--m-lg);
-          padding-left: var(--p-lg) ;
+          gap: var(--gap-size-s);
       }
 
       .guide-inner h3{
@@ -94,10 +93,20 @@ class AgGuideBanner extends HTMLElement {
           .guide{
               display: flex;
               flex-direction: column;
-              gap: var(--gap-size-s);
+              gap: var(--gap-size-m);
               width: 100%;
               justify-content: center;
               align-items: center;
+              padding: var(--p-xl) var(--p-md);
+          }
+
+          .guide-inner{
+              align-items: center;
+              text-align: center;
+          }
+
+          .guide-btn{
+              width: 80%;
           }
       }
       </style>

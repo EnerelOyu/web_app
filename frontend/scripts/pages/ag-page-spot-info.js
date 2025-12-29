@@ -366,7 +366,6 @@ class PageSpotInfo extends HTMLElement {
 
           <!-- Сэтгэгдэл -->
           <section class="review-section">
-            <h3>Сэтгэгдэл</h3>
             <ag-spot-review-list spot-id="${spot.id}"></ag-spot-review-list>
           </section>
         </div>

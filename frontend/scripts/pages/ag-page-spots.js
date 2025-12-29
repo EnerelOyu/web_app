@@ -1,18 +1,19 @@
 class PageSpots extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this.css = `
             @import url('/styles/fonts.css');
 
             main {
                 padding: 0;
                 margin: 0;
-                align-items: flex-start;
+                align-items: stretch;
                 display: grid;
                 grid-template-columns: 1fr 3fr;
                 animation: fadeInPage 0.6s ease-out;
                 background-color: var(--bg-color);
-                min-height: 100%;
+                height: 100%;
             }
 
             .filter-aside {
@@ -51,7 +52,28 @@ class PageSpots extends HTMLElement {
                 flex-direction: column;
                 gap: var(--gap-size-s);
                 padding: var(--p-md);
-                overflow-y: visible;
+                overflow-y: auto;
+                height: 100%;
+                scrollbar-width: thin;
+                scrollbar-color: var(--accent-3) var(--accent-9);
+            }
+
+            .spot-cards-container::-webkit-scrollbar {
+                width: var(--scrollbar-height);
+            }
+
+            .spot-cards-container::-webkit-scrollbar-track {
+                background: var(--accent-9);
+                border-radius: var(--br-xs);
+            }
+
+            .spot-cards-container::-webkit-scrollbar-thumb {
+                background: var(--accent-3);
+                border-radius: var(--br-xs);
+            }
+
+            .spot-cards-container::-webkit-scrollbar-thumb:hover {
+                background: var(--accent-2);
             }
 
             .spot-cards-container a:link {
@@ -398,7 +420,7 @@ class PageSpots extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
             <style>${this.css}</style>
             <main>
             <aside class="filter-aside">
@@ -424,7 +446,7 @@ class PageSpots extends HTMLElement {
     }
 
     generateFilters() {
-        const filterSection = this.querySelector('#filter-section');
+        const filterSection = this.shadowRoot.querySelector('#filter-section');
         if (!filterSection) return;
 
         // Generate static filter HTML
@@ -447,7 +469,7 @@ class PageSpots extends HTMLElement {
     }
 
     generateSpotCards() {
-        const spotsGrid = this.querySelector('#spots-grid');
+        const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         if (!spotsGrid) return;
 
         const spots = window.appState.getAllSpots();
@@ -511,7 +533,7 @@ class PageSpots extends HTMLElement {
     }
 
     preselectFilters() {
-        const filterSection = this.querySelector('#filter-section');
+        const filterSection = this.shadowRoot.querySelector('#filter-section');
         if (!filterSection) return;
 
         const agFilters = filterSection.querySelectorAll('ag-filter');
@@ -598,7 +620,7 @@ class PageSpots extends HTMLElement {
     }
 
     displayFilteredSpots(spots) {
-        const spotsGrid = this.querySelector('#spots-grid');
+        const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         if (!spotsGrid) return;
 
         if (spots.length === 0) {
@@ -630,8 +652,8 @@ class PageSpots extends HTMLElement {
     }
 
     displaySearchResults() {
-        const spotsGrid = this.querySelector('#spots-grid');
-        const containerHdr = this.querySelector('.container-hdr');
+        const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
+        const containerHdr = this.shadowRoot.querySelector('.container-hdr');
 
         if (!spotsGrid || !this.searchResults) return;
 

@@ -212,6 +212,19 @@ ag-footer {
   flex-shrink: 0;
 }
 
+/* === Page Components === */
+
+ag-page-spots,
+ag-page-home,
+ag-page-spot-info,
+ag-page-plan,
+ag-page-guides,
+ag-page-guide-profile,
+ag-page-guide-signup {
+  display: block;
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
 h1 {
   font-family: 'Rubik';
   font-size: var(--fs-2xl);

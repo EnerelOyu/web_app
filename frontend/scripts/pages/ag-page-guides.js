@@ -21,13 +21,14 @@ class PageGuides extends HTMLElement {
                 page-guides {
                     display: block;
                     padding: var(--m-lg);
+                    
                 }
 
                 .guides-container {
                     display: grid;
                     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
                     gap: var(--gap-size-l);
-                    margin-top: var(--m-lg);
+                    margin: var(--m-lg);
                 }
 
                 .guide-link {
@@ -46,7 +47,6 @@ class PageGuides extends HTMLElement {
 
             <h1>Бүх хөтөч</h1>
             <div class="guides-container">
-                <!-- Guides will be loaded here -->
             </div>
         `;
     }
