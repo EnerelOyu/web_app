@@ -21,7 +21,7 @@ class AgHeader extends HTMLElement {
       .logo {
         display: inline-flex;
         align-items: center;
-        margin-right: auto; /* бусдыг баруун тийш түлхэнэ */
+        margin-right: auto; 
         gap: var(--gap-size-s);
         justify-content: center;
       }
@@ -82,6 +82,7 @@ class AgHeader extends HTMLElement {
         text-decoration: none;
         transition: color 0.3s;
         font-weight: 500;
+        margin-left: var(--m-sm);
       }
 
       .header-nav a:hover {
@@ -271,6 +272,7 @@ class AgHeader extends HTMLElement {
       @media (max-width: 480px) {
         .logo-content { display: none; }         /* жижиг дэлгэц дээр текстээ нуух */
         .logo h1 { font-size: var(--fs-base); }
+        .logo { margin-right: var(--m-md); }     /* logo болон mobile menu хоорондох зай */
       }
     `;
   }

@@ -1,8 +1,10 @@
 class PageSpotInfo extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: 'open' });
 
     this.css = `
+      @import url('./styles/global.css');
       @import url('./styles/fonts.css');
 
       .page-spot-info {
@@ -66,9 +68,7 @@ class PageSpotInfo extends HTMLElement {
 
       .page-spot-info .guide-scroll-container {
         position: relative;
-        display: grid;
-        justify-content: center;
-        align-items: center;
+        display: block;
         padding: var(--p-sm) 0;
       }
 
@@ -288,7 +288,7 @@ class PageSpotInfo extends HTMLElement {
 
     // If spot data is not loaded yet, show loading state
     if (!spot) {
-      this.innerHTML = `
+      this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
         <div style="display: flex; justify-content: center; align-items: center; min-height: 50vh;">
           <p style="font-family: 'NunitoSans'; font-size: var(--fs-lg); color: var(--text-color-3);">
@@ -302,7 +302,7 @@ class PageSpotInfo extends HTMLElement {
     const allGuides = window.appState.getAllGuides();
     const filteredGuides = allGuides.filter(guide => guide.area === spot.region);
 
-    this.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <section class="page-spot-info">
         <div class="spot-main">
@@ -375,12 +375,12 @@ class PageSpotInfo extends HTMLElement {
 
   attachEventListeners() {
     // Хөтөчийн scroll товчны listener
-    this.onclick = (e) => {
+    this.shadowRoot.addEventListener('click', (e) => {
       // Хөтөчийн scroll товч (зүүн/баруун)
       const scrollBtn = e.target.closest(".scrl");
       if (scrollBtn) {
         e.preventDefault();
-        const guidesContainer = this.querySelector(".guides");
+        const guidesContainer = this.shadowRoot.querySelector(".guides");
         if (!guidesContainer) return;
 
         const direction = scrollBtn.dataset.scroll === "left" ? -1 : 1;
@@ -391,7 +391,7 @@ class PageSpotInfo extends HTMLElement {
           behavior: "smooth",
         });
       }
-    };
+    });
   }
 }
 

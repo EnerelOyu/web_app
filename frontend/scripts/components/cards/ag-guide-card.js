@@ -1,11 +1,14 @@
 class GuideCard extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
     }
 
-    applyStyles() {
-        const styles = `
-        <style>
+    getStyles() {
+        return `
+            @import url('./styles/global.css');
+            @import url('./styles/fonts.css');
+
             .guide-card {
                 display: flex;
                 flex-direction: column;
@@ -158,19 +161,11 @@ class GuideCard extends HTMLElement {
                     min-width: 70px;
                 }
             }
-        </style>`;
-
-        if (!document.querySelector('#guide-card-styles')) {
-            const styleElement = document.createElement('style');
-            styleElement.id = 'guide-card-styles';
-            styleElement.textContent = styles.split('<style>')[1].split('</style>')[0];
-            document.head.appendChild(styleElement);
-        }
+        `;
     }
 
     connectedCallback() {
         this.render();
-        this.applyStyles();
 
         // Автоматаар guide-id attribute-аас мэдээлэл унших
         const guideId = this.getAttribute('guide-id');
@@ -191,7 +186,8 @@ class GuideCard extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
+            <style>${this.getStyles()}</style>
             <div class="guide-card" id="guideCard">
                 <img id="guidePhoto" src="" alt="Guide photo">
                 <div class="guide-details">
@@ -217,25 +213,25 @@ class GuideCard extends HTMLElement {
         }
 
         // Render хийгдээгүй бол render хийнэ
-        if (!this.querySelector('#guideCard')) {
+        if (!this.shadowRoot.querySelector('#guideCard')) {
             this.render();
         }
 
         const imgSrc = guide.profileImg || '../assets/images/guide-img/default-profile.svg';
         console.log(`Loading guide ${guide.fullName}, image: ${imgSrc}`);
 
-        this.querySelector('#guidePhoto').src = imgSrc;
-        this.querySelector('#guidePhoto').alt = `${guide.fullName} хөтөч`;
-        this.querySelector('#guideName').textContent = guide.fullName;
-        this.querySelector('#guideExperience').textContent = guide.experience;
-        this.querySelector('#guideLanguages').textContent = guide.languages.join(', ');
-        this.querySelector('#guideBirthdate').textContent = '-'; // birthdate хадгалагдаагүй
+        this.shadowRoot.querySelector('#guidePhoto').src = imgSrc;
+        this.shadowRoot.querySelector('#guidePhoto').alt = `${guide.fullName} хөтөч`;
+        this.shadowRoot.querySelector('#guideName').textContent = guide.fullName;
+        this.shadowRoot.querySelector('#guideExperience').textContent = guide.experience;
+        this.shadowRoot.querySelector('#guideLanguages').textContent = guide.languages.join(', ');
+        this.shadowRoot.querySelector('#guideBirthdate').textContent = '-'; // birthdate хадгалагдаагүй
 
-        const phoneLink = this.querySelector('#guidePhone');
+        const phoneLink = this.shadowRoot.querySelector('#guidePhone');
         phoneLink.textContent = guide.phone;
         phoneLink.href = `tel:${guide.phone.replace(/\s+/g, '')}`;
 
-        const ratingElement = this.querySelector('#guideRating');
+        const ratingElement = this.shadowRoot.querySelector('#guideRating');
         if (ratingElement) {
             // Rating guides.json-д байхгүй тул default 4.5
             ratingElement.setAttribute('value', '4.5');

@@ -1,19 +1,21 @@
 class AgSpotReviewList extends HTMLElement {
     constructor() {
         super();
+        this.attachShadow({ mode: 'open' });
         this.reviews = [];
     }
 
     async connectedCallback() {
         this.spotId = this.getAttribute('spot-id') || 'default';
-        this.css();
         await this.loadReviews();
         this.render();
     }
 
-    css() {
-        const styles = `
-        <style>
+    getStyles() {
+        return `
+            @import url('./styles/global.css');
+            @import url('./styles/fonts.css');
+
             .reviews-container {
                 display: flex;
                 flex-direction: row;
@@ -149,15 +151,7 @@ class AgSpotReviewList extends HTMLElement {
                 flex: 1;
                 overflow: hidden;
             }
-        </style>
         `;
-
-        if (!document.querySelector('#ag-spot-review-list-styles')) {
-            const styleElement = document.createElement('style');
-            styleElement.id = 'ag-spot-review-list-styles';
-            styleElement.textContent = styles.split('<style>')[1].split('</style>')[0];
-            document.head.appendChild(styleElement);
-        }
     }
 
     async loadReviews() {
@@ -228,7 +222,8 @@ class AgSpotReviewList extends HTMLElement {
     }
 
     render() {
-        this.innerHTML = `
+        this.shadowRoot.innerHTML = `
+            <style>${this.getStyles()}</style>
             <section class="review-section">
                 <h3 class="section-title">Газрын үнэлгээ & Сэтгэгдэл</h2>
 
@@ -254,7 +249,7 @@ class AgSpotReviewList extends HTMLElement {
 
                     <div class="reviews-scroll">
                         ${this.reviews.map(review => `
-                            <ag-review 
+                            <ag-review
                                 bogin="${review.bogin}"
                                 urt="${review.urt}"
                                 unelgee="${review.unelgee}"
@@ -270,7 +265,7 @@ class AgSpotReviewList extends HTMLElement {
     }
 
     addEventListeners() {
-        const form = this.querySelector('#commentForm');
+        const form = this.shadowRoot.querySelector('#commentForm');
         if (form) {
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -280,9 +275,9 @@ class AgSpotReviewList extends HTMLElement {
     }
 
     async handleFormSubmit() {
-        const name = this.querySelector('#name').value;
-        const comment = this.querySelector('#comment').value;
-        const ratingInput = this.querySelector('#rating-input');
+        const name = this.shadowRoot.querySelector('#name').value;
+        const comment = this.shadowRoot.querySelector('#comment').value;
+        const ratingInput = this.shadowRoot.querySelector('#rating-input');
         const rating = ratingInput ? ratingInput.getValue() : 5.0;
 
         if (name && comment) {

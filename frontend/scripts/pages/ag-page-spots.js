@@ -500,7 +500,7 @@ class PageSpots extends HTMLElement {
 
     attachEventListeners() {
         // Handle spot card clicks
-        this.addEventListener('click', (e) => {
+        this.shadowRoot.addEventListener('click', (e) => {
             const spotCard = e.target.closest('ag-spot-card');
             if (spotCard) {
                 e.preventDefault();
@@ -513,7 +513,7 @@ class PageSpots extends HTMLElement {
         });
 
         // Handle filter changes
-        this.addEventListener('filter-changed', (e) => {
+        this.shadowRoot.addEventListener('filter-changed', (e) => {
             const { type, values } = e.detail;
             this.activeFilters[type] = values;
             this.applyFilters();
