@@ -4,16 +4,17 @@
 class PageGuideSignup extends HTMLElement {
   constructor() {
     super();
+    this.attachShadow({ mode: 'open' });
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   connectedCallback() {
     this.render();
 
-    this.$img = this.querySelector("app-image-upload");
-    this.$basic = this.querySelector("app-guide-basic-form");
-    this.$prefs = this.querySelector("app-guide-preferences");
-    this.$btn = this.querySelector(".submit-btn");
+    this.$img = this.shadowRoot.querySelector("ag-image-upload");
+    this.$basic = this.shadowRoot.querySelector("ag-guide-basic-form");
+    this.$prefs = this.shadowRoot.querySelector("ag-guide-preferences");
+    this.$btn = this.shadowRoot.querySelector(".submit-btn");
 
     this.$btn.addEventListener("click", this.onSubmit);
   }
@@ -84,16 +85,17 @@ class PageGuideSignup extends HTMLElement {
   }
 
   render() {
-    this.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
         @import url('/styles/fonts.css');
+        @import url('./styles/global.css');
 
         /* ===== guide_sign_up.css (page-level) ===== */
-        page-guide-signup {
+        :host {
           display: block;
         }
 
-        page-guide-signup main{
+        main{
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -103,7 +105,7 @@ class PageGuideSignup extends HTMLElement {
           position: relative;
         }
 
-        page-guide-signup .container{
+        .container{
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           gap: var(--gap-size-2xl);
@@ -111,13 +113,13 @@ class PageGuideSignup extends HTMLElement {
           width: 100%;
         }
 
-        page-guide-signup h1{
+        h1{
           text-transform: uppercase;
           font-family: 'Rubik';
           color: var(--text-color-1);
         }
 
-        page-guide-signup .submit-btn{
+        .submit-btn{
           background-color: var(--primary);
           color: var(--primary-5);
           text-transform: uppercase;
@@ -136,40 +138,40 @@ class PageGuideSignup extends HTMLElement {
           bottom: var(--m-lg);
         }
 
-        page-guide-signup .submit-btn:hover{
+        .submit-btn:hover{
           background-color: var(--secondary);
           color: white;
           transform: translateY(-2px);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
 
-        page-guide-signup .submit-btn:active {
+        .submit-btn:active {
           transform: translateY(0);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         /* ===== Responsive ===== */
         @media (max-width: 1024px) {
-          page-guide-signup .container{
+          .container{
             grid-template-columns: 1fr 1fr;
             gap: var(--gap-size-xl);
           }
-          page-guide-signup main{ margin: var(--m-sm); }
+          main{ margin: var(--m-sm); }
         }
 
         @media (max-width: 768px) {
-          page-guide-signup .container{
+          .container{
             grid-template-columns: 1fr;
             gap: var(--gap-size-l);
           }
-          page-guide-signup main{ margin: var(--m-xs); }
+          main{ margin: var(--m-xs); }
 
-          page-guide-signup h1{
+          h1{
             font-size: var(--fs-lg);
             text-align: center;
           }
 
-          page-guide-signup .submit-btn{
+          .submit-btn{
             position: static;
             width: 100%;
             margin-top: var(--m-lg);
@@ -177,7 +179,7 @@ class PageGuideSignup extends HTMLElement {
         }
 
         @media (max-width: 480px) {
-          page-guide-signup main{ gap: var(--gap-size-s); }
+          main{ gap: var(--gap-size-s); }
         }
       </style>
 
