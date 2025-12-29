@@ -326,6 +326,7 @@ class PageSpots extends HTMLElement {
         `;
     }
 
+    //Toast мэдэгдлийн систем тохируулах
     setupToast() {
         if (!document.querySelector('ag-toast')) {
             const toast = document.createElement('ag-toast');
@@ -342,7 +343,7 @@ class PageSpots extends HTMLElement {
             'Үнэлгээ': []
         };
 
-        // Check for search results from header search
+        // Header хайлтын үр дүнг sessionStorage-оос уншиж авах
         this.searchResults = null;
         this.searchQuery = null;
         const storedResults = sessionStorage.getItem('searchResults');
@@ -351,23 +352,22 @@ class PageSpots extends HTMLElement {
         if (storedResults && storedQuery) {
             this.searchResults = JSON.parse(storedResults);
             this.searchQuery = storedQuery;
-            // Clear from sessionStorage
+            // sessionStorage-оос цэвэрлэх
             sessionStorage.removeItem('searchResults');
             sessionStorage.removeItem('searchQuery');
         }
 
-        // Read URL query parameters from home search
+        // URL query параметрүүдээс шүүлт уншиж авах (home хуудаснаас)
         this.readSearchParams();
-
         this.render();
         this.setupToast();
         this.attachEventListeners();
 
-        // Listen for spotData changes
+        // spotData өөрчлөгдөх үед газруудыг дахин зурах
         window.addEventListener('appstatechange', (e) => {
             if (e.detail.key === 'spotData') {
                 this.renderContent();
-                // Apply initial filters from URL or show search results
+                // Хайлтын үр дүн эсвэл шүүлт ашиглах
                 if (this.searchResults) {
                     this.displaySearchResults();
                 } else if (this.hasActiveFilters()) {
@@ -376,10 +376,10 @@ class PageSpots extends HTMLElement {
             }
         });
 
-        // Initial render if data is already loaded
+        // Өгөгдөл аль хэдийн ачаалагдсан бол шууд зурах
         if (window.appState && Object.keys(window.appState.spotData).length > 0) {
             this.renderContent();
-            // Apply initial filters from URL or show search results
+            // Хайлтын үр дүн эсвэл шүүлт ашиглах
             if (this.searchResults) {
                 this.displaySearchResults();
             } else if (this.hasActiveFilters()) {
@@ -387,6 +387,8 @@ class PageSpots extends HTMLElement {
             }
         }
     }
+
+    //URL-аас search параметрүүдийг уншиж activeFilters-д хадгалах
 
     readSearchParams() {
         const hash = window.location.hash;
@@ -397,11 +399,11 @@ class PageSpots extends HTMLElement {
         const queryString = hash.substring(queryIndex + 1);
         const params = new URLSearchParams(queryString);
 
-        // Map URL params to filter names
-        const area = params.get('bus');        // 'bus' -> 'Бүс нутаг'
-        const category = params.get('cate');    // 'cate' -> 'Категори'
-        const activity = params.get('activity'); // 'activity' -> 'Үйл ажиллагаа'
-        const rating = params.get('rating');    // 'rating' -> 'Үнэлгээ'
+        // URL параметрүүдийг шүүлтийн нэртэй харгалзуулах
+        const area = params.get('bus');        
+        const category = params.get('cate');    
+        const activity = params.get('activity'); 
+        const rating = params.get('rating');   
 
         if (area) {
             this.activeFilters['Бүс нутаг'] = [area];
@@ -420,6 +422,10 @@ class PageSpots extends HTMLElement {
         }
     }
 
+    /**
+     * Идэвхтэй шүүлт байгаа эсэхийг шалгах
+     * @returns {boolean}
+     */
     hasActiveFilters() {
         return Object.values(this.activeFilters).some(arr => arr.length > 0);
     }
@@ -450,11 +456,12 @@ class PageSpots extends HTMLElement {
         this.generateSpotCards();
     }
 
+    //Шүүлтүүрийг үүсгэж, өмнөх сонголтыг идэвхжүүлэх
     generateFilters() {
         const filterSection = this.shadowRoot.querySelector('#filter-section');
         if (!filterSection) return;
 
-        // Generate static filter HTML
+        // Шүүлтүүрийн HTML үүсгэх
         filterSection.innerHTML = `
             ${this.createFilterElement('Категори')}
             ${this.createFilterElement('Бүс нутаг')}
@@ -462,17 +469,25 @@ class PageSpots extends HTMLElement {
             ${this.createFilterElement('Үнэлгээ')}
         `;
 
-        // Pre-select filters based on activeFilters after rendering
+        // activeFilters дээр үндэслэн шүүлтүүдийг урьдчилан сонгох
         requestAnimationFrame(() => {
             this.preselectFilters();
         });
     }
 
+    /**
+     * ag-filter элемент үүсгэх
+     * @param {string} name - Шүүлтийн нэр
+     * @returns {string} - HTML string
+     */
     createFilterElement(name) {
-        // ag-filter component now uses static data internally
+        // ag-filter компонент дотроо static өгөгдөл ашиглана
         return `<ag-filter ner="${name}"></ag-filter>`;
     }
 
+    /**
+     * Бүх газруудын картуудыг үүсгэх
+     */
     generateSpotCards() {
         const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         if (!spotsGrid) return;
@@ -480,7 +495,7 @@ class PageSpots extends HTMLElement {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
 
-        // Generate spot cards HTML
+        // Spot картуудын HTML үүсгэх
         spotsGrid.innerHTML = spots.map(spot => {
             const spotId = spot.id;
             const activities = spot.activities || '';
@@ -503,8 +518,9 @@ class PageSpots extends HTMLElement {
         }).join('');
     }
 
+
     attachEventListeners() {
-        // Handle spot card clicks
+        // spot card дарах үйлдэл
         this.shadowRoot.addEventListener('click', (e) => {
             const spotCard = e.target.closest('ag-spot-card');
             if (spotCard) {
@@ -517,13 +533,14 @@ class PageSpots extends HTMLElement {
             }
         });
 
-        // Handle filter changes
+        // filter өөрчлөгдөх үйлдэл
         this.shadowRoot.addEventListener('filter-changed', (e) => {
             const { type, values } = e.detail;
             this.activeFilters[type] = values;
             this.applyFilters();
         });
 
+        // Төлөвлөгөөнд нэмэх үйлдлийн үр дүн сонсох
         this.addEventListener('plan-add-result', (e) => {
             if (!this.toast) return;
             const status = e.detail ? e.detail.status : null;
@@ -537,6 +554,7 @@ class PageSpots extends HTMLElement {
         });
     }
 
+    //activeFilters дээр үндэслэн шүүлтүүрийг урьдчилан сонгох
     preselectFilters() {
         const filterSection = this.shadowRoot.querySelector('#filter-section');
         if (!filterSection) return;
@@ -549,10 +567,10 @@ class PageSpots extends HTMLElement {
 
             if (activeValues.length === 0) return;
 
-            // Access shadow DOM
             const shadowRoot = filter.shadowRoot;
             if (!shadowRoot) return;
 
+            // Checkbox-уудыг олж, тохирох утгуудыг сонгох
             const checkboxes = shadowRoot.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(cb => {
                 if (activeValues.includes(cb.value)) {
@@ -562,13 +580,15 @@ class PageSpots extends HTMLElement {
         });
     }
 
+    //Идэвхтэй шүүлтүүдийг ашиглан газруудыг шүүж харуулах
+
     applyFilters() {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
 
-        // Filter spots based on active filters
+        // Идэвхтэй шүүлтүүдийн дагуу газруудыг шүүх
         const filteredSpots = spots.filter(spot => {
-            // Check category filter
+            // Категорийн шүүлт шалгах
             const categoryFilter = this.activeFilters['Категори'];
             if (categoryFilter.length > 0) {
                 const spotCategories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
@@ -577,7 +597,7 @@ class PageSpots extends HTMLElement {
                 }
             }
 
-            // Check area filter
+            // Бүс нутгийн шүүлт шалгах
             const areaFilter = this.activeFilters['Бүс нутаг'];
             if (areaFilter.length > 0) {
                 if (!areaFilter.includes(spot.region)) {
@@ -585,7 +605,7 @@ class PageSpots extends HTMLElement {
                 }
             }
 
-            // Check activity filter
+            // Үйл ажиллагааны шүүлт шалгах
             const activityFilter = this.activeFilters['Үйл ажиллагаа'];
             if (activityFilter.length > 0) {
                 const spotActivities = spot.activities ? spot.activities.split(',').map(a => a.trim()) : [];
@@ -594,7 +614,7 @@ class PageSpots extends HTMLElement {
                 }
             }
 
-            // Check rating filter
+            // Үнэлгээний шүүлт шалгах
             const ratingFilter = this.activeFilters['Үнэлгээ'];
             if (ratingFilter.length > 0) {
                 const spotRating = parseFloat(spot.rating) || 0;
@@ -620,10 +640,14 @@ class PageSpots extends HTMLElement {
             return true;
         });
 
-        // Update the spots grid with filtered results
+        // Шүүсэн үр дүнг харуулах
         this.displayFilteredSpots(filteredSpots);
     }
 
+    /**
+     * Шүүсэн газруудыг grid дээр харуулах
+     * @param {Array} spots - Шүүсэн газруудын жагсаалт
+     */
     displayFilteredSpots(spots) {
         const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         if (!spotsGrid) return;
@@ -633,7 +657,6 @@ class PageSpots extends HTMLElement {
             return;
         }
 
-        // Generate spot cards HTML
         spotsGrid.innerHTML = spots.map(spot => {
             const spotId = spot.id;
             const activities = spot.activities || '';
@@ -656,13 +679,14 @@ class PageSpots extends HTMLElement {
         }).join('');
     }
 
+    //Header хайлтаас ирсэн үр дүнг харуулна
     displaySearchResults() {
         const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         const containerHdr = this.shadowRoot.querySelector('.container-hdr');
 
         if (!spotsGrid || !this.searchResults) return;
 
-        // Update header to show search query
+        // header хэсгийг хайлтын утгаар шинэчлэх
         if (containerHdr) {
             containerHdr.textContent = `"${this.searchQuery}" хайлтын үр дүн: ${this.searchResults.length} газар олдлоо`;
         }
@@ -672,7 +696,7 @@ class PageSpots extends HTMLElement {
             return;
         }
 
-        // Display search results
+        // Хайлтын үр дүнг харуулах
         spotsGrid.innerHTML = this.searchResults.map(spot => {
             const spotId = spot.id;
             const activities = spot.activities || '';

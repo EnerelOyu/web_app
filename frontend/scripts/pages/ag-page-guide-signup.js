@@ -1,20 +1,18 @@
-// Components are already loaded in index.html, no need to import again
-// but we keep imports for module dependencies
-
 class PageGuideSignup extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    // onSubmit функцийн this-ийг тогтоох
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   connectedCallback() {
     this.render();
 
-    this.$img = this.shadowRoot.querySelector("ag-image-upload");
-    this.$basic = this.shadowRoot.querySelector("ag-guide-basic-form");
-    this.$prefs = this.shadowRoot.querySelector("ag-guide-preferences");
-    this.$btn = this.shadowRoot.querySelector(".submit-btn");
+    this.$img = this.shadowRoot.querySelector("ag-image-upload");        // Зураг оруулах компонент
+    this.$basic = this.shadowRoot.querySelector("ag-guide-basic-form");  // Үндсэн мэдээллийн форм
+    this.$prefs = this.shadowRoot.querySelector("ag-guide-preferences"); // Сонголт, туршлагын форм
+    this.$btn = this.shadowRoot.querySelector(".submit-btn");            
 
     this.$btn.addEventListener("click", this.onSubmit);
   }
@@ -23,14 +21,17 @@ class PageGuideSignup extends HTMLElement {
     this.$btn?.removeEventListener("click", this.onSubmit);
   }
 
+  // Бүртгүүлэх товч дарагдахад форм өгөгдлийг цуглуулж backend руу илгээнэ
   onSubmit() {
+    // Бүх форм компонентуудаас өгөгдлийг цуглуулах
     const payload = {
-      imageFile: this.$img?.getFile?.() ?? null,
-      basic: this.$basic?.getValue?.() ?? {},
-      preferences: this.$prefs?.getValue?.() ?? {},
-      createdAt: new Date().toISOString(),
+      imageFile: this.$img?.getFile?.() ?? null,         
+      basic: this.$basic?.getValue?.() ?? {},            
+      preferences: this.$prefs?.getValue?.() ?? {},      
+      createdAt: new Date().toISOString(),                
     };
 
+    // Заавал шаардлагатай талбаруудыг шалгах
     if (!payload.basic?.firstName || !payload.basic?.lastName) {
       alert("Овог, нэрээ бөглөнө үү.");
       return;
@@ -40,21 +41,23 @@ class PageGuideSignup extends HTMLElement {
       return;
     }
 
-    // Create FormData for file upload
+    // FormData үүсгэх
     const formData = new FormData();
     formData.append('lastName', payload.basic.lastName);
     formData.append('firstName', payload.basic.firstName);
     formData.append('phone', payload.basic.phone || '');
     formData.append('email', payload.basic.email);
+    // Сонголтын утгуудыг оруулах 
     formData.append('area', payload.preferences.region !== 'default' ? payload.preferences.region : '');
     formData.append('category', payload.preferences.category !== 'default' ? payload.preferences.category : '');
     formData.append('languages', payload.preferences.language !== 'default' ? payload.preferences.language : '');
     formData.append('experienceLevel', payload.preferences.experience !== 'default' ? payload.preferences.experience : '');
+    // Профайл зураг байвал нэмэх
     if (payload.imageFile) {
       formData.append('profileImage', payload.imageFile);
     }
 
-    // Send to backend
+    // Backend API руу POST хүсэлт илгээх
     fetch('http://localhost:3000/api/guides', {
       method: 'POST',
       body: formData
@@ -67,12 +70,13 @@ class PageGuideSignup extends HTMLElement {
     })
     .then(data => {
       if (data.success) {
+        // Амжилттай бүртгэгдсэн
         alert(`Хөтөч амжилттай бүртгэгдлээ! ID: ${data.guideId}`);
-        // Refresh guide data
+        // appState-д хөтөчдийн өгөгдлийг дахин ачаалах
         if (window.appState && window.appState.loadGuideData) {
           window.appState.loadGuideData();
         }
-        // Redirect to guides page to see all guides including the new one
+        // Хөтөчдийн хуудас руу шилжих
         window.location.hash = '#/guides';
       } else {
         alert('Алдаа гарлаа: ' + data.error);
@@ -90,7 +94,7 @@ class PageGuideSignup extends HTMLElement {
         @import url('/styles/fonts.css');
         @import url('./styles/global.css');
 
-        /* ===== guide_sign_up.css (page-level) ===== */
+        /* Хуудасны загвар */
         :host {
           display: block;
         }
@@ -150,7 +154,7 @@ class PageGuideSignup extends HTMLElement {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* ===== Responsive ===== */
+        /* Хариуцлагатай загвар - төхөөрөмжийн хэмжээнд тохируулах */
         @media (max-width: 1024px) {
           .container{
             grid-template-columns: 1fr 1fr;

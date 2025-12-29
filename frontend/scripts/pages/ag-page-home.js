@@ -1,5 +1,5 @@
 class PageHome extends HTMLElement {
-    
+
     constructor() {
         super();
     }
@@ -7,10 +7,11 @@ class PageHome extends HTMLElement {
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
         this.render();
+        // Toast мэдэгдлэл 
         this.setupToast();
         this.attachEventListeners();
 
-        // Listen for spotData changes to render top rated spots
+        // spotData өөрчлөгдөх үед газруудыг дахин зурах
         window.addEventListener('appstatechange', (e) => {
             if (e.detail.key === 'spotData') {
                 this.renderTopRatedSpots();
@@ -19,7 +20,7 @@ class PageHome extends HTMLElement {
             }
         });
 
-        // Initial render if data is already loaded
+        // Өгөгдөл аль хэдийн ачаалагдсан бол шууд зурах
         if (window.appState && Object.keys(window.appState.spotData).length > 0) {
             this.renderTopRatedSpots();
             this.renderTopCulturalSpots();
@@ -27,7 +28,10 @@ class PageHome extends HTMLElement {
         }
     }
 
-    //plan -д spot нэмэгдсэн амжилт/алдааны мэдэгдэл харуулахад ашиглана
+    /*
+     * Toast мэдэгдлийн систем тохируулах
+     * Төлөвлөгөөнд газар нэмэгдсэн/алдаа гарсан үед мэдэгдэл харуулна
+     */
     setupToast() {
         // Toast элемент байхгүй бол шинээр үүсгэх
         if (!document.querySelector('ag-toast')) {
@@ -198,9 +202,7 @@ class PageHome extends HTMLElement {
                 padding: 0;
             }
 
-            /* =========================
-               MOBILE LANDSCAPE (481px - 768px - гар утасны хэвтээ)
-               ========================= */
+            /* MOBILE LANDSCAPE */
             @media (max-width: 768px) and (min-width: 481px) {
                 main {
                     gap: var(--gap-size-l);
@@ -382,7 +384,8 @@ class PageHome extends HTMLElement {
         `;
     }
 
-    /* Үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    //Бүх газруудыг үнэлгээгээр нь эрэмбэлж, эхний 4-ийг харуулна
+    
     renderTopRatedSpots() {
         const topRatedSection = this.shadowRoot.querySelector('#top-rated-section');
         if (!topRatedSection) return;
@@ -390,12 +393,12 @@ class PageHome extends HTMLElement {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
 
-        // Sort by rating (descending) and take top 4
+        // Үнэлгээгээр буурах дарааллаар эрэмбэлж, эхний 4-ийг авах
         const topRatedSpots = [...spots]
             .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
             .slice(0, 4);
 
-        // Generate spot HTML
+        // Spot HTML үүсгэх
         const spotsHTML = topRatedSpots.map(spot => `
             <ag-spot
                 zrg="${spot.img1 || ''}"
@@ -405,11 +408,12 @@ class PageHome extends HTMLElement {
             </ag-spot>
         `).join('');
 
-        // Insert spots into the section
+        // Section дотор spot-уудыг оруулах
         topRatedSection.innerHTML = spotsHTML;
     }
 
-    /* Соёлын категоритой, үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    // "Соёл" категоритой газруудыг шүүж, үнэлгээгээр эрэмбэлнэ
+
     renderTopCulturalSpots() {
         const culturalSection = this.shadowRoot.querySelector('#cultural-section');
         if (!culturalSection) return;
@@ -417,7 +421,7 @@ class PageHome extends HTMLElement {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
 
-        // Filter cultural spots and sort by rating (descending), take top 4
+        // Соёлын газруудыг шүүж, үнэлгээгээр эрэмбэлж, эхний 4-ийг авах
         const topCulturalSpots = [...spots]
             .filter(spot => {
                 const categories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
@@ -426,7 +430,7 @@ class PageHome extends HTMLElement {
             .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
             .slice(0, 4);
 
-        // Generate spot HTML
+        // Spot HTML үүсгэх
         const spotsHTML = topCulturalSpots.map(spot => `
             <ag-spot
                 zrg="${spot.img1 || ''}"
@@ -436,11 +440,11 @@ class PageHome extends HTMLElement {
             </ag-spot>
         `).join('');
 
-        // Insert spots into the section
+        // Section дотор spot-уудыг оруулах
         culturalSection.innerHTML = spotsHTML;
     }
 
-    /* Байгалийн категоритой, үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    //"Байгаль" категоритой газруудыг шүүж, үнэлгээгээр эрэмбэлнэ
     renderTopNatureSpots() {
         const natureSection = this.shadowRoot.querySelector('#nature-section');
         if (!natureSection) return;
@@ -448,7 +452,7 @@ class PageHome extends HTMLElement {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
 
-        // Filter nature spots and sort by rating (descending), take top 4
+        // Байгалийн газруудыг шүүж, үнэлгээгээр эрэмбэлж, эхний 4-ийг авах
         const topNatureSpots = [...spots]
             .filter(spot => {
                 const categories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
@@ -457,7 +461,7 @@ class PageHome extends HTMLElement {
             .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
             .slice(0, 4);
 
-        // Generate spot HTML
+        // Spot HTML үүсгэх
         const spotsHTML = topNatureSpots.map(spot => `
             <ag-spot
                 zrg="${spot.img1 || ''}"
@@ -467,18 +471,15 @@ class PageHome extends HTMLElement {
             </ag-spot>
         `).join('');
 
-        // Insert spots into the section
+        // Section дотор spot-уудыг оруулах
         natureSection.innerHTML = spotsHTML;
     }
 
-    /* ag-spot дээр дарах үйлдлүүдийг удирдана:
-     * - Газрын мэдээлэл үзэх
-     * - Төлөвлөгөөнд нэмэх
-     */
+    //ag-spot элемент дээрх дарах үйлдлүүдийг удирдах
     attachEventListeners() {
-        // ag-spot элементүүд дээрх дарах үйлдлийг боловсруулах
+        // ag-spot элементүүд дээрх дарах 
         this.shadowRoot.addEventListener('click', (e) => {
-            // Дарагдсан spot элементийг олох
+            // Дарагдсан spot-ыг олох
             const spot = e.target.closest('ag-spot');
             if (!spot) return;
 
@@ -495,21 +496,21 @@ class PageHome extends HTMLElement {
             );
 
             if (isAddButton) {
-                // Төлөвлөгөөнд нэмэх үйлдэл
+                // "Нэмэх" товч дарагдсан - Төлөвлөгөөнд нэмэх
                 e.preventDefault();
                 e.stopPropagation();
 
-                // Spot-г төлөвлөгөөнд нэмэх
+                // Spot-г төлөвлөгөөнд нэмэх 
                 const result = window.appState.addToPlan(spotId);
 
                 if (result === true) {
-                    // Амжилттай нэмэгдсэн - амжилтын мэдэгдэл харуулах
+                    // Амжилттай нэмэгдсэн
                     const button = path.find(el =>
                         el.tagName === 'BUTTON' &&
                         el.getAttribute?.('aria-label') === 'Маршрутдаа нэмэх'
                     );
                     if (button) {
-                        // Товчны өнгө түр өөрчлөх (харааны пиидбэк)
+                        // Товчны өнгө түр өөрчлөх
                         button.style.backgroundColor = 'var(--accent-3)';
                         setTimeout(() => {
                             button.style.backgroundColor = '';
@@ -527,7 +528,7 @@ class PageHome extends HTMLElement {
                     }
                 }
             } else {
-                // Spot-ын дэлгэрэнгүй мэдээлэл рүү шилжих
+                // Spot дээр дархад харгалзах spot-info хуудас руу шилжих
                 window.appState.setCurrentSpot(spotId);
                 window.location.hash = `#/spot-info?spotId=${spotId}`;
             }

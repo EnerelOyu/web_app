@@ -203,7 +203,7 @@ class PageGuideProfile extends HTMLElement {
         transform: translateX(-4px);
       }
 
-      /* RESPONSIVE */
+      /* Хариуцлагатай загвар - төхөөрөмжийн хэмжээнд тохируулах */
       @media (max-width: 960px) {
         .page-guide-profile {
           margin: var(--m-sm);
@@ -259,20 +259,21 @@ class PageGuideProfile extends HTMLElement {
   async connectedCallback() {
     await this.render();
 
-    // Listen for app state changes
+    // appState-ийн өөрчлөлтийг сонсох - хөтөчийн өгөгдөл шинэчлэгдвэл дахин зурах
     window.addEventListener("appstatechange", async (e) => {
       if (e.detail.key === "guideData") {
         await this.render();
       }
     });
 
-    // Listen for new review added event to update rating
+    // Шинэ үнэлгээ нэмэгдэх үед хөтөчийн үнэлгээг шинэчлэх
     window.addEventListener("guide-review-added", async (e) => {
-      // Re-render to update the rating display
+      // Үнэлгээний дундаж дахин тооцоолохоор хуудсыг дахин зурах
       await this.render();
     });
   }
 
+  // Backend-аас хөтөчийн үнэлгээнүүдийг татаж авах
   async fetchGuideReviews(guideId) {
     try {
       const response = await fetch(`http://localhost:3000/api/guides/${guideId}/reviews`);
@@ -287,21 +288,25 @@ class PageGuideProfile extends HTMLElement {
     }
   }
 
+  // Үнэлгээний дундаж тооцоолох
   calculateAverageRating(reviews) {
+    // Үнэлгээ байхгүй бол 0 буцаах
     if (!reviews || reviews.length === 0) {
       return { average: 0, count: 0 };
     }
+    // Бүх үнэлгээний нийлбэр тооцоолох
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     const average = sum / reviews.length;
     return { average: Math.round(average * 10) / 10, count: reviews.length };
   }
 
   async render() {
-    // Get guide ID from URL
+    // URL параметрээс хөтөчийн ID авах
     const queryString = window.location.hash.split('?')[1] || '';
     const urlParams = new URLSearchParams(queryString);
     const guideId = urlParams.get('g');
 
+    // Хөтөчийн ID байхгүй бол алдааны мессеж харуулах
     if (!guideId) {
       this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
@@ -312,8 +317,10 @@ class PageGuideProfile extends HTMLElement {
       return;
     }
 
+    // appState-аас хөтөчийн мэдээллийг авах
     const guide = window.appState?.getGuide(guideId);
 
+    // Хөтөч олдохгүй бол алдааны мессеж харуулах
     if (!guide) {
       this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
@@ -325,17 +332,19 @@ class PageGuideProfile extends HTMLElement {
       return;
     }
 
-    // Fetch guide reviews and calculate average rating
+    // Хөтөчийн үнэлгээнүүдийг татаж авч, дундажийг тооцоолох
     const reviews = await this.fetchGuideReviews(guideId);
     const { average, count } = this.calculateAverageRating(reviews);
 
     this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <div class="page-guide-profile">
+        <!-- Буцах товч -->
         <a href="javascript:history.back()" class="back-button">← Буцах</a>
 
-        <!-- HEADER SECTION -->
+        <!-- Хөтөчийн үндсэн мэдээлэл хэсэг -->
         <section class="guide-profile-header">
+          <!-- Профайл зураг -->
           <img
             src="${guide.profileImg || '../assets/images/guide-img/default-profile.svg'}"
             alt="${guide.fullName}"
@@ -343,13 +352,16 @@ class PageGuideProfile extends HTMLElement {
           />
 
           <div class="guide-profile-info">
+            <!-- Хөтөчийн нэр -->
             <h1 class="guide-profile-name">${guide.fullName}</h1>
 
+            <!-- Үнэлгээ харуулах хэсэг -->
             <div class="guide-profile-rating">
               <ag-rating value="${average || 0}"></ag-rating>
               <span style="color: var(--text-color-3); font-size: var(--fs-sm);">(${count} үнэлгээ)</span>
             </div>
 
+            <!-- Хөтөчийн мэдээлэл (туршлага, хэл, бүс нутаг, утас, и-мэйл) -->
             <div class="guide-profile-meta">
               <div class="guide-meta-item">
                 <span class="guide-meta-label">Туршлага</span>
@@ -382,6 +394,7 @@ class PageGuideProfile extends HTMLElement {
               </div>
             </div>
 
+            <!-- Холбоо барих товчууд -->
             <div class="guide-contact-section">
               <a href="tel:${guide.phone ? guide.phone.replace(/\s+/g, '') : ''}" class="guide-contact-btn">
                 <svg><use href="/styles/icons.svg#icon-phone"></use></svg>
@@ -395,7 +408,7 @@ class PageGuideProfile extends HTMLElement {
           </div>
         </section>
 
-        <!-- REVIEWS SECTION -->
+        <!-- Хөтөчийн үнэлгээний хэсэг -->
         <ag-guide-review-list guide-id="${guideId}"></ag-guide-review-list>
       </div>
     `;

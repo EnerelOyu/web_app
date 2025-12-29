@@ -1,4 +1,6 @@
+// URL параметрээс spotId авч, тухайн газрын бүх мэдээлэл харуулна
 class PageSpotInfo extends HTMLElement {
+
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
@@ -97,9 +99,7 @@ class PageSpotInfo extends HTMLElement {
       }
 
 
-      /* =====================================================
-             SCROLL BUTTONS (Left / Right)
-         ===================================================== */
+      /* SCROLL BUTTONS*/
 
       .page-spot-info .scrl {
         position: absolute;
@@ -186,9 +186,7 @@ class PageSpotInfo extends HTMLElement {
         gap: var(--gap-size-s);
       }
 
-      /* =====================================================
-             REVIEW CARD (Used inside ag-review-card)
-         ===================================================== */
+      /* REVIEW CARD */
 
       .page-spot-info .review-card {
         display: flex;
@@ -208,9 +206,7 @@ class PageSpotInfo extends HTMLElement {
         text-transform: uppercase;
       }
 
-      /* =====================================================
-                          RESPONSIVE
-         ===================================================== */
+      /* Хариуцлагатай загвар - төхөөрөмжийн хэмжээнд тохируулах */
 
       @media (max-width: 960px) {
         .page-spot-info {
@@ -254,14 +250,16 @@ class PageSpotInfo extends HTMLElement {
     `;
   }
 
+  // Element DOM дээр холбогдох үед дуудагдана
   connectedCallback() {
-    // Read spotId from URL hash
+    // URL-аас gazrын ID-г авч, appState-д тохируулах
     this.loadSpotFromURL();
 
+    // Хуудсыг анх зурж, event listener-үүдийг холбох
     this.render();
     this.attachEventListeners();
 
-    // appState дотор currentSpot эсвэл spotData солигдоход реактив болгоно
+    // appState-ийн өөрчлөлтийг сонсох - газрын өгөгдөл шинэчлэгдвэл дахин зурах
     window.addEventListener("appstatechange", (e) => {
       if (e.detail.key === "currentSpot" || e.detail.key === "spotData") {
         this.render();
@@ -269,9 +267,9 @@ class PageSpotInfo extends HTMLElement {
       }
     });
 
-    // Listen for new review added event to update rating
+    // Шинэ үнэлгээ нэмэгдэх үед газрын үнэлгээг шинэчлэх
     window.addEventListener("spot-review-added", async () => {
-      // Re-fetch and update the spot hero rating
+      // ag-spot-hero элементийг олж, үнэлгээг дахин тооцоолох
       const spotHero = this.shadowRoot.querySelector('#current-spot-hero');
       if (spotHero) {
         const spotId = spotHero.getAttribute('spot-id');
@@ -285,22 +283,24 @@ class PageSpotInfo extends HTMLElement {
   }
 
   loadSpotFromURL() {
-    // Get spotId from URL hash: #/spot-info?spotId=7
+    // URL hash-аас параметр авах
     const hash = window.location.hash;
     const urlParams = new URLSearchParams(hash.split('?')[1] || '');
     const spotId = urlParams.get('spotId');
 
+    // spotId байвал appState-д одоогийн газар болгон тохируулах
     if (spotId) {
       window.appState.setCurrentSpot(spotId);
     }
   }
 
   render() {
+    // appState-аас одоогийн газрын мэдээллийг авах, байхгүй бол default газар авах
     const spot =
       window.appState.currentSpot ||
       window.appState.getSpot("amarbayasgalant");
 
-    // If spot data is not loaded yet, show loading state
+    // Газрын өгөгдөл хараахан ачаалагдаагүй бол "Ачаалж байна" мессеж харуулах
     if (!spot) {
       this.shadowRoot.innerHTML = `
         <style>${this.css}</style>
@@ -313,12 +313,14 @@ class PageSpotInfo extends HTMLElement {
       return;
     }
 
+    // Тухайн газрын бүс нутагт хөтөч хийдэг хөтөчдийг шүүж авах
     const allGuides = window.appState.getAllGuides();
     const filteredGuides = allGuides.filter(guide => guide.area === spot.region);
 
     this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <section class="page-spot-info">
+        <!-- Газрын үндсэн мэдээлэл: зураг, нэр, үнэлгээ (зүүн), газрын зураг, хаяг (баруун) -->
         <div class="spot-main">
           <ag-spot-hero
             id="current-spot-hero"
@@ -343,14 +345,15 @@ class PageSpotInfo extends HTMLElement {
           ></ag-spot-aside>
         </div>
 
+        <!-- Газрын дэлгэрэнгүй: танилцуулга, хөтөч, сэтгэгдэл -->
         <div class="spot-details">
-          <!-- Танилцуулга -->
+          <!-- Танилцуулга хэсэг -->
           <section class="intro">
             <h3>Танилцуулга</h3>
             <p>${spot.description}</p>
           </section>
 
-          <!-- Санал болгох хөтөч -->
+          <!-- Санал болгох хөтөч хэсэг - хэвтээ гүйлгэх боломжтой -->
           <section class="guide-section">
             <h3>Санал болгох хөтөч</h3>
             <div class="guide-scroll-container">
@@ -379,7 +382,7 @@ class PageSpotInfo extends HTMLElement {
             </a>
           </section>
 
-          <!-- Сэтгэгдэл -->
+          <!-- Сэтгэгдэл хэсэг -->
           <section class="review-section">
             <ag-spot-review-list spot-id="${spot.id}"></ag-spot-review-list>
           </section>
@@ -389,18 +392,17 @@ class PageSpotInfo extends HTMLElement {
   }
 
   attachEventListeners() {
-    // Хөтөчийн scroll товчны listener
     this.shadowRoot.addEventListener('click', (e) => {
-      // Хөтөчийн scroll товч (зүүн/баруун)
+      // Хөтөчийн scroll товч дарагдсан эсэхийг шалгах
       const scrollBtn = e.target.closest(".scrl");
       if (scrollBtn) {
         e.preventDefault();
         const guidesContainer = this.shadowRoot.querySelector(".guides");
         if (!guidesContainer) return;
 
+        // Зүүн эсвэл баруун гүйх чиглэл тодорхойлох
         const direction = scrollBtn.dataset.scroll === "left" ? -1 : 1;
-        const amount = 300; // px
-
+        const amount = 300; // Гүйх зай (pixel)
         guidesContainer.scrollBy({
           left: direction * amount,
           behavior: "smooth",
