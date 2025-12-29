@@ -25,34 +25,80 @@ const ensureLookup = (table, name) => {
   return insert.lastInsertRowid;
 };
 
-const seedSpot = (spot) => {
-  const insertSpot = db.prepare(`
-    INSERT INTO spots (
-      name, area, category, detailLocation, descriptionLong, rating,
-      price, priceText, ageRange, openingHours, status,
-      imgMainUrl, img2Url, img3Url, mapSrc
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+const seedSpot = (spot, index) => {
+  const spotId = index + 1; // Use 1-based index as spotId
 
-  const spotResult = insertSpot.run(
-    spot.name,
-    spot.area,
-    spot.category || '',
-    spot.detailLocation,
-    spot.descriptionLong,
-    spot.rating,
-    spot.price,
-    spot.priceText,
-    spot.ageRange,
-    spot.openingHours,
-    spot.status,
-    spot.imgMainUrl,
-    spot.img2Url,
-    spot.img3Url,
-    spot.mapSrc
-  );
+  // Check if spot already exists
+  const existingSpot = db.prepare('SELECT spotId FROM spots WHERE spotId = ?').get(spotId);
 
-  const spotDbId = spotResult.lastInsertRowid;
+  let spotDbId;
+
+  if (existingSpot) {
+    // Update existing spot (preserves reviews)
+    const updateSpot = db.prepare(`
+      UPDATE spots SET
+        name = ?, area = ?, category = ?, detailLocation = ?, descriptionLong = ?,
+        rating = ?, price = ?, priceText = ?, ageRange = ?, openingHours = ?,
+        status = ?, imgMainUrl = ?, img2Url = ?, img3Url = ?, mapSrc = ?,
+        updatedAt = CURRENT_TIMESTAMP
+      WHERE spotId = ?
+    `);
+
+    updateSpot.run(
+      spot.name,
+      spot.area,
+      spot.category || '',
+      spot.detailLocation,
+      spot.descriptionLong,
+      spot.rating,
+      spot.price,
+      spot.priceText,
+      spot.ageRange,
+      spot.openingHours,
+      spot.status,
+      spot.imgMainUrl,
+      spot.img2Url,
+      spot.img3Url,
+      spot.mapSrc,
+      spotId
+    );
+
+    spotDbId = spotId;
+
+    // Clear existing relationships
+    db.prepare('DELETE FROM spot_categories WHERE spotId = ?').run(spotDbId);
+    db.prepare('DELETE FROM spot_activities WHERE spotId = ?').run(spotDbId);
+  } else {
+    // Insert new spot
+    const insertSpot = db.prepare(`
+      INSERT INTO spots (
+        spotId, name, area, category, detailLocation, descriptionLong, rating,
+        price, priceText, ageRange, openingHours, status,
+        imgMainUrl, img2Url, img3Url, mapSrc
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
+    insertSpot.run(
+      spotId,
+      spot.name,
+      spot.area,
+      spot.category || '',
+      spot.detailLocation,
+      spot.descriptionLong,
+      spot.rating,
+      spot.price,
+      spot.priceText,
+      spot.ageRange,
+      spot.openingHours,
+      spot.status,
+      spot.imgMainUrl,
+      spot.img2Url,
+      spot.img3Url,
+      spot.mapSrc
+    );
+
+    spotDbId = spotId;
+  }
 
   const categories = (spot.category || '').split(',').map(v => v.trim()).filter(Boolean);
   categories.forEach(catName => {
@@ -70,12 +116,15 @@ const seedSpot = (spot) => {
 
 const run = () => {
   initDB();
-  db.exec('DELETE FROM spot_categories; DELETE FROM spot_activities; DELETE FROM spots; VACUUM;');
+
+  // Don't delete spots to preserve reviews
+  // Only clear relationship tables
+  db.exec('DELETE FROM spot_categories; DELETE FROM spot_activities;');
 
   const spots = readSpotsJson();
-  spots.forEach(spot => seedSpot(spot));
+  spots.forEach((spot, index) => seedSpot(spot, index));
 
-  console.log(`Seeded ${spots.length} spots.`);
+  console.log(`Seeded ${spots.length} spots (preserved existing reviews).`);
 };
 
 run();

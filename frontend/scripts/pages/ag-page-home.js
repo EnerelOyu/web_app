@@ -5,10 +5,26 @@ class PageHome extends HTMLElement {
     }
 
     connectedCallback() {
-        this.attachShadow({ mode: 'open' }); 
+        this.attachShadow({ mode: 'open' });
         this.render();
         this.setupToast();
         this.attachEventListeners();
+
+        // Listen for spotData changes to render top rated spots
+        window.addEventListener('appstatechange', (e) => {
+            if (e.detail.key === 'spotData') {
+                this.renderTopRatedSpots();
+                this.renderTopCulturalSpots();
+                this.renderTopNatureSpots();
+            }
+        });
+
+        // Initial render if data is already loaded
+        if (window.appState && Object.keys(window.appState.spotData).length > 0) {
+            this.renderTopRatedSpots();
+            this.renderTopCulturalSpots();
+            this.renderTopNatureSpots();
+        }
     }
 
     //plan -д spot нэмэгдсэн амжилт/алдааны мэдэгдэл харуулахад ашиглана
@@ -341,31 +357,8 @@ class PageHome extends HTMLElement {
             </section>
 
             <!-- Featured Spots -->
-            <ag-spot-section title="Шилдэг аяллын цэгүүд" link="#/spots?rating=5">
-                <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2019-06/73598f88ed537774c53235a248ac9feb-gandan-khiid.jpg"
-                    ner="Гандан Тэгчинлэн Хийд"
-                    bus="Төв"
-                    data-spot-id="7">
-                </ag-spot>
-                <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF567790018.jpg"
-                    ner="Амарбаясгалант хийд"
-                    bus="Хангай"
-                    data-spot-id="2">
-                </ag-spot>
-                <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-08/iStock-1218362078.jpg"
-                    ner="Хустайн байгалийн цогцолборт газар"
-                    bus="Төв"
-                    data-spot-id="3">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot04-1.jpg"
-                    ner="Горхи-Тэрэлж Үндэсний Парк"
-                    bus="Төв"
-                    data-spot-id="4">
-                </ag-spot>
+            <ag-spot-section title="Шилдэг аяллын цэгүүд" link="#/spots?rating=5" id="top-rated-section">
+                <!-- Top rated spots will be dynamically loaded here -->
             </ag-spot-section>
 
             <!-- Guide Banner -->
@@ -377,62 +370,105 @@ class PageHome extends HTMLElement {
             </ag-guide-banner>
 
             <!-- Cultural Spots -->
-            <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="#/spots?cate=Соёл">
-                <ag-spot
-                    zrg="https://lp-cms-production.imgix.net/2023-07/shutterstockRF579068047.jpg"
-                    ner="Эрдэнэзуу хийд"
-                    bus="Хангай"
-                    data-spot-id="11">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot02-1.jpg"
-                    ner="Амарбаясгалант хийд"
-                    bus="Хангай"
-                    data-spot-id="2">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot07-1.jpg"
-                    ner="Гандан Тэгчинлэн Хийд"
-                    bus="Төв"
-                    data-spot-id="7">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot08-1.jpg"
-                    ner="Богд хан уул"
-                    bus="Төв"
-                    data-spot-id="8">
-                </ag-spot>
+            <ag-spot-section title="Соёлын үзэсгэлэнт газрууд" link="#/spots?cate=Соёл" id="cultural-section">
+                <!-- Top cultural spots will be dynamically loaded here -->
             </ag-spot-section>
 
             <!-- Nature Spots -->
-            <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="#/spots?cate=Байгаль">
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot03-1.jpg"
-                    ner="Хустайн байгалийн цогцолборт газар"
-                    bus="Төв"
-                    data-spot-id="3">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot13-1.jpg"
-                    ner="Тэрхийн цагаан нуур"
-                    bus="Хангай"
-                    data-spot-id="13">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot14-1.jpg"
-                    ner="Алтай Таван богд"
-                    bus="Алтай"
-                    data-spot-id="14">
-                </ag-spot>
-                <ag-spot
-                    zrg="/assets/images/spot-img/spot09-1.jpg"
-                    ner="Хөвсгөл нуур"
-                    bus="Хангай"
-                    data-spot-id="9">
-                </ag-spot>
+            <ag-spot-section title="Байгалийн үзэсгэлэнт газрууд" link="#/spots?cate=Байгаль" id="nature-section">
+                <!-- Top nature spots will be dynamically loaded here -->
             </ag-spot-section>
         </main>
         `;
+    }
+
+    /* Үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    renderTopRatedSpots() {
+        const topRatedSection = this.shadowRoot.querySelector('#top-rated-section');
+        if (!topRatedSection) return;
+
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Sort by rating (descending) and take top 4
+        const topRatedSpots = [...spots]
+            .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+            .slice(0, 4);
+
+        // Generate spot HTML
+        const spotsHTML = topRatedSpots.map(spot => `
+            <ag-spot
+                zrg="${spot.img1 || ''}"
+                ner="${spot.title || ''}"
+                bus="${spot.region || ''}"
+                data-spot-id="${spot.id}">
+            </ag-spot>
+        `).join('');
+
+        // Insert spots into the section
+        topRatedSection.innerHTML = spotsHTML;
+    }
+
+    /* Соёлын категоритой, үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    renderTopCulturalSpots() {
+        const culturalSection = this.shadowRoot.querySelector('#cultural-section');
+        if (!culturalSection) return;
+
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Filter cultural spots and sort by rating (descending), take top 4
+        const topCulturalSpots = [...spots]
+            .filter(spot => {
+                const categories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
+                return categories.includes('Соёл');
+            })
+            .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+            .slice(0, 4);
+
+        // Generate spot HTML
+        const spotsHTML = topCulturalSpots.map(spot => `
+            <ag-spot
+                zrg="${spot.img1 || ''}"
+                ner="${spot.title || ''}"
+                bus="${spot.region || ''}"
+                data-spot-id="${spot.id}">
+            </ag-spot>
+        `).join('');
+
+        // Insert spots into the section
+        culturalSection.innerHTML = spotsHTML;
+    }
+
+    /* Байгалийн категоритой, үнэлгээ хамгийн өндөр 4 spot-ыг рендер хийх */
+    renderTopNatureSpots() {
+        const natureSection = this.shadowRoot.querySelector('#nature-section');
+        if (!natureSection) return;
+
+        const spots = window.appState.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Filter nature spots and sort by rating (descending), take top 4
+        const topNatureSpots = [...spots]
+            .filter(spot => {
+                const categories = spot.cate ? spot.cate.split(',').map(c => c.trim()) : [];
+                return categories.includes('Байгаль');
+            })
+            .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+            .slice(0, 4);
+
+        // Generate spot HTML
+        const spotsHTML = topNatureSpots.map(spot => `
+            <ag-spot
+                zrg="${spot.img1 || ''}"
+                ner="${spot.title || ''}"
+                bus="${spot.region || ''}"
+                data-spot-id="${spot.id}">
+            </ag-spot>
+        `).join('');
+
+        // Insert spots into the section
+        natureSection.innerHTML = spotsHTML;
     }
 
     /* ag-spot дээр дарах үйлдлүүдийг удирдана:

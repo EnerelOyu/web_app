@@ -1,36 +1,79 @@
-// Global application state management
 class AppState {
     constructor() {
-        // Plan data - маршрутын мэдээлэл
+        // Хэрэглэгчийн аяллын төлөвлөгөөнд нэмсэн газруудын жагсаалт
         this.planItems = [];
-
-        // Currently selected spot
+        // spot-info хуудаст одоо харуулж байгаа газар
         this.currentSpot = null;
 
-        // Spot data repository (will be loaded from JSON)
+        // API-аас татсан газрын өгөгдөл
         this.spotData = {};
 
-        // Guide data repository (will be loaded from JSON)
+        // API-аас татсан хөтөчдийн өгөгдөл
         this.guideData = {};
 
-        // Load data from backend and storage
+        // Апп эхлэхэд backend болон localStorage-оос өгөгдөл ачаалах
         this.loadSpotData();
         this.loadGuideData();
         this.loadPlanFromBackend();
-
     }
 
-    // Get or create userId
+    /**
+     * @returns {string} - Хэрэглэгчийн уникаль ID
+     */
     getUserId() {
-        let userId = localStorage.getItem('ayalgo-userId');
+        // Эхлээд cookie-оос ID-г хайх
+        let userId = this.getCookie('ayalgo-userId');
+
+        // Cookie-д байхгүй бол localStorage-оос хайх
+        if (!userId) {
+            userId = localStorage.getItem('ayalgo-userId');
+        }
+
+        // Хоёуланд нь байхгүй бол шинээр үүсгэх
         if (!userId) {
             userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-            localStorage.setItem('ayalgo-userId', userId);
         }
+
+        // Cookie болон localStorage-д хадгалах
+        this.setCookie('ayalgo-userId', userId, 30);
+        localStorage.setItem('ayalgo-userId', userId);
+
         return userId;
     }
 
-    // Load plan from backend
+    /**
+     * Cookie утга авах
+     * @param {string} name - Cookie-ийн нэр
+     * @returns {string|null} - Cookie-ийн утга, эсвэл null
+     */
+    getCookie(name) {
+        const nameEQ = name + "=";
+        const cookies = document.cookie.split(';');
+
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.indexOf(nameEQ) === 0) {
+                return cookie.substring(nameEQ.length);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Cookie тохируулах
+     * @param {string} name - Cookie-ийн нэр
+     * @param {string} value - Cookie-ийн утга
+     * @param {number} days - Хэдэн хоног хадгалах 
+     */
+    setCookie(name, value, days = 30) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        const expires = "expires=" + date.toUTCString();
+        // SameSite=Lax нь CSRF халдлагаас хамгаална
+        document.cookie = name + "=" + value + ";" + expires + ";path=/;SameSite=Lax";
+    }
+
+    //Backend-аас аяллын төлөвлөгөө ачаалах, амжилтгүй бол localStorage-оос ачаална.
     async loadPlanFromBackend() {
         try {
             const userId = this.getUserId();
@@ -38,7 +81,7 @@ class AppState {
             const data = await response.json();
 
             if (data.spots && data.spots.length > 0) {
-                // Map backend spots to planItems format
+                // Backend-ээс ирсэн spot өгөгдлийг frontend форматруу хөрвүүлэх
                 this.planItems = data.spots.map((spot, idx) => ({
                     id: spot.spotId,
                     number: idx + 1,
@@ -63,23 +106,24 @@ class AppState {
                 this.savePlanToStorage();
                 this.dispatchStateChange('planItems', this.planItems);
             } else {
-                // Load from localStorage as fallback
+                // Backend дээр өгөгдөл байхгүй бол localStorage-оос ачаалах
                 this.planItems = this.loadPlanFromStorage();
             }
         } catch (error) {
             console.error('Error loading plan from backend:', error);
-            // Fallback to localStorage
+            // Backend алдаа гарвал localStorage-оос ачаална
             this.planItems = this.loadPlanFromStorage();
         }
     }
 
-    // Load spot data from JSON file
+    // Газруудын өгөгдлийг Backend API-аас ачаалах
+    
     async loadSpotData() {
         try {
             const response = await fetch('http://localhost:3000/api/spots');
             const data = await response.json();
 
-            // Transform JSON data to match existing structure
+            // Backend өгөгдлийг frontend форматруу хөрвүүлж, spotData object-д хадгалах
             data.spots.forEach(spot => {
                 const id = spot.spotId;
                 this.spotData[id] = {
@@ -103,26 +147,23 @@ class AppState {
                 };
             });
 
-            // Merge with temporary data (JSON data takes priority)
-            this.spotData = { ...this.spotData };
-
             console.log('Spot data ачаалагдлаа:', Object.keys(this.spotData).length, 'газар');
             console.log('Бүс нутгууд:', [...new Set(Object.values(this.spotData).map(s => s.region))].sort());
 
+            // Бүх component-үүдэд мэдэгдэл илгээх
             this.dispatchStateChange('spotData', this.spotData);
         } catch (error) {
             console.error('Error loading spot data:', error);
-            // Use temporary data as fallback
-            this.spotData = this.tempSpotData;
         }
     }
 
-    // Load guide data from API
+    //Хөтөчдийн өгөгдлийг Backend API-аас ачаалах
     async loadGuideData() {
         try {
             const response = await fetch('http://localhost:3000/api/guides');
             const data = await response.json();
 
+            // Backend өгөгдлийг frontend форматруу хөрвүүлж, guideData object-д хадгалах
             data.guides.forEach(guide => {
                 this.guideData[guide.guideId] = {
                     id: guide.guideId,
@@ -141,14 +182,16 @@ class AppState {
 
             console.log('Guide data ачаалагдлаа:', Object.keys(this.guideData).length, 'хөтөч');
 
+            // Бүх component-үүдэд мэдэгдэл илгээх
             this.dispatchStateChange('guideData', this.guideData);
         } catch (error) {
             console.error('Error loading guide data:', error);
-            // Fallback to JSON
+            // Backend амжилтгүй бол JSON файлаас ачаална
             this.loadGuideDataFromJSON();
         }
     }
 
+    //Хөтөчдийн өгөгдлийг JSON файлаас ачаалах, backend API алдаатай үед ашиглагдана
     async loadGuideDataFromJSON() {
         try {
             const response = await fetch('../data/guides.json');
@@ -178,33 +221,53 @@ class AppState {
         }
     }
 
-    // Get spot by ID
+    /**
+     * Газрын мэдээллийг ID-аар нь олох
+     * @param {string|number} spotId 
+     * @returns {Object|undefined}
+     */
     getSpot(spotId) {
         return this.spotData[spotId];
     }
 
-    // Get all spots
+    /**
+     * Бүх газруудын жагсаалт авах
+     * @returns {Array} - Газруудын array
+     */
     getAllSpots() {
         return Object.values(this.spotData);
     }
 
-    // Get guide by ID
+    /**
+     * Хөтөчийн мэдээллийг ID-аар нь олох
+     * @param {string|number} guideId - Хөтөчийн ID
+     * @returns {Object|undefined} - Хөтөчийн дэлгэрэнгүй мэдээлэл
+     */
     getGuide(guideId) {
         return this.guideData[guideId];
     }
 
-    // Get all guides
+    /**
+     * Бүх хөтөчдийн жагсаалт авах
+     * @returns {Array} - Хөтөчдийн array
+     */
     getAllGuides() {
         return Object.values(this.guideData);
     }
 
-    // Set current spot
+    /**
+     * spot-info хуудаст ашиглагдана
+     * @param {string|number} spotId - Газрын ID
+     */
     setCurrentSpot(spotId) {
         this.currentSpot = this.spotData[spotId];
         this.dispatchStateChange('currentSpot', this.currentSpot);
     }
 
-    // Load plan items from localStorage
+    /**
+     * localStorage-оос аяллын төлөвлөгөө ачаалах
+     * @returns {Array} - Төлөвлөгөөний жагсаалт 
+     */
     loadPlanFromStorage() {
         try {
             const saved = localStorage.getItem('ayalgo-planItems');
@@ -217,7 +280,9 @@ class AppState {
         return [];
     }
 
-    // Save plan items to localStorage
+    /**
+     * Аяллын төлөвлөгөөг localStorage-д хадгалах
+     */
     savePlanToStorage() {
         try {
             localStorage.setItem('ayalgo-planItems', JSON.stringify(this.planItems));
@@ -226,19 +291,23 @@ class AppState {
         }
     }
 
-    // Add spot to plan
+    /**
+     * Газрыг аяллын төлөвлөгөөнд нэмэх
+     * Backend DB болон localStorage-д хадгална
+     * @param {string|number} spotId - Газрын ID
+     * @returns {boolean|string} - true: амжилттай, 'exists': аль хэдийн байгаа, false: алдаа
+     */
     async addToPlan(spotId) {
         const spot = this.getSpot(spotId);
         if (!spot) return false;
 
-        // Check if already exists
+        // Аль хэдийн төлөвлөгөөнд байгаа эсэхийг шалгах
         const exists = this.planItems.some(item => item.id === spotId);
         if (exists) {
-            // Return 'exists' status to show different toast message
             return 'exists';
         }
 
-        // Add to backend DB
+        // Backend DB-д нэмэх
         try {
             const userId = this.getUserId();
             const response = await fetch(`http://localhost:3000/api/plans/${userId}/spots`, {
@@ -258,7 +327,7 @@ class AppState {
                 return false;
             }
 
-            // Add to local state
+            // Local state-д нэмэх
             this.planItems.push({
                 id: spotId,
                 number: this.planItems.length + 1,
@@ -274,15 +343,20 @@ class AppState {
         }
     }
 
-    // Remove from plan
+    /**
+     * Газрыг аяллын төлөвлөгөөнөөс хасах
+     * Backend DB болон localStorage-оос арилгана
+     * @param {string|number} spotId - Газрын ID
+     * @returns {boolean} - Амжилттай эсэх
+     */
     async removeFromPlan(spotId) {
-        // Convert spotId to string for comparison since getAttribute returns string
+        // getAttribute нь string буцаадаг тул string рүү хөрвүүлэх
         const spotIdStr = String(spotId);
         const index = this.planItems.findIndex(item => String(item.id) === spotIdStr);
 
         if (index === -1) return false;
 
-        // Remove from backend DB
+        // Backend DB-ээс устгах
         try {
             const userId = this.getUserId();
             const response = await fetch(`http://localhost:3000/api/plans/${userId}/spots/${spotIdStr}`, {
@@ -294,9 +368,9 @@ class AppState {
                 return false;
             }
 
-            // Remove from local state
+            // Local state-ээс устгах
             this.planItems.splice(index, 1);
-            // Renumber items
+            // Дугаараар нь дахин тохируулах
             this.planItems.forEach((item, idx) => {
                 item.number = idx + 1;
             });
@@ -309,9 +383,13 @@ class AppState {
         }
     }
 
-    // Clear all plan items
+    /**
+     * Аяллын төлөвлөгөөг бүхэлд нь цэвэрлэх
+     * Backend DB болон localStorage-оос бүх газруудыг устгана
+     * @returns {boolean} - Амжилттай эсэх
+     */
     async clearPlan() {
-        // Clear from backend DB
+        // Backend DB-ээс цэвэрлэх
         try {
             const userId = this.getUserId();
             const response = await fetch(`http://localhost:3000/api/plans/${userId}/spots`, {
@@ -323,7 +401,7 @@ class AppState {
                 return false;
             }
 
-            // Clear local state
+            // Local state цэвэрлэх
             this.planItems = [];
             this.savePlanToStorage();
             this.dispatchStateChange('planItems', this.planItems);
@@ -334,12 +412,20 @@ class AppState {
         }
     }
 
-    // Get all plan items
+    /**
+     * Аяллын төлөвлөгөөний бүх газруудыг авах
+     * @returns {Array} - Төлөвлөгөөний жагсаалт
+     */
     getPlanItems() {
         return this.planItems;
     }
 
-    // Dispatch state change event
+    /**
+     * Төлөв өөрчлөгдсөн тухай бүх component-үүдэд мэдэгдэл илгээх
+     * Component-үүд 'appstatechange' event сонсож байж өгөгдөл шинэчлэнэ
+     * @param {string} key - Өөрчлөгдсөн property-ийн нэр
+     * @param {any} value - Шинэ утга
+     */
     dispatchStateChange(key, value) {
         window.dispatchEvent(new CustomEvent('appstatechange', {
             detail: { key, value }
@@ -347,10 +433,8 @@ class AppState {
     }
 }
 
-// Create global instance
 window.appState = new AppState();
 
-// Debug utility - доступно через console
 window.debugAppState = {
     getAllSpots: () => window.appState.getAllSpots(),
     getAllGuides: () => window.appState.getAllGuides(),

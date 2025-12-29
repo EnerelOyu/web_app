@@ -1,28 +1,35 @@
-// router/app-router.js
 class AppRouter extends HTMLElement {
   constructor() {
     super();
-    // path -> template map
+    // Замууд - path -> HTML template
+    // Жишээ: '/home' -> '<ag-page-home></ag-page-home>'
     this.routes = new Map();
+
+    // onRouteChange функцийн this-ийг тогтоох 
     this.onRouteChange = this.onRouteChange.bind(this);
   }
 
+  /* Element DOM дээр холбогдох үед дуудагдана 
+  Window-ийн hashchange event сонсож эхэлнэ
+   */
   connectedCallback() {
-    // Hash өөрчлөгдөх бүрт route солих
+    // URL-ийн hash өөрчлөгдөх бүрт route солих
     window.addEventListener("hashchange", this.onRouteChange);
 
-    // Эхний ачаалал дээр шууд зурагдаж байг
+    // Эхний ачаалал дээр шууд хуудсыг зурах
     this.onRouteChange();
   }
 
+  /* Element DOM-оос салгах үед дуудагдана event listener-ийг цэвэрлэх */
   disconnectedCallback() {
     window.removeEventListener("hashchange", this.onRouteChange);
   }
 
   /**
-   * index.html дотроос:
-   *   router.registerRoute('/home', '<page-home></page-home>');
-   * гэх мэтээр дуудагдана
+   * Шинэ route бүртгэх
+   *
+   * @param {string} path - Замын нэр 
+   * @param {string} template - Харуулах HTML template
    */
   registerRoute(path, template) {
     if (!path.startsWith("/")) {
@@ -32,20 +39,23 @@ class AppRouter extends HTMLElement {
   }
 
   /**
-   * '#/home' → '/home'
-   * '#/spots' → '/spots'
+   * Одоогийн URL hash-аас замыг гаргаж авах
+   * @returns {string} 
    */
   getCurrentPath() {
+    // Hash байхгүй бол default нүүр хуудас
     let hash = window.location.hash || "#/home";
 
-    // '#/spot-info?id=xxx' → '/spot-info?id=xxx'
+    // '#' тэмдгийг хасах
     let noHash = hash.replace(/^#/, "");
 
-    // '/spot-info?id=xxx' → ['/spot-info', 'id=xxx']
+    // Query параметр (? -ээс хойш) хасах
     const [pathPart] = noHash.split("?");
 
+    // Зам байхгүй бол default нүүр хуудас
     let path = pathPart || "/home";
 
+    // Эхэнд '/' байхгүй бол нэмж өгнө
     if (!path.startsWith("/")) {
       path = "/" + path;
     }
@@ -53,20 +63,25 @@ class AppRouter extends HTMLElement {
     return path;
   }
 
-
+  //Route өөрчлөгдөх үед дуудагдах функц одоогийн URL-д тохирсон хуудсыг олж, харуулна
   onRouteChange() {
-    const path = this.getCurrentPath(); // ж: '/spots'
+    // Одоогийн зам авах
+    const path = this.getCurrentPath();
+
+    // Тухайн замд бүртгэгдсэн template олох
+    // Олдохгүй бол нүүр хуудас харуулна
     const template = this.routes.get(path) || this.routes.get("/home");
 
+    // Template олдохгүй бол алдааны мессеж
     if (!template) {
       this.innerHTML = `<p>Page not found</p>`;
       return;
     }
 
-    // Шинэ page-ийг үзүүлэх
+    // Шинэ хуудсыг харуулах
     this.innerHTML = template;
 
-    // Route солигдоход хамгийн дээр нь гүйлгэж өгвөл гоё
+    // Хуудас солигдоход хамгийн дээр нь гүйлгэх
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
