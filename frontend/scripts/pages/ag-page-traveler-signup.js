@@ -59,7 +59,7 @@ class PageTravelerSignup extends HTMLElement {
         }
 
         .social-login-title {
-          color: var(--text-color-2);
+          color: var(--text-color-1);
           font-size: var(--fs-sm);
           margin-bottom: var(--m-md);
           position: relative;
@@ -87,15 +87,16 @@ class PageTravelerSignup extends HTMLElement {
           font-weight: 500;
           cursor: pointer;
           transition: all 0.3s;
+          margin-bottom: var(--m-sm);
         }
 
         .social-btn.google {
-          background-color: #db4437;
+          background-color: var(--primary);
           color: white;
         }
 
         .social-btn.facebook {
-          background-color: #4267B2;
+          background-color: var(--text-color-4);
           color: white;
         }
 
