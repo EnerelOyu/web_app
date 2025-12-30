@@ -305,7 +305,7 @@ class AgSpotCard extends HTMLElement {
           <a href="${href}">
             <img src="${img}" alt="${title}">
           </a>
-          <button type="button" aria-label="Маршрутдаа нэмэх">
+          <button type="button">
             <svg>
               <use href="./styles/icons.svg#icon-add"></use>
             </svg>

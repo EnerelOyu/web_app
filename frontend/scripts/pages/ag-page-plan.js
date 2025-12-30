@@ -25,189 +25,7 @@ class PagePlan extends HTMLElement {
 
     render() {
         this.innerHTML = `
-            <style>
-                @import url('/styles/fonts.css');
-
-                /* Page Plan Container */
-                :host {
-                    display: block;
-                    width: 100%;
-                }
-
-                .main-container {
-                    display: grid;
-                    grid-template:
-                        "plan-title"
-                        "route"
-                        "suggestion" / 1fr;
-                    min-height: calc(100 * var(--vh) - var(--header-height) - var(--footer-height));
-                    margin: 0 auto;
-                    max-width: 1200px;
-                    width: 100%;
-                    row-gap: var(--gap-size-xl);
-                    padding-inline: var(--spacing-vw-sm);
-                }
-
-                /* Plan Title Section */
-                .plan-title {
-                    grid-area: plan-title;
-                    display: grid;
-                    grid-template: "h1" "btn" / 1fr;
-                    justify-items: center;
-                    align-items: center;
-                    background: url("./assets/images/spot-img/spot04-1.jpg") no-repeat center / cover;
-                    width: 100%;
-                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
-                    border-radius: var(--br-m);
-                }
-
-                .plan-title > div {
-                    position: relative;
-                    display: grid;
-                    grid-template: "h1 h1" "btn btn" / 1fr auto;
-                    align-items: center;
-                    justify-items: center;
-                    background-color: var(--bg-color);
-                    border-radius: var(--br-m);
-                    box-shadow: 0 3px 9px var(--text-color-1);
-                    width: 100%;
-                    max-width: 800px;
-                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
-                }
-
-                .plan-title-input {
-                    grid-area: h1;
-                    text-align: center;
-                    font-family: 'Rubik';
-                    font-size: clamp(1.5rem, 4vw, 3rem);
-                    font-weight: 700;
-                    margin: 0;
-                    padding: var(--p-sm);
-                    color: var(--text-color-0);
-                    background: transparent;
-                    border: 2px solid transparent;
-                    border-radius: var(--br-s);
-                    resize: none;
-                    overflow: hidden;
-                    transition: all 0.2s ease;
-                    width: 100%;
-                    box-sizing: border-box;
-                }
-
-                .plan-title-input:focus {
-                    outline: none;
-                    border-color: var(--primary);
-                    background: rgba(255, 255, 255, 0.9);
-                }
-
-                .plan-title-input::placeholder {
-                    color: var(--text-color-5);
-                    opacity: 0.7;
-                }
-
-                /* Suggestion Section */
-                .suggestion {
-                    grid-area: suggestion;
-                    display: grid;
-                    grid-template:
-                        "title sm" auto
-                        "list  list" 1fr / 1fr auto;
-                    overflow: hidden;
-                    width: 100%;
-                    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
-                    background-color: var(--bg-color);
-                    border-radius: var(--br-m);
-                    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-                }
-
-                .suggestion h3 {
-                    grid-area: title;
-                    text-align: start;
-                    font-family: 'Rubik';
-                    font-size: clamp(1rem, 2.5vw, 1.5rem);
-                    margin: 0;
-                    color: var(--text-color-0);
-                }
-
-                .more-spots {
-                    display: flex;
-                    justify-content: flex-end;
-                    align-items: center;
-                    gap: var(--gap-size-s);
-                    color: var(--text-color-2);
-                    margin-left: auto;
-                    margin-right: var(--m-xl);
-                    text-decoration: none;
-                    cursor: pointer;
-                }
-
-                .more-spots p {
-                    margin: 0;
-                    font-size: var(--fs-base);
-                }
-
-                .more-icon {
-                    width: var(--svg-s);
-                    height: var(--svg-s);
-                    color: var(--text-color-2);
-                    transition: transform 0.2s ease;
-                }
-
-                .more-spots:hover .more-icon {
-                    transform: translateX(4px);
-                }
-
-                .TL {
-                    grid-area: list;
-                    display: grid;
-                    grid-auto-flow: column;
-                    grid-auto-columns: 280px;
-                    gap: var(--gap-size-s);
-                    overflow-x: auto;
-                    padding-block: var(--p-sm);
-                }
-
-                /* Route Section */
-                ag-route-section {
-                    grid-area: route;
-                    width: 100%;
-                    display: block;
-                }
-
-                .empty-state {
-                    text-align: center;
-                    padding: var(--p-2xl);
-                    color: var(--text-color-3);
-                    font-family: 'NunitoSans';
-                }
-
-                .empty-state p:first-child {
-                    font-size: var(--fs-lg);
-                    margin-bottom: var(--m-sm);
-                }
-
-                .empty-state p:last-child {
-                    font-size: var(--fs-base);
-                }
-
-                /* Responsive Design */
-                @media (max-width: 768px) {
-                    .main-container {
-                        padding-inline: var(--p-md);
-                    }
-
-                    .TL {
-                        grid-auto-columns: 260px;
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    .more-spots {
-                        margin-right: 0;
-                    }
-                }
-            </style>
-
+            <h1 class="visually-hidden">Аяллын төлөвлөгөө</h1>
             <div class="main-container">
                 <!-- Plan Title -->
                 <div class="plan-title">
@@ -223,7 +41,7 @@ class PagePlan extends HTMLElement {
 
                 <!-- Suggested Spots -->
                 <div class="suggestion">
-                    <h3>Танд санал болгох аяллын цэгүүд</h3>
+                    <h2>Танд санал болгох аяллын цэгүүд</h2>
                     <a href="#/spots" class="more-spots">
                         <p>Бүгдийг харах</p>
                         <svg class="more-icon">
@@ -387,6 +205,7 @@ class PagePlan extends HTMLElement {
 
         // Handle add-item events from route-section (Газар нэмэх, Тэмдэглэл нэмэх)
         this.addEventListener('add-item', (e) => {
+            e.stopPropagation(); // Prevent event from bubbling up
             const { type, divider } = e.detail;
 
             if (type === 'place') {

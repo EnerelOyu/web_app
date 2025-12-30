@@ -603,13 +603,13 @@ class AgRouteItem extends HTMLElement {
             <div class="place-two">
             <div class="place-marker">
                 <svg class="marker-icon" aria-hidden="true" focusable="false">
-                    <use href="./styles/icons.svg#icon-marker"></use>
+                    <use href="/styles/icons.svg#icon-marker"></use>
                 </svg>
                 <span class="marker-number">${this.number}</span>
             </div>    
-                <button class="drag-handle-inline" title="Эрэмбэ солих" aria-label="Эрэмбэ солих">
+                <button class="drag-handle-inline" title="Эрэмбэ солих">
                     <svg aria-hidden="true" focusable="false">
-                        <use href="./styles/icons.svg#icon-grip"></use>
+                        <use href="/styles/icons.svg#icon-grip"></use>
                     </svg>
                 </button>
             </div>
@@ -654,14 +654,14 @@ class AgRouteItem extends HTMLElement {
                             </button>
                             <div class="slide-nav">
                                 ${this.images.map((_, index) => `
-                                    <button class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="Зураг ${index + 1}"></button>
+                                    <button class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="Зураг ${index + 1} руу шилжих"></button>
                                 `).join('')}
                             </div>
                         ` : ''}
                     </div>
 
                     <div class="guide-selector">
-                        <select class="guide-select-dropdown">
+                        <select class="guide-select-dropdown" aria-label="Хөтөч сонгох">
                             <option value="">Хөтөч сонгох...</option>
                             <option value="g1">Дорж</option>
                             <option value="g2">Саран</option>
@@ -679,7 +679,7 @@ class AgRouteItem extends HTMLElement {
             </div>
 
             <div class="route-actions">
-                <button class="delete-btn" title="Устгах" aria-label="Устгах">
+                <button class="delete-btn" title="Устгах">
                     <svg viewBox="0 0 448 512" width="18" height="18" aria-hidden="true" focusable="false">
                         <path fill="currentColor" d="M166.2-16c-13.3 0-25.3 8.3-30 20.8L120 48 24 48C10.7 48 0 58.7 0 72S10.7 96 24 96l400 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-96 0-16.2-43.2C307.1-7.7 295.2-16 281.8-16L166.2-16zM32 144l0 304c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-304-48 0 0 304c0 8.8-7.2 16-16 16L96 464c-8.8 0-16-7.2-16-16l0-304-48 0zm160 72c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 176c0 13.3 10.7 24 24 24s24-10.7 24-24l0-176zm112 0c0-13.3-10.7-24-24-24s-24 10.7-24 24l0 176c0 13.3 10.7 24 24 24s24-10.7 24-24l0-176z"/>
                     </svg>
