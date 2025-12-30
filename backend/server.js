@@ -25,30 +25,36 @@ import db, {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Multer for file uploads
+//Guide зураг upload хийх тохиргоо
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = path.join(__dirname, '..', 'frontend', 'assets', 'images', 'guide-img');
+    //directory байхгүй бол үүсгэх
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
+    // хавтас руу хадгалах
     cb(null, uploadDir);
   },
+  //file name өгөх
   filename: (req, file, cb) => {
     const uniqueName = `guide_${Date.now()}_${file.originalname}`;
     cb(null, uniqueName);
   }
 });
 const upload = multer({ storage });
-
+//express app үүсгэх
 const app = express()
+//port байвал ашиглана, үгүй бол 3000
 const port = process.env.PORT || 3000;
-
+//cors зөвшөөрөх
 app.use(cors());
+// json body-г parse хийх 
 app.use(express.json());
 
+//request-аас base URL үүсгэх
 const buildBaseUrl = (req) => `${req.protocol}://${req.get('host')}`;
-
+//asset path-ийг normalize хийх
 const normalizeAssetPath = (assetPath) => {
   if (!assetPath) return assetPath;
   if (assetPath.startsWith('/files/guide-img/')) {
@@ -59,7 +65,7 @@ const normalizeAssetPath = (assetPath) => {
   if (assetPath.startsWith('assets/')) return `/${assetPath}`;
   return assetPath;
 };
-
+//asset path-ийг absolute URL болгох
 const toAbsoluteUrl = (req, assetPath) => {
   if (!assetPath) return assetPath;
   if (/^https?:\/\//i.test(assetPath)) return assetPath;
@@ -70,16 +76,17 @@ const toAbsoluteUrl = (req, assetPath) => {
   return normalized;
 };
 
-// Static files - serve frontend static assets
+// assets хавтас руу static file serve хийх
 app.use('/assets', express.static(path.join(__dirname, '..', 'frontend', 'assets')))
-// Serve frontend SPA
+// frontend SPA-ийн root static serve 
 app.use(express.static(path.join(__dirname, '..', 'frontend')))
 
-// Initialize database
+// DB tables үүсгэх
 initDB();
 
+//DB -с spot мэдээллийг авч frontend-д тохирох хэлбэрт хөрвүүлнэ
 const mapSpotRow = (spotRow, req) => {
-  // fetch activities + categories
+  // activities болон categories-г join хийж авах
   const activities = db.prepare(`
     SELECT a.name FROM activities a
     JOIN spot_activities sa ON sa.activityId = a.id
@@ -96,6 +103,8 @@ const mapSpotRow = (spotRow, req) => {
     spotId: spotRow.spotId,
     name: spotRow.name,
     area: spotRow.area,
+
+    //categories-г comma-гаар тусгаарласан string болгох
     category: categories.length > 0 ? categories.join(', ') : spotRow.category,
     activities,
     rating: spotRow.rating,
@@ -105,6 +114,7 @@ const mapSpotRow = (spotRow, req) => {
     detailLocation: spotRow.detailLocation,
     openingHours: spotRow.openingHours,
     status: spotRow.status,
+    //зурагын URL-үүдийг absolute болгох
     imgMainUrl: toAbsoluteUrl(req, spotRow.imgMainUrl),
     img2Url: toAbsoluteUrl(req, spotRow.img2Url),
     img3Url: toAbsoluteUrl(req, spotRow.img3Url),
@@ -118,6 +128,7 @@ const mapSpotRow = (spotRow, req) => {
 app.post('/api/guides', upload.single('profileImage'), (req, res) => {
   try {
     const guideData = req.body;
+    //profile зураг оруулагүй бол default зураг ашиглах
     const defaultProfileImg = '/assets/images/guide-img/default-profile.svg';
     let profileImgUrl = defaultProfileImg;
     if (req.file) {
@@ -155,8 +166,11 @@ app.post('/api/guides', upload.single('profileImage'), (req, res) => {
       '5++': '5 -аас дээш жил'
     };
 
+    //guides.json файлын зам
     const jsonPath = path.join(__dirname, '..', 'frontend', 'data', 'guides.json');
+    //guides.json файлыг уншиж parse хийх
     const jsonData = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+    //шинэ guide объектыг үүсгэж JSON-д нэмэх
     const newGuide = {
       guideId: result.guideId,
       lastName: guideData.lastName,
@@ -181,6 +195,7 @@ app.post('/api/guides', upload.single('profileImage'), (req, res) => {
 //DB-д байгаа бүх guide жагсаалтыг авч буцаана
 app.get('/api/guides', (req, res) => {
   try {
+    //DB-с бүх guide мэдээллийг авах  
     const guides = getAllGuides();
     const payload = guides.map((guide) => ({
       ...guide,
@@ -198,6 +213,7 @@ app.get('/api/guides', (req, res) => {
 
 app.get('/api/spots', (req, res) => {
   try {
+    //spot мэдээллийг DB-с авч frontend-д тохирох хэлбэрт хөрвүүлнэ
     const rows = db.prepare('SELECT * FROM spots ORDER BY spotId').all();
     const payload = rows.map((row) => mapSpotRow(row, req));
     res.json({ spots: payload });
@@ -207,15 +223,13 @@ app.get('/api/spots', (req, res) => {
   }
 });
 
-// ===== PLAN API ENDPOINTS =====
 
-// Get or create plan for user
+// тухайн хэрэглэгчийн төлөвлөгөөг авах, байхгүй бол шинээр үүсгэх
 app.get('/api/plans/:userId', (req, res) => {
   try {
     const { userId } = req.params;
     let plan = getPlanByUserId(userId);
 
-    // Create plan if doesn't exist
     if (!plan) {
       const result = createPlan(userId);
       plan = { id: result.planId, userId, notes: '', createdAt: new Date().toISOString() };
@@ -228,16 +242,17 @@ app.get('/api/plans/:userId', (req, res) => {
   }
 });
 
-// Get all spots in a plan
+//plan-д нэмэгдсэн spot-уудыг авах
 app.get('/api/plans/:userId/spots', (req, res) => {
   try {
     const { userId } = req.params;
+    //userId-аар төлөвлөгөөг авах
     let plan = getPlanByUserId(userId);
 
     if (!plan) {
       return res.json({ spots: [] });
     }
-
+    //plan.id-аар төлөвлөгөөний spot-уудыг авах
     const spots = getPlanSpots(plan.id);
     const payload = spots.map((row) => mapSpotRow(row, req));
 
@@ -248,7 +263,7 @@ app.get('/api/plans/:userId/spots', (req, res) => {
   }
 });
 
-// Add spot to plan
+// plan-д шинэ spot нэмэх
 app.post('/api/plans/:userId/spots', (req, res) => {
   try {
     const { userId } = req.params;
@@ -258,14 +273,14 @@ app.post('/api/plans/:userId/spots', (req, res) => {
       return res.status(400).json({ success: false, error: 'spotId is required' });
     }
 
-    // Get or create plan
+    // plan-ийг userId-аар авах, байхгүй бол шинээр үүсгэх
     let plan = getPlanByUserId(userId);
     if (!plan) {
       const result = createPlan(userId);
       plan = { id: result.planId };
     }
 
-    // Add spot to plan
+    // plan.id-д spotId-г нэмэх
     const result = addSpotToPlan(plan.id, spotId);
 
     if (!result.success && result.error === 'exists') {
@@ -279,7 +294,7 @@ app.post('/api/plans/:userId/spots', (req, res) => {
   }
 });
 
-// Remove spot from plan
+//plan-аас spot устгах
 app.delete('/api/plans/:userId/spots/:spotId', (req, res) => {
   try {
     const { userId, spotId } = req.params;
@@ -302,7 +317,7 @@ app.delete('/api/plans/:userId/spots/:spotId', (req, res) => {
   }
 });
 
-// Update plan notes
+// plan-ийн тэмдэглэл шинэчлэх
 app.put('/api/plans/:userId/notes', (req, res) => {
   try {
     const { userId } = req.params;
@@ -326,7 +341,7 @@ app.put('/api/plans/:userId/notes', (req, res) => {
   }
 });
 
-// Clear all spots from plan
+// plan дахь бүх spot-уудыг устгах
 app.delete('/api/plans/:userId/spots', (req, res) => {
   try {
     const { userId } = req.params;
@@ -345,9 +360,8 @@ app.delete('/api/plans/:userId/spots', (req, res) => {
   }
 });
 
-// ===== REVIEW API ENDPOINTS =====
 
-// Get all reviews for a specific spot
+//spotid-аар тухайн spot-ийн бүх review-уудыг авах
 app.get('/api/spots/:spotId/reviews', (req, res) => {
   try {
     const { spotId } = req.params;
@@ -360,7 +374,7 @@ app.get('/api/spots/:spotId/reviews', (req, res) => {
   }
 });
 
-// Create a new review for a spot
+//spot-д шинэ review нэмэх
 app.post('/api/spots/:spotId/reviews', (req, res) => {
   try {
     const { spotId } = req.params;
@@ -382,9 +396,8 @@ app.post('/api/spots/:spotId/reviews', (req, res) => {
   }
 });
 
-// ===== GUIDE REVIEW API ENDPOINTS =====
 
-// Get all reviews for a specific guide
+// guideId-аар тухайн guide-ийн бүх review-уудыг авах
 app.get('/api/guides/:guideId/reviews', (req, res) => {
   try {
     const { guideId } = req.params;
@@ -397,7 +410,7 @@ app.get('/api/guides/:guideId/reviews', (req, res) => {
   }
 });
 
-// Create a new review for a guide
+// guide-д шинэ review нэмэх
 app.post('/api/guides/:guideId/reviews', (req, res) => {
   try {
     const { guideId } = req.params;
