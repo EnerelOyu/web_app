@@ -305,12 +305,12 @@ class AgSpotCard extends HTMLElement {
           <a href="${href}">
             <img src="${img}" alt="${title}">
           </a>
-          <button type="button">
+          <button type="button" aria-label="Төлөвлөгөөнд нэмэх">
             <svg>
               <use href="/styles/icons.svg#icon-add"></use>
             </svg>
           </button>
-          <button type="button">
+          <button type="button" aria-label="Хуваалцах">
             <svg>
               <use href="/styles/icons.svg#icon-share"></use>
             </svg>

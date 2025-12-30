@@ -1,0 +1,191 @@
+/* Page Plan Container */
+ag-page-plan {
+    display: block;
+    width: 100%;
+}
+
+/* Visually hidden but accessible to screen readers */
+ag-page-plan .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+ag-page-plan .main-container {
+    display: grid;
+    grid-template:
+        "plan-title"
+        "route"
+        "suggestion" / 1fr;
+    min-height: calc(100 * var(--vh) - var(--header-height) - var(--footer-height));
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+    row-gap: var(--gap-size-xl);
+    padding-inline: var(--spacing-vw-sm);
+}
+
+/* Plan Title Section */
+ag-page-plan .plan-title {
+    grid-area: plan-title;
+    display: grid;
+    grid-template: "h1" "btn" / 1fr;
+    justify-items: center;
+    align-items: center;
+    background: url("../assets/images/spot-img/spot04-1.jpg") no-repeat center / cover;
+    width: 100%;
+    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
+    border-radius: var(--br-m);
+}
+
+ag-page-plan .plan-title > div {
+    position: relative;
+    display: grid;
+    grid-template: "h1 h1" "btn btn" / 1fr auto;
+    align-items: center;
+    justify-items: center;
+    background-color: var(--bg-color);
+    border-radius: var(--br-m);
+    box-shadow: 0 3px 9px var(--text-color-1);
+    width: 100%;
+    max-width: 800px;
+    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
+}
+
+ag-page-plan .plan-title-input {
+    grid-area: h1;
+    text-align: center;
+    font-family: 'Rubik';
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 700;
+    margin: 0;
+    padding: var(--p-sm);
+    color: var(--text-color-0);
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: var(--br-s);
+    resize: none;
+    overflow: hidden;
+    transition: all 0.2s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+ag-page-plan .plan-title-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+ag-page-plan .plan-title-input::placeholder {
+    color: var(--text-color-5);
+    opacity: 0.7;
+}
+
+/* Suggestion Section */
+ag-page-plan .suggestion {
+    grid-area: suggestion;
+    display: grid;
+    grid-template:
+        "title sm" auto
+        "list  list" 1fr / 1fr auto;
+    overflow: hidden;
+    width: 100%;
+    padding: var(--spacing-vh-sm) var(--spacing-vw-sm);
+    background-color: var(--bg-color);
+    border-radius: var(--br-m);
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+ag-page-plan .suggestion h2 {
+    grid-area: title;
+    text-align: start;
+    font-family: 'Rubik';
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    margin: 0;
+    color: var(--text-color-0);
+}
+
+ag-page-plan .more-spots {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--gap-size-s);
+    color: var(--text-color-2);
+    margin-left: auto;
+    margin-right: var(--m-xl);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+ag-page-plan .more-spots p {
+    margin: 0;
+    font-size: var(--fs-base);
+}
+
+ag-page-plan .more-icon {
+    width: var(--svg-s);
+    height: var(--svg-s);
+    color: var(--text-color-2);
+    transition: transform 0.2s ease;
+}
+
+ag-page-plan .more-spots:hover .more-icon {
+    transform: translateX(4px);
+}
+
+ag-page-plan .TL {
+    grid-area: list;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 280px;
+    gap: var(--gap-size-s);
+    overflow-x: auto;
+    padding-block: var(--p-sm);
+}
+
+/* Route Section */
+ag-page-plan ag-route-section {
+    grid-area: route;
+    width: 100%;
+    display: block;
+}
+
+ag-page-plan .empty-state {
+    text-align: center;
+    padding: var(--p-2xl);
+    color: var(--text-color-3);
+    font-family: 'NunitoSans';
+}
+
+ag-page-plan .empty-state p:first-child {
+    font-size: var(--fs-lg);
+    margin-bottom: var(--m-sm);
+}
+
+ag-page-plan .empty-state p:last-child {
+    font-size: var(--fs-base);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    ag-page-plan .main-container {
+        padding-inline: var(--p-md);
+    }
+
+    ag-page-plan .TL {
+        grid-auto-columns: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    ag-page-plan .more-spots {
+        margin-right: 0;
+    }
+}

@@ -642,26 +642,26 @@ class AgRouteItem extends HTMLElement {
                         </div>
 
                         ${this.images.length > 1 ? `
-                            <button class="slide-arrow prev">
-                                <svg viewBox="0 0 320 512">
+                            <button class="slide-arrow prev" aria-label="Өмнөх зураг">
+                                <svg viewBox="0 0 320 512" aria-hidden="true">
                                     <path fill="currentColor" d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/>
                                 </svg>
                             </button>
-                            <button class="slide-arrow next">
-                                <svg viewBox="0 0 320 512">
+                            <button class="slide-arrow next" aria-label="Дараах зураг">
+                                <svg viewBox="0 0 320 512" aria-hidden="true">
                                     <path fill="currentColor" d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/>
                                 </svg>
                             </button>
                             <div class="slide-nav">
                                 ${this.images.map((_, index) => `
-                                    <button class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
+                                    <button class="slide-dot ${index === 0 ? 'active' : ''}" data-index="${index}" aria-label="Зураг ${index + 1} руу шилжих"></button>
                                 `).join('')}
                             </div>
                         ` : ''}
                     </div>
 
                     <div class="guide-selector">
-                        <select class="guide-select-dropdown">
+                        <select class="guide-select-dropdown" aria-label="Хөтөч сонгох">
                             <option value="">Хөтөч сонгох...</option>
                             <option value="g1">Дорж</option>
                             <option value="g2">Саран</option>

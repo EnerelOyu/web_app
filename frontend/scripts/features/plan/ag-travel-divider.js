@@ -218,6 +218,10 @@ class AgTravelDivider extends HTMLElement {
     }
 
     attachEventListeners() {
+        // Only attach listeners once
+        if (this._listenersAttached) return;
+        this._listenersAttached = true;
+
         const shadow = this.shadowRoot;
         const updateLabel = () => {
             const labelBtn = shadow.querySelector('.add-label-btn');
