@@ -334,6 +334,7 @@ class AgHeader extends HTMLElement {
           <a href="#/home">Нүүр Хуудас</a>
           <a href="#/spots">Аяллын Цэгүүд</a>
           <a href="#/plan">Миний Төлөвлөгөө</a>
+          <a href="#/traveler-signup">Нэвтрэх</a>
 
           <div class="mobile-theme-toggle-wrapper">
             <button class="theme-toggle mobile-theme-toggle" type="button" aria-label="Өнгөний тэм солих">
@@ -609,9 +610,15 @@ class AgHeader extends HTMLElement {
 
   setupUserBtn() {
     const userBtn = this.shadowRoot.querySelector('.user-btn');
-    if (!userBtn) return;
+    if (!userBtn) {
+      console.error('User button not found in shadow DOM');
+      return;
+    }
 
-    userBtn.addEventListener('click', () => {
+    userBtn.addEventListener('click', (e) => {
+      console.log('User button clicked');
+      e.preventDefault();
+      e.stopPropagation();
       // Аяллагч бүртгэлийн хуудас руу шилжих
       window.location.hash = '#/traveler-signup';
     });
