@@ -60,6 +60,7 @@ class AgHomeSearch extends HTMLElement {
           justify-content: flex-start;
           flex: 1;
           min-width: 0;
+          margin-left: var(--m-sm)
         }
 
         .form-group label {

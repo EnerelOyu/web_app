@@ -477,8 +477,8 @@ class PageHome extends HTMLElement {
 
     //ag-spot элемент дээрх дарах үйлдлүүдийг удирдах
     attachEventListeners() {
-        // ag-spot элементүүд дээрх дарах 
-        this.shadowRoot.addEventListener('click', (e) => {
+        // ag-spot элементүүд дээрх дарах
+        this.shadowRoot.addEventListener('click', async (e) => {
             // Дарагдсан spot-ыг олох
             const spot = e.target.closest('ag-spot');
             if (!spot) return;
@@ -500,8 +500,8 @@ class PageHome extends HTMLElement {
                 e.preventDefault();
                 e.stopPropagation();
 
-                // Spot-г төлөвлөгөөнд нэмэх 
-                const result = window.appState.addToPlan(spotId);
+                // Spot-г төлөвлөгөөнд нэмэх
+                const result = await window.appState.addToPlan(spotId);
 
                 if (result === true) {
                     // Амжилттай нэмэгдсэн
