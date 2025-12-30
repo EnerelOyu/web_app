@@ -7,14 +7,14 @@ class AgSpotHero extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    // Backend-ээс ирэх жинхэнэ үнэлгээ
+    // Backend-ээс ирэх жинхэнэ үнэлгээг хадгалах
     this.realRating = null; 
   }
 
   async connectedCallback() {
     const spotId = this.getAttribute("spot-id") || this.getAttribute("data-spot-id");
     if (spotId) {
-      // Үнэлгээг backend-ээс татах
+      // Үнэлгээг backend-ээс татаж тоцоолох
       await this.fetchAndCalculateRating(spotId);
     }
     this.render();
@@ -23,6 +23,7 @@ class AgSpotHero extends HTMLElement {
 
   // Attribute өөрчлөгдөх үед дахин зурах
   async attributeChangedCallback(name, oldValue, newValue) {
+    //Component DOM-д холбогдсон эсэхийг шалгах
     if (this.isConnected) {
       if (name === "spot-id" && newValue && oldValue !== newValue) {
         await this.fetchAndCalculateRating(newValue);
@@ -49,6 +50,7 @@ class AgSpotHero extends HTMLElement {
 
   // Сэтгэгдлүүдийн дундаж үнэлгээг тооцоолох
   calculateAverageRating(reviews) {
+    // Хэрэв сэтгэгдэл байхгүй бол 0 буцаах
     if (!reviews || reviews.length === 0) {
       return 0;
     }
@@ -500,7 +502,7 @@ class AgSpotHero extends HTMLElement {
 
   // Газрын линк хуваалцах үйлдэл
   handleShare() {
-    const title = this.getAttribute('title') || 'Аялалын газар';
+    const title = this.getAttribute('title') || 'Аялалын цэг';
     const url = window.location.href;
 
     // Web Share API дэмжигдэж байгаа эсэхийг шалгах
@@ -508,7 +510,7 @@ class AgSpotHero extends HTMLElement {
       // Mobile дээр native share dialog харуулах
       navigator.share({
         title: title,
-        text: `${title} - Ayalgo аяллын апп`,
+        text: `${title} - Ayalgo`,
         url: url
       }).catch(err => {
         console.log('Хуваалцах үйлдэл цуцлагдлаа:', err);

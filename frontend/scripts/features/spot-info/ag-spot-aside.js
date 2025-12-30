@@ -1,7 +1,6 @@
 class AgSpotAside extends HTMLElement {
   static get observedAttributes() {
-    // map-src: зураг, region/location/age/price: үндсэн info,
-    // schedule: "Дав: 8:00AM - 18:00PM, Мяг: 8:00AM - 18:00PM, ..."
+    
     return ["map-src", "region", "location", "age", "price", "schedule"];
   }
 
@@ -24,14 +23,14 @@ class AgSpotAside extends HTMLElement {
     const location = this.getAttribute("location") || "";
     const age = this.getAttribute("age") || "";
     const price = this.getAttribute("price") || "";
-
+    
     const scheduleAttr = this.getAttribute("schedule") || "";
     const scheduleItems = scheduleAttr
       .split(",")
       .map((s) => s.trim())
       .filter(Boolean);
 
-    // Schedule format is simple time range like "10:00–18:00 цаг хүртэл"
+    // scheduleItems-ийг html жагсаалт болгон хөрвүүлнэ
     const scheduleHtml = scheduleItems
     .map((item) => {
         return `

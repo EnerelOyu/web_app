@@ -153,10 +153,9 @@ class AgSpotReviewList extends HTMLElement {
             }
         `;
     }
-
+    //backend-с сэтгэгдэл татах
     async loadReviews() {
         try {
-            // Fetch reviews from backend API
             const response = await fetch(`http://localhost:3000/api/spots/${this.spotId}/reviews`);
 
             if (!response.ok) {
@@ -165,7 +164,7 @@ class AgSpotReviewList extends HTMLElement {
 
             const data = await response.json();
 
-            // Map backend data to frontend format
+            // backend-с ирсэн өгөгдлийг frontend форматаар хөрвүүлэх
             this.reviews = data.reviews.map(review => ({
                 bogin: review.userName,
                 urt: review.comment,
@@ -175,26 +174,11 @@ class AgSpotReviewList extends HTMLElement {
 
         } catch (error) {
             console.error('Error loading reviews from backend:', error);
-
-            // Fallback to default reviews if backend fails
-            this.reviews = [
-                {
-                    bogin: "Бат",
-                    urt: "Гайхалтай байгалийн үзэсгэлэнт газар. Цэвэр агаар, сайхан орчин. Хүмүүс маш эелдэг, тайван. Дахин ирэх дуртай.",
-                    unelgee: 4.5,
-                    date: "2024-01-15"
-                },
-                {
-                    bogin: "Сараа",
-                    urt: "Маш их тайван, амралт авахад тохиромжтой газар. Байгалийн үзэсгэлэн нүдэнд үзэсгэлэнтэй. Орчин нөхцөл маш сайн.",
-                    unelgee: 5.0,
-                    date: "2024-01-10"
-                }
-            ];
+            this.reviews
         }
     }
 
-    // Save review to backend
+    // backend-д сэтгэгдэл хадгалах
     async saveReview(userName, comment, rating) {
         try {
             const response = await fetch(`http://localhost:3000/api/spots/${this.spotId}/reviews`, {
@@ -282,21 +266,14 @@ class AgSpotReviewList extends HTMLElement {
 
         if (name && comment) {
             try {
-                // Save to backend
                 await this.saveReview(name, comment, rating);
-
-                // Reload reviews from backend
                 await this.loadReviews();
-
-                // Re-render with updated reviews
                 this.render();
 
-                // Dispatch event to notify parent component to update rating
                 window.dispatchEvent(new CustomEvent('spot-review-added', {
                     detail: { spotId: this.spotId }
                 }));
 
-                // Show success message
                 alert('Сэтгэгдэл амжилттай илгээгдлээ!');
             } catch (error) {
                 alert('Сэтгэгдэл хадгалахад алдаа гарлаа. Дахин оролдоно уу.');
