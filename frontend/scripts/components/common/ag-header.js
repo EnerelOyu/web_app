@@ -307,25 +307,25 @@ class AgHeader extends HTMLElement {
           <div class="search-container">
             <input type="text" placeholder="Хайлт хийх..">
             <button class="search-btn" type="button" aria-label="Хайх">
-              <svg><use href="/styles/icons.svg#icon-search"></use></svg>
+              <svg><use href="./styles/icons.svg#icon-search"></use></svg>
             </button>
           </div>
 
           <!-- Theme toggle: moon/sun icon-ийг theme-ээс хамаарч нуух/харуулах -->
           <button class="theme-toggle" type="button" aria-label="Theme солих">
-            <svg class="icon-moon"><use href="/styles/icons.svg#icon-moon"></use></svg>
-            <svg class="icon-sun hidden"><use href="/styles/icons.svg#icon-sun"></use></svg>
+            <svg class="icon-moon"><use href="./styles/icons.svg#icon-moon"></use></svg>
+            <svg class="icon-sun hidden"><use href="./styles/icons.svg#icon-sun"></use></svg>
           </button>
 
           <!-- user profile / login товч -->
           <button class="user-btn" aria-label="Хэрэглэгчийн профайл">
-            <svg><use href="/styles/icons.svg#icon-user"></use></svg>
+            <svg><use href="./styles/icons.svg#icon-user"></use></svg>
           </button>
         </div>
 
         <!-- Mobile menu (hamburger) -->
         <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
-          <svg><use href="/styles/icons.svg#icon-menu"></use></svg>
+          <svg><use href="./styles/icons.svg#icon-menu"></use></svg>
         </button>
 
         <!-- Mobile dropdown nav -->
@@ -336,8 +336,8 @@ class AgHeader extends HTMLElement {
 
           <div class="mobile-theme-toggle-wrapper">
             <button class="theme-toggle mobile-theme-toggle" type="button" aria-label="Өнгөний тэм солих">
-              <svg class="icon-moon"><use href="/styles/icons.svg#icon-moon"></use></svg>
-              <svg class="icon-sun hidden"><use href="/styles/icons.svg#icon-sun"></use></svg>
+              <svg class="icon-moon"><use href="./styles/icons.svg#icon-moon"></use></svg>
+              <svg class="icon-sun hidden"><use href="./styles/icons.svg#icon-sun"></use></svg>
             </button>
           </div>
         </div>

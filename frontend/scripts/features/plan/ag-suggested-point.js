@@ -20,7 +20,7 @@ class suggestedPoint  extends HTMLElement {
                         </div>
                         <button>
                             <svg>
-                                <use href="/styles/icons.svg#icon-add"></use>
+                                <use href="./styles/icons.svg#icon-add"></use>
                             </svg>
                         </button>
                     </div>
@@ -42,7 +42,7 @@ class suggestedPoint  extends HTMLElement {
     for(let i = 0; i < fullStars; i++){
       html += `
           <svg class="star">
-              <use href="/styles/icons.svg#icon-star-filled"></use>
+              <use href="./styles/icons.svg#icon-star-filled"></use>
           </svg>
       `;
     }
@@ -50,7 +50,7 @@ class suggestedPoint  extends HTMLElement {
     if(hasHalf){
       html += `
           <svg class="star">
-              <use href="/styles/icons.svg#icon-star-half"></use>
+              <use href="./styles/icons.svg#icon-star-half"></use>
           </svg>
       `;
     }
@@ -58,7 +58,7 @@ class suggestedPoint  extends HTMLElement {
     for(let i = 0; i < emptyStars; i++){
       html += `
           <svg class="star">
-              <use href="/styles/icons.svg#icon-star-unfilled"></use>
+              <use href="./styles/icons.svg#icon-star-unfilled"></use>
           </svg>
       `;
     }

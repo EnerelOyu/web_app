@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
      */
     function showSaveFeedback() {
         const originalText = notesSave.innerHTML;
-        notesSave.innerHTML = '<svg><use href="/styles/icons.svg#icon-check"></use></svg> Хадгалагдсан';
+        notesSave.innerHTML = '<svg><use href="./styles/icons.svg#icon-check"></use></svg> Хадгалагдсан';
         notesSave.style.background = 'var(--accent)';
 
         setTimeout(() => {

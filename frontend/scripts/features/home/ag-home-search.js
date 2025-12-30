@@ -1,3 +1,4 @@
+// Home хуудсын хайлтын компонент - Бүс нутаг болон категориор хайх
 class AgHomeSearch extends HTMLElement {
   constructor() {
     super();
@@ -8,6 +9,7 @@ class AgHomeSearch extends HTMLElement {
     const areaLabel = this.getAttribute("area-label") || "Бүс нутаг";
     const cateLabel = this.getAttribute("cate-label") || "Категори";
 
+    // Бүс нутаг болон категорийн жагсаалтыг attribute-аас авах
     const areas = JSON.parse(this.getAttribute("areas") || "[]");
     const categories = JSON.parse(this.getAttribute("categories") || "[]");
 
@@ -37,6 +39,7 @@ class AgHomeSearch extends HTMLElement {
           margin: 0 auto;
         }
 
+        /* Хайлтын формын дэлгэцэнд орох animation */
         @keyframes scaleIn {
           from {
             opacity: 0;
@@ -48,6 +51,7 @@ class AgHomeSearch extends HTMLElement {
           }
         }
 
+        /* Hover үед form хөргөх эффект */
         .search-form:hover {
           box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
           transform: translateY(-3px);
@@ -132,14 +136,15 @@ class AgHomeSearch extends HTMLElement {
           transform: scale(0.95);
         }
 
+        /* MEDIA QUERY */
+
         *:focus-visible {
           outline: 2px solid var(--accent-3);
           outline-offset: 2px;
         }
 
-        /* =========================
-           media query
-           ========================= */
+
+        /* Tablet - 1024px-ээс бага */
         @media (max-width: 1024px) {
           .search-form {
             width: 90%;
@@ -147,6 +152,7 @@ class AgHomeSearch extends HTMLElement {
           }
         }
 
+        /* Mobile landscape - 768px-ээс бага */
         @media (max-width: 768px) {
           .search-form {
             flex-direction: column;
@@ -167,6 +173,7 @@ class AgHomeSearch extends HTMLElement {
           }
         }
 
+        /* Mobile portrait - 480px-ээс бага */
         @media (max-width: 480px) {
           .search-form {
             gap: var(--gap-size-s);
@@ -192,23 +199,27 @@ class AgHomeSearch extends HTMLElement {
         </div>
 
         <button id="filter-submit" type="submit" aria-label="Хайх">
-          <svg><use href="/styles/icons.svg#icon-search"></use></svg>
+          <svg><use href="./styles/icons.svg#icon-search"></use></svg>
         </button>
       </form>
     `;
 
+    // Form элементүүдийг олох
     const form = this.shadowRoot.getElementById("search-form");
     const areaSelect = this.shadowRoot.getElementById("areas");
     const categorySelect = this.shadowRoot.getElementById("categories");
 
     if (!form) return;
 
+    // Form submit үед хайлтын параметрүүдийг /spots хуудас руу илгээх
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
+      // Сонгогдсон утгуудыг авах
       const area = areaSelect.value;
       const category = categorySelect.value;
 
+      // URL параметрүүд үүсгэх
       const params = new URLSearchParams();
 
       if (area) params.set("bus", area);
@@ -216,7 +227,7 @@ class AgHomeSearch extends HTMLElement {
 
       const query = params.toString();
 
-      // Use hash-based routing instead of full page navigation
+      // Hash-based routing ашиглан /spots хуудас руу шилжих
       if (query) {
         window.location.hash = `#/spots?${query}`;
       } else {

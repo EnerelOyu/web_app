@@ -84,7 +84,7 @@ class PagePlan extends HTMLElement {
                     <a href="#/spots" class="more-spots">
                         <p>Бүгдийг харах</p>
                         <svg class="more-icon">
-                            <use href="/styles/icons.svg#icon-arrow"></use>
+                            <use href="./styles/icons.svg#icon-arrow"></use>
                         </svg>
                     </a>
                     <div class="TL">

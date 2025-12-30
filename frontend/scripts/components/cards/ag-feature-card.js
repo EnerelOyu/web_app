@@ -54,7 +54,7 @@ class AgFeatureCard extends HTMLElement {
       </style>
 
       <svg aria-hidden="true" focusable="false">
-        <use href="/styles/icons.svg#icon-${icon}"></use>
+        <use href="./styles/icons.svg#icon-${icon}"></use>
       </svg>
       <p>${text}</p>
     `;

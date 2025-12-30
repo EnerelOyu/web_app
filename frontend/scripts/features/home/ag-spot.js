@@ -1,6 +1,5 @@
 class AgSpot extends HTMLElement {
   static get observedAttributes() {
-    // Одоо үнэхээр ашиглаж байгаа attribute-ууд
     return ["zrg", "ner", "bus"];
   }
 
@@ -164,7 +163,7 @@ class AgSpot extends HTMLElement {
           <img src="${img}" alt="${name}">
           <button type="button" aria-label="Маршрутдаа нэмэх">
             <svg aria-hidden="true" focusable="false">
-              <use href="/styles/icons.svg#icon-add"></use>
+              <use href="./styles/icons.svg#icon-add"></use>
             </svg>
           </button>
         </figure>
@@ -174,7 +173,7 @@ class AgSpot extends HTMLElement {
         <div class="spot-detail">
           <p>ДЭЛЭГРЭНГҮЙ</p>
           <svg class="more-icon" aria-hidden="true" focusable="false">
-            <use href="/styles/icons.svg#icon-arrow"></use>
+            <use href="./styles/icons.svg#icon-arrow"></use>
           </svg>
         </div>
       </article>

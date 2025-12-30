@@ -309,7 +309,7 @@ class AgImageUpload extends HTMLElement {
       <div class="profile-card">
         <div id="placeholder">
           <svg aria-hidden="true">
-                <use href="/styles/icons.svg#icon-camera"></use>
+                <use href="./styles/icons.svg#icon-camera"></use>
           </svg>
             <p class="profile-text">Зураг оруулах</p>
         </div>

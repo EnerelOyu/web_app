@@ -397,7 +397,7 @@ class PageGuideProfile extends HTMLElement {
             <!-- Холбоо барих товчууд -->
             <div class="guide-contact-section">
               <a href="tel:${guide.phone ? guide.phone.replace(/\s+/g, '') : ''}" class="guide-contact-btn">
-                <svg><use href="/styles/icons.svg#icon-phone"></use></svg>
+                <svg><use href="./styles/icons.svg#icon-phone"></use></svg>
                 Залгах
               </a>
               <a href="mailto:${guide.email}" class="guide-contact-btn secondary">
