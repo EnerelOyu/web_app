@@ -101,7 +101,7 @@ class AgToast extends HTMLElement {
 
       <div class="toast">
         <svg class="toast-icon" aria-hidden="true" focusable="false">
-          <use href="/styles/icons.svg#icon-added"></use>
+          <use href="./styles/icons.svg#icon-added"></use>
         </svg>
         <p class="toast-message"></p>
       </div>

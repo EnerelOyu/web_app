@@ -1,24 +1,27 @@
+// Газрын дэлгэрэнгүй мэдээллийн үндсэн компонент - зураг, нэр, үнэлгээ, товч
 class AgSpotHero extends HTMLElement {
   static get observedAttributes() {
-    // Спотын үндсэн мэдээллийг аттрибутаар өгнө
     return ["title", "rating", "cate", "status", "time", "img1", "img2", "img3", "spot-id"];
   }
 
   constructor() {
     super();
     this.attachShadow({ mode: "open" });
-    this.realRating = null;
+    // Backend-ээс ирэх жинхэнэ үнэлгээ
+    this.realRating = null; 
   }
 
   async connectedCallback() {
     const spotId = this.getAttribute("spot-id") || this.getAttribute("data-spot-id");
     if (spotId) {
+      // Үнэлгээг backend-ээс татах
       await this.fetchAndCalculateRating(spotId);
     }
     this.render();
     this.attachEventListeners();
   }
 
+  // Attribute өөрчлөгдөх үед дахин зурах
   async attributeChangedCallback(name, oldValue, newValue) {
     if (this.isConnected) {
       if (name === "spot-id" && newValue && oldValue !== newValue) {
@@ -29,6 +32,7 @@ class AgSpotHero extends HTMLElement {
     }
   }
 
+  // Backend-ээс газрын сэтгэгдлүүдийг татах
   async fetchSpotReviews(spotId) {
     try {
       const response = await fetch(`http://localhost:3000/api/spots/${spotId}/reviews`);
@@ -43,15 +47,17 @@ class AgSpotHero extends HTMLElement {
     }
   }
 
+  // Сэтгэгдлүүдийн дундаж үнэлгээг тооцоолох
   calculateAverageRating(reviews) {
     if (!reviews || reviews.length === 0) {
       return 0;
     }
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     const average = sum / reviews.length;
-    return Math.round(average * 10) / 10;
+    return Math.round(average * 10) / 10; 
   }
 
+  // Үнэлгээг татаж, тооцоолох
   async fetchAndCalculateRating(spotId) {
     const reviews = await this.fetchSpotReviews(spotId);
     this.realRating = this.calculateAverageRating(reviews);
@@ -59,7 +65,7 @@ class AgSpotHero extends HTMLElement {
 
   render() {
     const title = this.getAttribute("title") || "";
-    // Use real rating if available, otherwise fall back to attribute
+    // Backend үнэлгээ байвал үүнийг ашиглах, үгүй бол attribute-аас авах
     const rating = this.realRating !== null ? this.realRating : (this.getAttribute("rating") || "0");
 
     const cates = (this.getAttribute("cate") || "")
@@ -85,9 +91,7 @@ class AgSpotHero extends HTMLElement {
           display: block;
         }
 
-        /* =====================================================
-           MAIN INFO - Үндсэн мэдээлэл контейнер
-           ===================================================== */
+        /* MAIN INFO - Үндсэн мэдээлэл контейнер */
 
         .main-info {
           display: flex;
@@ -95,9 +99,7 @@ class AgSpotHero extends HTMLElement {
           gap: var(--gap-size-s);
         }
 
-        /* =====================================================
-           HEADER - Гарчиг болон товчлууруud
-           ===================================================== */
+        /* HEADER */
 
         .spot-header {
           display: flex;
@@ -116,9 +118,7 @@ class AgSpotHero extends HTMLElement {
           line-height: 1.2;
         }
 
-        /* =====================================================
-           ACTION BUTTONS - Хуваалцах, Нэмэх товчлууруud
-           ===================================================== */
+        /* ACTION BUTTONS - Хуваалцах, Нэмэх товчлууруud */
 
         .actions {
           display: flex;
@@ -167,17 +167,13 @@ class AgSpotHero extends HTMLElement {
           fill: var(--primary-5);
         }
 
-        /* =====================================================
-           RATING - Үнэлгээний компонент
-           ===================================================== */
+        /* RATING - Үнэлгээний компонент */
 
         ag-rating {
           margin: var(--gap-size-xs) 0;
         }
 
-        /* =====================================================
-           CATEGORIES & SCHEDULE ROW - Ангилал ба цагийн хуваарь
-           ===================================================== */
+        /* CATEGORIES & SCHEDULE ROW */
 
         .category-schedule-row {
           display: flex;
@@ -188,9 +184,7 @@ class AgSpotHero extends HTMLElement {
           flex-wrap: wrap;
         }
 
-        /* =====================================================
-           CATEGORIES - Ангилал тагууд
-           ===================================================== */
+        /* CATEGORIES */
 
         .spot-category {
           display: flex;
@@ -217,9 +211,7 @@ class AgSpotHero extends HTMLElement {
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
-        /* =====================================================
-           SCHEDULE - Цагийн хуваарь болон төлөв
-           ===================================================== */
+        /* SCHEDULE */
 
         .spot-schedue {
           display: flex;
@@ -250,10 +242,7 @@ class AgSpotHero extends HTMLElement {
           color: var(--accent-2);
         }
 
-        /* =====================================================
-           IMAGES - Зургийн grid бүтэц
-           ===================================================== */
-
+        /* IMAGES */
         .spot-imgs {
           display: grid;
           grid-template-columns: 2fr 1fr;
@@ -280,10 +269,7 @@ class AgSpotHero extends HTMLElement {
           grid-row: 1 / 3;
         }
 
-        /* =====================================================
-           RESPONSIVE DESIGN - Хариуцлагатай дизайн
-           ===================================================== */
-
+        /* MEDIA QUERY*/
         /* Tablet - 768px ба түүнээс бага */
         @media (max-width: 768px) {
           :host {
@@ -392,16 +378,16 @@ class AgSpotHero extends HTMLElement {
         <div class="spot-header">
           <h1>${title}</h1>
           <div class="actions">
-            <button class="action-btn">
+            <button class="action-btn" aria-label="Хуваалцах">
               <span>Хуваалцах</span>
               <svg>
-                <use href="/styles/icons.svg#icon-share"></use>
+                <use href="./styles/icons.svg#icon-share"></use>
               </svg>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" aria-label="Маршрутдаа нэмэх">
               <span>Нэмэх</span>
               <svg>
-                <use href="/styles/icons.svg#icon-add"></use>
+                <use href="./styles/icons.svg#icon-add"></use>
               </svg>
             </button>
           </div>
@@ -436,15 +422,13 @@ class AgSpotHero extends HTMLElement {
     buttons.forEach(button => {
       const buttonText = button.querySelector('span')?.textContent;
 
-      // "Нэмэх" товч
       if (buttonText === 'Нэмэх') {
-        button.onclick = (e) => {
+        button.onclick = async (e) => {
           e.preventDefault();
-          this.handleAddToPlan(button);
+          await this.handleAddToPlan(button);
         };
       }
 
-      // "Хуваалцах" товч
       if (buttonText === 'Хуваалцах') {
         button.onclick = (e) => {
           e.preventDefault();
@@ -454,7 +438,8 @@ class AgSpotHero extends HTMLElement {
     });
   }
 
-  handleAddToPlan(button) {
+  // Газрыг аяллын төлөвлөгөөнд нэмэх үйлдэл
+  async handleAddToPlan(button) {
     const spotId = this.getAttribute('data-spot-id');
 
     if (!spotId) {
@@ -462,11 +447,13 @@ class AgSpotHero extends HTMLElement {
       return;
     }
 
-    // Add to plan
-    const result = window.appState.addToPlan(spotId);
+    // Toast мэдэгдлийн элемент олох
+    const toast = document.querySelector('ag-toast');
+
+    // Backend руу хүсэлт илгээж төлөвлөгөөнд нэмэх
+    const result = await window.appState.addToPlan(spotId);
 
     if (result === true) {
-      // Visual feedback
       const originalHTML = button.innerHTML;
       const originalBg = button.style.backgroundColor;
 
@@ -480,12 +467,16 @@ class AgSpotHero extends HTMLElement {
         button.style.color = '';
       }, 1500);
 
-      // Navigate to plan page
+      // Toast мэдэгдэл харуулах
+      if (toast) {
+        toast.show('Төлөвлөгөөнд нэмэгдлээ!', 'success', 3000);
+      }
+
       setTimeout(() => {
         window.location.hash = '#/plan';
       }, 600);
     } else if (result === 'exists') {
-      // Already exists - show feedback without navigation
+      // Аль хэдийн байгаа бол - Мэдэгдэл харуулах, хуудас солихгүй
       const originalHTML = button.innerHTML;
       const originalBg = button.style.backgroundColor;
 
@@ -493,20 +484,28 @@ class AgSpotHero extends HTMLElement {
       button.style.backgroundColor = 'var(--text-color-6)';
       button.style.color = 'var(--text-color-1)';
 
+      // 2 секундын дараа товчийг буцааж өөрчлөх
       setTimeout(() => {
         button.innerHTML = originalHTML;
         button.style.backgroundColor = originalBg;
         button.style.color = '';
       }, 2000);
+
+      // Toast мэдэгдэл харуулах
+      if (toast) {
+        toast.show('Энэ газар аль хэдийн төлөвлөгөөнд байна', 'info', 3000);
+      }
     }
   }
 
+  // Газрын линк хуваалцах үйлдэл
   handleShare() {
     const title = this.getAttribute('title') || 'Аялалын газар';
     const url = window.location.href;
 
-    // Web Share API support check
+    // Web Share API дэмжигдэж байгаа эсэхийг шалгах
     if (navigator.share) {
+      // Mobile дээр native share dialog харуулах
       navigator.share({
         title: title,
         text: `${title} - Ayalgo аяллын апп`,
@@ -515,7 +514,6 @@ class AgSpotHero extends HTMLElement {
         console.log('Хуваалцах үйлдэл цуцлагдлаа:', err);
       });
     } else {
-      // Fallback: Copy to clipboard
       navigator.clipboard.writeText(url).then(() => {
         alert('Холбоос хуулагдлаа!');
       }).catch(err => {

@@ -72,15 +72,15 @@ class AgRating extends HTMLElement {
     let html = "";
 
     for (let i = 0; i < full; i++) {
-      html += `<svg class="star"><use href="/styles/icons.svg#icon-star-filled"></use></svg>`;
+      html += `<svg class="star"><use href="./styles/icons.svg#icon-star-filled"></use></svg>`;
     }
 
     if (half) {
-      html += `<svg class="star"><use href="/styles/icons.svg#icon-star-half"></use></svg>`;
+      html += `<svg class="star"><use href="./styles/icons.svg#icon-star-half"></use></svg>`;
     }
 
     for (let i = 0; i < empty; i++) {
-      html += `<svg class="star"><use href="/styles/icons.svg#icon-star-unfilled"></use></svg>`;
+      html += `<svg class="star"><use href="./styles/icons.svg#icon-star-unfilled"></use></svg>`;
     }
 
     return html;

@@ -230,14 +230,14 @@ class AgFooter extends HTMLElement {
               <li>
                 <a href="#" aria-label="Facebook">
                   <svg>
-                    <use href="/styles/icons.svg#icon-facebook"></use>
+                    <use href="./styles/icons.svg#icon-facebook"></use>
                   </svg>
                 </a>
               </li>
               <li>
                 <a href="#" aria-label="Instagram">
                   <svg>
-                    <use href="/styles/icons.svg#icon-instagram"></use>
+                    <use href="./styles/icons.svg#icon-instagram"></use>
                   </svg>
                 </a>
               </li>

@@ -91,9 +91,7 @@ class AgSpotSection extends HTMLElement {
           transform: translateX(4px);
         }
 
-        
-
-        /* ---------- MOBILE (≤768px) ---------- */
+        /*  MOBILE (≤768px)  */
         @media (max-width: 768px) {
           .spot-header {
             flex-direction: column;
@@ -123,7 +121,6 @@ class AgSpotSection extends HTMLElement {
           }
         }
 
-        /* ---------- SMALL MOBILE (≤480px) ---------- */
         @media (max-width: 480px) {
           .spots-grid {
             grid-template-columns: 1fr;
@@ -137,7 +134,7 @@ class AgSpotSection extends HTMLElement {
           <a href="${link}" class="more-spots">
             <p>Бүгдийг харах</p>
             <svg class="more-icon" aria-hidden="true" focusable="false">
-              <use href="/styles/icons.svg#icon-arrow"></use>
+              <use href="./styles/icons.svg#icon-arrow"></use>
             </svg>
           </a>
         </div>

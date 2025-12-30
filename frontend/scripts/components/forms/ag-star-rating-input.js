@@ -56,7 +56,7 @@ class AgStarRatingInput extends HTMLElement {
                     <input type="radio" id="star${value}-${this._uid}" name="rating-${this._uid}" value="${value}" ${value === this.rating ? 'checked' : ''}>
                     <label for="star${value}-${this._uid}">
                         <svg class="star ${value <= this.rating ? 'filled' : 'empty'}">
-                            <use href="/styles/icons.svg#icon-star-filled"></use>
+                            <use href="./styles/icons.svg#icon-star-filled"></use>
                         </svg>
                     </label>
                 `).join('')}

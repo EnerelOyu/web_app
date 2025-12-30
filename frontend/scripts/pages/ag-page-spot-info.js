@@ -301,6 +301,15 @@ class PageSpotInfo extends HTMLElement {
     `;
   }
 
+  //Toast мэдэгдлийн систем тохируулах
+  setupToast() {
+    if (!document.querySelector('ag-toast')) {
+      const toast = document.createElement('ag-toast');
+      document.body.appendChild(toast);
+    }
+    this.toast = document.querySelector('ag-toast');
+  }
+
   // Element DOM дээр холбогдох үед дуудагдана
   connectedCallback() {
     // URL-аас gazrын ID-г авч, appState-д тохируулах
@@ -308,6 +317,7 @@ class PageSpotInfo extends HTMLElement {
 
     // Хуудсыг анх зурж, event listener-үүдийг холбох
     this.render();
+    this.setupToast();
     this.attachEventListeners();
 
     // appState-ийн өөрчлөлтийг сонсох - газрын өгөгдөл шинэчлэгдвэл дахин зурах
@@ -415,7 +425,7 @@ class PageSpotInfo extends HTMLElement {
             <div class="guide-scroll-container">
               <button class="scrl scrl-left" data-scroll="left" aria-label="Зүүн тийш гүйлгэх">
                 <svg>
-                  <use href="/styles/icons.svg#icon-leftScroll"></use>
+                  <use href="./styles/icons.svg#icon-leftScroll"></use>
                 </svg>
               </button>
 
@@ -425,7 +435,7 @@ class PageSpotInfo extends HTMLElement {
 
               <button class="scrl scrl-right" data-scroll="right" aria-label="Баруун тийш гүйлгэх">
                 <svg>
-                  <use href="/styles/icons.svg#icon-rightScroll"></use>
+                  <use href="./styles/icons.svg#icon-rightScroll"></use>
                 </svg>
               </button>
             </div>
@@ -433,7 +443,7 @@ class PageSpotInfo extends HTMLElement {
             <a href="#/guides" class="more-guides">
               <p>Бүгдийг харах</p>
               <svg class="more-icon">
-                <use href="/styles/icons.svg#icon-arrow"></use>
+                <use href="./styles/icons.svg#icon-arrow"></use>
               </svg>
             </a>
           </section>

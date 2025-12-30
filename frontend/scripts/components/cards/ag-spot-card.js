@@ -227,7 +227,7 @@ class AgSpotCard extends HTMLElement {
             // Visual feedback
             newAddButton.style.backgroundColor = 'var(--accent-2)';
             const originalSvg = newAddButton.innerHTML;
-            newAddButton.innerHTML = '<svg><use href="/styles/icons.svg#icon-check"></use></svg>';
+            newAddButton.innerHTML = '<svg><use href="./styles/icons.svg#icon-check"></use></svg>';
 
             setTimeout(() => {
               newAddButton.style.backgroundColor = '';
@@ -305,14 +305,14 @@ class AgSpotCard extends HTMLElement {
           <a href="${href}">
             <img src="${img}" alt="${title}">
           </a>
-          <button type="button">
+          <button type="button" aria-label="Маршрутдаа нэмэх">
             <svg>
-              <use href="/styles/icons.svg#icon-add"></use>
+              <use href="./styles/icons.svg#icon-add"></use>
             </svg>
           </button>
-          <button type="button">
+          <button type="button" aria-label="Хуваалцах">
             <svg>
-              <use href="/styles/icons.svg#icon-share"></use>
+              <use href="./styles/icons.svg#icon-share"></use>
             </svg>
           </button>
         </figure>
