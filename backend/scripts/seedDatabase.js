@@ -10,31 +10,44 @@ const spotsJsonPath = path.join(__dirname, '..', '..', 'frontend', 'data', 'spot
 
 const readSpotsJson = () => {
   const raw = fs.readFileSync(spotsJsonPath, 'utf-8');
-  return JSON.parse(raw).spots || [];
+  return JSON.parse(raw).spots || []; // JSON.parse(raw) = текстийг жинхэнэ JS object болгоно. Дотор нь .spots гэж массив байвал буцаана.
 };
 
-const ensureLookup = (table, name) => {
-  if (!name) return null;
+const ensureLookup = (table, name) => { //нэр байвал DB-д олж/үүсгэж ID буцаана
+  if (!name) return null; //Нэр байхгүй бол шууд null
   const trimmed = name.trim();
-  if (!trimmed) return null;
+  if (!trimmed) return null; //" " шиг зөвхөн хоосон зай байвал null.
 
+  /* ${table} = хүснэгтийн нэрээ орлуулж тавина.
+  ? = параметр (SQL injection хамгаалалт)
+  .get(trimmed) = нэг мөр (row) олбол авна. */
   const select = db.prepare(`SELECT id FROM ${table} WHERE name = ?`).get(trimmed);
   if (select) return select.id;
 
+  /* Байхгүй бол insert хийнэ
+  Шинээр мөр нэмнэ.
+  .run() → INSERT ажиллуулна.
+  lastInsertRowid → шинээр нэмэгдсэн мөрийн ID.*/
   const insert = db.prepare(`INSERT INTO ${table} (name) VALUES (?)`).run(trimmed);
   return insert.lastInsertRowid;
 };
 
 const seedSpot = (spot, index) => {
   const spotId = index + 1; // Use 1-based index as spotId
-
-  // Check if spot already exists
+  /* JSON-ийн 0-оос эхэлдэг индексыг 1-ээс эхэлдэг болгож байна.
+  Тэгэхээр:
+  эхний spot → spotId=1
+  хоёр дахь spot → spotId=2
+  Анхаарах зүйл: энэ арга нь JSON-ийн дараалал өөрчлөгдвөл spotId солигдоно. */
+  
+  // Spot байгаа эсэхийг шалгах
   const existingSpot = db.prepare('SELECT spotId FROM spots WHERE spotId = ?').get(spotId);
 
   let spotDbId;
+  // Доор нь ашиглах spot-ийн ID-г хадгалах хувьсагч.
 
   if (existingSpot) {
-    // Update existing spot (preserves reviews)
+    // Хэрвээ spot өмнө нь байсан бол UPDATE хийнэ (review-ийг хадгална)
     const updateSpot = db.prepare(`
       UPDATE spots SET
         name = ?, area = ?, category = ?, detailLocation = ?, descriptionLong = ?,
@@ -65,7 +78,8 @@ const seedSpot = (spot, index) => {
 
     spotDbId = spotId;
 
-    // Clear existing relationships
+    // Category/Activity нь олон-олонтой холбоотой (many-to-many) байдаг.
+    // Шинэчилсэн spot-д хуучин холбоо үлдэхгүй байлгахын тулд эхлээд устгаад, дараа нь шинээр insert хийнэ.
     db.prepare('DELETE FROM spot_categories WHERE spotId = ?').run(spotDbId);
     db.prepare('DELETE FROM spot_activities WHERE spotId = ?').run(spotDbId);
   } else {
@@ -100,6 +114,7 @@ const seedSpot = (spot, index) => {
     spotDbId = spotId;
   }
 
+  // Category-уудыг задлаад spot_categories холбоос хүснэгтэд хийнэ
   const categories = (spot.category || '').split(',').map(v => v.trim()).filter(Boolean);
   categories.forEach(catName => {
     const catId = ensureLookup('categories', catName);
@@ -107,6 +122,7 @@ const seedSpot = (spot, index) => {
     db.prepare('INSERT OR IGNORE INTO spot_categories (spotId, categoryId) VALUES (?, ?)').run(spotDbId, catId);
   });
 
+  // Activities-ийг яг адилхан холбоос хүснэгтэд хийнэ
   (spot.activities || []).filter(Boolean).forEach(activityName => {
     const actId = ensureLookup('activities', activityName);
     if (!actId) return;
@@ -117,8 +133,10 @@ const seedSpot = (spot, index) => {
 const run = () => {
   initDB();
 
-  // Don't delete spots to preserve reviews
-  // Only clear relationship tables
+  /*spots хүснэгтийг огт устгахгүй. Харин холбоос хүснэгтүүдийг (категори/үйл ажиллагаа) бүхэлд нь цэвэрлэнэ.
+  Seed хийхэд холбоосууд давхардаж/хуучирч болох тул цэвэрлээд дахин үүсгэнэ.
+  reviews-тэй холбоотой spots устгахгүй байх зорилготой. */
+  
   db.exec('DELETE FROM spot_categories; DELETE FROM spot_activities;');
 
   const spots = readSpotsJson();
