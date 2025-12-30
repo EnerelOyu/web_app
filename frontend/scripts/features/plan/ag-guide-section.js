@@ -1,51 +1,52 @@
+/**
+ * ========================================
+ * AgGuideSection - Хөтөч сонгох хэсэг
+ * ========================================
+ *
+ * Энэхүү компонент нь төлөвлөгөөнд хөтөч сонгох интерфэйс юм.
+ * Хэрэглэгч дараах үйлдлүүдийг хийх боломжтой:
+ * - Dropdown-оос хөтөч сонгох
+ * - Сонгосон хөтчийн мэдээллийг харах (ag-guide-card ашиглан)
+ * - Хөтөчид утасдах
+ * - Хөтчийн профайл руу очих
+ * - Хөтөч солих
+ * - Сонголтыг localStorage-д хадгалах
+ */
 class AgGuideSection extends HTMLElement {
+    /**
+     * constructor - Компонентыг үүсгэх
+     *
+     * Үүрэг:
+     * HTMLElement-ийн constructor-ийг дуудна
+     */
     constructor() {
         super();
-        this.guides = [
-            {
-                id: 'g1',
-                name: 'Дорж',
-                phone: '+97690909909',
-                experience: '5 жил',
-                languages: 'Монгол, Англи',
-                birthdate: '1990-05-15',
-                photo: '../assets/images/guide-img/guide1.svg',
-                rating: 4.5,
-                area: 'Улаанбаатар'
-            },
-            {
-                id: 'g2',
-                name: 'Саран',
-                phone: '+97699001122',
-                experience: '3 жил',
-                languages: 'Монгол, Англи, Орос',
-                birthdate: '1992-08-20',
-                photo: '../assets/images/guide-img/guide2.svg',
-                rating: 4.8,
-                area: 'Улаанбаатар, Хархорин'
-            },
-            {
-                id: 'g3',
-                name: 'Бат',
-                phone: '+97688812233',
-                experience: '7 жил',
-                languages: 'Монгол, Япон',
-                birthdate: '1988-12-10',
-                photo: '../assets/images/guide-img/guide3.svg',
-                rating: 4.2,
-                area: 'Улаанбаатар, Говь'
-            }
-        ];
     }
 
+    /**
+     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
+     *
+     * Үүрэг:
+     * 1. Компонентыг дүрсэлнэ (render)
+     * 2. Widget-ийг эхлүүлнэ (dropdown, товчууд)
+     * 3. CSS хэв загварыг суулгана
+     */
     connectedCallback() {
         this.render();
-    this.initInstWidget();
-    this.applyStyles();
-  }
+        this.initInstWidget();
+        this.applyStyles();
+    }
 
-  applyStyles() {
-    const styles = `
+    /**
+     * applyStyles - CSS хэв загварыг document head-д нэмэх
+     *
+     * Үүрэг:
+     * 1. Бүх CSS хэв загварыг бүтээнэ
+     * 2. <style> tag үүсгэж document head-д нэмнэ
+     * 3. Давхар нэмэхээс сэргийлнэ (ID шалгах)
+     */
+    applyStyles() {
+        const styles = `
       /* Inst section */
       .inst {
         grid-area: guide;
@@ -202,6 +203,7 @@ class AgGuideSection extends HTMLElement {
       }
         `;
 
+        // Давхар нэмэхээс сэргийлэх - ID шалгах
         if (!document.querySelector('#guide-section-styles')) {
             const styleElement = document.createElement('style');
             styleElement.id = 'guide-section-styles';
@@ -210,6 +212,15 @@ class AgGuideSection extends HTMLElement {
         }
     }
 
+    /**
+     * render - Компонентыг дүрсэлэх
+     *
+     * Үүрэг:
+     * 1. Хөтөч сонгох dropdown үүсгэнэ
+     * 2. Хөтчийн карт (ag-guide-card) харуулах хэсэг үүсгэнэ
+     * 3. Хөтөч солих, утасдах, профайл харах товчуудыг нэмнэ
+     * 4. aria-live="polite" ашиглан screen reader-т мэдээлнэ
+     */
     render() {
         this.innerHTML = `
             <div class="inst" aria-live="polite">
@@ -236,6 +247,17 @@ class AgGuideSection extends HTMLElement {
         `;
     }
 
+    /**
+     * initInstWidget - Widget-ийг эхлүүлэх (event listener-ууд, dropdown)
+     *
+     * Үүрэг:
+     * 1. DOM элементүүдийг авах
+     * 2. Хөтчүүдийг dropdown-д нэмэх
+     * 3. showGuide функц үүсгэх - хөтчийн картыг харуулах
+     * 4. hideGuide функц үүсгэх - хөтчийн картыг нуух
+     * 5. Event listener-ууд суулгах (select, товчууд)
+     * 6. localStorage-аас сонгогдсон хөтчийг ачаалах
+     */
     initInstWidget() {
         const select = this.querySelector('#guideSelect');
         const card = this.querySelector('#instCard');
@@ -245,7 +267,7 @@ class AgGuideSection extends HTMLElement {
         const profileBtn = this.querySelector('#profileBtn');
         const guideCardElement = this.querySelector('#guideCardElement');
 
-        // Populate select options
+        // Dropdown-д хөтчүүдийг нэмэх
         this.guides.forEach(guide => {
             const option = document.createElement('option');
             option.value = guide.id;
@@ -253,7 +275,17 @@ class AgGuideSection extends HTMLElement {
             select.appendChild(option);
         });
 
-        // Show guide info in card
+        /**
+         * showGuide - Хөтчийн мэдээллийг картанд харуулах
+         *
+         * Үүрэг:
+         * 1. Хөтчийг ID-аар олох
+         * 2. ag-guide-card компонентод хөтчийн өгөгдөл дамжуулах
+         * 3. Картыг харуулах, dropdown нуух
+         * 4. Сонгогдсон хөтчийн ID-г data атрибутад хадгалах
+         *
+         * @param {string} guideId - Хөтчийн ID
+         */
         const showGuide = (guideId) => {
             const guide = this.guides.find(g => g.id === guideId);
             if (!guide) {
@@ -261,26 +293,34 @@ class AgGuideSection extends HTMLElement {
                 return;
             }
 
-            // Set the guide data in the ag-guide-card component
+            // ag-guide-card компонентод хөтчийн өгөгдөл дамжуулах
             if (guideCardElement && guideCardElement.setGuide) {
                 guideCardElement.setGuide(guideId);
             }
 
-            // Show card and hide select
+            // Картыг харуулах, dropdown нуух
             card.hidden = false;
             card.classList.add('show');
             instContainer.classList.add('has-guide');
-            
-            // Store selected guide
+
+            // Сонгогдсон хөтчийг хадгалах
             instContainer.setAttribute('data-selected-guide', guideId);
         };
 
-        // Hide guide and show select
+        /**
+         * hideGuide - Хөтчийн картыг нуух, dropdown харуулах
+         *
+         * Үүрэг:
+         * 1. Картыг нуух
+         * 2. Dropdown-ыг харуулах
+         * 3. Сонголтыг цэвэрлэх
+         * 4. data атрибут устгах
+         */
         this.hideGuide = () => {
             const instContainer = this.querySelector('.inst');
             const card = this.querySelector('#instCard');
             const select = this.querySelector('#instSelect');
-            
+
             card.hidden = true;
             card.classList.remove('show');
             instContainer.classList.remove('has-guide');
@@ -288,12 +328,23 @@ class AgGuideSection extends HTMLElement {
             instContainer.removeAttribute('data-selected-guide');
         };
 
-        // Event listeners
+        // ========================================
+        // Event Listeners
+        // ========================================
+
+        /**
+         * Select change event - Dropdown-оос хөтөч сонгох
+         *
+         * Үүрэг:
+         * 1. Сонгогдсон хөтчийн ID-г авах
+         * 2. Хөтөч байвал харуулах, localStorage-д хадгалах
+         * 3. Хөтөч байхгүй бол нуух, localStorage-аас устгах
+         */
         select.addEventListener('change', () => {
             const guideId = select.value;
             if (guideId) {
                 showGuide(guideId);
-                // Save to localStorage
+                // localStorage-д хадгалах
                 localStorage.setItem('selectedGuide', guideId);
             } else {
                 this.hideGuide();
@@ -301,15 +352,31 @@ class AgGuideSection extends HTMLElement {
             }
         });
 
+        /**
+         * Change guide button click event - Хөтөч солих товч
+         *
+         * Үүрэг:
+         * 1. Хөтчийн картыг нуух
+         * 2. localStorage-аас устгах
+         * 3. Dropdown руу фокус шилжүүлэх (UX сайжруулах)
+         */
         changeGuideBtn.addEventListener('click', () => {
             this.hideGuide();
             localStorage.removeItem('selectedGuide');
-            // Focus on select for better UX
+            // Dropdown руу фокус шилжүүлэх
             setTimeout(() => {
                 select.focus();
             }, 100);
         });
 
+        /**
+         * Contact button click event - Утасдах товч
+         *
+         * Үүрэг:
+         * 1. Сонгогдсон хөтчийг олох
+         * 2. Хөтөч байхгүй бол анхааруулах
+         * 3. Хөтөч байвал утасны дугаар руу залгах (tel: link)
+         */
         contactBtn.addEventListener('click', () => {
             const selectedGuideId = instContainer.getAttribute('data-selected-guide');
             const guide = this.guides.find(g => g.id === selectedGuideId);
@@ -317,9 +384,18 @@ class AgGuideSection extends HTMLElement {
                 alert('Хөтөч сонгоно уу.');
                 return;
             }
+            // Утасны дугаар руу залгах
             window.location.href = `tel:${guide.phone.replace(/\s+/g, '')}`;
         });
 
+        /**
+         * Profile button click event - Профайл харах товч
+         *
+         * Үүрэг:
+         * 1. Сонгогдсон хөтчийг олох
+         * 2. Хөтөч байхгүй бол анхааруулах
+         * 3. Хөтөч байвал профайл хуудас руу шилжих (одоогоор жишээ alert)
+         */
         profileBtn.addEventListener('click', () => {
             const selectedGuideId = instContainer.getAttribute('data-selected-guide');
             const guide = this.guides.find(g => g.id === selectedGuideId);
@@ -327,10 +403,13 @@ class AgGuideSection extends HTMLElement {
                 alert('Хөтөч сонгоно уу.');
                 return;
             }
+            // Профайл хуудас руу шилжих (одоогоор жишээ)
             alert(`Орон нутгийн хөтөч ${guide.name} -ийн профайл руу шилжих (жишээ).`);
         });
 
-        // Check if there's a previously selected guide (for persistence)
+        // ========================================
+        // localStorage-аас өмнө сонгосон хөтчийг ачаалах
+        // ========================================
         const savedGuide = localStorage.getItem('selectedGuide');
         if (savedGuide && this.guides.find(g => g.id === savedGuide)) {
             select.value = savedGuide;

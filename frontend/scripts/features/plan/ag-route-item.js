@@ -1,605 +1,735 @@
+/**
+ * ========================================
+ * AgRouteItem - Аяллын зам дахь нэг газрын карт
+ * ========================================
+ *
+ * Энэхүү компонент нь хэрэглэгчийн төлөвлөгөөнд нэмсэн аяллын газар бүрийг дүрсэлнэ.
+ * Хэрэглэгч дараах үйлдлүүдийг хийх боломжтой:
+ * - Газрын нэр, тайлбарыг засварлах
+ * - Зургуудыг шилжүүлэх (slider)
+ * - Хөтөч сонгох
+ * - Газрын зураг руу очих
+ * - Дэлгэрэнгүй мэдээлэл харах
+ * - Газрыг жагсаалтаас устгах
+ * - Эрэмбэ солих (drag & drop)
+ */
 class AgRouteItem extends HTMLElement {
+    /**
+     * constructor - Компонентыг үүсгэх
+     *
+     * Үүрэг:
+     * 1. HTMLElement-ийн constructor-ийг дуудна
+     * 2. Shadow DOM үүсгэн, компонентыг дотоод хэв загвартай болгоно
+     */
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
+    /**
+     * observedAttributes - Хянах шинж чанаруудын жагсаалт
+     *
+     * Үүрэг:
+     * Эдгээр атрибутууд өөрчлөгдөх үед attributeChangedCallback автоматаар ажиллана
+     *
+     * @returns {Array<string>} - Хянах атрибутуудын жагсаалт
+     */
     static get observedAttributes() {
         return ['number', 'title', 'description', 'image', 'img1', 'img2', 'img3', 'map-query', 'region', 'selected-guide'];
     }
 
+    /**
+     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
+     *
+     * Үүрэг:
+     * 1. Компонентыг дүрсэлнэ (render)
+     * 2. Event listener-ууд суулгана
+     */
     connectedCallback() {
         this.render();
         this.attachEventListeners();
     }
 
+    /**
+     * attributeChangedCallback - Атрибут өөрчлөгдөх үед ажиллах
+     *
+     * Үүрэг:
+     * 1. region атрибут өөрчлөгдвөл - тухайн бүс нутгийн хөтчүүдийг дахин ачаална
+     * 2. selected-guide атрибут өөрчлөгдвөл - сонгосон хөтчийн мэдээллийг харуулна
+     * 3. Бусад атрибутууд өөрчлөгдвөл - бүхэлд нь дахин дүрсэлнэ
+     *
+     * @param {string} name - Өөрчлөгдсөн атрибутын нэр
+     * @param {string} oldValue - Хуучин утга
+     * @param {string} newValue - Шинэ утга
+     */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue === newValue) return;
 
-        // Only re-render for visual attributes, not for region/selected-guide
+        // Зөвхөн харагдах байдлын атрибутуудад дахин дүрсэлнэ
         if (name === 'region') {
-            // Region changed, reload guides
+            // Бүс нутаг өөрчлөгдвөл хөтчүүдийг дахин ачаална
             if (this.shadowRoot.querySelector('.guide-select-dropdown')) {
                 this.loadGuidesForRegion();
             }
         } else if (name === 'selected-guide') {
-            // Selected guide changed, show the guide
+            // Сонгосон хөтөч өөрчлөгдвөл харуулна
             if (this.shadowRoot.querySelector('.guide-select-dropdown')) {
                 this.updateSelectedGuideDisplay();
             }
         } else {
-            // For other attributes, re-render
+            // Бусад атрибутуудад бүхэлд нь дахин дүрсэлнэ
             this.render();
             this.attachEventListeners();
         }
     }
 
+    /**
+     * number getter - Газрын дугаар (дарааллыг заах)
+     *
+     * @returns {string} - Газрын дугаар (үндсэн утга: '1')
+     */
     get number() {
         return this.getAttribute('number') || '1';
     }
 
+    /**
+     * number setter - Газрын дугаар тохируулах
+     *
+     * @param {string} value - Шинэ дугаар
+     */
     set number(value) {
         this.setAttribute('number', value);
     }
 
+    /**
+     * title getter - Газрын нэр
+     *
+     * @returns {string} - Газрын нэр
+     */
     get title() {
         return this.getAttribute('title') || '';
     }
 
+    /**
+     * description getter - Газрын тайлбар
+     *
+     * @returns {string} - Тайлбар (нээлттэй цаг, үнэ, тэмдэглэл гэх мэт)
+     */
     get description() {
         return this.getAttribute('description') || '';
     }
 
+    /**
+     * image getter - Үндсэн зураг
+     *
+     * @returns {string} - Зургийн URL
+     */
     get image() {
         return this.getAttribute('image') || this.img1 || '';
     }
 
+    /**
+     * img1 getter - Эхний зураг
+     *
+     * @returns {string} - Эхний зургийн URL
+     */
     get img1() {
         return this.getAttribute('img1') || this.getAttribute('image') || '';
     }
 
+    /**
+     * img2 getter - Хоёр дахь зураг
+     *
+     * @returns {string} - Хоёр дахь зургийн URL (үгүй бол эхний зургийг ашиглана)
+     */
     get img2() {
         return this.getAttribute('img2') || this.img1;
     }
 
+    /**
+     * img3 getter - Гурав дахь зураг
+     *
+     * @returns {string} - Гурав дахь зургийн URL (үгүй бол эхний зургийг ашиглана)
+     */
     get img3() {
         return this.getAttribute('img3') || this.img1;
     }
 
+    /**
+     * images getter - Бүх зургуудын жагсаалт
+     *
+     * Үүрэг:
+     * Slider-д харуулах бүх зургуудыг цуглуулна
+     *
+     * @returns {Array<string>} - Зургуудын URL-ийн жагсаалт
+     */
     get images() {
         const imgs = [this.img1, this.img2, this.img3].filter(img => img);
         return imgs.length > 0 ? imgs : [this.image || ''];
     }
 
+    /**
+     * mapQuery getter - Газрын зургийн хайлтын query
+     *
+     * @returns {string} - Google Maps-д хайх утга (үндсэн утга: title)
+     */
     get mapQuery() {
         return this.getAttribute('map-query') || this.title;
     }
 
+    /**
+     * region getter - Газар байрлах бүс нутаг
+     *
+     * Үүрэг:
+     * Энэ утгыг ашиглан тухайн бүс нутгийн хөтчүүдийг шүүнэ
+     *
+     * @returns {string} - Бүс нутгийн нэр (жишээ: "Төв", "Хангай")
+     */
     get region() {
         return this.getAttribute('region') || '';
     }
 
+    /**
+     * selectedGuide getter - Сонгосон хөтчийн ID
+     *
+     * @returns {string} - Хөтчийн ID
+     */
     get selectedGuide() {
         return this.getAttribute('selected-guide') || '';
     }
 
+    /**
+     * selectedGuide setter - Сонгосон хөтчийн ID тохируулах
+     *
+     * @param {string} value - Хөтчийн ID
+     */
     set selectedGuide(value) {
         this.setAttribute('selected-guide', value);
     }
 
+    /**
+     * render - Компонентыг дүрсэлэх
+     *
+     * Үүрэг:
+     * 1. Shadow DOM руу бүх HTML, CSS-ийг бичнэ
+     * 2. Газрын мэдээлэл (нэр, тайлбар, зураг) харуулна
+     * 3. Зургийн slider бүтээнэ (олон зураг байвал)
+     * 4. Хөтөч сонгох dropdown харуулна
+     * 5. Газрын зураг, дэлгэрэнгүй, устгах товчуудыг нэмнэ
+     */
     render() {
-        this.shadowRoot.innerHTML = `
-            <style>
-                :host {
-                    display: grid;
-                    grid-template-columns: auto 1fr auto;
-                    gap: var(--gap-size-m, 1rem);
-                    align-items: start;
-                    background-color: var(--bg-color, #fff);
-                    border-radius: var(--br-s, 8px);
-                    padding: var(--p-md, 1rem);
-                    position: relative;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-                    margin-bottom: var(--m-xs, 0.5rem);
-                    transition: all 0.2s ease;
-                }
+        const styles = `
+            :host {
+                display: grid;
+                grid-template-columns: auto 1fr auto;
+                gap: var(--gap-size-m, 1rem);
+                align-items: start;
+                background-color: var(--bg-color, #fff);
+                border-radius: var(--br-s, 8px);
+                padding: var(--p-md, 1rem);
+                position: relative;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+                margin-bottom: var(--m-xs, 0.5rem);
+                transition: all 0.2s ease;
+            }
 
-                :host(:hover) {
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-                }
+            :host(:hover) {
+                box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            }
 
-                :host([draggable="true"]) {
-                    cursor: grab;
-                }
+            :host([draggable="true"]) {
+                cursor: grab;
+            }
 
-                :host([draggable="true"]:active) {
-                    cursor: grabbing;
-                }
+            :host([draggable="true"]:active) {
+                cursor: grabbing;
+            }
 
-                :host(.dragging) {
-                    opacity: 0.6;
-                    background: var(--text-color-8, #f5f5f5);
-                    transform: rotate(2deg);
-                }
+            :host(.dragging) {
+                opacity: 0.6;
+                background: var(--text-color-8, #f5f5f5);
+                transform: rotate(2deg);
+            }
 
-                /* Place Marker - Always Visible */
-                .place-marker {
-                    position: relative;
-                    width: 2rem;
-                    height: 2.5rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    flex-shrink: 0;
-                }
-                .place-two {
-                    display: flex;
-                    flex-direction: column;
-                }
+            /* Place Marker - Always Visible */
+            .place-marker {
+                position: relative;
+                width: 2rem;
+                height: 2.5rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+            .place-two {
+                display: flex;
+                flex-direction: column;
+            }
 
-                .marker-icon {
-                    width: 100%;
-                    height: 100%;
-                    color: var(--primary);
-                }
+            .marker-icon {
+                width: 100%;
+                height: 100%;
+                color: var(--primary);
+            }
 
-                .marker-number {
-                    position: absolute;
-                    top: 40%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    color: var(--bg-color, #fff);
-                    font-weight: bold;
-                    font-size: var(--fs-sm, 0.875rem);
-                    font-family: 'Rubik', sans-serif;
-                }
+            .marker-number {
+                position: absolute;
+                top: 40%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: var(--bg-color, #fff);
+                font-weight: bold;
+                font-size: var(--fs-sm, 0.875rem);
+                font-family: 'Rubik', sans-serif;
+            }
 
-                .drag-handle-inline {
-                    background: none;
-                    border: none;
-                    cursor: grab;
-                    padding: var(--p-xxs, 0.25rem);
-                    transition: opacity 0.2s ease;
-                    opacity: 0;
-                    align-self: flex-start;
-                    margin-top: var(--m-xs, 0.5rem);
-                }
+            .drag-handle-inline {
+                background: none;
+                border: none;
+                cursor: grab;
+                padding: var(--p-xxs, 0.25rem);
+                transition: opacity 0.2s ease;
+                opacity: 0;
+                align-self: flex-start;
+                margin-top: var(--m-xs, 0.5rem);
+            }
 
-                :host(:hover) .drag-handle-inline {
-                    opacity: 1;
-                }
+            :host(:hover) .drag-handle-inline {
+                opacity: 1;
+            }
 
-                .drag-handle-inline svg {
-                    width: 18px;
-                    height: 18px;
-                    color: var(--primary);
-                }
+            .drag-handle-inline svg {
+                width: 18px;
+                height: 18px;
+                color: var(--primary);
+            }
 
-                .drag-handle-inline:active {
-                    cursor: grabbing;
-                }
+            .drag-handle-inline:active {
+                cursor: grabbing;
+            }
 
-                /* Route Main */
-                .route-main {
-                    display: grid;
-                    grid-template-areas: "text image";
-                    grid-template-columns: 1fr auto;
-                    gap: var(--gap-size-m, 1rem);
-                    align-items: start;
-                    min-width: 0;
-                }
+            /* Route Main */
+            .route-main {
+                display: grid;
+                grid-template-areas: "text image";
+                grid-template-columns: 1fr auto;
+                gap: var(--gap-size-m, 1rem);
+                align-items: start;
+                min-width: 0;
+            }
 
-                .place-info {
-                    grid-area: text;
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--gap-size-s, 0.75rem);
-                    min-width: 0;
-                    overflow: visible;
-                }
+            .place-info {
+                grid-area: text;
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-s, 0.75rem);
+                min-width: 0;
+                overflow: visible;
+            }
 
-                .place-header {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--gap-size-xs, 0.25rem);
-                }
+            .place-header {
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-xs, 0.25rem);
+            }
 
-                .place-title {
-                    font-size: var(--fs-lg, 1.125rem);
-                    font-weight: 600;
-                    color: var(--text-color-0, #1a1a1a);
-                    border: none;
-                    background: transparent;
-                    padding: var(--p-xs, 0.5rem);
-                    border-radius: var(--br-s, 8px);
-                    outline: none;
-                    cursor: text;
-                    transition: background 0.2s;
-                    font-family: 'Rubik', sans-serif;
-                }
+            .place-title {
+                font-size: var(--fs-lg, 1.125rem);
+                font-weight: 600;
+                color: var(--text-color-0, #1a1a1a);
+                border: none;
+                background: transparent;
+                padding: var(--p-xs, 0.5rem);
+                border-radius: var(--br-s, 8px);
+                outline: none;
+                cursor: text;
+                transition: background 0.2s;
+                font-family: 'Rubik', sans-serif;
+            }
 
-                .place-title:hover,
-                .place-title:focus {
-                    background: var(--primary-5, rgba(255, 107, 0, 0.05));
-                }
+            .place-title:hover,
+            .place-title:focus {
+                background: var(--primary-5, rgba(255, 107, 0, 0.05));
+            }
 
-                .place-meta {
-                    display: flex;
-                    align-items: center;
-                    gap: var(--gap-size-xs, 0.25rem);
-                    font-size: var(--fs-sm, 0.875rem);
-                    color: var(--text-color-3, #666);
-                }
+            .place-meta {
+                display: flex;
+                align-items: center;
+                gap: var(--gap-size-xs, 0.25rem);
+                font-size: var(--fs-sm, 0.875rem);
+                color: var(--text-color-3, #666);
+            }
 
-                .meta-separator {
-                    color: var(--text-color-6, #ccc);
-                }
+            .meta-separator {
+                color: var(--text-color-6, #ccc);
+            }
 
-                .map-link {
-                    color: var(--text-color-3, #666);
-                    text-decoration: none;
-                    transition: color 0.2s;
-                    font-weight: 500;
-                }
+            .map-link {
+                color: var(--text-color-3, #666);
+                text-decoration: none;
+                transition: color 0.2s;
+                font-weight: 500;
+            }
 
-                .map-link:hover {
-                    color: var(--primary, #ff6b00);
-                    text-decoration: underline;
-                }
+            .map-link:hover {
+                color: var(--primary, #ff6b00);
+                text-decoration: underline;
+            }
 
-                .details-link {
-                    background: none;
-                    border: none;
-                    color: var(--text-color-3, #666);
-                    font-size: var(--fs-sm, 0.875rem);
-                    font-weight: 500;
-                    cursor: pointer;
-                    transition: color 0.2s;
-                    padding: 0;
-                    font-family: 'NunitoSans', sans-serif;
-                }
+            .details-link {
+                background: none;
+                border: none;
+                color: var(--text-color-3, #666);
+                font-size: var(--fs-sm, 0.875rem);
+                font-weight: 500;
+                cursor: pointer;
+                transition: color 0.2s;
+                padding: 0;
+                font-family: 'NunitoSans', sans-serif;
+            }
 
-                .details-link:hover {
-                    color: var(--primary, #ff6b00);
-                    text-decoration: underline;
-                }
+            .details-link:hover {
+                color: var(--primary, #ff6b00);
+                text-decoration: underline;
+            }
 
-                .place-description {
-                    width: 100%;
-                    min-width: 0;
-                }
+            .place-description {
+                width: 100%;
+                min-width: 0;
+            }
 
-                .place-description textarea {
-                    width: 100%;
-                    min-height: 80px;
-                    max-width: 100%;
-                    padding: var(--p-sm, 0.75rem);
-                    border: 1px solid var(--text-color-7, #ddd);
-                    border-radius: var(--br-s, 8px);
-                    font-family: 'NunitoSans', sans-serif;
-                    font-size: var(--fs-sm, 0.875rem);
-                    color: var(--text-color-1, #333);
-                    resize: vertical;
-                    transition: all 0.2s;
-                    box-sizing: border-box;
-                }
+            .place-description textarea {
+                width: 100%;
+                min-height: 80px;
+                max-width: 100%;
+                padding: var(--p-sm, 0.75rem);
+                border: 1px solid var(--text-color-7);
+                border-radius: var(--br-s, 8px);
+                font-family: 'NunitoSans', sans-serif;
+                font-size: var(--fs-sm, 0.875rem);
+                color: var(--text-color-1);
+                resize: vertical;
+                transition: all 0.2s;
+                box-sizing: border-box;
+            }
 
-                .place-description textarea:focus {
-                    outline: none;
-                    border-color: var(--primary, #ff6b00);
-                    background: var(--bg-color, #fff);
-                }
+            .place-description textarea:focus {
+                outline: none;
+                border-color: var(--primary);
+                background: var(--bg-color);
+            }
 
-                .place-description textarea::placeholder {
-                    color: var(--text-color-5, #999);
-                }
+            .place-description textarea::placeholder {
+                color: var(--text-color-5);
+            }
 
-                /* Place Media */
-                .place-media {
-                    grid-area: image;
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--gap-size-s, 0.75rem);
-                }
+            /* Place Media */
+            .place-media {
+                grid-area: image;
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-s, 0.75rem);
+            }
 
-                .image-container {
-                    position: relative;
-                    width: 200px;
-                    height: 150px;
-                    border-radius: var(--br-s, 8px);
-                    overflow: hidden;
-                }
+            .image-container {
+                position: relative;
+                width: 200px;
+                height: 150px;
+                border-radius: var(--br-s, 8px);
+                overflow: hidden;
+            }
 
-                .image-slider {
-                    position: relative;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    transition: transform 0.3s ease;
-                }
+            .image-slider {
+                position: relative;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                transition: transform 0.3s ease;
+            }
 
-                .image-slide {
-                    min-width: 100%;
-                    height: 100%;
-                    flex-shrink: 0;
-                }
+            .image-slide {
+                min-width: 100%;
+                height: 100%;
+                flex-shrink: 0;
+            }
 
-                .image-slide img {
-                    width: 100%;
-                    height: 100%;
-                    object-fit: cover;
-                    -webkit-user-drag: none;
-                    user-select: none;
-                }
+            .image-slide img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                -webkit-user-drag: none;
+                user-select: none;
+            }
 
-                /* Slide Navigation */
-                .slide-nav {
-                    position: absolute;
-                    bottom: 8px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    display: flex;
-                    gap: 6px;
-                    z-index: 3;
-                    opacity: 0;
-                    transition: opacity 0.2s;
-                }
+            /* Slide Navigation */
+            .slide-nav {
+                position: absolute;
+                bottom: 8px;
+                left: 50%;
+                transform: translateX(-50%);
+                display: flex;
+                gap: 6px;
+                z-index: 3;
+                opacity: 0;
+                transition: opacity 0.2s;
+            }
 
-                .image-container:hover .slide-nav {
-                    opacity: 1;
-                }
+            .image-container:hover .slide-nav {
+                opacity: 1;
+            }
 
-                .slide-dot {
-                    width: 8px;
-                    height: 8px;
-                    border-radius: 50%;
-                    background: rgba(255, 255, 255, 0.5);
-                    border: none;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    padding: 0;
-                }
+            .slide-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                border: none;
+                cursor: pointer;
+                transition: all 0.2s;
+                padding: 0;
+            }
 
-                .slide-dot.active {
-                    background: var(--bg-color, #fff);
-                    width: 24px;
-                    border-radius: 4px;
-                }
+            .slide-dot.active {
+                background: var(--bg-color, #fff);
+                width: 24px;
+                border-radius: 4px;
+            }
 
-                .slide-arrow {
-                    position: absolute;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    background: rgba(255, 255, 255, 0.9);
-                    border: none;
-                    border-radius: var(--br-circle, 50%);
-                    width: 32px;
-                    height: 32px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    z-index: 3;
-                    opacity: 0;
-                }
+            .slide-arrow {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                background: rgba(255, 255, 255, 0.9);
+                border: none;
+                border-radius: var(--br-circle, 50%);
+                width: 32px;
+                height: 32px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.2s;
+                z-index: 3;
+                opacity: 0;
+            }
 
-                .image-container:hover .slide-arrow {
-                    opacity: 1;
-                }
+            .image-container:hover .slide-arrow {
+                opacity: 1;
+            }
 
-                .slide-arrow:hover {
-                    background: var(--primary, #ff6b00);
-                    transform: translateY(-50%) scale(1.1);
-                }
+            .slide-arrow:hover {
+                background: var(--primary, #ff6b00);
+                transform: translateY(-50%) scale(1.1);
+            }
 
-                .slide-arrow svg {
-                    width: 16px;
-                    height: 16px;
-                    fill: var(--text-color-1, #333);
-                }
+            .slide-arrow svg {
+                width: 16px;
+                height: 16px;
+                fill: var(--text-color-1, #333);
+            }
 
-                .slide-arrow:hover svg {
-                    fill: var(--bg-color, #fff);
-                }
+            .slide-arrow:hover svg {
+                fill: var(--bg-color, #fff);
+            }
 
-                .slide-arrow.prev {
-                    left: 8px;
-                }
+            .slide-arrow.prev {
+                left: 8px;
+            }
 
-                .slide-arrow.next {
-                    right: 8px;
-                }
+            .slide-arrow.next {
+                right: 8px;
+            }
 
-                /* Guide Selector */
-                .guide-selector {
-                    width: 200px;
-                }
+            /* Guide Selector */
+            .guide-selector {
+                width: 200px;
+            }
 
-                .guide-select-dropdown {
-                    width: 100%;
-                    padding: var(--p-xs, 0.5rem) var(--p-sm, 0.75rem);
-                    background: var(--primary-5, rgba(255, 107, 0, 0.05));
-                    border: 1px solid var(--text-color-7, #ddd);
-                    border-radius: var(--br-s, 8px);
-                    font-family: 'NunitoSans', sans-serif;
-                    font-size: var(--fs-sm, 0.875rem);
-                    color: var(--text-color-2, #555);
-                    cursor: pointer;
-                    transition: all 0.2s;
-                }
+            .guide-select-dropdown {
+                width: 100%;
+                padding: var(--p-xs, 0.5rem) var(--p-sm, 0.75rem);
+                background: var(--primary-5, rgba(255, 107, 0, 0.05));
+                border: 1px solid var(--text-color-7, #ddd);
+                border-radius: var(--br-s, 8px);
+                font-family: 'NunitoSans', sans-serif;
+                font-size: var(--fs-sm, 0.875rem);
+                color: var(--text-color-2, #555);
+                cursor: pointer;
+                transition: all 0.2s;
+            }
 
-                .guide-select-dropdown:focus {
-                    outline: none;
-                    border-color: var(--primary, #ff6b00);
-                }
+            .guide-select-dropdown:focus {
+                outline: none;
+                border-color: var(--primary, #ff6b00);
+            }
 
-                .selected-guide {
-                    display: none;
-                    background: var(--primary-5, rgba(255, 107, 0, 0.05));
-                    padding: var(--p-sm, 0.75rem);
-                    border-radius: var(--br-s, 8px);
-                    align-items: center;
-                    justify-content: space-between;
-                    gap: var(--gap-size-s, 0.75rem);
-                }
+            .selected-guide {
+                display: none;
+                background: var(--primary-5, rgba(255, 107, 0, 0.05));
+                padding: var(--p-sm, 0.75rem);
+                border-radius: var(--br-s, 8px);
+                align-items: center;
+                justify-content: space-between;
+                gap: var(--gap-size-s, 0.75rem);
+            }
 
-                .selected-guide.show {
-                    display: flex;
-                }
+            .selected-guide.show {
+                display: flex;
+            }
 
-                .guide-mini-info {
-                    display: flex;
-                    flex-direction: column;
-                    gap: var(--gap-size-xs, 0.25rem);
-                }
+            .guide-mini-info {
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-size-xs, 0.25rem);
+            }
 
-                .guide-name {
-                    font-weight: 600;
-                    color: var(--text-color-1, #333);
-                    font-size: var(--fs-sm, 0.875rem);
-                }
+            .guide-name {
+                font-weight: 600;
+                color: var(--text-color-1, #333);
+                font-size: var(--fs-sm, 0.875rem);
+            }
 
-                .guide-phone {
-                    color: var(--text-color-3, #666);
-                    font-size: var(--fs-xs, 0.75rem);
-                    text-decoration: none;
-                }
+            .guide-phone {
+                color: var(--text-color-3, #666);
+                font-size: var(--fs-xs, 0.75rem);
+                text-decoration: none;
+            }
 
-                .guide-phone:hover {
-                    color: var(--primary, #ff6b00);
-                    text-decoration: underline;
-                }
+            .guide-phone:hover {
+                color: var(--primary, #ff6b00);
+                text-decoration: underline;
+            }
 
-                .change-guide-btn {
-                    background: var(--bg-color, #fff);
-                    border: 1px solid var(--text-color-7, #ddd);
-                    border-radius: var(--br-s, 8px);
-                    padding: var(--p-xxs, 0.25rem) var(--p-xs, 0.5rem);
-                    font-size: var(--fs-xs, 0.75rem);
-                    color: var(--text-color-3, #666);
-                    cursor: pointer;
-                    transition: all 0.2s;
-                    white-space: nowrap;
-                    font-family: 'NunitoSans', sans-serif;
-                }
+            .change-guide-btn {
+                background: var(--bg-color, #fff);
+                border: 1px solid var(--text-color-7, #ddd);
+                border-radius: var(--br-s, 8px);
+                padding: var(--p-xxs, 0.25rem) var(--p-xs, 0.5rem);
+                font-size: var(--fs-xs, 0.75rem);
+                color: var(--text-color-3, #666);
+                cursor: pointer;
+                transition: all 0.2s;
+                white-space: nowrap;
+                font-family: 'NunitoSans', sans-serif;
+            }
 
-                .change-guide-btn:hover {
-                    background: var(--primary, #ff6b00);
-                    color: var(--bg-color, #fff);
-                    border-color: var(--primary, #ff6b00);
-                }
+            .change-guide-btn:hover {
+                background: var(--primary, #ff6b00);
+                color: var(--bg-color, #fff);
+            }
 
-                /* Route Actions */
+            /* Route Actions */
+            .route-actions {
+                display: flex;
+                align-items: flex-start;
+                padding: var(--p-xs, 0.5rem);
+                opacity: 0;
+                transition: opacity 0.2s ease;
+                justify-self: end;
+                align-self: start;
+            }
+
+            :host(:hover) .route-actions {
+                opacity: 1;
+            }
+
+            .delete-btn {
+                background: none;
+                border: none;
+                padding: var(--p-xs, 0.5rem);
+                border-radius: var(--br-s, 8px);
+                cursor: pointer;
+                color: var(--text-color-5);
+                transition: all 0.2s ease;
+            }
+
+            .delete-btn:hover {
+                background: var(--primary-8);
+                color: var(--primary);
+            }
+
+            .delete-btn svg {
+                width: 18px;
+                height: 18px;
+                fill: currentColor;
+                display: block;
+            }
+
+            /* Responsive */
+            @media (hover: none) {
                 .route-actions {
-                    display: flex;
-                    align-items: flex-start;
-                    padding: var(--p-xs, 0.5rem);
-                    opacity: 0;
-                    transition: opacity 0.2s ease;
-                    justify-self: end;
+                    opacity: 1;
+                }
+            }
+
+            @media (max-width: 768px) {
+                :host {
+                    grid-template-columns: auto 1fr;
+                    grid-template-rows: auto 1fr;
+                    gap: var(--gap-size-s, 0.75rem);
+                    padding: var(--p-sm, 0.75rem);
+                }
+
+                .place-marker {
+                    grid-row: 1 / 3;
                     align-self: start;
                 }
 
-                :host(:hover) .route-actions {
+                .route-main {
+                    grid-column: 2;
+                    grid-row: 2;
+                    grid-template-areas: "text" "image";
+                    grid-template-columns: 1fr;
+                    gap: var(--gap-size-s, 0.75rem);
+                }
+
+                .drag-handle-inline {
                     opacity: 1;
                 }
 
-                .delete-btn {
-                    background: none;
-                    border: none;
+                .image-container {
+                    width: 100%;
+                    height: 180px;
+                }
+
+                .guide-selector {
+                    width: 100%;
+                }
+
+                .place-media {
+                    width: 100%;
+                }
+
+                .route-actions {
+                    position: absolute;
+                    top: var(--p-sm, 0.75rem);
+                    right: var(--p-sm, 0.75rem);
+                    opacity: 1;
+                }
+            }
+
+            @media (max-width: 480px) {
+                :host {
                     padding: var(--p-xs, 0.5rem);
-                    border-radius: var(--br-s, 8px);
-                    cursor: pointer;
-                    color: var(--text-color-5);
-                    transition: all 0.2s ease;
                 }
 
-                .delete-btn:hover {
-                    background: var(--primary-8);
-                    color: var(--primary);
+                .place-title {
+                    font-size: var(--fs-base, 1rem);
                 }
 
-                .delete-btn svg {
-                    width: 18px;
-                    height: 18px;
-                    fill: currentColor;
-                    display: block;
+                .image-container {
+                    height: 150px;
                 }
 
-                /* Responsive */
-                @media (hover: none) {
-                    .route-actions {
-                        opacity: 1;
-                    }
+                .place-description textarea {
+                    min-height: 60px;
+                    font-size: var(--fs-xs, 0.75rem);
                 }
+            }
+        `;
 
-                @media (max-width: 768px) {
-                    :host {
-                        grid-template-columns: auto 1fr;
-                        grid-template-rows: auto 1fr;
-                        gap: var(--gap-size-s, 0.75rem);
-                        padding: var(--p-sm, 0.75rem);
-                    }
-
-                    .place-marker {
-                        grid-row: 1 / 3;
-                        align-self: start;
-                    }
-
-                    .route-main {
-                        grid-column: 2;
-                        grid-row: 2;
-                        grid-template-areas: "text" "image";
-                        grid-template-columns: 1fr;
-                        gap: var(--gap-size-s, 0.75rem);
-                    }
-
-                    .drag-handle-inline {
-                        opacity: 1;
-                    }
-
-                    .image-container {
-                        width: 100%;
-                        height: 180px;
-                    }
-
-                    .guide-selector {
-                        width: 100%;
-                    }
-
-                    .place-media {
-                        width: 100%;
-                    }
-
-                    .route-actions {
-                        position: absolute;
-                        top: var(--p-sm, 0.75rem);
-                        right: var(--p-sm, 0.75rem);
-                        opacity: 1;
-                    }
-                }
-
-                @media (max-width: 480px) {
-                    :host {
-                        padding: var(--p-xs, 0.5rem);
-                    }
-
-                    .place-title {
-                        font-size: var(--fs-base, 1rem);
-                    }
-
-                    .image-container {
-                        height: 150px;
-                    }
-
-                    .place-description textarea {
-                        min-height: 60px;
-                        font-size: var(--fs-xs, 0.75rem);
-                    }
-                }
-            </style>
-
+        this.shadowRoot.innerHTML = `
+            <style>${styles}</style>
             <div class="place-two">
             <div class="place-marker">
                 <svg class="marker-icon" aria-hidden="true" focusable="false">
@@ -688,13 +818,22 @@ class AgRouteItem extends HTMLElement {
         `;
     }
 
+    /**
+     * attachEventListeners - Event listener-ууд суулгах
+     *
+     * Үүрэг:
+     * 1. Бүс нутгийн хөтчүүдийг ачаална (loadGuidesForRegion)
+     * 2. Зургийн slider-ийн товчуудад listener суулгана
+     * 3. Устгах товчид listener суулгана
+     * 4. Дэлгэрэнгүй товчид listener суулгана
+     */
     attachEventListeners() {
         const shadow = this.shadowRoot;
 
-        // Load guides dynamically from backend
+        // Бүс нутгийн хөтчүүдийг backend-ээс динамикаар ачаална
         this.loadGuidesForRegion();
 
-        // Image Slider
+        // Зургийн Slider
         let currentSlide = 0;
         const slider = shadow.querySelector('.image-slider');
         const slides = shadow.querySelectorAll('.image-slide');
@@ -702,30 +841,42 @@ class AgRouteItem extends HTMLElement {
         const prevBtn = shadow.querySelector('.slide-arrow.prev');
         const nextBtn = shadow.querySelector('.slide-arrow.next');
 
+        /**
+         * updateSlider - Slider-ийг шинэчлэх (зураг солих)
+         *
+         * @param {number} index - Харуулах зургийн дугаар
+         */
         const updateSlider = (index) => {
             if (!slider || slides.length === 0) return;
 
             currentSlide = index;
+            // Хамгийн эхний зураг руу буцах
             if (currentSlide < 0) currentSlide = slides.length - 1;
+            // Хамгийн сүүлийн зураг руу шилжих
             if (currentSlide >= slides.length) currentSlide = 0;
 
+            // Transform ашиглан зургийг зүүн тийш шилжүүлнэ
             slider.style.transform = `translateX(-${currentSlide * 100}%)`;
 
+            // Цэгүүдийг идэвхтэй болгох
             dots.forEach((dot, i) => {
                 dot.classList.toggle('active', i === currentSlide);
             });
         };
 
+        // Өмнөх зураг товч
         prevBtn?.addEventListener('click', (e) => {
             e.stopPropagation();
             updateSlider(currentSlide - 1);
         });
 
+        // Дараагийн зураг товч
         nextBtn?.addEventListener('click', (e) => {
             e.stopPropagation();
             updateSlider(currentSlide + 1);
         });
 
+        // Цэгүүд дээр дарахад зураг солих
         dots.forEach(dot => {
             dot.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -734,9 +885,9 @@ class AgRouteItem extends HTMLElement {
             });
         });
 
-        // Guide selector - will be initialized after guides are loaded
+        // Хөтөч сонгогч - хөтчүүд ачаалагдсаны дараа эхлүүлнэ
 
-        // Delete button
+        // Устгах товч
         shadow.querySelector('.delete-btn')?.addEventListener('click', () => {
             this.dispatchEvent(new CustomEvent('delete-item', {
                 bubbles: true,
@@ -745,7 +896,7 @@ class AgRouteItem extends HTMLElement {
             }));
         });
 
-        // Details link
+        // Дэлгэрэнгүй холбоос
         shadow.querySelector('.details-link')?.addEventListener('click', () => {
             const spotId = this.getAttribute('data-spot-id') || this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
             if (spotId && window.appState?.setCurrentSpot) {
@@ -766,7 +917,17 @@ class AgRouteItem extends HTMLElement {
         });
     }
 
-    // Load guides for the region dynamically
+    /**
+     * loadGuidesForRegion - Бүс нутгийн хөтчүүдийг ачаалах
+     *
+     * Үүрэг:
+     * 1. appState-ээс бүх хөтчүүдийг авна
+     * 2. Зөвхөн тухайн газрын бүс нутагт ажилладаг хөтчүүдийг шүүнэ
+     * 3. Dropdown руу хөтчүүдийг нэмнэ
+     * 4. Өмнө сонгосон хөтөч байвал харуулна
+     *
+     * @async
+     */
     async loadGuidesForRegion() {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
@@ -774,19 +935,19 @@ class AgRouteItem extends HTMLElement {
 
         if (!select || !this.region) return;
 
-        // Clear existing options except placeholder
+        // Өмнө байсан сонголтуудыг цэвэрлэх (placeholder-ийг үлдээнэ)
         select.innerHTML = '<option value="">Хөтөч сонгох...</option>';
 
         try {
-            // Get guides from appState
+            // appState-ээс хөтчүүдийг авах
             const allGuides = window.appState?.getAllGuides() || [];
 
-            // If guides not loaded yet, wait for appstatechange event
+            // Хөтчүүд хараахан ачаалагдаагүй бол хүлээнэ
             if (allGuides.length === 0) {
                 select.innerHTML = '<option value="">Хөтөч ачааллаж байна...</option>';
                 select.disabled = true;
 
-                // Listen for guide data load
+                // Хөтчүүдийн өгөгдөл ачаалагдахыг хүлээх listener
                 const handleGuideLoad = (e) => {
                     if (e.detail.key === 'guideData') {
                         window.removeEventListener('appstatechange', handleGuideLoad);
@@ -797,7 +958,7 @@ class AgRouteItem extends HTMLElement {
                 return;
             }
 
-            // Filter guides by region
+            // Бүс нутгаар хөтчүүдийг шүүх
             const regionGuides = allGuides.filter(guide => guide.area === this.region);
 
             if (regionGuides.length === 0) {
@@ -806,7 +967,7 @@ class AgRouteItem extends HTMLElement {
                 return;
             }
 
-            // Populate dropdown with filtered guides
+            // Dropdown-д шүүсэн хөтчүүдийг нэмэх
             regionGuides.forEach(guide => {
                 const option = document.createElement('option');
                 option.value = guide.id;
@@ -814,10 +975,10 @@ class AgRouteItem extends HTMLElement {
                 select.appendChild(option);
             });
 
-            // Setup guide selector event listeners
+            // Хөтөч сонгогчийн event listener-ууд суулгах
             this.setupGuideSelector(regionGuides);
 
-            // If there's a previously selected guide, show it
+            // Өмнө сонгосон хөтөч байвал харуулах
             if (this.selectedGuide) {
                 const savedGuide = regionGuides.find(g => g.id === this.selectedGuide);
                 if (savedGuide) {
@@ -832,30 +993,40 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    // Setup guide selector event listeners
+    /**
+     * setupGuideSelector - Хөтөч сонгогчийн event listener-ууд суулгах
+     *
+     * Үүрэг:
+     * 1. Dropdown-ын change event сонсох (хөтөч сонгоход)
+     * 2. "Солих" товчны click event сонсох (хөтөч сольж байгаа үед)
+     * 3. Сонгосон хөтчийг localStorage-д хадгална
+     *
+     * @param {Array} guides - Тухайн бүс нутгийн хөтчүүдийн жагсаалт
+     */
     setupGuideSelector(guides) {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
         const selectedGuideDiv = shadow.querySelector('.selected-guide');
 
-        // Clone to remove old event listeners
+        // Хуучин event listener-ууд устгахын тулд clone хийнэ
         const newSelect = select.cloneNode(true);
         select.parentNode.replaceChild(newSelect, select);
 
+        // Dropdown-оос хөтөч сонгох
         newSelect.addEventListener('change', (e) => {
             const selectedId = e.target.value;
             if (selectedId) {
                 const guide = guides.find(g => g.id === selectedId);
                 if (guide) {
                     this.showSelectedGuide(guide);
-                    // Save selected guide
+                    // Сонгосон хөтчийг хадгалах
                     this.selectedGuide = guide.id;
                     this.saveSelectedGuide();
                 }
             }
         });
 
-        // Change guide button
+        // Хөтөч солих товч
         const changeBtn = selectedGuideDiv.querySelector('.change-guide-btn');
         if (changeBtn) {
             const newChangeBtn = changeBtn.cloneNode(true);
@@ -869,21 +1040,38 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    // Show selected guide info
+    /**
+     * showSelectedGuide - Сонгосон хөтчийн мэдээлэл харуулах
+     *
+     * Үүрэг:
+     * 1. Хөтчийн нэр, утас дугаарыг харуулна
+     * 2. Dropdown-ыг нуух
+     * 3. Хөтчийн мэдээллийн хэсгийг харуулах
+     *
+     * @param {Object} guide - Хөтчийн мэдээлэл (firstName, lastName, phone)
+     */
     showSelectedGuide(guide) {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
         const selectedGuideDiv = shadow.querySelector('.selected-guide');
 
+        // Хөтчийн нэр, утасны дугаарыг харуулах
         selectedGuideDiv.querySelector('.guide-name').textContent = `${guide.lastName} ${guide.firstName}`;
         selectedGuideDiv.querySelector('.guide-phone').textContent = guide.phone;
         selectedGuideDiv.querySelector('.guide-phone').href = `tel:${guide.phone.replace(/\s/g, '')}`;
 
+        // Dropdown нуух, хөтчийн мэдээлэл харуулах
         select.style.display = 'none';
         selectedGuideDiv.classList.add('show');
     }
 
-    // Save selected guide to localStorage
+    /**
+     * saveSelectedGuide - Сонгосон хөтчийг localStorage-д хадгалах
+     *
+     * Үүрэг:
+     * Тухайн газрын ID дээр ямар хөтөч сонгогдсоныг localStorage-д хадгална.
+     * Хуудас дахин ачаалагдсан үед сонгосон хөтөч алдагдахгүй.
+     */
     saveSelectedGuide() {
         const spotId = this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
         if (spotId && this.selectedGuide) {
@@ -893,7 +1081,15 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    // Update selected guide display when attribute changes
+    /**
+     * updateSelectedGuideDisplay - Сонгосон хөтчийн харагдах байдлыг шинэчлэх
+     *
+     * Үүрэг:
+     * selected-guide атрибут өөрчлөгдөх үед (жишээ нь localStorage-ээс уншсан үед)
+     * сонгосон хөтчийн мэдээллийг харуулна.
+     *
+     * @async
+     */
     async updateSelectedGuideDisplay() {
         if (!this.selectedGuide || !this.region) return;
 

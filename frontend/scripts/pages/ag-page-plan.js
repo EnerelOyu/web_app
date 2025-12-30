@@ -80,68 +80,15 @@ class PagePlan extends HTMLElement {
 
                 <!-- Санал болгосон газрууд -->
                 <div class="suggestion">
-                    <h2>Танд санал болгох аяллын цэгүүд</h2>
+                    <h2>Дээд үнэлгээтэй аяллын цэгүүд</h2>
                     <a href="#/spots" class="more-spots">
                         <p>Бүгдийг харах</p>
                         <svg class="more-icon">
                             <use href="./styles/icons.svg#icon-arrow"></use>
                         </svg>
                     </a>
-                    <div class="TL">
-                        <ag-spot-card
-                            zrg="../assets/images/spot-img/spot01-1.jpg"
-                            bus="Төв"
-                            unelgee="4.5"
-                            ner="Цонжин Болдог"
-                            cate="Соёл"
-                            activity="Морин аялал, Амьтантай ойр"
-                            une="20,000₮"
-                            age="Бүх нас"
-                            data-spot-id="1">
-                        </ag-spot-card>
-                        <ag-spot-card
-                            zrg="../assets/images/spot-img/spot07-1.jpg"
-                            bus="Төв"
-                            unelgee="4.5"
-                            ner="Гандан Тэгчинлэн Хийд"
-                            cate="Соёл"
-                            activity="Түүхэн"
-                            une="5,000₮"
-                            age="Бүх нас"
-                            data-spot-id="7">
-                        </ag-spot-card>
-                        <ag-spot-card
-                            zrg="../assets/images/spot-img/spot02-1.jpg"
-                            bus="Хангай"
-                            unelgee="4.3"
-                            ner="Амарбаясгалант хийд"
-                            cate="Соёл"
-                            activity="Түүхэн"
-                            une="500,000₮"
-                            age="Бүх нас"
-                            data-spot-id="2">
-                        </ag-spot-card>
-                        <ag-spot-card
-                            zrg="../assets/images/spot-img/spot03-1.jpg"
-                            bus="Төв"
-                            unelgee="4.5"
-                            ner="Хустайн байгалийн цогцолбор"
-                            cate="Байгаль"
-                            une="15,000₮"
-                            activity="Морин аялал, Сур харваа"
-                            age="Бүх нас"
-                            data-spot-id="3">
-                        </ag-spot-card>
-                        <ag-spot-card
-                            zrg="../assets/images/spot-img/spot14-1.jpg"
-                            bus="Алтай"
-                            unelgee="4.5"
-                            ner="Алтай Таван Богд"
-                            cate="Байгаль, Амралт сувилал"
-                            une="80,000₮"
-                            age="Бүх нас"
-                            data-spot-id="14">
-                        </ag-spot-card>
+                    <div class="TL" id="top-rated-section">
+                        <!-- Дээд үнэлгээтэй газрууд энд динамикаар нэмэгдэнэ -->
                     </div>
                 </div>
 
@@ -154,6 +101,9 @@ class PagePlan extends HTMLElement {
 
         // Төлөвлөгөөний газруудыг анхны удаа харуулна
         this.updatePlanItems();
+
+        // Дээд үнэлгээтэй газруудыг харуулна
+        this.renderTopRatedSpots();
 
         // Гарчигийн талбарыг тохируулна
         this.setupPlanTitle();
@@ -449,6 +399,47 @@ class PagePlan extends HTMLElement {
             titleInput.value = savedTitle;
             autoResize();
         }
+    }
+
+    /**
+     * renderTopRatedSpots - Дээд үнэлгээтэй газруудыг харуулна
+     *
+     * Үүрэг:
+     * 1. appState-аас бүх газруудыг авна
+     * 2. Үнэлгээгээр буурах дарааллаар эрэмбэлнэ
+     * 3. Эхний 5 газрыг сонгоно
+     * 4. ag-spot-card компонентуудыг үүсгэж харуулна
+     */
+    renderTopRatedSpots() {
+        const topRatedSection = this.querySelector('#top-rated-section');
+        if (!topRatedSection) return;
+
+        const spots = window.appState?.getAllSpots();
+        if (!spots || spots.length === 0) return;
+
+        // Үнэлгээгээр буурах дарааллаар эрэмбэлж, эхний 5-ийг авах
+        const topRatedSpots = [...spots]
+            .sort((a, b) => (parseFloat(b.rating) || 0) - (parseFloat(a.rating) || 0))
+            .slice(0, 5);
+
+        // ag-spot-card HTML үүсгэх (бүх шаардлагатай атрибутуудтай)
+        const spotsHTML = topRatedSpots.map(spot => `
+            <ag-spot-card
+                zrg="${spot.img1 || spot.image || ''}"
+                bus="${spot.region || ''}"
+                unelgee="${spot.rating || 0}"
+                ner="${spot.title || spot.name || ''}"
+                cate="${spot.category || ''}"
+                activity="${spot.activities || ''}"
+                une="${spot.price || ''}"
+                age="${spot.age || ''}"
+                href="#/spot-info?spotId=${spot.id}"
+                data-spot-id="${spot.id}">
+            </ag-spot-card>
+        `).join('');
+
+        // Section дотор spot-уудыг оруулах
+        topRatedSection.innerHTML = spotsHTML;
     }
 }
 
