@@ -284,6 +284,7 @@ class AgHeader extends HTMLElement {
     this.setupMobileMenu();   // mobile menu нээх/хаах логик
     this.setupThemeToggle();  // light/dark theme солих логик
     this.setupSearch();       // хайлт хийх логик
+    this.setupUserBtn();      // user profile товчны логик
   }
 
   render() {
@@ -603,6 +604,16 @@ class AgHeader extends HTMLElement {
       if (e.key === 'Enter') {
         performSearch();
       }
+    });
+  }
+
+  setupUserBtn() {
+    const userBtn = this.shadowRoot.querySelector('.user-btn');
+    if (!userBtn) return;
+
+    userBtn.addEventListener('click', () => {
+      // Аяллагч бүртгэлийн хуудас руу шилжих
+      window.location.hash = '#/traveler-signup';
     });
   }
 }
