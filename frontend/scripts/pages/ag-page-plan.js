@@ -1,13 +1,38 @@
+/**
+ * ========================================
+ * PagePlan - Аяллын төлөвлөгөө хуудас
+ * ========================================
+ *
+ * Энэхүү компонент нь хэрэглэгчийн аяллын төлөвлөгөөг удирдах үндсэн интерфэйс юм.
+ * Хэрэглэгч энд дараах үйлдлүүдийг хийх боломжтой:
+ * - Төлөвлөгөөнд газар нэмэх/хасах
+ * - Газруудын эрэмбэ солих (drag & drop)
+ * - Хөтөч сонгох
+ * - Тэмдэглэл нэмэх
+ * - Төлөвлөгөөгөө хуваалцах
+ */
 class PagePlan extends HTMLElement {
+    /**
+     * Конструктор - Компонентыг үүсгэх үед ажиллана
+     */
     constructor() {
         super();
     }
 
+    /**
+     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
+     *
+     * Үүрэг:
+     * 1. Хуудсыг дүрсэлнэ (render)
+     * 2. Event listener-ууд суулгана
+     * 3. appState-ийн өөрчлөлтийг сонсож эхэлнэ
+     */
     connectedCallback() {
         this.render();
         this.attachEventListeners();
 
-        // Listen for state changes (bind to this instance)
+        // appState-ийн өөрчлөлтийг сонсох функц
+        // Төлөвлөгөөний жагсаалт өөрчлөгдөх бүрд хуудсыг шинэчилнэ
         this.handleStateChange = (e) => {
             if (e.detail.key === 'planItems') {
                 this.updatePlanItems();
@@ -16,18 +41,32 @@ class PagePlan extends HTMLElement {
         window.addEventListener('appstatechange', this.handleStateChange);
     }
 
+    /**
+     * disconnectedCallback - Компонент DOM-оос салах үед автоматаар ажиллана
+     *
+     * Үүрэг: Event listener-ийг цэвэрлэж, санах ойн зарцуулалтыг багасгана
+     */
     disconnectedCallback() {
-        // Clean up event listener when component is removed
+        // Компонент устах үед event listener-ийг цэвэрлэнэ
         if (this.handleStateChange) {
             window.removeEventListener('appstatechange', this.handleStateChange);
         }
     }
 
+    /**
+     * render - Хуудсыг дүрсэлнэ
+     *
+     * Үүрэг:
+     * 1. HTML бүтцийг үүсгэнэ
+     * 2. Төлөвлөгөөний жагсаалтыг харуулна
+     * 3. Санал болгосон газруудыг харуулна
+     * 4. Төлөвлөгөөний гарчигийн талбарыг тохируулна
+     */
     render() {
         this.innerHTML = `
             <h1 class="visually-hidden">Аяллын төлөвлөгөө</h1>
             <div class="main-container">
-                <!-- Plan Title -->
+                <!-- Төлөвлөгөөний гарчиг -->
                 <div class="plan-title">
                     <div>
                         <textarea
@@ -39,7 +78,7 @@ class PagePlan extends HTMLElement {
                     </div>
                 </div>
 
-                <!-- Suggested Spots -->
+                <!-- Санал болгосон газрууд -->
                 <div class="suggestion">
                     <h2>Танд санал болгох аяллын цэгүүд</h2>
                     <a href="#/spots" class="more-spots">
@@ -106,30 +145,39 @@ class PagePlan extends HTMLElement {
                     </div>
                 </div>
 
-                <!-- Route Section - Dynamic -->
+                <!-- Төлөвлөгөөний жагсаалт - Динамик контент -->
                 <ag-route-section id="route-section">
-                    <!-- Route items will be dynamically rendered here -->
+                    <!-- Маршрутын элементүүд энд динамикаар нэмэгдэнэ -->
                 </ag-route-section>
             </div>
         `;
 
-        // Initial render of plan items
+        // Төлөвлөгөөний газруудыг анхны удаа харуулна
         this.updatePlanItems();
 
-        // Setup plan title textarea
+        // Гарчигийн талбарыг тохируулна
         this.setupPlanTitle();
     }
 
+    /**
+     * updatePlanItems - Төлөвлөгөөний жагсаалтыг шинэчилнэ
+     *
+     * Үүрэг:
+     * 1. appState-аас төлөвлөгөөний жагсаалт авна
+     * 2. Хуучин элементүүдийг цэвэрлэнэ
+     * 3. Шинэ элементүүдийг үүсгэж нэмнэ
+     * 4. Хадгалагдсан хөтөчийн сонголтыг ачаална
+     */
     updatePlanItems() {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
 
         const planItems = window.appState.getPlanItems();
 
-        // Clear existing items
+        // Хуучин элементүүдийг цэвэрлэх
         routeSection.innerHTML = '';
 
-        // If no items, show placeholder
+        // Хоосон байвал placeholder харуулах
         if (planItems.length === 0) {
             routeSection.innerHTML = `
                 <div class="empty-state">
@@ -140,9 +188,9 @@ class PagePlan extends HTMLElement {
             return;
         }
 
-        // Render each plan item
+        // Төлөвлөгөөний газар бүрийг дүрсэлнэ
         planItems.forEach((item) => {
-            // Create route item
+            // Маршрутын элемент үүсгэх
             const routeItem = document.createElement('ag-route-item');
             routeItem.setAttribute('number', item.number);
             routeItem.setAttribute('title', item.title);
@@ -155,7 +203,7 @@ class PagePlan extends HTMLElement {
             routeItem.setAttribute('data-spot-id', item.id);
             routeItem.setAttribute('region', item.region || '');
 
-            // Load saved guide selection
+            // Хадгалагдсан хөтөчийн сонголтыг ачаалах
             const savedGuides = JSON.parse(localStorage.getItem('ayalgo-selected-guides') || '{}');
             if (savedGuides[item.id]) {
                 routeItem.setAttribute('selected-guide', savedGuides[item.id]);
@@ -165,8 +213,17 @@ class PagePlan extends HTMLElement {
         });
     }
 
+    /**
+     * attachEventListeners - Event listener-ууд суулгана
+     *
+     * Үүрэг:
+     * 1. Санал болгосон газар дарах үед дэлгэрэнгүй хуудас руу шилжих
+     * 2. Газар устгах үйлдлийг зохицуулах
+     * 3. Газар нэмэх үр дүнгийн toast мэдэгдэл харуулах
+     * 4. Газар/Тэмдэглэл нэмэх event-үүдийг зохицуулах
+     */
     attachEventListeners() {
-        // Handle suggested spot clicks
+        // Санал болгосон газар дарах үйлдлийг зохицуулах
         this.addEventListener('click', (e) => {
             const spotCard = e.target.closest('ag-spot-card');
             if (spotCard) {
@@ -179,7 +236,7 @@ class PagePlan extends HTMLElement {
             }
         });
 
-        // Handle route item delete
+        // Газар устгах үйлдлийг зохицуулах
         this.addEventListener('delete-item', async (e) => {
             const item = e.detail.item;
             const spotId = item.getAttribute('data-spot-id');
@@ -188,7 +245,7 @@ class PagePlan extends HTMLElement {
             }
         });
 
-        // Handle plan-add-result events from ag-spot-card
+        // ag-spot-card-аас ирсэн төлөвлөгөө нэмэх үр дүнгийг зохицуулах
         this.addEventListener('plan-add-result', (e) => {
             const toast = document.querySelector('ag-toast');
             if (!toast) return;
@@ -203,9 +260,9 @@ class PagePlan extends HTMLElement {
             }
         });
 
-        // Handle add-item events from route-section (Газар нэмэх, Тэмдэглэл нэмэх)
+        // route-section-аас ирсэн газар/тэмдэглэл нэмэх event-үүдийг зохицуулах
         this.addEventListener('add-item', (e) => {
-            e.stopPropagation(); // Prevent event from bubbling up
+            e.stopPropagation(); // Event-ийн дамжилтыг зогсоох
             const { type, divider } = e.detail;
 
             if (type === 'place') {
@@ -216,11 +273,24 @@ class PagePlan extends HTMLElement {
         });
     }
 
-    // Газар нэмэх dialog харуулах
+    /**
+     * showAddPlaceDialog - Газар нэмэх dialog харуулна
+     *
+     * Параметр:
+     * @param {HTMLElement} divider - Хуваагч элемент (газар оруулах байрлалыг тодорхойлно)
+     *
+     * Үүрэг:
+     * 1. Аль байрлалд газар нэмэхийг тодорхойлно
+     * 2. Төлөвлөгөөнд байхгүй газруудыг шүүнэ
+     * 3. Хэрэглэгчээс газар сонгуулна
+     * 4. Сонгосон газрыг төлөвлөгөөнд нэмнэ
+     * 5. Үр дүнгийн мэдэгдэл харуулна
+     */
     showAddPlaceDialog(divider) {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
 
+        // Оруулах байрлалыг олох
         let insertIndex = 0;
         if (divider) {
             let prev = divider.previousElementSibling;
@@ -233,14 +303,15 @@ class PagePlan extends HTMLElement {
             }
         }
 
-        // Get available spots from appState
+        // appState-аас боломжтой газруудыг авах
         const allSpots = window.appState?.getAllSpots() || [];
         const planItems = window.appState?.getPlanItems() || [];
         const planSpotIds = planItems.map(item => String(item.id));
 
-        // Filter out spots already in plan
+        // Төлөвлөгөөнд байгаа газруудыг хасах
         const availableSpots = allSpots.filter(spot => !planSpotIds.includes(String(spot.id)));
 
+        // Боломжтой газар байхгүй бол мэдэгдэл харуулах
         if (availableSpots.length === 0) {
             const toast = document.querySelector('ag-toast');
             if (toast) {
@@ -249,7 +320,7 @@ class PagePlan extends HTMLElement {
             return;
         }
 
-        // Create a simple selection dialog
+        // Сонгох цонх үүсгэх
         const spotNames = availableSpots.map((spot, idx) => `${idx + 1}. ${spot.title || spot.name}`).join('\n');
         const selection = prompt(`Нэмэх газраа сонгоно уу (1-${availableSpots.length}):\n\n${spotNames}`);
 
@@ -258,18 +329,20 @@ class PagePlan extends HTMLElement {
             if (index >= 0 && index < availableSpots.length) {
                 const selectedSpot = availableSpots[index];
 
-                // Add to plan via appState (now async)
+                // appState ашиглан төлөвлөгөөнд нэмэх (async)
                 window.appState.addToPlan(selectedSpot.id).then(result => {
                     const toast = document.querySelector('ag-toast');
                     if (!toast) return;
 
                     if (result === true) {
+                        // Нэмэгдсэн газрыг зөв байрлалд оруулах
                         const items = window.appState.getPlanItems();
                         const addedIndex = items.findIndex(item => String(item.id) === String(selectedSpot.id));
                         if (addedIndex > -1) {
                             const [addedItem] = items.splice(addedIndex, 1);
                             const safeIndex = Math.min(Math.max(insertIndex, 0), items.length);
                             items.splice(safeIndex, 0, addedItem);
+                            // Дугаарлалтыг шинэчлэх
                             items.forEach((item, idx) => {
                                 item.number = idx + 1;
                             });
@@ -287,28 +360,39 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    // Тэмдэглэл нэмэх dialog харуулах
+    /**
+     * showAddNoteDialog - Тэмдэглэл нэмэх dialog харуулна
+     *
+     * Параметр:
+     * @param {HTMLElement} divider - Хуваагч элемент (тэмдэглэл оруулах байрлалыг тодорхойлно)
+     *
+     * Үүрэг:
+     * 1. Шинэ тэмдэглэл элемент үүсгэнэ
+     * 2. Зөв байрлалд оруулна
+     * 3. Засварлах горимд шилжүүлнэ
+     * 4. Мэдэгдэл харуулна
+     */
     showAddNoteDialog(divider) {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
 
-        // Count existing notes to set number
+        // Тэмдэглэлийн дугаарыг тодорхойлох
         const existingNotes = routeSection.querySelectorAll('ag-note-item');
         const noteNumber = existingNotes.length + 1;
 
-        // Create empty note element immediately
+        // Хоосон тэмдэглэл элемент үүсгэх
         const noteElement = document.createElement('ag-note-item');
         noteElement.setAttribute('note-text', 'Энд тэмдэглэл бичнэ үү...');
         noteElement.setAttribute('number', noteNumber);
 
-        // If divider is provided, insert after it; otherwise append to end
+        // Divider өгөгдсөн бол дараа нь, үгүй бол төгсгөлд нэмэх
         if (divider && divider.parentElement) {
             divider.parentElement.insertBefore(noteElement, divider.nextSibling);
         } else {
             routeSection.appendChild(noteElement);
         }
 
-        // Focus on the note for editing
+        // Тэмдэглэлийг засварлах горимд оруулах
         setTimeout(() => {
             const editBtn = noteElement.shadowRoot?.querySelector('.edit');
             if (editBtn) {
@@ -316,43 +400,50 @@ class PagePlan extends HTMLElement {
             }
         }, 100);
 
-        // Show toast notification
+        // Амжилттай нэмэгдсэн мэдэгдэл харуулах
         const toast = document.querySelector('ag-toast');
         if (toast) {
             toast.show('Тэмдэглэл нэмэгдлээ! Засахын тулд дарна уу.', 'success', 3000);
         }
     }
 
-    // Setup plan title textarea
+    /**
+     * setupPlanTitle - Төлөвлөгөөний гарчигийн талбарыг тохируулна
+     *
+     * Үүрэг:
+     * 1. Автоматаар өндрийг өөрчилнө (агуулгад тохируулна)
+     * 2. Хэрэглэгч өөрчлөх бүрд хадгална
+     * 3. Хадгалагдсан гарчгийг ачаална
+     */
     setupPlanTitle() {
         const titleInput = this.querySelector('#plan-title-input');
         if (!titleInput) return;
 
-        // Auto-resize textarea
+        // Textarea-ийн өндрийг автоматаар өөрчилнө
         const autoResize = () => {
             titleInput.style.height = 'auto';
             titleInput.style.height = titleInput.scrollHeight + 'px';
         };
 
-        // Initial resize
+        // Анхны өндрийг тохируулах
         autoResize();
 
-        // Resize on input
+        // Өөрчлөлт бүрд өндрийг дахин тохируулах
         titleInput.addEventListener('input', autoResize);
 
-        // Save to backend on blur (when user clicks away)
+        // Хэрэглэгч өөр газар дарах үед хадгалах
         titleInput.addEventListener('blur', async () => {
             const title = titleInput.value.trim();
             if (title) {
-                // Save to localStorage
+                // localStorage-д хадгалах
                 localStorage.setItem('ayalgo-plan-title', title);
 
-                // TODO: Save to backend DB when we add plan title field to schema
-                // For now, just save locally
+                // ДАВАА: Backend DB-д хадгалах (schema-д гарчгийн талбар нэмэх хэрэгтэй)
+                // Одоогоор зөвхөн localStorage-д хадгалж байна
             }
         });
 
-        // Load saved title
+        // Хадгалагдсан гарчгийг ачаалах
         const savedTitle = localStorage.getItem('ayalgo-plan-title');
         if (savedTitle) {
             titleInput.value = savedTitle;
@@ -361,4 +452,5 @@ class PagePlan extends HTMLElement {
     }
 }
 
+// Компонентыг Custom Element болгон бүртгэх
 customElements.define('ag-page-plan', PagePlan);
