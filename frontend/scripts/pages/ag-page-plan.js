@@ -80,7 +80,7 @@ class PagePlan extends HTMLElement {
 
                 <!-- Санал болгосон газрууд -->
                 <div class="suggestion">
-                    <h2>Дээд үнэлгээтэй аяллын цэгүүд</h2>
+                    <h2>Өндөр үнэлгээтэй аяллын цэгүүд</h2>
                     <a href="#/spots" class="more-spots">
                         <p>Бүгдийг харах</p>
                         <svg class="more-icon">
@@ -88,7 +88,7 @@ class PagePlan extends HTMLElement {
                         </svg>
                     </a>
                     <div class="TL" id="top-rated-section">
-                        <!-- Дээд үнэлгээтэй газрууд энд динамикаар нэмэгдэнэ -->
+                        <!-- Өндөр үнэлгээтэй газрууд энд динамикаар нэмэгдэнэ -->
                     </div>
                 </div>
 
