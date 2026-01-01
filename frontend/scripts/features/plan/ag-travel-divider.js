@@ -142,17 +142,18 @@ class AgTravelDivider extends HTMLElement {
                 top: 50%;
                 height: 2px;
                 background: repeating-linear-gradient(to right, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) 5px, transparent 5px, transparent 10px);
-                opacity: 0.6;
+                opacity: 0;
                 transition: opacity 0.2s;
             }
 
             .divider-line-vertical {
                 position: absolute;
                 width: 2px;
+                left: 10px;
                 top: 0;
                 bottom: 0;
                 background: repeating-linear-gradient(to bottom, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) 5px, transparent 5px, transparent 10px);
-                opacity: 0;
+                opacity: 0.6;
                 transition: opacity 0.2s;
             }
 
