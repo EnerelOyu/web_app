@@ -581,23 +581,33 @@ class AgRouteItem extends HTMLElement {
                 display: flex;
                 flex-direction: column;
                 gap: var(--gap-size-xs, 0.25rem);
+                cursor: pointer;
+                transition: all var(--transition-fast, 0.2s) ease;
+                padding: var(--p-xs, 0.25rem);
+                border-radius: var(--br-s, 8px);
+                margin: calc(-1 * var(--p-xs, 0.25rem));
+            }
+
+            .guide-mini-info:hover {
+                background: var(--bg-color, #fff);
             }
 
             .guide-name {
                 font-weight: 600;
                 color: var(--text-color-1, #333);
                 font-size: var(--fs-sm, 0.875rem);
+                transition: color var(--transition-fast, 0.2s) ease;
+            }
+
+            .guide-mini-info:hover .guide-name {
+                color: var(--primary, #ff6b00);
             }
 
             .guide-phone {
                 color: var(--text-color-3, #666);
                 font-size: var(--fs-xs, 0.75rem);
                 text-decoration: none;
-            }
-
-            .guide-phone:hover {
-                color: var(--primary, #ff6b00);
-                text-decoration: underline;
+                pointer-events: none;
             }
 
             .change-guide-btn {
@@ -1047,8 +1057,9 @@ class AgRouteItem extends HTMLElement {
      * 1. Хөтчийн нэр, утас дугаарыг харуулна
      * 2. Dropdown-ыг нуух
      * 3. Хөтчийн мэдээллийн хэсгийг харуулах
+     * 4. Хөтчийн мэдээлэл дээр дарахад guide info хуудас руу үсрэх
      *
-     * @param {Object} guide - Хөтчийн мэдээлэл (firstName, lastName, phone)
+     * @param {Object} guide - Хөтчийн мэдээлэл (firstName, lastName, phone, id)
      */
     showSelectedGuide(guide) {
         const shadow = this.shadowRoot;
@@ -1063,6 +1074,18 @@ class AgRouteItem extends HTMLElement {
         // Dropdown нуух, хөтчийн мэдээлэл харуулах
         select.style.display = 'none';
         selectedGuideDiv.classList.add('show');
+
+        // Хөтчийн мэдээлэл дээр дарахад guide info хуудас руу үсрэх
+        const guideInfo = selectedGuideDiv.querySelector('.guide-mini-info');
+        const newGuideInfo = guideInfo.cloneNode(true);
+        guideInfo.parentNode.replaceChild(newGuideInfo, guideInfo);
+
+        newGuideInfo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (guide.id) {
+                window.location.hash = `#/guide-profile?g=${guide.id}`;
+            }
+        });
     }
 
     /**
