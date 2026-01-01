@@ -18,10 +18,10 @@ class AppState {
     }
 
     /**
-     * @returns {string} - Хэрэглэгчийн уникаль ID
+     * @returns {string} - Хэрэглэгчийн unique ID
      */
     getUserId() {
-        // Эхлээд cookie-оос ID-г хайх
+        // Эхлээд cookie-ээс ID-г хайх
         let userId = this.getCookie('ayalgo-userId');
 
         // Cookie-д байхгүй бол localStorage-оос хайх
@@ -117,7 +117,6 @@ class AppState {
     }
 
     // Газруудын өгөгдлийг Backend API-аас ачаалах
-    
     async loadSpotData() {
         try {
             const response = await fetch('http://localhost:3000/api/spots');
@@ -307,7 +306,7 @@ class AppState {
             return 'exists';
         }
 
-        // Backend DB-д нэмэх
+        // Backend-д хадгалах
         try {
             const userId = this.getUserId();
             const response = await fetch(`http://localhost:3000/api/plans/${userId}/spots`, {

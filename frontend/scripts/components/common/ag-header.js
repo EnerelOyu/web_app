@@ -212,7 +212,7 @@ class AgHeader extends HTMLElement {
         font-size: var(--fs-xl);
         cursor: pointer;
         padding: var(--p-xs);
-        margin-left: var(--m-xs);
+        margin-left: auto; 
       }
 
       .mobile-menu-btn svg {

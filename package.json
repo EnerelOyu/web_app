@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/EnerelOyu/web_app/issues"
   },
-  "homepage": "https://github.com/EnerelOyu/web_app#readme"
+  "homepage": "https://github.com/EnerelOyu/web_app#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
 }
