@@ -29,7 +29,7 @@ class AgHomeSearch extends HTMLElement {
           align-items: center;
           justify-content: space-around;
           border-radius: 9999px;
-          background-color: var(--accent-7);
+          background-color: var(--primary-5);
           padding: var(--p-sm) var(--p-lg);
           gap: var(--gap-size-m);
           width: 70%;
@@ -84,7 +84,7 @@ class AgHomeSearch extends HTMLElement {
           color: var(--text-color-3);
           outline: none;
           border: none;
-          background-color: var(--accent-7);
+          background-color: var(--primary-5);
           cursor: pointer;
           transition: all 0.3s ease;
           opacity: 0.85;
@@ -99,7 +99,7 @@ class AgHomeSearch extends HTMLElement {
         }
 
         #filter-submit {
-          background-color: var(--accent);
+          background-color: var(--primary);
           display: inline-flex;
           justify-content: center;
           align-items: center;
@@ -115,20 +115,20 @@ class AgHomeSearch extends HTMLElement {
 
         #filter-submit:hover {
           transform: scale(1.08);
-          background-color: var(--accent-7);
+          background-color: var(--primary-4);
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 
         #filter-submit svg {
           height: var(--svg-m);
           width: var(--svg-m);
-          color: var(--accent-9);
+          color: var(--primary-5);
           transition: all 0.3s ease;
           z-index: 1;
         }
 
         #filter-submit:hover svg {
-          color: var(--accent);
+          color: var(--primary);
           transform: rotate(90deg);
         }
 
