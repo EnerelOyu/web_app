@@ -209,11 +209,11 @@ class AgSpotReviewList extends HTMLElement {
         this.shadowRoot.innerHTML = `
             <style>${this.getStyles()}</style>
             <section class="review-section">
-                <h3 class="section-title">Газрын үнэлгээ & Сэтгэгдэл</h2>
+                <h3 class="section-title">Газрын үнэлгээ & Сэтгэгдэл</h3>
 
                 <div class="reviews-container">
                     <div class="comment-form-card">
-                        <h4>Сэтгэгдэл үлдээх</h3>
+                        <h4>Сэтгэгдэл үлдээх</h4>
                         <form id="commentForm">
                             <div class="form-group">
                                 <label for="name">Нэр</label>

@@ -71,7 +71,7 @@ class AgTutorialCard extends HTMLElement {
 
       <article class="tutorial-card">
         <img src="${img}" alt="${shortText || "tutorial image"}">
-        <h4>${shortText}</h4>
+        <h3>${shortText}</h3>
         <p>${longText}</p>
       </article>
     `;

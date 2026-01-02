@@ -41,6 +41,7 @@ class PageGuides extends HTMLElement {
                     font-family: 'Rubik';
                     text-transform: uppercase;
                     margin-bottom: var(--m-lg);
+                    margin-top: var(--m-lg);
                 }
             </style>
 
