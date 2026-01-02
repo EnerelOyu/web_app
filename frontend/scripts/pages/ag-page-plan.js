@@ -1,32 +1,9 @@
-/**
- * ========================================
- * PagePlan - Аяллын төлөвлөгөө хуудас
- * ========================================
- *
- * Энэхүү компонент нь хэрэглэгчийн аяллын төлөвлөгөөг удирдах үндсэн интерфэйс юм.
- * Хэрэглэгч энд дараах үйлдлүүдийг хийх боломжтой:
- * - Төлөвлөгөөнд газар нэмэх/хасах
- * - Газруудын эрэмбэ солих (drag & drop)
- * - Хөтөч сонгох
- * - Тэмдэглэл нэмэх
- * - Төлөвлөгөөгөө хуваалцах
- */
 class PagePlan extends HTMLElement {
-    /**
-     * Конструктор - Компонентыг үүсгэх үед ажиллана
-     */
+
     constructor() {
         super();
     }
 
-    /**
-     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
-     *
-     * Үүрэг:
-     * 1. Хуудсыг дүрсэлнэ (render)
-     * 2. Event listener-ууд суулгана
-     * 3. appState-ийн өөрчлөлтийг сонсож эхэлнэ
-     */
     connectedCallback() {
         this.render();
         this.attachEventListeners();
@@ -41,11 +18,7 @@ class PagePlan extends HTMLElement {
         window.addEventListener('appstatechange', this.handleStateChange);
     }
 
-    /**
-     * disconnectedCallback - Компонент DOM-оос салах үед автоматаар ажиллана
-     *
-     * Үүрэг: Event listener-ийг цэвэрлэж, санах ойн зарцуулалтыг багасгана
-     */
+    // disconnectedCallback - Компонент DOM-оос салах үед автоматаар ажиллана, санах ойн зарцуулалтыг багасгана
     disconnectedCallback() {
         // Компонент устах үед event listener-ийг цэвэрлэнэ
         if (this.handleStateChange) {
@@ -53,15 +26,6 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    /**
-     * render - Хуудсыг дүрсэлнэ
-     *
-     * Үүрэг:
-     * 1. HTML бүтцийг үүсгэнэ
-     * 2. Төлөвлөгөөний жагсаалтыг харуулна
-     * 3. Санал болгосон газруудыг харуулна
-     * 4. Төлөвлөгөөний гарчигийн талбарыг тохируулна
-     */
     render() {
         this.innerHTML = `
             <h1 class="visually-hidden">Аяллын төлөвлөгөө</h1>
@@ -109,15 +73,6 @@ class PagePlan extends HTMLElement {
         this.setupPlanTitle();
     }
 
-    /**
-     * updatePlanItems - Төлөвлөгөөний жагсаалтыг шинэчилнэ
-     *
-     * Үүрэг:
-     * 1. appState-аас төлөвлөгөөний жагсаалт авна
-     * 2. Хуучин элементүүдийг цэвэрлэнэ
-     * 3. Шинэ элементүүдийг үүсгэж нэмнэ
-     * 4. Хадгалагдсан хөтөчийн сонголтыг ачаална
-     */
     updatePlanItems() {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
@@ -163,15 +118,6 @@ class PagePlan extends HTMLElement {
         });
     }
 
-    /**
-     * attachEventListeners - Event listener-ууд суулгана
-     *
-     * Үүрэг:
-     * 1. Санал болгосон газар дарах үед дэлгэрэнгүй хуудас руу шилжих
-     * 2. Газар устгах үйлдлийг зохицуулах
-     * 3. Газар нэмэх үр дүнгийн toast мэдэгдэл харуулах
-     * 4. Газар/Тэмдэглэл нэмэх event-үүдийг зохицуулах
-     */
     attachEventListeners() {
         // Санал болгосон газар дарах үйлдлийг зохицуулах
         this.addEventListener('click', (e) => {
@@ -223,19 +169,7 @@ class PagePlan extends HTMLElement {
         });
     }
 
-    /**
-     * showAddPlaceDialog - Газар нэмэх dialog харуулна
-     *
-     * Параметр:
-     * @param {HTMLElement} divider - Хуваагч элемент (газар оруулах байрлалыг тодорхойлно)
-     *
-     * Үүрэг:
-     * 1. Аль байрлалд газар нэмэхийг тодорхойлно
-     * 2. Төлөвлөгөөнд байхгүй газруудыг шүүнэ
-     * 3. Хэрэглэгчээс газар сонгуулна
-     * 4. Сонгосон газрыг төлөвлөгөөнд нэмнэ
-     * 5. Үр дүнгийн мэдэгдэл харуулна
-     */
+    //Газар нэмэх dialog харуулна
     showAddPlaceDialog(divider) {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
@@ -310,18 +244,6 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    /**
-     * showAddNoteDialog - Тэмдэглэл нэмэх dialog харуулна
-     *
-     * Параметр:
-     * @param {HTMLElement} divider - Хуваагч элемент (тэмдэглэл оруулах байрлалыг тодорхойлно)
-     *
-     * Үүрэг:
-     * 1. Шинэ тэмдэглэл элемент үүсгэнэ
-     * 2. Зөв байрлалд оруулна
-     * 3. Засварлах горимд шилжүүлнэ
-     * 4. Мэдэгдэл харуулна
-     */
     showAddNoteDialog(divider) {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
@@ -357,14 +279,6 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    /**
-     * setupPlanTitle - Төлөвлөгөөний гарчигийн талбарыг тохируулна
-     *
-     * Үүрэг:
-     * 1. Автоматаар өндрийг өөрчилнө (агуулгад тохируулна)
-     * 2. Хэрэглэгч өөрчлөх бүрд хадгална
-     * 3. Хадгалагдсан гарчгийг ачаална
-     */
     setupPlanTitle() {
         const titleInput = this.querySelector('#plan-title-input');
         if (!titleInput) return;
@@ -401,15 +315,6 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    /**
-     * renderTopRatedSpots - Дээд үнэлгээтэй газруудыг харуулна
-     *
-     * Үүрэг:
-     * 1. appState-аас бүх газруудыг авна
-     * 2. Үнэлгээгээр буурах дарааллаар эрэмбэлнэ
-     * 3. Эхний 5 газрыг сонгоно
-     * 4. ag-spot-card компонентуудыг үүсгэж харуулна
-     */
     renderTopRatedSpots() {
         const topRatedSection = this.querySelector('#top-rated-section');
         if (!topRatedSection) return;
@@ -443,5 +348,4 @@ class PagePlan extends HTMLElement {
     }
 }
 
-// Компонентыг Custom Element болгон бүртгэх
 customElements.define('ag-page-plan', PagePlan);
