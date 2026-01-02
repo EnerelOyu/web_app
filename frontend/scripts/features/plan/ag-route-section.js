@@ -29,7 +29,7 @@ class AgRouteSection extends HTMLElement {
                 }
 
                 h2 {
-                    color: var(--text-color-0, #1a1a1a);
+                    color: var(--text-color-0);
                     margin-bottom: var(--m-md, 1.5rem);
                     font-weight: 600;
                     font-size: var(--fs-xl, 1.5rem);
@@ -39,7 +39,7 @@ class AgRouteSection extends HTMLElement {
                 /* Route Divider */
                 .route-divider {
                     position: relative;
-                    min-height: 40px;
+                    min-height: var(--route-divider-min-height, 40px);
                     margin: var(--m-sm, 1rem) 0;
                 }
 
@@ -48,18 +48,18 @@ class AgRouteSection extends HTMLElement {
                     left: 0;
                     right: 0;
                     top: 50%;
-                    height: 2px;
-                    background: repeating-linear-gradient(to right, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) 5px, transparent 5px, transparent 10px);
+                    height: var(--route-divider-line-size, 2px);
+                    background: repeating-linear-gradient(to right, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) var(--route-divider-dash, 5px), transparent var(--route-divider-dash, 5px), transparent var(--route-divider-gap, 10px));
                     opacity: 0.6;
                     transition: opacity 0.2s;
                 }
 
                 .divider-line-vertical {
                     position: absolute;
-                    width: 2px;
+                    width: var(--route-divider-line-size, 2px);
                     top: 0;
                     bottom: 0;
-                    background: repeating-linear-gradient(to bottom, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) 5px, transparent 5px, transparent 10px);
+                    background: repeating-linear-gradient(to bottom, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) var(--route-divider-dash, 5px), transparent var(--route-divider-dash, 5px), transparent var(--route-divider-gap, 10px));
                     opacity: 0;
                     transition: opacity 0.2s;
                 }
@@ -99,10 +99,10 @@ class AgRouteSection extends HTMLElement {
                 .add-block-btn {
                     background: var(--bg-color, #fff);
                     color: var(--primary, #ff6b00);
-                    border: 2px solid var(--text-color-7, #ddd);
+                    border: var(--route-divider-border-width, 2px) solid var(--text-color-7, #ddd);
                     border-radius: var(--br-circle, 50%);
-                    width: 32px;
-                    height: 32px;
+                    width: var(--route-add-btn-size, 32px);
+                    height: var(--route-add-btn-size, 32px);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -111,8 +111,8 @@ class AgRouteSection extends HTMLElement {
                 }
 
                 .add-block-btn svg {
-                    width: 16px;
-                    height: 16px;
+                    width: var(--icon-size-xs, 16px);
+                    height: var(--icon-size-xs, 16px);
                     fill: currentColor;
                 }
 
@@ -124,9 +124,9 @@ class AgRouteSection extends HTMLElement {
 
                 .add-label-btn {
                     background: var(--bg-color, #fff);
-                    border: 1px solid var(--text-color-7, #ddd);
-                    border-radius: 999px;
-                    padding: 0.35rem 0.75rem;
+                    border: var(--border-width, 1px) solid var(--text-color-7, #ddd);
+                    border-radius: var(--pill-radius, 999px);
+                    padding: var(--route-label-padding-y, 0.35rem) var(--route-label-padding-x, 0.75rem);
                     font-family: 'NunitoSans', sans-serif;
                     font-size: var(--fs-sm, 0.875rem);
                     color: var(--text-color-2, #555);
@@ -141,10 +141,10 @@ class AgRouteSection extends HTMLElement {
 
                 .add-toggle-btn {
                     background: var(--bg-color, #fff);
-                    border: 1px solid var(--text-color-7, #ddd);
+                    border: var(--border-width, 1px) solid var(--text-color-7, #ddd);
                     border-radius: var(--br-s, 8px);
-                    width: 28px;
-                    height: 28px;
+                    width: var(--route-toggle-size, 28px);
+                    height: var(--route-toggle-size, 28px);
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -154,8 +154,8 @@ class AgRouteSection extends HTMLElement {
                 }
 
                 .add-toggle-btn svg {
-                    width: 14px;
-                    height: 14px;
+                    width: var(--icon-size-xxs, 14px);
+                    height: var(--icon-size-xxs, 14px);
                     fill: currentColor;
                 }
 
@@ -166,10 +166,10 @@ class AgRouteSection extends HTMLElement {
 
                 /* Drop Indicator */
                 .drop-indicator {
-                    height: 4px;
+                    height: var(--route-drop-indicator-height, 4px);
                     background: var(--primary, #ff6b00);
-                    margin: 8px 0;
-                    border-radius: 2px;
+                    margin: var(--route-drop-indicator-margin, 8px) 0;
+                    border-radius: var(--route-drop-indicator-radius, 2px);
                     opacity: 0.6;
                 }
 
@@ -215,37 +215,37 @@ class AgRouteSection extends HTMLElement {
     attachEventListeners() {
         const shadow = this.shadowRoot;
 
-        // Listen for delete events from route items and note items
+        // Маршрутын болон тэмдэглэлийн устгах event сонсох
         this.addEventListener('delete-item', (e) => {
             const item = e.detail.item;
             const nextSibling = item.nextElementSibling;
 
-            // Remove the item
+            // Элементийг устгах
             item.remove();
 
-            // Remove the travel divider if it exists
+            // Аялалын хуваагч байвал устгах
             if (nextSibling && nextSibling.tagName === 'AG-TRAVEL-DIVIDER') {
                 nextSibling.remove();
             }
 
-            // Update numbering
+            // Дугаарлалтыг шинэчлэх
             this.updateRouteNumbering();
         });
 
-        // Listen for delete events from note items
+        // Тэмдэглэл устгах event сонсох
         this.addEventListener('delete-note', (e) => {
             const item = e.detail.item;
             const nextSibling = item.nextElementSibling;
 
-            // Remove the item
+            // Элементийг устгах
             item.remove();
 
-            // Remove the travel divider if it exists
+            // Аялалын хуваагч байвал устгах
             if (nextSibling && nextSibling.tagName === 'AG-TRAVEL-DIVIDER') {
                 nextSibling.remove();
             }
 
-            // Update numbering
+            // Дугаарлалтыг шинэчлэх
             this.updateRouteNumbering();
         });
 
@@ -285,10 +285,10 @@ class AgRouteSection extends HTMLElement {
             }));
         });
 
-        // Drag and drop
+        // Чирж байршуулах
         this.initializeDragAndDrop();
 
-        // Observe slot changes
+        // Slot өөрчлөлтийг ажиглах
         const slot = shadow.querySelector('slot');
         slot?.addEventListener('slotchange', () => {
             if (this.suppressSlotChange) return;
@@ -307,7 +307,7 @@ class AgRouteSection extends HTMLElement {
     }
 
     initializeDragAndDrop() {
-        // Drag start - handle both route-item and note-item
+        // Чирэх эхлэх - маршрут болон тэмдэглэл хоёуланг зохицуулах
         this.addEventListener('dragstart', (e) => {
             const item = e.target.closest('ag-route-item, ag-note-item');
             if (item) {
@@ -318,19 +318,19 @@ class AgRouteSection extends HTMLElement {
             }
         });
 
-        // Drag end - handle both route-item and note-item
+        // Чирэх дуусах - маршрут болон тэмдэглэл хоёуланг зохицуулах
         this.addEventListener('dragend', (e) => {
             const item = e.target.closest('ag-route-item, ag-note-item');
             if (item) {
                 item.classList.remove('dragging');
                 this.draggedItem = null;
 
-                // Remove any drop indicators
+                // Бүх заагчуудыг устгах
                 this.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
             }
         });
 
-        // Drag over - handle both route-item and note-item
+        // Чирж байгаа үед - маршрут болон тэмдэглэл хоёуланг зохицуулах
         this.addEventListener('dragover', (e) => {
             e.preventDefault();
             const item = e.target.closest('ag-route-item, ag-note-item');
@@ -338,19 +338,19 @@ class AgRouteSection extends HTMLElement {
             if (item && this.draggedItem && this.draggedItem !== item) {
                 e.dataTransfer.dropEffect = 'move';
 
-                // Remove existing indicators
+                // Хуучин заагчуудыг устгах
                 this.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
 
                 const rect = item.getBoundingClientRect();
                 const midpoint = rect.top + rect.height / 2;
 
-                // Create new indicator
+                // Шинэ заагч үүсгэх
                 if (!this.dropIndicator) {
                     this.dropIndicator = document.createElement('div');
                     this.dropIndicator.className = 'drop-indicator';
                 }
 
-                // Insert before or after based on mouse position
+                // Хулганы байрлалаас хамааран өмнө эсвэл ард оруулах
                 if (e.clientY < midpoint) {
                     item.parentNode.insertBefore(this.dropIndicator, item);
                 } else {
@@ -364,7 +364,7 @@ class AgRouteSection extends HTMLElement {
             }
         });
 
-        // Drop - handle both route-item and note-item
+        // Тавих үйлдэл - маршрут болон тэмдэглэл хоёуланг зохицуулах
         this.addEventListener('drop', (e) => {
             e.preventDefault();
             const item = e.target.closest('ag-route-item, ag-note-item');
@@ -373,17 +373,17 @@ class AgRouteSection extends HTMLElement {
                 const rect = item.getBoundingClientRect();
                 const midpoint = rect.top + rect.height / 2;
 
-                // Get the travel divider after dragged item
+                // Чирсэн элементийн дараах аялалын хуваагчийг авах
                 const draggedDivider = this.draggedItem.nextElementSibling;
                 const isDraggedDivider = draggedDivider && draggedDivider.tagName === 'AG-TRAVEL-DIVIDER';
 
-                // Remove dragged item and its divider
+                // Чирсэн элемент болон түүний хуваагчийг устгах
                 if (isDraggedDivider) {
                     draggedDivider.remove();
                 }
                 this.draggedItem.remove();
 
-                // Insert before or after based on drop position
+                // Тавих байрлалаас хамааран өмнө эсвэл ард оруулах
                 if (e.clientY < midpoint) {
                     item.parentNode.insertBefore(this.draggedItem, item);
                     if (isDraggedDivider) {
@@ -404,11 +404,11 @@ class AgRouteSection extends HTMLElement {
                     }
                 }
 
-                // Update numbering
+                // Дугаарлалтыг шинэчлэх
                 this.updateRouteNumbering();
             }
 
-            // Remove drop indicators
+            // Заагчуудыг устгах
             this.querySelectorAll('.drop-indicator').forEach(ind => ind.remove());
             this.dropIndicator = null;
         });
@@ -416,13 +416,13 @@ class AgRouteSection extends HTMLElement {
 
     updateRouteNumbering() {
         if (this.isUpdatingDividers) return;
-        // Update route-item numbers
+        // Маршрутын элементүүдийн дугаарыг шинэчлэх
         const routeItems = this.querySelectorAll('ag-route-item');
         routeItems.forEach((item, index) => {
             item.setAttribute('number', index + 1);
         });
 
-        // Update note-item numbers
+        // Тэмдэглэлийн элементүүдийн дугаарыг шинэчлэх
         const noteItems = this.querySelectorAll('ag-note-item');
         noteItems.forEach((item, index) => {
             item.setAttribute('number', index + 1);
@@ -430,7 +430,7 @@ class AgRouteSection extends HTMLElement {
 
         this.updateStartDividerVisibility();
 
-        // Update travel dividers - recalculate distances
+        // Аялалын хуваагчуудыг шинэчлэх - зайг дахин тооцоолох
         this.updateTravelDividers();
     }
 
@@ -455,10 +455,10 @@ class AgRouteSection extends HTMLElement {
                 this.suppressSlotChange = false;
             });
 
-            // Ensure a single divider between items by resetting existing ones
+            // Хуучин хуваагчуудыг устгаж, элемент бүрийн хооронд нэг хуваагч үлдээх
             this.querySelectorAll('ag-travel-divider').forEach(divider => divider.remove());
 
-            // Get all items (both route-items and note-items) in order
+            // Бүх элементүүдийг (маршрут болон тэмдэглэл) дарааллаар авах
             const allItems = Array.from(this.querySelectorAll('ag-route-item, ag-note-item'));
 
             for (let i = 0; i < allItems.length; i++) {
@@ -471,7 +471,7 @@ class AgRouteSection extends HTMLElement {
                     divider.setAttribute('distance', '');
                     currentItem.after(divider);
                 } else {
-                    // Last item - no divider
+                    // Сүүлийн элемент - хуваагч хэрэггүй
                 }
             }
         } finally {
@@ -480,14 +480,14 @@ class AgRouteSection extends HTMLElement {
     }
 
     async calculateDistance(divider) {
-        // Set loading state
+        // Ачаалах төлөвт оруулах
         divider.setAttribute('time', '');
         divider.setAttribute('distance', '');
 
         try {
-            // Simple mock calculation - replace with real Google Maps API
-            const mockDistance = Math.floor(Math.random() * 150) + 20; // 20-170 km
-            const mockTime = Math.floor((mockDistance / 60) * 60); // Average 60km/h
+            // Энгийн тооцоолол - бодит Google Maps API-аар солих
+            const mockDistance = Math.floor(Math.random() * 150) + 20; // 20-170 км
+            const mockTime = Math.floor((mockDistance / 60) * 60); // Дундаж 60км/цаг
             const hours = Math.floor(mockTime / 60);
             const minutes = mockTime % 60;
 
@@ -501,15 +501,15 @@ class AgRouteSection extends HTMLElement {
             divider.setAttribute('distance', `${mockDistance} км`);
             divider.setAttribute('time', timeStr);
 
-            // TODO: Replace with real Google Maps API call
-            // Get previous and next route items to calculate real distance
+            // TODO: Бодит Google Maps API дуудлагаар солих
+            // Өмнөх болон дараагийн маршрутын элементүүдийг авч бодит зайг тооцоолох
             // const prev = divider.previousElementSibling;
             // const next = divider.nextElementSibling;
             // const origin = prev.getAttribute('map-query') || prev.getAttribute('title');
             // const destination = next.getAttribute('map-query') || next.getAttribute('title');
             // const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=YOUR_API_KEY`);
             // const data = await response.json();
-            // Parse and set real distance and time
+            // Бодит зай болон цагийг задлан авч тохируулах
         } catch (error) {
             console.error('Error calculating distance:', error);
             divider.setAttribute('distance', 'Тооцоолох боломжгүй');

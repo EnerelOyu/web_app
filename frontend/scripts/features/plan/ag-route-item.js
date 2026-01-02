@@ -1,67 +1,19 @@
-/**
- * ========================================
- * AgRouteItem - Аяллын зам дахь нэг газрын карт
- * ========================================
- *
- * Энэхүү компонент нь хэрэглэгчийн төлөвлөгөөнд нэмсэн аяллын газар бүрийг дүрсэлнэ.
- * Хэрэглэгч дараах үйлдлүүдийг хийх боломжтой:
- * - Газрын нэр, тайлбарыг засварлах
- * - Зургуудыг шилжүүлэх (slider)
- * - Хөтөч сонгох
- * - Газрын зураг руу очих
- * - Дэлгэрэнгүй мэдээлэл харах
- * - Газрыг жагсаалтаас устгах
- * - Эрэмбэ солих (drag & drop)
- */
 class AgRouteItem extends HTMLElement {
-    /**
-     * constructor - Компонентыг үүсгэх
-     *
-     * Үүрэг:
-     * 1. HTMLElement-ийн constructor-ийг дуудна
-     * 2. Shadow DOM үүсгэн, компонентыг дотоод хэв загвартай болгоно
-     */
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
     }
 
-    /**
-     * observedAttributes - Хянах шинж чанаруудын жагсаалт
-     *
-     * Үүрэг:
-     * Эдгээр атрибутууд өөрчлөгдөх үед attributeChangedCallback автоматаар ажиллана
-     *
-     * @returns {Array<string>} - Хянах атрибутуудын жагсаалт
-     */
+    // observedAttributes - Хянах шинж чанаруудын жагсаалт
     static get observedAttributes() {
         return ['number', 'title', 'description', 'image', 'img1', 'img2', 'img3', 'map-query', 'region', 'selected-guide'];
     }
 
-    /**
-     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
-     *
-     * Үүрэг:
-     * 1. Компонентыг дүрсэлнэ (render)
-     * 2. Event listener-ууд суулгана
-     */
     connectedCallback() {
         this.render();
         this.attachEventListeners();
     }
 
-    /**
-     * attributeChangedCallback - Атрибут өөрчлөгдөх үед ажиллах
-     *
-     * Үүрэг:
-     * 1. region атрибут өөрчлөгдвөл - тухайн бүс нутгийн хөтчүүдийг дахин ачаална
-     * 2. selected-guide атрибут өөрчлөгдвөл - сонгосон хөтчийн мэдээллийг харуулна
-     * 3. Бусад атрибутууд өөрчлөгдвөл - бүхэлд нь дахин дүрсэлнэ
-     *
-     * @param {string} name - Өөрчлөгдсөн атрибутын нэр
-     * @param {string} oldValue - Хуучин утга
-     * @param {string} newValue - Шинэ утга
-     */
     attributeChangedCallback(name, oldValue, newValue) {
         if (oldValue === newValue) return;
 
@@ -83,140 +35,59 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    /**
-     * number getter - Газрын дугаар (дарааллыг заах)
-     *
-     * @returns {string} - Газрын дугаар (үндсэн утга: '1')
-     */
     get number() {
         return this.getAttribute('number') || '1';
     }
 
-    /**
-     * number setter - Газрын дугаар тохируулах
-     *
-     * @param {string} value - Шинэ дугаар
-     */
     set number(value) {
         this.setAttribute('number', value);
     }
 
-    /**
-     * title getter - Газрын нэр
-     *
-     * @returns {string} - Газрын нэр
-     */
     get title() {
         return this.getAttribute('title') || '';
     }
 
-    /**
-     * description getter - Газрын тайлбар
-     *
-     * @returns {string} - Тайлбар (нээлттэй цаг, үнэ, тэмдэглэл гэх мэт)
-     */
     get description() {
         return this.getAttribute('description') || '';
     }
 
-    /**
-     * image getter - Үндсэн зураг
-     *
-     * @returns {string} - Зургийн URL
-     */
     get image() {
         return this.getAttribute('image') || this.img1 || '';
     }
 
-    /**
-     * img1 getter - Эхний зураг
-     *
-     * @returns {string} - Эхний зургийн URL
-     */
     get img1() {
         return this.getAttribute('img1') || this.getAttribute('image') || '';
     }
 
-    /**
-     * img2 getter - Хоёр дахь зураг
-     *
-     * @returns {string} - Хоёр дахь зургийн URL (үгүй бол эхний зургийг ашиглана)
-     */
     get img2() {
         return this.getAttribute('img2') || this.img1;
     }
 
-    /**
-     * img3 getter - Гурав дахь зураг
-     *
-     * @returns {string} - Гурав дахь зургийн URL (үгүй бол эхний зургийг ашиглана)
-     */
     get img3() {
         return this.getAttribute('img3') || this.img1;
     }
 
-    /**
-     * images getter - Бүх зургуудын жагсаалт
-     *
-     * Үүрэг:
-     * Slider-д харуулах бүх зургуудыг цуглуулна
-     *
-     * @returns {Array<string>} - Зургуудын URL-ийн жагсаалт
-     */
     get images() {
         const imgs = [this.img1, this.img2, this.img3].filter(img => img);
         return imgs.length > 0 ? imgs : [this.image || ''];
     }
 
-    /**
-     * mapQuery getter - Газрын зургийн хайлтын query
-     *
-     * @returns {string} - Google Maps-д хайх утга (үндсэн утга: title)
-     */
     get mapQuery() {
         return this.getAttribute('map-query') || this.title;
     }
 
-    /**
-     * region getter - Газар байрлах бүс нутаг
-     *
-     * Үүрэг:
-     * Энэ утгыг ашиглан тухайн бүс нутгийн хөтчүүдийг шүүнэ
-     *
-     * @returns {string} - Бүс нутгийн нэр (жишээ: "Төв", "Хангай")
-     */
     get region() {
         return this.getAttribute('region') || '';
     }
 
-    /**
-     * selectedGuide getter - Сонгосон хөтчийн ID
-     *
-     * @returns {string} - Хөтчийн ID
-     */
     get selectedGuide() {
         return this.getAttribute('selected-guide') || '';
     }
 
-    /**
-     * selectedGuide setter - Сонгосон хөтчийн ID тохируулах
-     *
-     * @param {string} value - Хөтчийн ID
-     */
     set selectedGuide(value) {
         this.setAttribute('selected-guide', value);
     }
 
-    /**
-     * render - Компонентыг дүрсэлэх
-     *
-     * Үүрэг:
-     * 1. Shadow DOM руу бүх HTML, CSS-ийг бичнэ
-     * 2. Газрын мэдээлэл (нэр, тайлбар, зураг) харуулна
-     * 3. Зургийн slider бүтээнэ (олон зураг байвал)
-     * 4. Хөтөч сонгох dropdown харуулна
-     * 5. Газрын зураг, дэлгэрэнгүй, устгах товчуудыг нэмнэ
-     */
     render() {
         const styles = `
             :host {
@@ -254,8 +125,8 @@ class AgRouteItem extends HTMLElement {
             /* Place Marker - Always Visible */
             .place-marker {
                 position: relative;
-                width: 2rem;
-                height: 2.5rem;
+                width: var(--route-marker-width, 2rem);
+                height: var(--route-marker-height, 2.5rem);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -299,8 +170,8 @@ class AgRouteItem extends HTMLElement {
             }
 
             .drag-handle-inline svg {
-                width: 18px;
-                height: 18px;
+                width: var(--icon-size-s, 18px);
+                height: var(--icon-size-s, 18px);
                 color: var(--primary);
             }
 
@@ -400,10 +271,10 @@ class AgRouteItem extends HTMLElement {
 
             .place-description textarea {
                 width: 100%;
-                min-height: 80px;
+                min-height: var(--route-description-min-height, 80px);
                 max-width: 100%;
                 padding: var(--p-sm, 0.75rem);
-                border: 1px solid var(--text-color-7);
+                border: var(--border-width, 1px) solid var(--text-color-7);
                 border-radius: var(--br-s, 8px);
                 font-family: 'NunitoSans', sans-serif;
                 font-size: var(--fs-sm, 0.875rem);
@@ -433,8 +304,8 @@ class AgRouteItem extends HTMLElement {
 
             .image-container {
                 position: relative;
-                width: 200px;
-                height: 150px;
+                width: var(--route-image-width, 200px);
+                height: var(--route-image-height, 150px);
                 border-radius: var(--br-s, 8px);
                 overflow: hidden;
             }
@@ -464,11 +335,11 @@ class AgRouteItem extends HTMLElement {
             /* Slide Navigation */
             .slide-nav {
                 position: absolute;
-                bottom: 8px;
+                bottom: var(--slide-nav-offset, 8px);
                 left: 50%;
                 transform: translateX(-50%);
                 display: flex;
-                gap: 6px;
+                gap: var(--slide-nav-gap, 6px);
                 z-index: 3;
                 opacity: 0;
                 transition: opacity 0.2s;
@@ -479,8 +350,8 @@ class AgRouteItem extends HTMLElement {
             }
 
             .slide-dot {
-                width: 8px;
-                height: 8px;
+                width: var(--slide-dot-size, 8px);
+                height: var(--slide-dot-size, 8px);
                 border-radius: 50%;
                 background: rgba(255, 255, 255, 0.5);
                 border: none;
@@ -491,8 +362,8 @@ class AgRouteItem extends HTMLElement {
 
             .slide-dot.active {
                 background: var(--bg-color, #fff);
-                width: 24px;
-                border-radius: 4px;
+                width: var(--slide-dot-active-width, 24px);
+                border-radius: var(--slide-dot-active-radius, 4px);
             }
 
             .slide-arrow {
@@ -502,8 +373,8 @@ class AgRouteItem extends HTMLElement {
                 background: rgba(255, 255, 255, 0.9);
                 border: none;
                 border-radius: var(--br-circle, 50%);
-                width: 32px;
-                height: 32px;
+                width: var(--slide-arrow-size, 32px);
+                height: var(--slide-arrow-size, 32px);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -523,8 +394,8 @@ class AgRouteItem extends HTMLElement {
             }
 
             .slide-arrow svg {
-                width: 16px;
-                height: 16px;
+                width: var(--icon-size-xs, 16px);
+                height: var(--icon-size-xs, 16px);
                 fill: var(--text-color-1, #333);
             }
 
@@ -533,23 +404,23 @@ class AgRouteItem extends HTMLElement {
             }
 
             .slide-arrow.prev {
-                left: 8px;
+                left: var(--slide-arrow-offset, 8px);
             }
 
             .slide-arrow.next {
-                right: 8px;
+                right: var(--slide-arrow-offset, 8px);
             }
 
             /* Guide Selector */
             .guide-selector {
-                width: 200px;
+                width: var(--route-guide-width, 200px);
             }
 
             .guide-select-dropdown {
                 width: 100%;
                 padding: var(--p-xs, 0.5rem) var(--p-sm, 0.75rem);
                 background: var(--primary-5, rgba(255, 107, 0, 0.05));
-                border: 1px solid var(--text-color-7, #ddd);
+                border: var(--border-width, 1px) solid var(--text-color-7, #ddd);
                 border-radius: var(--br-s, 8px);
                 font-family: 'NunitoSans', sans-serif;
                 font-size: var(--fs-sm, 0.875rem);
@@ -612,7 +483,7 @@ class AgRouteItem extends HTMLElement {
 
             .change-guide-btn {
                 background: var(--bg-color, #fff);
-                border: 1px solid var(--text-color-7, #ddd);
+                border: var(--border-width, 1px) solid var(--text-color-7, #ddd);
                 border-radius: var(--br-s, 8px);
                 padding: var(--p-xxs, 0.25rem) var(--p-xs, 0.5rem);
                 font-size: var(--fs-xs, 0.75rem);
@@ -659,8 +530,8 @@ class AgRouteItem extends HTMLElement {
             }
 
             .delete-btn svg {
-                width: 18px;
-                height: 18px;
+                width: var(--icon-size-s, 18px);
+                height: var(--icon-size-s, 18px);
                 fill: currentColor;
                 display: block;
             }
@@ -699,7 +570,7 @@ class AgRouteItem extends HTMLElement {
 
                 .image-container {
                     width: 100%;
-                    height: 180px;
+                    height: var(--route-image-height-md, 180px);
                 }
 
                 .guide-selector {
@@ -732,7 +603,7 @@ class AgRouteItem extends HTMLElement {
                 }
 
                 .place-description textarea {
-                    min-height: 60px;
+                    min-height: var(--route-description-min-height-sm, 60px);
                     font-size: var(--fs-xs, 0.75rem);
                 }
             }
@@ -828,15 +699,6 @@ class AgRouteItem extends HTMLElement {
         `;
     }
 
-    /**
-     * attachEventListeners - Event listener-ууд суулгах
-     *
-     * Үүрэг:
-     * 1. Бүс нутгийн хөтчүүдийг ачаална (loadGuidesForRegion)
-     * 2. Зургийн slider-ийн товчуудад listener суулгана
-     * 3. Устгах товчид listener суулгана
-     * 4. Дэлгэрэнгүй товчид listener суулгана
-     */
     attachEventListeners() {
         const shadow = this.shadowRoot;
 
@@ -927,17 +789,6 @@ class AgRouteItem extends HTMLElement {
         });
     }
 
-    /**
-     * loadGuidesForRegion - Бүс нутгийн хөтчүүдийг ачаалах
-     *
-     * Үүрэг:
-     * 1. appState-ээс бүх хөтчүүдийг авна
-     * 2. Зөвхөн тухайн газрын бүс нутагт ажилладаг хөтчүүдийг шүүнэ
-     * 3. Dropdown руу хөтчүүдийг нэмнэ
-     * 4. Өмнө сонгосон хөтөч байвал харуулна
-     *
-     * @async
-     */
     async loadGuidesForRegion() {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
@@ -1003,16 +854,6 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    /**
-     * setupGuideSelector - Хөтөч сонгогчийн event listener-ууд суулгах
-     *
-     * Үүрэг:
-     * 1. Dropdown-ын change event сонсох (хөтөч сонгоход)
-     * 2. "Солих" товчны click event сонсох (хөтөч сольж байгаа үед)
-     * 3. Сонгосон хөтчийг localStorage-д хадгална
-     *
-     * @param {Array} guides - Тухайн бүс нутгийн хөтчүүдийн жагсаалт
-     */
     setupGuideSelector(guides) {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
@@ -1050,17 +891,6 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    /**
-     * showSelectedGuide - Сонгосон хөтчийн мэдээлэл харуулах
-     *
-     * Үүрэг:
-     * 1. Хөтчийн нэр, утас дугаарыг харуулна
-     * 2. Dropdown-ыг нуух
-     * 3. Хөтчийн мэдээллийн хэсгийг харуулах
-     * 4. Хөтчийн мэдээлэл дээр дарахад guide info хуудас руу үсрэх
-     *
-     * @param {Object} guide - Хөтчийн мэдээлэл (firstName, lastName, phone, id)
-     */
     showSelectedGuide(guide) {
         const shadow = this.shadowRoot;
         const select = shadow.querySelector('.guide-select-dropdown');
@@ -1088,13 +918,6 @@ class AgRouteItem extends HTMLElement {
         });
     }
 
-    /**
-     * saveSelectedGuide - Сонгосон хөтчийг localStorage-д хадгалах
-     *
-     * Үүрэг:
-     * Тухайн газрын ID дээр ямар хөтөч сонгогдсоныг localStorage-д хадгална.
-     * Хуудас дахин ачаалагдсан үед сонгосон хөтөч алдагдахгүй.
-     */
     saveSelectedGuide() {
         const spotId = this.closest('[data-spot-id]')?.getAttribute('data-spot-id');
         if (spotId && this.selectedGuide) {
@@ -1104,15 +927,6 @@ class AgRouteItem extends HTMLElement {
         }
     }
 
-    /**
-     * updateSelectedGuideDisplay - Сонгосон хөтчийн харагдах байдлыг шинэчлэх
-     *
-     * Үүрэг:
-     * selected-guide атрибут өөрчлөгдөх үед (жишээ нь localStorage-ээс уншсан үед)
-     * сонгосон хөтчийн мэдээллийг харуулна.
-     *
-     * @async
-     */
     async updateSelectedGuideDisplay() {
         if (!this.selectedGuide || !this.region) return;
 

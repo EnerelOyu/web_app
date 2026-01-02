@@ -44,7 +44,7 @@ class AgNoteItem extends HTMLElement {
                     gap: var(--gap-size-m, 1rem);
                     padding: var(--p-lg, 1.5rem);
                     background: var(--bg-color, #fff);
-                    border: 2px solid var(--text-color-8, #f0f0f0);
+                    border: var(--note-border-width, 2px) solid var(--text-color-8, #f0f0f0);
                     border-radius: var(--br-m, 12px);
                     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
                     transition: all 0.2s ease;
@@ -68,8 +68,8 @@ class AgNoteItem extends HTMLElement {
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    width: 40px;
-                    height: 40px;
+                    width: var(--note-number-size, 40px);
+                    height: var(--note-number-size, 40px);
                     background: var(--primary-5, rgba(255, 107, 0, 0.1));
                     color: var(--primary, #ff6b00);
                     border-radius: var(--br-circle, 50%);
@@ -80,8 +80,8 @@ class AgNoteItem extends HTMLElement {
                 }
 
                 .note-icon {
-                    width: 20px;
-                    height: 20px;
+                    width: var(--icon-size-m, 20px);
+                    height: var(--icon-size-m, 20px);
                     fill: currentColor;
                 }
 
@@ -108,8 +108,8 @@ class AgNoteItem extends HTMLElement {
                 }
 
                 .note-title svg {
-                    width: 18px;
-                    height: 18px;
+                    width: var(--icon-size-s, 18px);
+                    height: var(--icon-size-s, 18px);
                     fill: var(--text-color-3, #666);
                 }
 
@@ -121,12 +121,12 @@ class AgNoteItem extends HTMLElement {
                     white-space: pre-wrap;
                     word-break: break-word;
                     width: 100%;
-                    border: 1px solid transparent;
+                    border: var(--border-width, 1px) solid transparent;
                     padding: var(--p-xs, 0.5rem);
                     border-radius: var(--br-s, 8px);
                     background: transparent;
                     resize: vertical;
-                    min-height: 60px;
+                    min-height: var(--note-text-min-height, 60px);
                     transition: all 0.2s ease;
                 }
 
@@ -139,7 +139,7 @@ class AgNoteItem extends HTMLElement {
                     outline: none;
                     border-color: var(--primary, #ff6b00);
                     background: var(--bg-color, #fff);
-                    box-shadow: 0 0 0 3px var(--primary-5, rgba(255, 107, 0, 0.1));
+                    box-shadow: 0 0 0 var(--focus-ring-size, 3px) var(--primary-5, rgba(255, 107, 0, 0.1));
                 }
 
                 .note-actions {
@@ -188,8 +188,8 @@ class AgNoteItem extends HTMLElement {
                 }
 
                 .action-btn svg {
-                    width: 18px;
-                    height: 18px;
+                    width: var(--icon-size-s, 18px);
+                    height: var(--icon-size-s, 18px);
                     fill: currentColor;
                 }
 
@@ -214,8 +214,8 @@ class AgNoteItem extends HTMLElement {
                     }
 
                     .note-number {
-                        width: 32px;
-                        height: 32px;
+                        width: var(--note-number-size-sm, 32px);
+                        height: var(--note-number-size-sm, 32px);
                         font-size: var(--fs-base, 1rem);
                     }
                 }
