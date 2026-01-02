@@ -460,6 +460,42 @@ class AppState {
     }
 
     /**
+     * Төлөвлөгөөнд байгаа газрын тайлбар шинэчлэх
+     * Backend DB болон localStorage-д хадгална
+     * @param {string|number} spotId - Газрын ID
+     * @param {string} description - Шинэ тайлбар
+     * @returns {boolean} - Амжилттай эсэх
+     */
+    async updateSpotDescription(spotId, description) {
+        try {
+            const userId = this.getUserId();
+            const response = await fetch(`http://localhost:3000/api/plans/${userId}/spots/${spotId}/description`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ description })
+            });
+
+            if (!response.ok) {
+                console.error('Failed to update spot description');
+                return false;
+            }
+
+            // Local state-д шинэчлэх
+            const item = this.planItems.find(item => String(item.id) === String(spotId));
+            if (item) {
+                item.description = description;
+                this.savePlanToStorage();
+                this.dispatchStateChange('planItems', this.planItems);
+            }
+
+            return true;
+        } catch (error) {
+            console.error('Error updating spot description:', error);
+            return false;
+        }
+    }
+
+    /**
      * Төлөв өөрчлөгдсөн тухай бүх component-үүдэд мэдэгдэл илгээх
      * Component-үүд 'appstatechange' event сонсож байж өгөгдөл шинэчлэнэ
      * @param {string} key - Өөрчлөгдсөн property-ийн нэр

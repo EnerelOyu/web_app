@@ -10,7 +10,11 @@ class AgRouteItem extends HTMLElement {
     }
 
     connectedCallback() {
+        // localStorage-аас хадгалагдсан өгөгдлийг ачаална
+        this.loadSavedData();
+        // Render хийх
         this.render();
+        // Event listeners суулгах
         this.attachEventListeners();
     }
 
@@ -49,6 +53,14 @@ class AgRouteItem extends HTMLElement {
 
     get description() {
         return this.getAttribute('description') || '';
+    }
+
+    set description(value) {
+        this.setAttribute('description', value);
+    }
+
+    set title(value) {
+        this.setAttribute('title', value);
     }
 
     get image() {
@@ -788,23 +800,27 @@ class AgRouteItem extends HTMLElement {
             }));
         });
 
-        // Газрын нэр өөрчлөх - blur үед backend-д хадгална
+        // Газрын нэр өөрчлөх - blur үед backend болон localStorage-д хадгална
         const titleElement = shadow.querySelector('.place-title');
         if (titleElement) {
             titleElement.addEventListener('blur', async () => {
                 const newTitle = titleElement.textContent.trim();
                 const spotId = this.getAttribute('data-spot-id');
 
-                if (newTitle && spotId && newTitle !== this.title) {
-                    // AppState-аар backend-д хадгална
-                    const success = await window.appState?.updateSpotTitle(spotId, newTitle);
+                if (newTitle && newTitle !== this.title) {
+                    // 1. Шууд localStorage-д хадгалах
+                    this.saveToLocalStorage('title', newTitle);
 
-                    if (success) {
-                        // Атрибутыг шинэчлэх
-                        this.setAttribute('title', newTitle);
-                    } else {
-                        // Алдаа гарвал хуучин утгыг буцаана
-                        titleElement.textContent = this.title;
+                    // 2. Attribute шинэчлэх
+                    this.title = newTitle;
+
+                    // 3. Backend-д хадгалах (spotId байгаа тохиолдолд)
+                    if (spotId) {
+                        const success = await window.appState?.updateSpotTitle(spotId, newTitle);
+
+                        if (!success) {
+                            console.warn('Backend-д title хадгалахад алдаа гарлаа, localStorage дээр хадгалагдсан');
+                        }
                     }
                 }
             });
@@ -814,6 +830,32 @@ class AgRouteItem extends HTMLElement {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     titleElement.blur();
+                }
+            });
+        }
+
+        // Тайлбар өөрчлөх - blur үед backend болон localStorage-д хадгална
+        const descriptionElement = shadow.querySelector('.place-description textarea');
+        if (descriptionElement) {
+            descriptionElement.addEventListener('blur', async () => {
+                const newDescription = descriptionElement.value.trim();
+                const spotId = this.getAttribute('data-spot-id');
+
+                if (newDescription !== this.description) {
+                    // 1. Шууд localStorage-д хадгалах
+                    this.saveToLocalStorage('description', newDescription);
+
+                    // 2. Attribute шинэчлэх
+                    this.description = newDescription;
+
+                    // 3. Backend-д хадгалах (spotId байгаа тохиолдолд)
+                    if (spotId && window.appState?.updateSpotDescription) {
+                        const success = await window.appState.updateSpotDescription(spotId, newDescription);
+
+                        if (!success) {
+                            console.warn('Backend-д description хадгалахад алдаа гарлаа, localStorage дээр хадгалагдсан');
+                        }
+                    }
                 }
             });
         }
@@ -970,6 +1012,74 @@ class AgRouteItem extends HTMLElement {
             }
         } catch (error) {
             console.error('Error updating selected guide display:', error);
+        }
+    }
+
+    /**
+     * localStorage-д routeItem-ийн өгөгдөл хадгалах
+     * @param {string} field - Хадгалах талбар (title, description гэх мэт)
+     * @param {string} value - Хадгалах утга
+     */
+    saveToLocalStorage(field, value) {
+        try {
+            const spotId = this.getAttribute('data-spot-id');
+            if (!spotId) {
+                console.warn('data-spot-id байхгүй байна, localStorage-д хадгалах боломжгүй');
+                return;
+            }
+
+            // Бүх route items-ийн өгөгдлийг авах
+            const storageKey = 'ayalgo-route-items-data';
+            const allData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+            // Тухайн spot-ийн өгөгдлийг шинэчлэх
+            if (!allData[spotId]) {
+                allData[spotId] = {};
+            }
+            allData[spotId][field] = value;
+            allData[spotId].lastModified = new Date().toISOString();
+
+            // localStorage-д хадгалах
+            localStorage.setItem(storageKey, JSON.stringify(allData));
+        } catch (error) {
+            console.error('localStorage-д хадгалахад алдаа гарлаа:', error);
+        }
+    }
+
+    /**
+     * localStorage-аас routeItem-ийн өгөгдөл ачаалах
+     * @param {string} field - Ачаалах талбар
+     * @returns {string|null} - Хадгалагдсан утга эсвэл null
+     */
+    loadFromLocalStorage(field) {
+        try {
+            const spotId = this.getAttribute('data-spot-id');
+            if (!spotId) return null;
+
+            const storageKey = 'ayalgo-route-items-data';
+            const allData = JSON.parse(localStorage.getItem(storageKey) || '{}');
+
+            return allData[spotId]?.[field] || null;
+        } catch (error) {
+            console.error('localStorage-аас ачаалахад алдаа гарлаа:', error);
+            return null;
+        }
+    }
+
+    /**
+     * Component render хийхийн өмнө localStorage-аас өгөгдөл ачаалж attribute-уудыг шинэчлэх
+     */
+    loadSavedData() {
+        const savedTitle = this.loadFromLocalStorage('title');
+        const savedDescription = this.loadFromLocalStorage('description');
+
+        // localStorage дээр хадгалагдсан утга байвал attribute шинэчлэх
+        if (savedTitle && savedTitle !== this.title) {
+            this.title = savedTitle;
+        }
+
+        if (savedDescription && savedDescription !== this.description) {
+            this.description = savedDescription;
         }
     }
 }
