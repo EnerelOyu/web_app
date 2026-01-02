@@ -48,6 +48,7 @@ class AgGuideBanner extends HTMLElement {
           flex-direction: column;
           align-items: flex-start;
           gap: var(--gap-size-s);
+          margin-left: var(--m-2xl);
       }
 
       .guide-inner h3{
@@ -109,6 +110,23 @@ class AgGuideBanner extends HTMLElement {
           .guide-btn{
               width: 80%;
           }
+      }
+      @media (max-width: 480px){
+        .guide{
+          display: flex;
+          flex-direction: column;
+          gap: var(--gap-size-s);
+          width: 100%;
+          justify-content: center;
+          align-items: center;
+          padding: var(--p-xl) 0;
+        }
+        .guide-inner h3{
+          margin-bottom: 0;
+        }
+        .guide-btn{
+            width: 60%;
+        }
       }
       </style>
 
