@@ -56,6 +56,7 @@ class AgTutorialCard extends HTMLElement {
           margin: 0.25rem 0;
           font-family: 'Rubik';
           font-size: var(--fs-base);
+          text-align: center;
         }
 
         .tutorial-card:hover h3 {
@@ -66,7 +67,9 @@ class AgTutorialCard extends HTMLElement {
           color: var(--text-color-3);
           font-family: 'NunitoSans';
           margin: 0;
+          text-align: justify;
         }
+
       </style>
 
       <article class="tutorial-card">

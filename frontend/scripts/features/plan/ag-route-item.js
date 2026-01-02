@@ -787,6 +787,36 @@ class AgRouteItem extends HTMLElement {
                 }
             }));
         });
+
+        // Газрын нэр өөрчлөх - blur үед backend-д хадгална
+        const titleElement = shadow.querySelector('.place-title');
+        if (titleElement) {
+            titleElement.addEventListener('blur', async () => {
+                const newTitle = titleElement.textContent.trim();
+                const spotId = this.getAttribute('data-spot-id');
+
+                if (newTitle && spotId && newTitle !== this.title) {
+                    // AppState-аар backend-д хадгална
+                    const success = await window.appState?.updateSpotTitle(spotId, newTitle);
+
+                    if (success) {
+                        // Атрибутыг шинэчлэх
+                        this.setAttribute('title', newTitle);
+                    } else {
+                        // Алдаа гарвал хуучин утгыг буцаана
+                        titleElement.textContent = this.title;
+                    }
+                }
+            });
+
+            // Enter дарахад focus алдах
+            titleElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    titleElement.blur();
+                }
+            });
+        }
     }
 
     async loadGuidesForRegion() {

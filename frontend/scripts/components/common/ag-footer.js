@@ -6,7 +6,7 @@ class AgFooter extends HTMLElement {
         @import url('./styles/fonts.css');
 
       footer{
-        background-color: var(--ftr-bg-color);
+        background: var(--ftr-bg-color);
         display: flex;
         flex-direction: row;
         justify-content: space-between;

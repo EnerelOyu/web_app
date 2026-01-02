@@ -29,7 +29,7 @@ class AgHomeSearch extends HTMLElement {
           align-items: center;
           justify-content: space-around;
           border-radius: 9999px;
-          background-color: var(--accent-9);
+          background-color: var(--accent-7);
           padding: var(--p-sm) var(--p-lg);
           gap: var(--gap-size-m);
           width: 70%;
@@ -84,7 +84,7 @@ class AgHomeSearch extends HTMLElement {
           color: var(--text-color-3);
           outline: none;
           border: none;
-          background-color: var(--accent-9);
+          background-color: var(--accent-7);
           cursor: pointer;
           transition: all 0.3s ease;
           opacity: 0.85;
@@ -115,7 +115,7 @@ class AgHomeSearch extends HTMLElement {
 
         #filter-submit:hover {
           transform: scale(1.08);
-          background-color: var(--accent-9);
+          background-color: var(--accent-7);
           box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
         }
 

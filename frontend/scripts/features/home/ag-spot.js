@@ -171,7 +171,7 @@ class AgSpot extends HTMLElement {
         <h3 class="spot-name">${name}</h3>
         <div class="line"></div>
         <div class="spot-detail">
-          <p>ДЭЛЭГРЭНГҮЙ</p>
+          <p>ДЭЛГЭРЭНГҮЙ</p>
           <svg class="more-icon" aria-hidden="true" focusable="false">
             <use href="./styles/icons.svg#icon-arrow"></use>
           </svg>

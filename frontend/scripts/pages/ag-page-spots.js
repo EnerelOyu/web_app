@@ -12,7 +12,7 @@ class PageSpots extends HTMLElement {
                 display: grid;
                 grid-template-columns: 1fr 3fr;
                 animation: fadeInPage 0.6s ease-out;
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 height: 100%;
             }
 
@@ -25,7 +25,7 @@ class PageSpots extends HTMLElement {
                 justify-content: flex-start;
                 padding: var(--p-md);
                 box-shadow: 1px 0 10px 2px var(--text-color-6);
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 max-height: 100vh;
                 overflow-y: auto;
                 animation: slideInLeft 0.7s ease-out;
@@ -211,7 +211,7 @@ class PageSpots extends HTMLElement {
                 gap: var(--gap-size-m);
 
                 padding: var(--p-sm) var(--p-lg);
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 box-shadow: 0 2px 10px rgba(0,0,0,0.06);
                 backdrop-filter: blur(8px);
             }

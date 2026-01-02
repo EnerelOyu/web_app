@@ -79,7 +79,7 @@ class PageTravelerSignup extends HTMLElement {
           padding: var(--p-md);
           border: 1px solid var(--border-color);
           border-radius: var(--br-m);
-          background-color: var(--bg-color);
+          background: var(--bg-color);
           color: var(--text-color-1);
           text-decoration: none;
           font-family: 'NunitoSans';
@@ -93,11 +93,13 @@ class PageTravelerSignup extends HTMLElement {
         .social-btn.google {
           background-color: var(--primary);
           color: white;
+          padding: var(--p-md);
         }
 
         .social-btn.facebook {
           background-color: var(--text-color-4);
           color: white;
+          padding: var(--p-md);
         }
 
         .social-btn svg {
@@ -136,7 +138,7 @@ class PageTravelerSignup extends HTMLElement {
         <div class="signup-header">
           <h1>Аялагч Нэвтрэх</h1>
         </div>
-        <div class="social-login-title">Social account-аар нэвтрэх</div>
+        <div class="social-login-title">Холбоосоор нэвтрэх</div>
         <div class="social-buttons">
           <button class="social-btn google" type="button">
             <svg viewBox="0 0 24 24">

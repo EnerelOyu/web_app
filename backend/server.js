@@ -58,7 +58,7 @@ const cspDirectives = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self'"
+  "connect-src 'self' https://maps.googleapis.com"
 ].join('; ');
 
 app.use((req, res, next) => {
@@ -510,6 +510,59 @@ app.post('/api/guides/:guideId/reviews', (req, res) => {
     res.status(201).json({ success: true, id: result.id });
   } catch (error) {
     console.error('Error creating guide review:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Google Maps Distance Matrix API дуудлага
+app.post('/api/distance', async (req, res) => {
+  try {
+    const { origin, destination } = req.body;
+
+    if (!origin || !destination) {
+      return res.status(400).json({
+        success: false,
+        error: 'origin and destination are required'
+      });
+    }
+
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({
+        success: false,
+        error: 'Google Maps API key not configured'
+      });
+    }
+
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}&language=mn`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.status !== 'OK') {
+      return res.status(400).json({
+        success: false,
+        error: `Google Maps API error: ${data.status}`
+      });
+    }
+
+    const element = data.rows[0]?.elements[0];
+    if (!element || element.status !== 'OK') {
+      return res.status(400).json({
+        success: false,
+        error: 'Unable to calculate distance'
+      });
+    }
+
+    res.json({
+      success: true,
+      distance: element.distance.text,
+      duration: element.duration.text,
+      distanceValue: element.distance.value, // meters
+      durationValue: element.duration.value  // seconds
+    });
+  } catch (error) {
+    console.error('Error calculating distance:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

@@ -34,7 +34,7 @@ class AgGuideBanner extends HTMLElement {
         }
 
         .guide{
-          background-color: var(--hdr-bg-color);
+          background: var(--hdr-bg-color);
           width: 100%;
           display: grid;
           grid-template-columns: 2fr 1fr;
