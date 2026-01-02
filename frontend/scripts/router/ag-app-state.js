@@ -162,6 +162,13 @@ class AppState {
             const response = await fetch('http://localhost:3000/api/guides');
             const data = await response.json();
 
+            // Backend өгөгдөл хоосон эсэхийг шалгах
+            if (!data.guides || data.guides.length === 0) {
+                console.log('Backend хөтөч хоосон байна, JSON файлаас ачаална...');
+                this.loadGuideDataFromJSON();
+                return;
+            }
+
             // Backend өгөгдлийг frontend форматруу хөрвүүлж, guideData object-д хадгалах
             data.guides.forEach(guide => {
                 this.guideData[guide.guideId] = {
@@ -193,7 +200,7 @@ class AppState {
     //Хөтөчдийн өгөгдлийг JSON файлаас ачаалах, backend API алдаатай үед ашиглагдана
     async loadGuideDataFromJSON() {
         try {
-            const response = await fetch('../data/guides.json');
+            const response = await fetch('./data/guides.json');
             const data = await response.json();
 
             data.guides.forEach(guide => {

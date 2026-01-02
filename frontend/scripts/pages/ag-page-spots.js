@@ -45,7 +45,7 @@ class PageSpots extends HTMLElement {
                 gap: var(--gap-size-m);
             }
 
-            /* =============== SPOT GRID SECTION =============== */
+            /*  SPOT GRID SECTION  */
 
             .spot-cards-container {
                 display: flex;
@@ -103,7 +103,7 @@ class PageSpots extends HTMLElement {
             animation: cardFadeUp 0.5s ease-out forwards;
             }
 
-            /* Жаахан stagger эффект */
+            /* Жаахан stagger effect */
             .spots-grid .spot-card:nth-child(1) { animation-delay: 0.05s; }
             .spots-grid .spot-card:nth-child(2) { animation-delay: 0.1s; }
             .spots-grid .spot-card:nth-child(3) { animation-delay: 0.15s; }
@@ -136,7 +136,7 @@ class PageSpots extends HTMLElement {
             color: var(--accent-1);
             }
 
-            /* =============== LOADING SHIMMER =============== */
+            /*  LOADING SHIMMER  */
 
             @keyframes shimmer {
             0% {
@@ -159,7 +159,7 @@ class PageSpots extends HTMLElement {
             background-size: 1000px 100%;
             }
 
-            /* =============== KEYFRAMES (page/filter/cards) =============== */
+            /*  KEYFRAMES (page/filter/cards)  */
 
             @keyframes fadeInPage {
             from {
@@ -194,10 +194,7 @@ class PageSpots extends HTMLElement {
             }
             }
 
-            /* =========================================================
-            ===============  TABLET  ≤ 1024px ========================
-            ========================================================= */
-
+            /* TABLET  ≤ 1024px  */
             @media (max-width: 1024px) {
 
             main {
@@ -259,9 +256,7 @@ class PageSpots extends HTMLElement {
             }
             }
 
-            /* =========================================================
-            ==================  MOBILE  ≤ 768px ======================
-            ========================================================= */
+            /*   MOBILE  ≤ 768px  */
 
             @media (max-width: 768px) {
 

@@ -168,7 +168,7 @@ class AgSpot extends HTMLElement {
           </button>
         </figure>
         <p class="spot-area">${area}</p>
-        <h4 class="spot-name">${name}</h4>
+        <h3 class="spot-name">${name}</h3>
         <div class="line"></div>
         <div class="spot-detail">
           <p>ДЭЛЭГРЭНГҮЙ</p>
