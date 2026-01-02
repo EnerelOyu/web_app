@@ -199,72 +199,32 @@ class AgTravelDivider extends HTMLElement {
                 white-space: nowrap;
             }
 
-            .add-block-btn {
-                background: var(--bg-color, #fff);
-                color: var(--primary, #ff6b00);
-                border: 1px solid var(--text-color-7, #ddd);
-                border-radius: var(--br-circle, 50%);
-                width: 28px;
-                height: 28px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.2s ease;
-            }
-
-            .add-block-btn svg {
-                width: 14px;
-                height: 14px;
-                fill: currentColor;
-            }
-
-            .add-block-btn:hover {
-                background: var(--primary, #ff6b00);
-                color: var(--bg-color, #fff);
-                transform: scale(1.05);
-            }
-
             .add-label-btn {
                 background: var(--bg-color, #fff);
                 border: 1px solid var(--text-color-7, #ddd);
-                border-radius: 999px;
-                padding: 0.3rem 0.65rem;
-                font-family: 'NunitoSans', sans-serif;
-                font-size: var(--fs-sm, 0.875rem);
+                border-radius: var(--br-pill, 999px);
+                display: flex;
+                align-items: center;
+                gap: var(--gap-size-xs, 0.5rem);
                 color: var(--text-color-2, #555);
                 cursor: pointer;
-                transition: all 0.2s ease;
+                transition: all var(--transition-fast, 0.2s) ease;
+                padding: var(--p-xs, 0.3rem) var(--p-sm, 0.65rem);
+                font-family: var(--font-sans, 'NunitoSans', sans-serif);
+                font-size: var(--fs-sm, 0.875rem);
+            }
+
+            .add-label-btn svg {
+                width: var(--svg-icon-size, 14px);
+                height: var(--svg-icon-size, 14px);
+                fill: currentColor;
+                flex-shrink: 0;
             }
 
             .add-label-btn:hover {
                 border-color: var(--primary, #ff6b00);
                 color: var(--primary, #ff6b00);
-            }
-
-            .add-toggle-btn {
-                background: var(--bg-color, #fff);
-                border: 1px solid var(--text-color-7, #ddd);
-                border-radius: var(--br-s, 8px);
-                width: 26px;
-                height: 26px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                color: var(--text-color-4, #888);
-                transition: all 0.2s ease;
-            }
-
-            .add-toggle-btn svg {
-                width: 12px;
-                height: 12px;
-                fill: currentColor;
-            }
-
-            .add-toggle-btn:hover {
-                border-color: var(--primary, #ff6b00);
-                color: var(--primary, #ff6b00);
+                transform: scale(1.05);
             }
 
             @media (max-width: 768px) {
@@ -281,16 +241,17 @@ class AgTravelDivider extends HTMLElement {
                 <div class="divider-line-vertical"></div>
                 <div class="add-prompt">
                     <span class="prompt-text">Энд юм нэмэх үү?</span>
-                    <button class="add-block-btn" data-action="add" aria-label="Газар нэмэх">
-                        <svg viewBox="0 0 448 512" aria-hidden="true">
-                            <path fill="currentColor" d="M256 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 160-160 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l160 0 0 160c0 17.7 14.3 32 32 32s32-14.3 32-32l0-160 160 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-160 0 0-160z"/>
+                    <button class="add-label-btn add-place-btn" data-action="add" data-type="place" aria-label="Газар нэмэх">
+                        <svg viewBox="0 0 384 512" aria-hidden="true">
+                            <path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
                         </svg>
+                        <span>Газар</span>
                     </button>
-                    <button class="add-label-btn" data-action="add">Газар нэмэх</button>
-                    <button class="add-toggle-btn" data-action="toggle" aria-label="Нэмэх төрлийг солих">
-                        <svg viewBox="0 0 512 512" aria-hidden="true">
-                            <path fill="currentColor" d="M304 48c0-26.5 21.5-48 48-48l80 0c26.5 0 48 21.5 48 48l0 80c0 26.5-21.5 48-48 48-16.9 0-31.7-8.7-40.1-21.9l-82.7 82.7c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l82.7-82.7C312.7 79.7 304 64.9 304 48zM208 464c0 26.5-21.5 48-48 48l-80 0c-26.5 0-48-21.5-48-48l0-80c0-26.5 21.5-48 48-48 16.9 0 31.7 8.7 40.1 21.9l82.7-82.7c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-82.7 82.7c12.7 8.4 21.9 23.2 21.9 40.1l0 80z"/>
+                    <button class="add-label-btn add-note-btn" data-action="add" data-type="note" aria-label="Тэмдэглэл нэмэх">
+                        <svg viewBox="0 0 448 512" aria-hidden="true">
+                            <path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L274.7 69.3c-12-12-28.3-18.7-45.3-18.7H64zm0 96c0-17.7 14.3-32 32-32H208c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM96 320a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM224 416a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM96 448a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
                         </svg>
+                        <span>Тэмдэглэл</span>
                     </button>
                 </div>
             </div>
@@ -302,9 +263,7 @@ class AgTravelDivider extends HTMLElement {
      *
      * Үүрэг:
      * 1. Listener-ууд давхар суухаас сэргийлнэ
-     * 2. Товчны текстийг шинэчлэх функц үүсгэнэ
-     * 3. Нэмэх төрөл солих event listener суулгана
-     * 4. Газар/тэмдэглэл нэмэх event listener суулгана
+     * 2. Газар/тэмдэглэл нэмэх event listener суулгана
      */
     attachEventListeners() {
         // Listener-ууд давхар суухаас сэргийлэх
@@ -314,29 +273,11 @@ class AgTravelDivider extends HTMLElement {
         const shadow = this.shadowRoot;
 
         /**
-         * updateLabel - Товчны текстийг шинэчлэх
-         *
-         * Үүрэг:
-         * addType-ийн утгаас хамааруулан товчны текст болон aria-label-ийг шинэчилнэ
-         */
-        const updateLabel = () => {
-            const labelBtn = shadow.querySelector('.add-label-btn');
-            const addBtn = shadow.querySelector('.add-block-btn');
-            const label = this.addType === 'note' ? 'Тэмдэглэл нэмэх' : 'Газар нэмэх';
-            if (labelBtn) labelBtn.textContent = label;
-            if (addBtn) addBtn.setAttribute('aria-label', label);
-        };
-
-        // Эхлээд текстийг тохируулах
-        updateLabel();
-
-        /**
          * Click event listener - Товч дарахад ажиллах
          *
          * Үүрэг:
          * 1. Дарагдсан товчийг олох
-         * 2. toggle action бол addType-ийг солих
-         * 3. add action бол add-item event дамжуулах
+         * 2. add action бол add-item event дамжуулах (type-ийг data-type атрибутаас авна)
          */
         shadow.addEventListener('click', (e) => {
             const actionBtn = e.target.closest('[data-action]');
@@ -344,19 +285,16 @@ class AgTravelDivider extends HTMLElement {
 
             const action = actionBtn.dataset.action;
 
-            // Нэмэх төрөл солих
-            if (action === 'toggle') {
-                this.addType = this.addType === 'place' ? 'note' : 'place';
-                updateLabel();
-                return;
+            // add action - Газар/тэмдэглэл нэмэх event дамжуулах
+            if (action === 'add') {
+                // data-type атрибутаас type-ийг авна
+                const type = actionBtn.dataset.type || this.addType;
+                this.dispatchEvent(new CustomEvent('add-item', {
+                    bubbles: true,
+                    composed: true,
+                    detail: { type, divider: this }
+                }));
             }
-
-            // Газар/тэмдэглэл нэмэх event дамжуулах
-            this.dispatchEvent(new CustomEvent('add-item', {
-                bubbles: true,
-                composed: true,
-                detail: { type: this.addType, divider: this }
-            }));
         });
     }
 }

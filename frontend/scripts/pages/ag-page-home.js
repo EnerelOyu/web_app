@@ -169,7 +169,6 @@ class PageHome extends HTMLElement {
                 flex-direction: column;
                 align-items: center;
                 gap: var(--gap-size-xl);
-                padding: var(--p-2xl) 0;
             }
 
             .tutorial h2 {
@@ -193,7 +192,6 @@ class PageHome extends HTMLElement {
             ag-spot-section {
                 width: 100%;
                 max-width: 95%;
-                padding: var(--p-xl) 2%;
             }
 
             /* Guide Banner */

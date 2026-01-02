@@ -219,8 +219,7 @@ class AgSpotHero extends HTMLElement {
           display: flex;
           align-items: center;
           gap: var(--gap-size-xs);
-          font-size: var(--fs-xs);
-          font-family: 'NunitoSans';
+
           margin: 0;
           flex-shrink: 0;
         }

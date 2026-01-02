@@ -228,34 +228,29 @@ ag-page-guide-signup {
 h1 {
   font-family: 'Rubik';
   font-size: var(--fs-2xl);
-  padding-bottom: var(--p-lg);
 }
 
 h2 {
   font-family: 'Rubik';
   font-size: var(--fs-xl);
   text-transform: uppercase;
-  padding-bottom: var(--p-md);
 }
 
 h3 {
   font-family: 'Rubik';
   font-size: var(--fs-lg);
   text-transform: uppercase;
-  padding-bottom: var(--p-sm);
 }
 
 h4 {
   font-family: 'Rubik';
   font-size: var(--fs-base);
   text-transform: uppercase;
-  padding-bottom: var(--p-sm);
 }
 
 p {
   font-family: 'NunitoSans';
   font-size: var(--fs-base);
-  padding-bottom: var(--p-xs);
   flex-direction: column;
 }
 
