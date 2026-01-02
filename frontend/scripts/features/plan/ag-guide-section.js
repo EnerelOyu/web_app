@@ -1,53 +1,16 @@
-/**
- * ========================================
- * AgGuideSection - Хөтөч сонгох хэсэг
- * ========================================
- *
- * Энэхүү компонент нь төлөвлөгөөнд хөтөч сонгох интерфэйс юм.
- * Хэрэглэгч дараах үйлдлүүдийг хийх боломжтой:
- * - Dropdown-оос хөтөч сонгох
- * - Сонгосон хөтчийн мэдээллийг харах (ag-guide-card ашиглан)
- * - Хөтөчид утасдах
- * - Хөтчийн профайл руу очих
- * - Хөтөч солих
- * - Сонголтыг localStorage-д хадгалах
- */
 class AgGuideSection extends HTMLElement {
-    /**
-     * constructor - Компонентыг үүсгэх
-     *
-     * Үүрэг:
-     * HTMLElement-ийн constructor-ийг дуудна
-     */
     constructor() {
         super();
     }
 
-    /**
-     * connectedCallback - Компонент DOM-д холбогдох үед автоматаар ажиллана
-     *
-     * Үүрэг:
-     * 1. Компонентыг дүрсэлнэ (render)
-     * 2. Widget-ийг эхлүүлнэ (dropdown, товчууд)
-     * 3. CSS хэв загварыг суулгана
-     */
     connectedCallback() {
         this.render();
         this.initInstWidget();
         this.applyStyles();
     }
 
-    /**
-     * applyStyles - CSS хэв загварыг document head-д нэмэх
-     *
-     * Үүрэг:
-     * 1. Бүх CSS хэв загварыг бүтээнэ
-     * 2. <style> tag үүсгэж document head-д нэмнэ
-     * 3. Давхар нэмэхээс сэргийлнэ (ID шалгах)
-     */
     applyStyles() {
         const styles = `
-      /* Inst section */
       .inst {
         grid-area: guide;
         justify-content: center;
@@ -56,57 +19,55 @@ class AgGuideSection extends HTMLElement {
         flex-direction: column;
         position: relative;
       }
+
       .inst h4, p {
         padding: 0;
       }
 
-      /* Inst select - visible by default */
       .inst-select {
           display: flex;
           flex-direction: column;
           gap: var(--p-xs);
-          transition: all 0.3s ease;
+          transition: all var(--transition-medium);
       }
 
       .inst-select label {
-          font-family: 'Nunito-Sans';
+          font-family: var(--font-body);
           font-size: var(--fs-sm);
           color: var(--text-color-2);
-          font-weight: 500;
+          font-weight: var(--fw-medium);
       }
 
       .inst-select select {
           padding: var(--p-sm);
           border-radius: var(--br-s);
-          border: 1px solid var(--text-color-7);
+          border: var(--border-width) solid var(--text-color-7);
           background: var(--bg-color);
           font-size: var(--fs-base);
           color: var(--text-color-1);
-          transition: all 0.3s ease;
+          transition: all var(--transition-medium);
           width: 100%;
       }
 
       .inst-select select:focus {
           outline: none;
           border-color: var(--primary);
-          box-shadow: 0 0 0 3px var(--text-color-9);
+          box-shadow: var(--shadow-focus);
       }
 
-      /* Inst card - hidden by default */
       .inst-card {
           display: none;
           gap: var(--p-sm);
           padding: var(--p-md);
           align-items: flex-start;
           position: relative;
-          animation: fadeIn 0.3s ease;
+          animation: fadeIn var(--transition-medium);
       }
 
       .inst-card.show {
           display: flex;
       }
 
-      /* Change guide button */
       .change-guide-btn {
           position: absolute;
           top: var(--p-xs);
@@ -117,7 +78,7 @@ class AgGuideSection extends HTMLElement {
           border-radius: var(--br-s);
           cursor: pointer;
           color: var(--text-color-5);
-          transition: all 0.3s ease;
+          transition: all var(--transition-medium);
           opacity: 0;
       }
 
@@ -136,34 +97,30 @@ class AgGuideSection extends HTMLElement {
       }
 
       .inst-actions {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    gap: var(--p-xs);
-    bottom: 16px;
-    right: 16px;
-    z-index: 5;
-}
+          position: absolute;
+          display: flex;
+          flex-direction: column;
+          gap: var(--p-xs);
+          bottom: var(--spacing-md);
+          right: var(--spacing-md);
+          z-index: var(--z-actions);
+      }
 
-/* If you want the buttons to have a fixed width */
-.inst-actions .inst-btn {
-    min-width: 120px;
-}
+      .inst-actions .inst-btn {
+          min-width: var(--btn-min-width);
+      }
 
       .inst-meta {
           margin: 0;
           font-size: var(--fs-xs);
           color: var(--text-color-3);
-          line-height: 1.4;
+          line-height: var(--line-height-normal);
       }
 
-       
-
-      /* Animation */
       @keyframes fadeIn {
           from {
               opacity: 0;
-              transform: translateY(-10px);
+              transform: translateY(var(--translate-fade-in));
           }
           to {
               opacity: 1;
@@ -171,7 +128,6 @@ class AgGuideSection extends HTMLElement {
           }
       }
 
-      /* When guide is selected */
       .inst.has-guide .inst-select {
           opacity: 0;
           height: 0;
@@ -183,22 +139,21 @@ class AgGuideSection extends HTMLElement {
           display: flex;
       }
 
-      /* Mobile responsive */
       @media (max-width: 768px) {
           .inst-card {
               flex-direction: column;
               text-align: center;
               gap: var(--p-md);
           }
-          
+
           .inst-card-left img {
-              width: 80px;
-              height: 80px;
+              width: var(--avatar-size-mobile);
+              height: var(--avatar-size-mobile);
               margin: 0 auto;
           }
-          
+
           .change-guide-btn {
-              opacity: 1; /* Always visible on mobile */
+              opacity: 1;
           }
       }
         `;
@@ -212,15 +167,6 @@ class AgGuideSection extends HTMLElement {
         }
     }
 
-    /**
-     * render - Компонентыг дүрсэлэх
-     *
-     * Үүрэг:
-     * 1. Хөтөч сонгох dropdown үүсгэнэ
-     * 2. Хөтчийн карт (ag-guide-card) харуулах хэсэг үүсгэнэ
-     * 3. Хөтөч солих, утасдах, профайл харах товчуудыг нэмнэ
-     * 4. aria-live="polite" ашиглан screen reader-т мэдээлнэ
-     */
     render() {
         this.innerHTML = `
             <div class="inst" aria-live="polite">
@@ -247,17 +193,6 @@ class AgGuideSection extends HTMLElement {
         `;
     }
 
-    /**
-     * initInstWidget - Widget-ийг эхлүүлэх (event listener-ууд, dropdown)
-     *
-     * Үүрэг:
-     * 1. DOM элементүүдийг авах
-     * 2. Хөтчүүдийг dropdown-д нэмэх
-     * 3. showGuide функц үүсгэх - хөтчийн картыг харуулах
-     * 4. hideGuide функц үүсгэх - хөтчийн картыг нуух
-     * 5. Event listener-ууд суулгах (select, товчууд)
-     * 6. localStorage-аас сонгогдсон хөтчийг ачаалах
-     */
     initInstWidget() {
         const select = this.querySelector('#guideSelect');
         const card = this.querySelector('#instCard');
@@ -275,17 +210,6 @@ class AgGuideSection extends HTMLElement {
             select.appendChild(option);
         });
 
-        /**
-         * showGuide - Хөтчийн мэдээллийг картанд харуулах
-         *
-         * Үүрэг:
-         * 1. Хөтчийг ID-аар олох
-         * 2. ag-guide-card компонентод хөтчийн өгөгдөл дамжуулах
-         * 3. Картыг харуулах, dropdown нуух
-         * 4. Сонгогдсон хөтчийн ID-г data атрибутад хадгалах
-         *
-         * @param {string} guideId - Хөтчийн ID
-         */
         const showGuide = (guideId) => {
             const guide = this.guides.find(g => g.id === guideId);
             if (!guide) {
@@ -307,15 +231,6 @@ class AgGuideSection extends HTMLElement {
             instContainer.setAttribute('data-selected-guide', guideId);
         };
 
-        /**
-         * hideGuide - Хөтчийн картыг нуух, dropdown харуулах
-         *
-         * Үүрэг:
-         * 1. Картыг нуух
-         * 2. Dropdown-ыг харуулах
-         * 3. Сонголтыг цэвэрлэх
-         * 4. data атрибут устгах
-         */
         this.hideGuide = () => {
             const instContainer = this.querySelector('.inst');
             const card = this.querySelector('#instCard');
@@ -328,18 +243,6 @@ class AgGuideSection extends HTMLElement {
             instContainer.removeAttribute('data-selected-guide');
         };
 
-        // ========================================
-        // Event Listeners
-        // ========================================
-
-        /**
-         * Select change event - Dropdown-оос хөтөч сонгох
-         *
-         * Үүрэг:
-         * 1. Сонгогдсон хөтчийн ID-г авах
-         * 2. Хөтөч байвал харуулах, localStorage-д хадгалах
-         * 3. Хөтөч байхгүй бол нуух, localStorage-аас устгах
-         */
         select.addEventListener('change', () => {
             const guideId = select.value;
             if (guideId) {
@@ -352,14 +255,6 @@ class AgGuideSection extends HTMLElement {
             }
         });
 
-        /**
-         * Change guide button click event - Хөтөч солих товч
-         *
-         * Үүрэг:
-         * 1. Хөтчийн картыг нуух
-         * 2. localStorage-аас устгах
-         * 3. Dropdown руу фокус шилжүүлэх (UX сайжруулах)
-         */
         changeGuideBtn.addEventListener('click', () => {
             this.hideGuide();
             localStorage.removeItem('selectedGuide');
@@ -369,14 +264,6 @@ class AgGuideSection extends HTMLElement {
             }, 100);
         });
 
-        /**
-         * Contact button click event - Утасдах товч
-         *
-         * Үүрэг:
-         * 1. Сонгогдсон хөтчийг олох
-         * 2. Хөтөч байхгүй бол анхааруулах
-         * 3. Хөтөч байвал утасны дугаар руу залгах (tel: link)
-         */
         contactBtn.addEventListener('click', () => {
             const selectedGuideId = instContainer.getAttribute('data-selected-guide');
             const guide = this.guides.find(g => g.id === selectedGuideId);
@@ -388,14 +275,6 @@ class AgGuideSection extends HTMLElement {
             window.location.href = `tel:${guide.phone.replace(/\s+/g, '')}`;
         });
 
-        /**
-         * Profile button click event - Профайл харах товч
-         *
-         * Үүрэг:
-         * 1. Сонгогдсон хөтчийг олох
-         * 2. Хөтөч байхгүй бол анхааруулах
-         * 3. Хөтөч байвал профайл хуудас руу шилжих (одоогоор жишээ alert)
-         */
         profileBtn.addEventListener('click', () => {
             const selectedGuideId = instContainer.getAttribute('data-selected-guide');
             const guide = this.guides.find(g => g.id === selectedGuideId);
@@ -407,9 +286,7 @@ class AgGuideSection extends HTMLElement {
             alert(`Орон нутгийн хөтөч ${guide.name} -ийн профайл руу шилжих (жишээ).`);
         });
 
-        // ========================================
         // localStorage-аас өмнө сонгосон хөтчийг ачаалах
-        // ========================================
         const savedGuide = localStorage.getItem('selectedGuide');
         if (savedGuide && this.guides.find(g => g.id === savedGuide)) {
             select.value = savedGuide;
