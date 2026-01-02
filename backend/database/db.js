@@ -87,12 +87,32 @@ export const initDB = () => {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       planId INTEGER NOT NULL,
       spotId INTEGER NOT NULL,
+      customTitle TEXT DEFAULT NULL,
+      customDescription TEXT DEFAULT NULL,
       addedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+      updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (planId) REFERENCES plans(id) ON DELETE CASCADE,
       FOREIGN KEY (spotId) REFERENCES spots(spotId) ON DELETE CASCADE,
       UNIQUE(planId, spotId)
     )
   `);
+
+  // Хуучин table-д customTitle болон customDescription талбар нэмэх (migration)
+  try {
+    db.exec(`ALTER TABLE plan_spots ADD COLUMN customTitle TEXT DEFAULT NULL`);
+  } catch (e) {
+    // Талбар аль хэдийн байвал алдаа гарахгүй
+  }
+  try {
+    db.exec(`ALTER TABLE plan_spots ADD COLUMN customDescription TEXT DEFAULT NULL`);
+  } catch (e) {
+    // Талбар аль хэдийн байвал алдаа гарахгүй
+  }
+  try {
+    db.exec(`ALTER TABLE plan_spots ADD COLUMN updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP`);
+  } catch (e) {
+    // Талбар аль хэдийн байвал алдаа гарахгүй
+  }
 
   // Guides table
   db.exec(`
@@ -243,7 +263,7 @@ export const removeSpotFromPlan = (planId, spotId) => {
 
 export const getPlanSpots = (planId) => {
   const stmt = db.prepare(`
-    SELECT s.*, ps.addedAt
+    SELECT s.*, ps.addedAt, ps.customTitle, ps.customDescription
     FROM spots s
     JOIN plan_spots ps ON s.spotId = ps.spotId
     WHERE ps.planId = ?
@@ -307,6 +327,28 @@ export const createGuideReview = (guideId, userName, comment, rating) => {
   `);
   const result = stmt.run(guideId, userName, comment, rating);
   return { id: result.lastInsertRowid };
+};
+
+// Plan spot-ийн customTitle шинэчлэх
+export const updatePlanSpotTitle = (planId, spotId, customTitle) => {
+  const stmt = db.prepare(`
+    UPDATE plan_spots
+    SET customTitle = ?, updatedAt = CURRENT_TIMESTAMP
+    WHERE planId = ? AND spotId = ?
+  `);
+  const result = stmt.run(customTitle, planId, spotId);
+  return result.changes > 0;
+};
+
+// Plan spot-ийн customDescription шинэчлэх
+export const updatePlanSpotDescription = (planId, spotId, customDescription) => {
+  const stmt = db.prepare(`
+    UPDATE plan_spots
+    SET customDescription = ?, updatedAt = CURRENT_TIMESTAMP
+    WHERE planId = ? AND spotId = ?
+  `);
+  const result = stmt.run(customDescription, planId, spotId);
+  return result.changes > 0;
 };
 
 export default db;

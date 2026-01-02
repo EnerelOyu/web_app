@@ -15,6 +15,8 @@ import db, {
   removeSpotFromPlan,
   getPlanSpots,
   updatePlanNotes,
+  updatePlanSpotTitle,
+  updatePlanSpotDescription,
   clearPlan,
   getReviewsBySpotId,
   createReview,
@@ -119,7 +121,8 @@ const mapSpotRow = (spotRow, req) => {
 
   return {
     spotId: spotRow.spotId,
-    name: spotRow.name,
+    // customTitle байвал ашиглах, үгүй бол анхны нэр
+    name: spotRow.customTitle || spotRow.name,
     area: spotRow.area,
 
     //categories-г comma-гаар тусгаарласан string болгох
@@ -137,7 +140,8 @@ const mapSpotRow = (spotRow, req) => {
     img2Url: toAbsoluteUrl(req, spotRow.img2Url),
     img3Url: toAbsoluteUrl(req, spotRow.img3Url),
     mapSrc: toAbsoluteUrl(req, spotRow.mapSrc),
-    descriptionLong: spotRow.descriptionLong,
+    // customDescription байвал ашиглах, үгүй бол анхны тайлбар
+    descriptionLong: spotRow.customDescription || spotRow.descriptionLong,
     infoPageHref: '../code/index.html#/spot-info'
   };
 };
@@ -419,6 +423,54 @@ app.put('/api/plans/:userId/notes', (req, res) => {
     }
   } catch (error) {
     console.error('Error updating plan notes:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// plan spot-ийн customTitle шинэчлэх
+app.put('/api/plans/:userId/spots/:spotId/title', (req, res) => {
+  try {
+    const { userId, spotId } = req.params;
+    const { customTitle } = req.body;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const updated = updatePlanSpotTitle(plan.id, spotId, customTitle);
+
+    if (updated) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Spot not found in plan' });
+    }
+  } catch (error) {
+    console.error('Error updating spot title:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// plan spot-ийн customDescription шинэчлэх
+app.put('/api/plans/:userId/spots/:spotId/description', (req, res) => {
+  try {
+    const { userId, spotId } = req.params;
+    const { description } = req.body;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const updated = updatePlanSpotDescription(plan.id, spotId, description);
+
+    if (updated) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Spot not found in plan' });
+    }
+  } catch (error) {
+    console.error('Error updating spot description:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
