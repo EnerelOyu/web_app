@@ -17,6 +17,8 @@ main {
   grid-template-columns: 2fr 1fr;
   gap: var(--gap-size-m);
   align-items: flex-start;
+  padding: var(--p-xs);
+
 }
 
 /* =========================
