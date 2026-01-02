@@ -47,6 +47,24 @@ const upload = multer({ storage });
 const app = express()
 //port байвал ашиглана, үгүй бол 3000
 const port = process.env.PORT || 3000;
+
+const cspDirectives = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  "connect-src 'self'"
+].join('; ');
+
+app.use((req, res, next) => {
+  res.setHeader('Content-Security-Policy', cspDirectives);
+  next();
+});
 //cors зөвшөөрөх
 app.use(cors());
 // json body-г parse хийх 
