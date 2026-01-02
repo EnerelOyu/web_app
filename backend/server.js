@@ -195,15 +195,79 @@ app.post('/api/guides', upload.single('profileImage'), (req, res) => {
 //DB-д байгаа бүх guide жагсаалтыг авч буцаана
 app.get('/api/guides', (req, res) => {
   try {
-    //DB-с бүх guide мэдээллийг авах  
+    //DB-с бүх guide мэдээллийг авах
     const guides = getAllGuides();
-    const payload = guides.map((guide) => ({
-      ...guide,
-      profileImgUrl: toAbsoluteUrl(
-        req,
-        guide.profileImgUrl || '/assets/images/guide-img/default-profile.svg'
-      )
-    }));
+
+    // Mapping объектууд
+    const regionMap = {
+      tuv: 'Төв',
+      zuun: 'Зүүн',
+      baruun: 'Баруун',
+      hangai: 'Хангай',
+      altai: 'Алтай',
+      govi: 'Говь'
+    };
+    const categoryMap = {
+      culture: 'Соёл',
+      resort: 'Амралт сувилал',
+      adventure: 'Адал явдалт',
+      nature: 'Байгаль',
+      montain: 'Ууланд гарах'
+    };
+    const languageMap = {
+      mongolian: 'Монгол',
+      english: 'Англи',
+      russian: 'Орос',
+      chinese: 'Хятад',
+      japanese: 'Япон'
+    };
+    const experienceMap = {
+      '1': '1 жил ба түүнээс доош',
+      '1-5': '1 - 5 жил',
+      '5++': '5 -аас дээш жил'
+    };
+
+    const payload = guides.map((guide) => {
+      // area-г монгол хэлбэр рүү хөрвүүлэх (хэрэв англи хэлээр байвал)
+      let area = guide.area;
+      if (regionMap[guide.area]) {
+        area = regionMap[guide.area];
+      }
+
+      // category-г монгол хэлбэр рүү хөрвүүлэх
+      let category = guide.category;
+      if (categoryMap[guide.category]) {
+        category = categoryMap[guide.category];
+      }
+
+      // languages-г монгол хэлбэр рүү хөрвүүлэх
+      let languages = guide.languages;
+      if (languages) {
+        // comma-гаар тусгаарласан string эсвэл нэг хэл байж болно
+        const langArray = languages.split(',').map(l => l.trim());
+        const translatedLangs = langArray.map(lang => languageMap[lang] || lang);
+        languages = translatedLangs.join(', ');
+      }
+
+      // experienceLevel-ийг монгол хэлбэр рүү хөрвүүлэх
+      let experienceLevel = guide.experienceLevel;
+      if (experienceMap[guide.experienceLevel]) {
+        experienceLevel = experienceMap[guide.experienceLevel];
+      }
+
+      return {
+        ...guide,
+        area,
+        category,
+        languages,
+        experienceLevel,
+        profileImgUrl: toAbsoluteUrl(
+          req,
+          guide.profileImgUrl || '/assets/images/guide-img/default-profile.svg'
+        )
+      };
+    });
+
     res.json({ guides: payload });
   } catch (error) {
     console.error('Error fetching guides:', error);
