@@ -39,7 +39,8 @@ class AgGuideBanner extends HTMLElement {
           display: grid;
           grid-template-columns: 2fr 1fr;
           align-items: center;
-          padding: var(--p-2xl) var(--p-xl);
+          padding: var(--p-2xl) 0;
+          padding-left: var(--p-2xl);
       }
 
       .guide-inner{

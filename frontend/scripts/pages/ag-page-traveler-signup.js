@@ -111,6 +111,20 @@ class PageTravelerSignup extends HTMLElement {
           font-style: italic;
         }
 
+        .guide-signup-link {
+          display: block;
+          margin-top: var(--m-md);
+          color: var(--primary);
+          text-decoration: none;
+          font-size: var(--fs-sm);
+          transition: color 0.3s;
+        }
+
+        .guide-signup-link:hover {
+          color: var(--primary-hover);
+          text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
           .social-buttons {
             flex-direction: column;
@@ -139,6 +153,8 @@ class PageTravelerSignup extends HTMLElement {
             </svg>
             Facebook-р нэвтрэх
           </button>
+        </div>
+        <a href="#/guide-signup" class="guide-signup-link">Хөтөчөөр бүртгүүлэх</a>
       </div>
     `;
   }

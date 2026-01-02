@@ -29,7 +29,7 @@ class AgToast extends HTMLElement {
         .toast {
           position: fixed;
           top: 100px;
-          right: 20px;
+          right: 50px;
           padding: var(--p-md) var(--p-lg);
           border-radius: var(--br-m);
           background-color: var(--accent-7);

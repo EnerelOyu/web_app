@@ -47,6 +47,7 @@ class PageSpotInfo extends HTMLElement {
         display: flex;
         flex-direction: column;
         gap: var(--m-xl);
+        padding: var(--m-md);
       }
 
       .page-spot-info .spot-main {
