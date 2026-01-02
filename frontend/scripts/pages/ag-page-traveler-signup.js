@@ -132,7 +132,7 @@ class PageTravelerSignup extends HTMLElement {
         }
       </style>
 
-      <div class="signup-container">
+      <main class="signup-container">
         <div class="signup-header">
           <h1>Аялагч Нэвтрэх</h1>
         </div>
@@ -155,7 +155,7 @@ class PageTravelerSignup extends HTMLElement {
           </button>
         </div>
         <a href="#/guide-signup" class="guide-signup-link">Хөтөчөөр бүртгүүлэх</a>
-      </div>
+      </main>
     `;
   }
 }

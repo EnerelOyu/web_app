@@ -614,13 +614,13 @@ class AgRouteItem extends HTMLElement {
             <div class="place-two">
             <div class="place-marker">
                 <svg class="marker-icon" aria-hidden="true" focusable="false">
-                    <use href="/styles/icons.svg#icon-marker"></use>
+                    <use href="./styles/icons.svg#icon-marker"></use>
                 </svg>
                 <span class="marker-number">${this.number}</span>
             </div>    
                 <button class="drag-handle-inline" title="Эрэмбэ солих">
                     <svg aria-hidden="true" focusable="false">
-                        <use href="/styles/icons.svg#icon-grip"></use>
+                        <use href="./styles/icons.svg#icon-grip"></use>
                     </svg>
                 </button>
             </div>

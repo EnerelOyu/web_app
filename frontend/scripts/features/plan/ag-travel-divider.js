@@ -122,7 +122,7 @@ class AgTravelDivider extends HTMLElement {
      */
     render() {
         const styles = `
-            @import url('/styles/fonts.css');
+            @import url('./styles/fonts.css');
 
             :host {
                 display: block;

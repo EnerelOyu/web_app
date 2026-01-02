@@ -16,7 +16,7 @@ class PageGuides extends HTMLElement {
     render() {
         this.innerHTML = `
             <style>
-                @import url('/styles/fonts.css');
+                @import url('./styles/fonts.css');
 
                 page-guides {
                     display: block;

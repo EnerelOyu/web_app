@@ -3,7 +3,7 @@ class AgFooter extends HTMLElement {
     super();
     this.css = `
       @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
       footer{
         background-color: var(--ftr-bg-color);

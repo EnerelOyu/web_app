@@ -3,7 +3,7 @@ class PageSpots extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.css = `
-            @import url('/styles/fonts.css');
+            @import url('./styles/fonts.css');
 
             main {
                 padding: 0;

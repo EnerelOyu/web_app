@@ -26,7 +26,7 @@ class AgTutorialCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
         :host {
           display: block;

@@ -44,7 +44,7 @@ class PageHome extends HTMLElement {
     render() {
         this.shadowRoot.innerHTML = `
         <style>
-            @import url('/styles/fonts.css');
+            @import url('./styles/fonts.css');
 
             main {
                 width: 100%;
@@ -339,17 +339,17 @@ class PageHome extends HTMLElement {
                 <h2>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h2>
                 <div class="tutorial-grid">
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-1.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-1.svg"
                         bogin="Нэг товшоод төлөвлөгөөндөө нэм."
                         urt="Сэтгэл татсан аяллын цэг бүрээ нэг товшоод маршрутдаа нэм. Аяллын төлөвлөгөө илүү ухаалаг, илүү төгс хэлбэрээр бүтээгээрэй.">
                     </ag-tutorial-card>
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-2.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-2.svg"
                         bogin="Монголын үзэсгэлэнт газруудтай танилц."
                         urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ. Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
                     </ag-tutorial-card>
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-3.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-3.svg"
                         bogin="Хялбар төлөвлөгөө ба хуваалцах."
                         urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц. Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
                     </ag-tutorial-card>

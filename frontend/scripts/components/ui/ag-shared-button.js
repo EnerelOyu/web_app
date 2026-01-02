@@ -5,9 +5,9 @@ class AgShareButton extends HTMLElement {
     this.isOpen = false;
     this.copied = false;
     this.sharedWith = [
-      { id: 1, name: 'Бат', avatar: '/assets/images/guide-img/guide1.svg', color: '#FF6B00' },
-      { id: 2, name: 'Сэргэлэн', avatar: '/assets/images/guide-img/guide2.svg', color: '#4A90E2' },
-      { id: 3, name: 'Өлзий', avatar: '/assets/images/guide-img/guide3.svg', color: '#50C878' }
+      { id: 1, name: 'Бат', avatar: './assets/images/guide-img/guide1.svg', color: '#FF6B00' },
+      { id: 2, name: 'Сэргэлэн', avatar: './assets/images/guide-img/guide2.svg', color: '#4A90E2' },
+      { id: 3, name: 'Өлзий', avatar: './assets/images/guide-img/guide3.svg', color: '#50C878' }
     ];
   }
 

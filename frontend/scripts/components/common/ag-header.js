@@ -3,7 +3,7 @@ class AgHeader extends HTMLElement {
     super();
     this.css = `
       @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
       header {
         position: sticky;

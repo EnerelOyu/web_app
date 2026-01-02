@@ -91,7 +91,7 @@ class PageGuideSignup extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
         @import url('./styles/global.css');
 
         /* Хуудасны загвар */
