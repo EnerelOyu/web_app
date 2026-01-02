@@ -58,7 +58,7 @@ class AgSpotSection extends HTMLElement {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: var(--gap-size-xl);
-          margin: 0 var(--m-xl);
+          margin: var(--m-md) var(--m-xl);
         }
 
         .more-spots {
