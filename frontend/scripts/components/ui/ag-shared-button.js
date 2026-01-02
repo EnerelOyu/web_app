@@ -5,9 +5,9 @@ class AgShareButton extends HTMLElement {
     this.isOpen = false;
     this.copied = false;
     this.sharedWith = [
-      { id: 1, name: 'Бат', avatar: 'https://i.pravatar.cc/150?img=12', color: '#FF6B00' },
-      { id: 2, name: 'Сэргэлэн', avatar: 'https://i.pravatar.cc/150?img=32', color: '#4A90E2' },
-      { id: 3, name: 'Өлзий', avatar: 'https://i.pravatar.cc/150?img=45', color: '#50C878' }
+      { id: 1, name: 'Бат', avatar: '/assets/images/guide-img/guide1.svg', color: '#FF6B00' },
+      { id: 2, name: 'Сэргэлэн', avatar: '/assets/images/guide-img/guide2.svg', color: '#4A90E2' },
+      { id: 3, name: 'Өлзий', avatar: '/assets/images/guide-img/guide3.svg', color: '#50C878' }
     ];
   }
 
@@ -109,8 +109,8 @@ class AgShareButton extends HTMLElement {
         .modal {
           background: var(--bg-color);
           border-radius: var(--br-m);
-          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-          max-width: 28rem;
+          box-shadow: 0 var(--share-modal-shadow-y, 20px) var(--share-modal-shadow-blur, 60px) rgba(0, 0, 0, 0.3);
+          max-width: var(--share-modal-max-width, 28rem);
           width: 100%;
           padding: var(--p-lg);
           animation: scaleIn 0.2s ease;
@@ -151,7 +151,7 @@ class AgShareButton extends HTMLElement {
           height: var(--svg-s);
           stroke: currentColor;
           fill: none;
-          stroke-width: 2;
+          stroke-width: var(--icon-stroke-width, 2);
           stroke-linecap: round;
           stroke-linejoin: round;
         }
@@ -189,11 +189,11 @@ class AgShareButton extends HTMLElement {
         }
 
         .person-avatar {
-          width: 40px;
-          height: 40px;
+          width: var(--share-avatar-size, 40px);
+          height: var(--share-avatar-size, 40px);
           border-radius: var(--br-circle);
           object-fit: cover;
-          border: 2px solid var(--text-color-7);
+          border: var(--avatar-border-width, 2px) solid var(--text-color-7);
         }
 
         .person-name {
@@ -228,12 +228,12 @@ class AgShareButton extends HTMLElement {
         .action-btn-primary {
           background: linear-gradient(to right, var(--primary), var(--primary-1));
           color: var(--bg-color);
-          box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+          box-shadow: 0 var(--share-action-shadow-y, 4px) var(--share-action-shadow-blur, 12px) rgba(255, 107, 0, 0.3);
         }
 
         .action-btn-primary:hover {
           background: linear-gradient(to right, var(--primary-1), var(--primary-2));
-          box-shadow: 0 6px 16px rgba(255, 107, 0, 0.4);
+          box-shadow: 0 var(--share-action-shadow-y-hover, 6px) var(--share-action-shadow-blur-hover, 16px) rgba(255, 107, 0, 0.4);
         }
 
         .action-btn-secondary {
@@ -335,6 +335,7 @@ class AgShareButton extends HTMLElement {
     shareBtn.addEventListener('click', () => this.openModal());
     closeBtn.addEventListener('click', () => this.closeModal());
     modalOverlay.addEventListener('click', (e) => {
+      // Арын давхаргыг дарахад цонх хаах
       if (e.target === modalOverlay) {
         this.closeModal();
       }
@@ -349,18 +350,19 @@ class AgShareButton extends HTMLElement {
   openModal() {
     const modalOverlay = this.shadowRoot.getElementById('modalOverlay');
     modalOverlay.classList.add('show');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Арын гүйлгэх үйлдлийг идэвхгүй болгох
   }
 
   closeModal() {
     const modalOverlay = this.shadowRoot.getElementById('modalOverlay');
     modalOverlay.classList.remove('show');
-    document.body.style.overflow = '';
+    document.body.style.overflow = ''; // Гүйлгэх үйлдлийг сэргээх
   }
 
   async handleShare() {
     const url = window.location.href;
 
+    // Хөтөч хуваалцах функц дэмждэг эсэхийг шалгах
     if (navigator.share) {
       try {
         await navigator.share({
@@ -374,6 +376,7 @@ class AgShareButton extends HTMLElement {
         }
       }
     } else {
+      // Хөтөч дэмждэггүй бол холбоосыг хуулах
       await this.copyToClipboard();
     }
   }
@@ -386,12 +389,13 @@ class AgShareButton extends HTMLElement {
     try {
       await navigator.clipboard.writeText(url);
 
-      // Show success feedback
+      // Амжилттай хуулсан мэдэгдэл харуулах
       shareText.textContent = 'Хуулагдлаа!';
       shareIcon.innerHTML = `
         <polyline points="20 6 9 17 4 12" stroke="currentColor" fill="none" stroke-width="2"></polyline>
       `;
 
+      // 2 секундын дараа анхны төлөвт буцаах
       setTimeout(() => {
         shareText.textContent = 'Хуваалцах';
         shareIcon.innerHTML = `
@@ -408,6 +412,7 @@ class AgShareButton extends HTMLElement {
     const sharedCount = this.shadowRoot.getElementById('sharedCount');
     const sharedSection = this.shadowRoot.getElementById('sharedSection');
 
+    // Хуваалцсан хүн байхгүй бол секцийг нуух
     if (this.sharedWith.length === 0) {
       sharedSection.style.display = 'none';
       return;
@@ -415,6 +420,7 @@ class AgShareButton extends HTMLElement {
 
     sharedCount.textContent = this.sharedWith.length;
 
+    // Хуваалцсан хүмүүсийн жагсаалт үүсгэх
     sharedList.innerHTML = this.sharedWith.map(person => `
       <div class="shared-person">
         <img class="person-avatar" src="${person.avatar}" alt="${person.name}">
