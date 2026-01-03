@@ -43,6 +43,7 @@ const storage = multer.diskStorage({
   }
 });
 const upload = multer({ storage });
+
 //express app үүсгэх
 const app = express()
 //port байвал ашиглана, үгүй бол 3000

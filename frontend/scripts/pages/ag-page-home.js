@@ -6,8 +6,15 @@ class PageHome extends HTMLElement {
 
     connectedCallback() {
         this.attachShadow({ mode: 'open' });
+
+        // Font stylesheet-ийг shadow DOM-д нэмэх
+        const fontLink = document.createElement('link');
+        fontLink.rel = 'stylesheet';
+        fontLink.href = '/styles/fonts.css';
+        this.shadowRoot.appendChild(fontLink);
+
         this.render();
-        // Toast мэдэгдлэл 
+        // Toast мэдэгдлэл
         this.setupToast();
         this.attachEventListeners();
 
@@ -44,8 +51,6 @@ class PageHome extends HTMLElement {
     render() {
         this.shadowRoot.innerHTML = `
         <style>
-            @import url('/styles/fonts.css');
-
             main {
                 width: 100%;
                 display: flex;
