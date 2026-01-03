@@ -468,9 +468,7 @@ class PageSpots extends HTMLElement {
         return `<ag-filter ner="${name}"></ag-filter>`;
     }
 
-    /**
-     * Бүх газруудын картуудыг үүсгэх
-     */
+    // Бүх газруудын картуудыг үүсгэх
     generateSpotCards() {
         const spotsGrid = this.shadowRoot.querySelector('#spots-grid');
         if (!spotsGrid) return;
@@ -564,7 +562,6 @@ class PageSpots extends HTMLElement {
     }
 
     //Идэвхтэй шүүлтүүдийг ашиглан газруудыг шүүж харуулах
-
     applyFilters() {
         const spots = window.appState.getAllSpots();
         if (!spots || spots.length === 0) return;
