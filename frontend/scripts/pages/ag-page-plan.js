@@ -14,6 +14,9 @@ class PagePlan extends HTMLElement {
             if (e.detail.key === 'planItems') {
                 this.updatePlanItems();
             }
+            if (e.detail.key === 'spotData') {
+                this.renderTopRatedSpots();
+            }
         };
         window.addEventListener('appstatechange', this.handleStateChange);
     }
@@ -77,7 +80,7 @@ class PagePlan extends HTMLElement {
         const routeSection = this.querySelector('#route-section');
         if (!routeSection) return;
 
-        const planItems = window.appState.getPlanItems();
+        const planItems = window.appState?.getPlanItems?.() || [];
 
         // Хуучин элементүүдийг цэвэрлэх
         routeSection.innerHTML = '';
@@ -97,16 +100,19 @@ class PagePlan extends HTMLElement {
         planItems.forEach((item) => {
             // Маршрутын элемент үүсгэх
             const routeItem = document.createElement('ag-route-item');
+            const title = item.customTitle || item.title || item.name || '';
+            const mapQuery = item.detailLocation || item.name || title || '';
+
             routeItem.setAttribute('number', item.number);
-            routeItem.setAttribute('title', item.title);
-            routeItem.setAttribute('description', item.description || '');
-            routeItem.setAttribute('img1', item.img1 || item.image || '');
-            routeItem.setAttribute('img2', item.img2 || item.img1 || item.image || '');
-            routeItem.setAttribute('img3', item.img3 || item.img1 || item.image || '');
-            routeItem.setAttribute('map-query', item.title);
+            routeItem.setAttribute('title', title);
+            routeItem.setAttribute('description', item.description || item.descriptionLong || '');
+            routeItem.setAttribute('img1', item.img1 || item.imgMainUrl || item.image || '');
+            routeItem.setAttribute('img2', item.img2 || item.img2Url || item.img1 || item.imgMainUrl || '');
+            routeItem.setAttribute('img3', item.img3 || item.img3Url || item.img1 || item.imgMainUrl || '');
+            routeItem.setAttribute('map-query', mapQuery);
             routeItem.setAttribute('draggable', 'true');
             routeItem.setAttribute('data-spot-id', item.id);
-            routeItem.setAttribute('region', item.region || '');
+            routeItem.setAttribute('region', item.region || item.area || '');
 
             // Хадгалагдсан хөтөчийн сонголтыг ачаалах
             const savedGuides = JSON.parse(localStorage.getItem('ayalgo-selected-guides') || '{}');
@@ -156,16 +162,11 @@ class PagePlan extends HTMLElement {
             }
         });
 
-        // route-section-аас ирсэн газар/тэмдэглэл нэмэх event-үүдийг зохицуулах
+        // route-section-аас ирсэн газар нэмэх event зохицуулах
         this.addEventListener('add-item', (e) => {
             e.stopPropagation(); // Event-ийн дамжилтыг зогсоох
-            const { type, divider } = e.detail;
-
-            if (type === 'place') {
-                this.showAddPlaceDialog(divider);
-            } else if (type === 'note') {
-                this.showAddNoteDialog(divider);
-            }
+            const { divider } = e.detail;
+            this.showAddPlaceDialog(divider);
         });
     }
 
@@ -244,41 +245,6 @@ class PagePlan extends HTMLElement {
         }
     }
 
-    showAddNoteDialog(divider) {
-        const routeSection = this.querySelector('#route-section');
-        if (!routeSection) return;
-
-        // Тэмдэглэлийн дугаарыг тодорхойлох
-        const existingNotes = routeSection.querySelectorAll('ag-note-item');
-        const noteNumber = existingNotes.length + 1;
-
-        // Хоосон тэмдэглэл элемент үүсгэх
-        const noteElement = document.createElement('ag-note-item');
-        noteElement.setAttribute('note-text', 'Энд тэмдэглэл бичнэ үү...');
-        noteElement.setAttribute('number', noteNumber);
-
-        // Divider өгөгдсөн бол дараа нь, үгүй бол төгсгөлд нэмэх
-        if (divider && divider.parentElement) {
-            divider.parentElement.insertBefore(noteElement, divider.nextSibling);
-        } else {
-            routeSection.appendChild(noteElement);
-        }
-
-        // Тэмдэглэлийг засварлах горимд оруулах
-        setTimeout(() => {
-            const editBtn = noteElement.shadowRoot?.querySelector('.edit');
-            if (editBtn) {
-                editBtn.click();
-            }
-        }, 100);
-
-        // Амжилттай нэмэгдсэн мэдэгдэл харуулах
-        const toast = document.querySelector('ag-toast');
-        if (toast) {
-            toast.show('Тэмдэглэл нэмэгдлээ! Засахын тулд дарна уу.', 'success', 3000);
-        }
-    }
-
     setupPlanTitle() {
         const titleInput = this.querySelector('#plan-title-input');
         if (!titleInput) return;
@@ -319,8 +285,16 @@ class PagePlan extends HTMLElement {
         const topRatedSection = this.querySelector('#top-rated-section');
         if (!topRatedSection) return;
 
-        const spots = window.appState?.getAllSpots();
-        if (!spots || spots.length === 0) return;
+        const spots = window.appState?.getAllSpots?.() || [];
+        if (spots.length === 0) {
+            topRatedSection.innerHTML = `
+                <div class="empty-state">
+                    <p>Одоогоор санал болгох аяллын цэг алга байна</p>
+                    <p>Өгөгдөл ачаалсны дараа энд гарч ирнэ.</p>
+                </div>
+            `;
+            return;
+        }
 
         // Үнэлгээгээр буурах дарааллаар эрэмбэлж, эхний 5-ийг авах
         const topRatedSpots = [...spots]

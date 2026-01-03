@@ -3,14 +3,14 @@ class AgHeader extends HTMLElement {
     super();
     this.css = `
       @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
       header {
         position: sticky;
         top: 0;
         z-index: 1000;
-        padding: var(--p-md) var(--p-sm);
-        background-color: var(--hdr-bg-color);
+        padding: var(--p-sm) var(--p-lg);
+        background: var(--hdr-bg-color);
         display: flex;
         align-items: center;
         min-height: 50px;
@@ -24,6 +24,7 @@ class AgHeader extends HTMLElement {
         margin-right: auto; 
         gap: var(--gap-size-s);
         justify-content: center;
+        cursor: pointer;
       }
 
       .logo img {
@@ -57,6 +58,25 @@ class AgHeader extends HTMLElement {
       /* "GO" хэсгийг primary өнгөөр тодруулж байна */
       .logo h1 > span {
         color: var(--primary);
+      }
+
+      .logo h1.logo-gradient-anim {
+        background: linear-gradient(120deg, var(--bg-color), var(--secondary), var(--primary), var(--accent));
+        background-size: 220% 220%;
+        color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        animation: logoGradientShift 1.6s ease;
+      }
+
+      .logo h1.logo-gradient-anim > span {
+        color: inherit;
+      }
+
+      @keyframes logoGradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
       }
 
       .logo p {
@@ -97,28 +117,33 @@ class AgHeader extends HTMLElement {
 
       /* === SEARCH хэсэг === */
       .search-container {
+        position: relative;
         display: flex;
         align-items: center;
         gap: var(--gap-size-s);
       }
 
-      .header-nav input {
+      .search-container input {
         background-color: var(--primary-5);
         border-radius: var(--br-m);
         border: none;
         height: var(--svg-m);
-        padding: 0 var(--p-md);
+        padding: 0 calc(var(--p-md) + var(--svg-m)) 0 var(--p-md);
         color: var(--text-color-1);
-        width: 200px;
+        width: var(--textarea-max-height);
         font-family: 'NunitoSans';
       }
 
-      .header-nav input::placeholder {
+      .search-container input::placeholder {
         color: var(--text-color-4);
       }
 
-      .header-nav input:focus {
+      .search-container input:focus {
         outline: 2px solid var(--primary);
+      }
+
+      #header-plan {
+        padding-right: var(--p-lg);
       }
 
       /* search, user товчнуудын ерөнхий хэлбэр */
@@ -136,6 +161,18 @@ class AgHeader extends HTMLElement {
         transition: 0.3s;
       }
 
+      .search-container .search-btn {
+        position: absolute;
+        right: var(--p-xs);
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: transparent;
+      }
+
+      .search-container .search-btn:hover {
+        background-color: transparent;
+      }
+
       .search-btn svg, .user-btn svg{
         width: var(--svg-s);
         height: var(--svg-s);
@@ -143,13 +180,9 @@ class AgHeader extends HTMLElement {
         color: var(--primary);
       }
 
-      /* search hover үед background өнгө солигдож, icon эргэнэ */
-      .search-btn:hover{
-        background-color: var(--primary);
-      }
 
       .search-btn:hover svg {
-        color: var(--primary-5);
+        color: var(--primary);
         transform: rotate(90deg);
       }
 
@@ -212,31 +245,87 @@ class AgHeader extends HTMLElement {
         font-size: var(--fs-xl);
         cursor: pointer;
         padding: var(--p-xs);
-        margin-left: auto; 
+        margin-left: var(--m-sm); 
       }
 
-      .mobile-menu-btn svg {
-        width: var(--svg-m);
+      .mobile-menu-btn .menu-icon {
+        position: relative;
+        width: 28px;
+        height: 18px;
+        display: inline-block;
+      }
+
+      .mobile-menu-btn .bar {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--primary);
+        border-radius: 999px;
+        transition: transform 0.25s ease, opacity 0.2s ease;
+      }
+
+      .mobile-menu-btn .bar.top {
+        top: 2px;
+      }
+
+      .mobile-menu-btn .bar.bottom {
+        bottom: 2px;
+      }
+
+      .mobile-menu-btn.is-open .bar.top {
+        transform: translateY(6px) rotate(45deg);
+      }
+
+      .mobile-menu-btn.is-open .bar.bottom {
+        transform: translateY(-6px) rotate(-45deg);
+      }
+
+      .mobile-actions {
+        display: none;
+        align-items: center;
+        gap: var(--gap-size-xs);
+        margin-left: auto;
+        margin-right: var(--m-xs);
+      }
+
+      .mobile-actions .search-container input {
+        width: 140px;
+      }
+
+      .mobile-actions .search-btn,
+      .mobile-actions .user-btn {
         height: var(--svg-m);
-        color: var(--primary);
+        width: var(--svg-m);
       }
 
       /* MOBILE NAV (dropdown) */
       .mobile-nav {
-        display: none;
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-size-s);
         position: absolute;
         top: 100%;  /* header-ийн доор гарна */
         left: 0;
         right: 0;
-        background-color: var(--hdr-bg-color);
+        background: var(--hdr-bg-color);
         padding: var(--p-lg);
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-10px);
+        overflow: hidden;
+        pointer-events: none;
+        transition: max-height 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+                    opacity 0.35s ease,
+                    transform 0.35s ease;
       }
 
       /* active үед л харагдана */
       .mobile-nav.active {
-        display: flex;
-        flex-direction: column;
-        gap: var(--gap-size-s);
+        max-height: 520px;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
       }
 
       .mobile-nav a {
@@ -255,24 +344,20 @@ class AgHeader extends HTMLElement {
         color: var(--bg-color);
       }
 
-      /* mobile дээр theme toggle-ийг dropdown дотор тусад нь харуулах wrapper */
-      .mobile-theme-toggle-wrapper {
-        display: none;
-        justify-content: center;
-        margin-top: var(--m-sm);
-      }
-
       /* === RESPONSIVE BREAKPOINTS === */
-      @media (max-width: 780px) {
-        .header-nav { display: none; }           /* desktop nav-ийг нуух */
+      @media (max-width: 1030px) {
+        .header-nav > a { display: none; }          
         .mobile-menu-btn { display: block; }     /* hamburger show */
-        .mobile-theme-toggle-wrapper { display: flex; }
+        .inline-wrap { display: none; }
       }
 
       @media (max-width: 480px) {
-        .logo-content { display: none; }         /* жижиг дэлгэц дээр текстээ нуух */
+        .header-nav { display: none; }           /* desktop nav-ийг нуух */
+        .mobile-actions { display: none; }      /* 480px-д actions-ийг нуух */
         .logo h1 { font-size: var(--fs-base); }
         .logo { margin-right: var(--m-md); }     /* logo болон mobile menu хоорондох зай */
+        .inline-wrap {display: flex; flex-direction: collumn; gap: var(--gap-size-m); justify-content: center;}
+        header {justify-content: space-between;}
       }
     `;
   }
@@ -285,13 +370,14 @@ class AgHeader extends HTMLElement {
     this.setupThemeToggle();  // light/dark theme солих логик
     this.setupSearch();       // хайлт хийх логик
     this.setupUserBtn();      // user profile товчны логик
+    this.setupLogoClick();    // logo дээр дархад home руу, gradient animation
   }
 
   render() {
     this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
       <header>
-        <div class="logo">
+        <div class="logo" role="link" tabindex="0" aria-label="Нүүр хуудас руу очих">
           <img src="./assets/images/Logo.svg" alt="Logo">
           <div class="logo-content">
             <div class="logo-main">
@@ -303,7 +389,7 @@ class AgHeader extends HTMLElement {
         <div class="header-nav">
           <a href="#/home">Нүүр Хуудас</a>
           <a href="#/spots">Аяллын Цэгүүд</a>
-          <a href="#/plan">Миний Төлөвлөгөө</a>
+          <a id="header-plan" href="#/plan">Миний Төлөвлөгөө</a>
 
           <div class="search-container">
             <input type="text" placeholder="Хайлт хийх..">
@@ -324,9 +410,21 @@ class AgHeader extends HTMLElement {
           </button>
         </div>
 
+        <div class="mobile-actions">
+          <div class="search-container mobile-search">
+            <input type="text" placeholder="Хайлт хийх..">
+            <button class="search-btn" type="button" aria-label="Хайх">
+              <svg><use href="./styles/icons.svg#icon-search"></use></svg>
+            </button>
+          </div>
+        </div>
+
         <!-- Mobile menu (hamburger) -->
         <button class="mobile-menu-btn" type="button" aria-label="Цэс нээх">
-          <svg><use href="./styles/icons.svg#icon-menu"></use></svg>
+          <span class="menu-icon" aria-hidden="true">
+            <span class="bar top"></span>
+            <span class="bar bottom"></span>
+          </span>
         </button>
 
         <!-- Mobile dropdown nav -->
@@ -334,7 +432,15 @@ class AgHeader extends HTMLElement {
           <a href="#/home">Нүүр Хуудас</a>
           <a href="#/spots">Аяллын Цэгүүд</a>
           <a href="#/plan">Миний Төлөвлөгөө</a>
-          <a href="#/traveler-signup">Нэвтрэх</a>
+        <div class="inline-wrap">
+          <div class="mobile-search-wrapper">
+            <div class="search-container">
+              <input type="text" placeholder="Хайлт хийх..">
+              <button class="search-btn" type="button" aria-label="Хайх">
+                <svg><use href="./styles/icons.svg#icon-search"></use></svg>
+              </button>
+            </div>
+          </div>
 
           <div class="mobile-theme-toggle-wrapper">
             <button class="theme-toggle mobile-theme-toggle" type="button" aria-label="Өнгөний тэм солих">
@@ -342,6 +448,12 @@ class AgHeader extends HTMLElement {
               <svg class="icon-sun hidden"><use href="./styles/icons.svg#icon-sun"></use></svg>
             </button>
           </div>
+
+          <!-- user profile / login товч -->
+          <button class="user-btn" aria-label="Хэрэглэгчийн профайл">
+            <svg><use href="./styles/icons.svg#icon-user"></use></svg>
+          </button>
+        </div>
         </div>
       </header>
     `;
@@ -374,16 +486,11 @@ class AgHeader extends HTMLElement {
   setupMobileMenu() {
     const btn = this.shadowRoot.querySelector(".mobile-menu-btn");
     const nav = this.shadowRoot.querySelector(".mobile-nav");
-    const useEl = btn.querySelector("use");
-
-    const MENU_ICON = "./styles/icons.svg#icon-menu";
-    const CLOSE_ICON = "./styles/icons.svg#icon-close";
-
-    if (!btn || !nav || !useEl) return;
+    if (!btn || !nav) return;
 
     const setState = (isOpen) => {
       nav.classList.toggle("active", isOpen); // dropdown харагдуулах/нуух
-      useEl.setAttribute("href", isOpen ? CLOSE_ICON : MENU_ICON); // icon солих
+      btn.classList.toggle("is-open", isOpen); // icon animation төлөв
       btn.setAttribute("aria-label", isOpen ? "Цэс хаах" : "Цэс нээх");
     };
 
@@ -453,10 +560,9 @@ class AgHeader extends HTMLElement {
   }
 
   setupSearch() {
-    const searchInput = this.shadowRoot.querySelector('.search-container input');
-    const searchBtn = this.shadowRoot.querySelector('.search-btn');
+    const searchContainers = Array.from(this.shadowRoot.querySelectorAll('.search-container'));
 
-    if (!searchInput || !searchBtn) return;
+    if (!searchContainers.length) return;
 
     // Текстийг нэг стандартад оруулах 
     const normalizeStr = (str) => {
@@ -514,7 +620,7 @@ class AgHeader extends HTMLElement {
       return null;
     };
 
-    const performSearch = () => {
+    const performSearch = (searchInput) => {
       const rawQuery = searchInput.value.trim();
       const normalizedQuery = normalizeStr(rawQuery);
 
@@ -597,14 +703,21 @@ class AgHeader extends HTMLElement {
       searchInput.value = '';
     };
 
-    // товч дарж хайх
-    searchBtn.addEventListener('click', performSearch);
+    searchContainers.forEach((container) => {
+      const searchInput = container.querySelector('input');
+      const searchBtn = container.querySelector('.search-btn');
 
-    // Enter дарж хайх
-    searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        performSearch();
-      }
+      if (!searchInput || !searchBtn) return;
+
+      // товч дарж хайх
+      searchBtn.addEventListener('click', () => performSearch(searchInput));
+
+      // Enter дарж хайх
+      searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          performSearch(searchInput);
+        }
+      });
     });
   }
 
@@ -621,6 +734,37 @@ class AgHeader extends HTMLElement {
       e.stopPropagation();
       // Аяллагч бүртгэлийн хуудас руу шилжих
       window.location.hash = '#/traveler-signup';
+    });
+  }
+
+  setupLogoClick() {
+    const logo = this.shadowRoot.querySelector('.logo');
+    const logoTitle = this.shadowRoot.querySelector('.logo h1');
+
+    if (!logo || !logoTitle) return;
+
+    const trigger = () => {
+      window.location.hash = '#/home';
+      logoTitle.classList.remove('logo-gradient-anim');
+      // Force reflow so animation can restart on repeated clicks
+      void logoTitle.offsetWidth;
+      logoTitle.classList.add('logo-gradient-anim');
+    };
+
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      trigger();
+    });
+
+    logo.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        trigger();
+      }
+    });
+
+    logoTitle.addEventListener('animationend', () => {
+      logoTitle.classList.remove('logo-gradient-anim');
     });
   }
 }

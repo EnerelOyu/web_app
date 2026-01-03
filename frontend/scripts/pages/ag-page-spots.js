@@ -3,7 +3,7 @@ class PageSpots extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.css = `
-            @import url('/styles/fonts.css');
+            @import url('./styles/fonts.css');
 
             main {
                 padding: 0;
@@ -12,7 +12,7 @@ class PageSpots extends HTMLElement {
                 display: grid;
                 grid-template-columns: 1fr 3fr;
                 animation: fadeInPage 0.6s ease-out;
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 height: 100%;
             }
 
@@ -25,7 +25,7 @@ class PageSpots extends HTMLElement {
                 justify-content: flex-start;
                 padding: var(--p-md);
                 box-shadow: 1px 0 10px 2px var(--text-color-6);
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 max-height: 100vh;
                 overflow-y: auto;
                 animation: slideInLeft 0.7s ease-out;
@@ -45,7 +45,7 @@ class PageSpots extends HTMLElement {
                 gap: var(--gap-size-m);
             }
 
-            /* =============== SPOT GRID SECTION =============== */
+            /*  SPOT GRID SECTION  */
 
             .spot-cards-container {
                 display: flex;
@@ -103,7 +103,7 @@ class PageSpots extends HTMLElement {
             animation: cardFadeUp 0.5s ease-out forwards;
             }
 
-            /* Жаахан stagger эффект */
+            /* Жаахан stagger effect */
             .spots-grid .spot-card:nth-child(1) { animation-delay: 0.05s; }
             .spots-grid .spot-card:nth-child(2) { animation-delay: 0.1s; }
             .spots-grid .spot-card:nth-child(3) { animation-delay: 0.15s; }
@@ -136,7 +136,7 @@ class PageSpots extends HTMLElement {
             color: var(--accent-1);
             }
 
-            /* =============== LOADING SHIMMER =============== */
+            /*  LOADING SHIMMER  */
 
             @keyframes shimmer {
             0% {
@@ -159,7 +159,7 @@ class PageSpots extends HTMLElement {
             background-size: 1000px 100%;
             }
 
-            /* =============== KEYFRAMES (page/filter/cards) =============== */
+            /*  KEYFRAMES (page/filter/cards)  */
 
             @keyframes fadeInPage {
             from {
@@ -194,10 +194,7 @@ class PageSpots extends HTMLElement {
             }
             }
 
-            /* =========================================================
-            ===============  TABLET  ≤ 1024px ========================
-            ========================================================= */
-
+            /* TABLET  ≤ 1024px  */
             @media (max-width: 1024px) {
 
             main {
@@ -214,7 +211,7 @@ class PageSpots extends HTMLElement {
                 gap: var(--gap-size-m);
 
                 padding: var(--p-sm) var(--p-lg);
-                background-color: var(--bg-color);
+                background: var(--bg-color);
                 box-shadow: 0 2px 10px rgba(0,0,0,0.06);
                 backdrop-filter: blur(8px);
             }
@@ -259,9 +256,7 @@ class PageSpots extends HTMLElement {
             }
             }
 
-            /* =========================================================
-            ==================  MOBILE  ≤ 768px ======================
-            ========================================================= */
+            /*   MOBILE  ≤ 768px  */
 
             @media (max-width: 768px) {
 

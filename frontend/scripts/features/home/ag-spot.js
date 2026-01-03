@@ -23,7 +23,7 @@ class AgSpot extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
         :host {
           display: block;
@@ -168,10 +168,10 @@ class AgSpot extends HTMLElement {
           </button>
         </figure>
         <p class="spot-area">${area}</p>
-        <h4 class="spot-name">${name}</h4>
+        <h3 class="spot-name">${name}</h3>
         <div class="line"></div>
         <div class="spot-detail">
-          <p>ДЭЛЭГРЭНГҮЙ</p>
+          <p>ДЭЛГЭРЭНГҮЙ</p>
           <svg class="more-icon" aria-hidden="true" focusable="false">
             <use href="./styles/icons.svg#icon-arrow"></use>
           </svg>

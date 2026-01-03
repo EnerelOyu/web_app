@@ -122,7 +122,7 @@ class AgTravelDivider extends HTMLElement {
      */
     render() {
         const styles = `
-            @import url('/styles/fonts.css');
+            @import url('./styles/fonts.css');
 
             :host {
                 display: block;
@@ -155,6 +155,45 @@ class AgTravelDivider extends HTMLElement {
                 background: repeating-linear-gradient(to bottom, var(--text-color-7, #ddd) 0, var(--text-color-7, #ddd) 5px, transparent 5px, transparent 10px);
                 opacity: 0.6;
                 transition: opacity 0.2s;
+            }
+
+            .travel-info {
+                position: absolute;
+                left: 30px;
+                top: 50%;
+                transform: translateY(-50%);
+                display: flex;
+                align-items: center;
+                gap: var(--gap-size-xs, 0.5rem);
+                background: var(--bg-color, #fff);
+                border: 1px solid var(--text-color-7, #ddd);
+                border-radius: var(--br-pill, 999px);
+                padding: 0.25rem 0.75rem;
+                font-family: 'NunitoSans', sans-serif;
+                font-size: var(--fs-sm, 0.875rem);
+                color: var(--text-color-3, #666);
+                white-space: nowrap;
+                z-index: 1;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.2s ease;
+            }
+
+            :host(:not([time=""])) .travel-info,
+            :host(:not([distance=""])) .travel-info {
+                opacity: 1;
+            }
+
+            .travel-info svg {
+                width: 14px;
+                height: 14px;
+                fill: currentColor;
+                flex-shrink: 0;
+            }
+
+            .loading-text {
+                color: var(--text-color-5, #999);
+                font-style: italic;
             }
 
             .divider-controls {
@@ -235,24 +274,27 @@ class AgTravelDivider extends HTMLElement {
             }
         `;
 
+        const travelInfoHtml = !this.isEmpty ? `
+            <div class="travel-info">
+                <svg viewBox="0 0 512 512" aria-hidden="true">
+                    <path fill="currentColor" d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z"/>
+                </svg>
+                <span>${this.travelText}</span>
+            </div>
+        ` : '';
+
         this.shadowRoot.innerHTML = `
             <style>${styles}</style>
             <div class="divider-line-horizontal"></div>
             <div class="divider-controls">
                 <div class="divider-line-vertical"></div>
+                ${travelInfoHtml}
                 <div class="add-prompt">
-                    <span class="prompt-text">Энд юм нэмэх үү?</span>
                     <button class="add-label-btn add-place-btn" data-action="add" data-type="place" aria-label="Газар нэмэх">
                         <svg viewBox="0 0 384 512" aria-hidden="true">
                             <path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64 0 1 1 0 128 64 64 0 1 1 0-128z"/>
                         </svg>
-                        <span>Газар</span>
-                    </button>
-                    <button class="add-label-btn add-note-btn" data-action="add" data-type="note" aria-label="Тэмдэглэл нэмэх">
-                        <svg viewBox="0 0 448 512" aria-hidden="true">
-                            <path fill="currentColor" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H288c35.3 0 64-28.7 64-64V173.3c0-17-6.7-33.3-18.7-45.3L274.7 69.3c-12-12-28.3-18.7-45.3-18.7H64zm0 96c0-17.7 14.3-32 32-32H208c17.7 0 32 14.3 32 32v64c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V128zM224 288a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM96 320a32 32 0 1 1 64 0 32 32 0 1 1 -64 0zM224 416a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM96 448a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/>
-                        </svg>
-                        <span>Тэмдэглэл</span>
+                        <span>Газар нэмэх</span>
                     </button>
                 </div>
             </div>

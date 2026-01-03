@@ -385,7 +385,7 @@ class PageSpotInfo extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>${this.css}</style>
-      <section class="page-spot-info">
+      <main class="page-spot-info">
         <!-- Газрын үндсэн мэдээлэл: зураг, нэр, үнэлгээ (зүүн), газрын зураг, хаяг (баруун) -->
         <div class="spot-main">
           <ag-spot-hero
@@ -453,7 +453,7 @@ class PageSpotInfo extends HTMLElement {
             <ag-spot-review-list spot-id="${spot.id}"></ag-spot-review-list>
           </section>
         </div>
-      </section>
+      </main>
     `;
   }
 

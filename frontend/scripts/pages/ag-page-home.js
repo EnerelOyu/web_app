@@ -51,13 +51,15 @@ class PageHome extends HTMLElement {
     render() {
         this.shadowRoot.innerHTML = `
         <style>
+            @import url('/styles/fonts.css');
+
             main {
                 width: 100%;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 animation: fadeIn 0.6s ease-out;
-                gap: var(--gap-size-m);
+                gap: var(--gap-size-2xl);
                 padding: 0;
                 margin: 0;
             }
@@ -80,7 +82,7 @@ class PageHome extends HTMLElement {
                 flex-direction: column;
                 align-items: center;
                 gap: var(--gap-size-m);
-                padding: var(--p-xl) 0;
+                padding-top: var(--p-3xl);
             }
 
             .uria {
@@ -112,7 +114,6 @@ class PageHome extends HTMLElement {
                 font-family: 'Rubik';
                 animation: slideUp 1s ease-out 0.2s backwards;
                 margin: 0;
-                padding: var(--p-md) 0;
             }
 
             @keyframes slideUp {
@@ -153,7 +154,7 @@ class PageHome extends HTMLElement {
                 max-width: 90%;
                 display: flex;
                 justify-content: center;
-                padding: var(--p-lg) 0;
+                padding-bottom: var(--p-xl);
             }
 
             /* Features Grid */
@@ -197,6 +198,7 @@ class PageHome extends HTMLElement {
             ag-spot-section {
                 width: 100%;
                 max-width: 95%;
+                padding: var(--p-xl) 0;
             }
 
             /* Guide Banner */
@@ -208,7 +210,7 @@ class PageHome extends HTMLElement {
             /* MOBILE LANDSCAPE */
             @media (max-width: 768px) and (min-width: 481px) {
                 main {
-                    gap: var(--gap-size-l);
+                    gap: var(--gap-size-xl);
                     padding: var(--p-xl) 0;
                 }
 
@@ -258,7 +260,7 @@ class PageHome extends HTMLElement {
             /* MOBILE (≤480px - гар утасны босоо) */
             @media (max-width: 480px) {
                 main {
-                    gap: var(--gap-size-m);
+                    gap: var(--gap-size-l);
                     padding: var(--p-md) 0;
                 }
 
@@ -334,27 +336,27 @@ class PageHome extends HTMLElement {
             <!-- Features Grid -->
             <section class="rec-grid">
                 <ag-feature-card icon="route"  text="Уян хатан маршрут"></ag-feature-card>
-                <ag-feature-card icon="people" text="Хамтдаа төлөвлө"></ag-feature-card>
+                <ag-feature-card icon="people" text="Хамтдаа төлөвлөх"></ag-feature-card>
                 <ag-feature-card icon="signal" text="Хадгалсан маршрут"></ag-feature-card>
-                <ag-feature-card icon="doc"    text="Газар нээж ол"></ag-feature-card>
+                <ag-feature-card icon="doc"    text="Газар нээж олох"></ag-feature-card>
             </section>
 
             <!-- Tutorial Section -->
             <section class="tutorial">
-                <h2>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ.</h2>
+                <h2>АЯЛЛЫГ ИЛҮҮ ХЯЛБАРААР ЭХЛҮҮЛЬЕ</h2>
                 <div class="tutorial-grid">
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-1.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-1.svg"
                         bogin="Нэг товшоод төлөвлөгөөндөө нэм."
                         urt="Сэтгэл татсан аяллын цэг бүрээ нэг товшоод маршрутдаа нэм. Аяллын төлөвлөгөө илүү ухаалаг, илүү төгс хэлбэрээр бүтээгээрэй.">
                     </ag-tutorial-card>
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-2.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-2.svg"
                         bogin="Монголын үзэсгэлэнт газруудтай танилц."
                         urt="Монголын гайхамшигт байгаль, үзэсгэлэнт газруудыг нэг даруултаар нээ. Өөрийн аяллын санаагаа хамгийн хурдан байдлаар олж аваарай.">
                     </ag-tutorial-card>
                     <ag-tutorial-card
-                        zrg="/assets/images/tutorial-img/tutorial-3.svg"
+                        zrg="./assets/images/tutorial-img/tutorial-3.svg"
                         bogin="Хялбар төлөвлөгөө ба хуваалцах."
                         urt="Маршрутаа секундийн дотор бүтээгээд шууд хуваалц. Хамтын аялал зохион байгуулах хамгийн хялбар арга.">
                     </ag-tutorial-card>

@@ -20,7 +20,7 @@ p {
 body {
   font-family: 'NunitoSans';
   color: var(--text-color-1);
-  background-color: var(--bg-color);
+  background: var(--bg-color);
 }
 
 /* Page fade-in */
@@ -43,7 +43,7 @@ main {
 
   padding: var(--p-md) var(--p-xl);
   box-shadow: 1px 0 10px 2px var(--text-color-6);
-  background-color: var(--bg-color);
+  background: var(--bg-color);
 
   animation: slideInLeft 0.7s ease-out;
 }
@@ -208,7 +208,7 @@ main {
     gap: var(--gap-size-m);
 
     padding: var(--p-sm) var(--p-lg);
-    background-color: var(--bg-color);
+    background: var(--bg-color);
     box-shadow: 0 2px 10px rgba(0,0,0,0.06);
     backdrop-filter: blur(8px);
   }

@@ -26,7 +26,7 @@ class AgTutorialCard extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
         :host {
           display: block;
@@ -56,6 +56,7 @@ class AgTutorialCard extends HTMLElement {
           margin: 0.25rem 0;
           font-family: 'Rubik';
           font-size: var(--fs-base);
+          text-align: center;
         }
 
         .tutorial-card:hover h3 {
@@ -66,12 +67,14 @@ class AgTutorialCard extends HTMLElement {
           color: var(--text-color-3);
           font-family: 'NunitoSans';
           margin: 0;
+          text-align: justify;
         }
+
       </style>
 
       <article class="tutorial-card">
         <img src="${img}" alt="${shortText || "tutorial image"}">
-        <h4>${shortText}</h4>
+        <h3>${shortText}</h3>
         <p>${longText}</p>
       </article>
     `;

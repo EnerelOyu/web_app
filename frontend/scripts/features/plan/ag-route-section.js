@@ -17,7 +17,7 @@ class AgRouteSection extends HTMLElement {
     render() {
         this.shadowRoot.innerHTML = `
             <style>
-                @import url('/styles/fonts.css');
+                @import url('./styles/fonts.css');
 
                 :host {
                     display: block;
@@ -196,11 +196,6 @@ class AgRouteSection extends HTMLElement {
                                 </svg>
                             </button>
                             <button class="add-label-btn" data-action="add">Газар нэмэх</button>
-                            <button class="add-toggle-btn" data-action="toggle" aria-label="Нэмэх төрлийг солих">
-                                <svg viewBox="0 0 512 512" aria-hidden="true">
-                                    <path fill="currentColor" d="M304 48c0-26.5 21.5-48 48-48l80 0c26.5 0 48 21.5 48 48l0 80c0 26.5-21.5 48-48 48-16.9 0-31.7-8.7-40.1-21.9l-82.7 82.7c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l82.7-82.7C312.7 79.7 304 64.9 304 48zM208 464c0 26.5-21.5 48-48 48l-80 0c-26.5 0-48-21.5-48-48l0-80c0-26.5 21.5-48 48-48 16.9 0 31.7 8.7 40.1 21.9l82.7-82.7c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-82.7 82.7c12.7 8.4 21.9 23.2 21.9 40.1l0 80z"/>
-                                </svg>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -406,6 +401,8 @@ class AgRouteSection extends HTMLElement {
 
                 // Дугаарлалтыг шинэчлэх
                 this.updateRouteNumbering();
+                // DOM дээрх шинэ дарааллыг шууд state-д хадгална
+                this.savePlanOrder();
             }
 
             // Заагчуудыг устгах
@@ -422,12 +419,6 @@ class AgRouteSection extends HTMLElement {
             item.setAttribute('number', index + 1);
         });
 
-        // Тэмдэглэлийн элементүүдийн дугаарыг шинэчлэх
-        const noteItems = this.querySelectorAll('ag-note-item');
-        noteItems.forEach((item, index) => {
-            item.setAttribute('number', index + 1);
-        });
-
         this.updateStartDividerVisibility();
 
         // Аялалын хуваагчуудыг шинэчлэх - зайг дахин тооцоолох
@@ -437,7 +428,7 @@ class AgRouteSection extends HTMLElement {
     updateStartDividerVisibility() {
         const startDivider = this.shadowRoot?.querySelector('.route-divider--start');
         if (!startDivider) return;
-        const itemCount = this.querySelectorAll('ag-route-item, ag-note-item').length;
+        const itemCount = this.querySelectorAll('ag-route-item').length;
         if (itemCount === 0) {
             startDivider.removeAttribute('hidden');
         } else {
@@ -458,8 +449,8 @@ class AgRouteSection extends HTMLElement {
             // Хуучин хуваагчуудыг устгаж, элемент бүрийн хооронд нэг хуваагч үлдээх
             this.querySelectorAll('ag-travel-divider').forEach(divider => divider.remove());
 
-            // Бүх элементүүдийг (маршрут болон тэмдэглэл) дарааллаар авах
-            const allItems = Array.from(this.querySelectorAll('ag-route-item, ag-note-item'));
+            // Бүх элементүүдийг (маршрут) дарааллаар авах
+            const allItems = Array.from(this.querySelectorAll('ag-route-item'));
 
             for (let i = 0; i < allItems.length; i++) {
                 const currentItem = allItems[i];
@@ -470,6 +461,9 @@ class AgRouteSection extends HTMLElement {
                     divider.setAttribute('time', '');
                     divider.setAttribute('distance', '');
                     currentItem.after(divider);
+
+                    // Зай тооцоолох
+                    this.calculateDistance(divider);
                 } else {
                     // Сүүлийн элемент - хуваагч хэрэггүй
                 }
@@ -479,15 +473,99 @@ class AgRouteSection extends HTMLElement {
         }
     }
 
+    /**
+     * Маршрутын дарааллыг AppState дээр шууд шинэчилж хадгалах
+     */
+    savePlanOrder() {
+        if (!window.appState) return;
+
+        const itemsInOrder = Array.from(this.querySelectorAll('ag-route-item'));
+        const planItems = window.appState.getPlanItems?.() || [];
+        const planById = new Map(planItems.map(item => [String(item.id), item]));
+
+        const updatedPlanItems = [];
+        let planIndex = 0;
+
+        itemsInOrder.forEach((item) => {
+            const spotId = String(item.getAttribute('data-spot-id') || '');
+            if (!spotId) return;
+            planIndex += 1;
+            const existing = planById.get(spotId) || { id: spotId };
+            updatedPlanItems.push({ ...existing, number: planIndex });
+        });
+
+        window.appState.planItems = updatedPlanItems;
+        window.appState.savePlanToStorage();
+        window.appState.dispatchStateChange('planItems', updatedPlanItems);
+
+        console.log('Маршрутын дараалал хадгалагдлаа:', {
+            planItems: updatedPlanItems.length
+        });
+    }
+
     async calculateDistance(divider) {
         // Ачаалах төлөвт оруулах
         divider.setAttribute('time', '');
         divider.setAttribute('distance', '');
 
         try {
-            // Энгийн тооцоолол - бодит Google Maps API-аар солих
-            const mockDistance = Math.floor(Math.random() * 150) + 20; // 20-170 км
-            const mockTime = Math.floor((mockDistance / 60) * 60); // Дундаж 60км/цаг
+            // Өмнөх болон дараагийн маршрутын элементүүдийг авах
+            const prev = divider.previousElementSibling;
+            const next = divider.nextElementSibling;
+
+            if (!prev || !next) {
+                divider.setAttribute('distance', '');
+                divider.setAttribute('time', '');
+                return;
+            }
+
+            // Байршлын мэдээллийг авах
+            const origin = prev.getAttribute('map-query') || prev.getAttribute('title');
+            const destination = next.getAttribute('map-query') || next.getAttribute('title');
+
+            if (!origin || !destination) {
+                divider.setAttribute('distance', '');
+                divider.setAttribute('time', '');
+                return;
+            }
+
+            // Backend API дуудаж бодит зай тооцоолох
+            const response = await fetch('/api/distance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ origin, destination })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                divider.setAttribute('distance', data.distance);
+                divider.setAttribute('time', data.duration);
+            } else {
+                // Алдаа гарсан тохиолдолд mock өгөгдөл ашиглах
+                console.warn('Distance API error:', data.error);
+                const mockDistance = Math.floor(Math.random() * 150) + 20;
+                const mockTime = Math.floor((mockDistance / 60) * 60);
+                const hours = Math.floor(mockTime / 60);
+                const minutes = mockTime % 60;
+
+                let timeStr = '';
+                if (hours > 0) {
+                    timeStr = `${hours} цаг ${minutes} мин`;
+                } else {
+                    timeStr = `${minutes} мин`;
+                }
+
+                divider.setAttribute('distance', `~${mockDistance} км`);
+                divider.setAttribute('time', timeStr);
+            }
+        } catch (error) {
+            console.error('Error calculating distance:', error);
+            // Алдаа гарсан тохиолдолд mock өгөгдөл ашиглах
+            const mockDistance = Math.floor(Math.random() * 150) + 20;
+            const mockTime = Math.floor((mockDistance / 60) * 60);
             const hours = Math.floor(mockTime / 60);
             const minutes = mockTime % 60;
 
@@ -498,22 +576,8 @@ class AgRouteSection extends HTMLElement {
                 timeStr = `${minutes} мин`;
             }
 
-            divider.setAttribute('distance', `${mockDistance} км`);
+            divider.setAttribute('distance', `~${mockDistance} км`);
             divider.setAttribute('time', timeStr);
-
-            // TODO: Бодит Google Maps API дуудлагаар солих
-            // Өмнөх болон дараагийн маршрутын элементүүдийг авч бодит зайг тооцоолох
-            // const prev = divider.previousElementSibling;
-            // const next = divider.nextElementSibling;
-            // const origin = prev.getAttribute('map-query') || prev.getAttribute('title');
-            // const destination = next.getAttribute('map-query') || next.getAttribute('title');
-            // const response = await fetch(`https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=YOUR_API_KEY`);
-            // const data = await response.json();
-            // Бодит зай болон цагийг задлан авч тохируулах
-        } catch (error) {
-            console.error('Error calculating distance:', error);
-            divider.setAttribute('distance', 'Тооцоолох боломжгүй');
-            divider.setAttribute('time', '');
         }
     }
 }

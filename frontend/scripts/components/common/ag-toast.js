@@ -24,7 +24,7 @@ class AgToast extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         @import url('./styles/global.css');
-        @import url('/styles/fonts.css');
+        @import url('./styles/fonts.css');
 
         .toast {
           position: fixed;

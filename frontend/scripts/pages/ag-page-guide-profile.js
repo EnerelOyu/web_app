@@ -340,7 +340,7 @@ class PageGuideProfile extends HTMLElement {
       <style>${this.css}</style>
       <div class="page-guide-profile">
         <!-- Буцах товч -->
-        <a href="javascript:history.back()" class="back-button">← Буцах</a>
+        <a href="#/guides" class="back-button">← Буцах</a>
 
         <!-- Хөтөчийн үндсэн мэдээлэл хэсэг -->
         <section class="guide-profile-header">

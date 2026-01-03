@@ -15,6 +15,8 @@ import db, {
   removeSpotFromPlan,
   getPlanSpots,
   updatePlanNotes,
+  updatePlanSpotTitle,
+  updatePlanSpotDescription,
   clearPlan,
   getReviewsBySpotId,
   createReview,
@@ -59,7 +61,7 @@ const cspDirectives = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self'",
-  "connect-src 'self'"
+  "connect-src 'self' https://maps.googleapis.com"
 ].join('; ');
 
 app.use((req, res, next) => {
@@ -120,7 +122,8 @@ const mapSpotRow = (spotRow, req) => {
 
   return {
     spotId: spotRow.spotId,
-    name: spotRow.name,
+    // customTitle байвал ашиглах, үгүй бол анхны нэр
+    name: spotRow.customTitle || spotRow.name,
     area: spotRow.area,
 
     //categories-г comma-гаар тусгаарласан string болгох
@@ -138,7 +141,8 @@ const mapSpotRow = (spotRow, req) => {
     img2Url: toAbsoluteUrl(req, spotRow.img2Url),
     img3Url: toAbsoluteUrl(req, spotRow.img3Url),
     mapSrc: toAbsoluteUrl(req, spotRow.mapSrc),
-    descriptionLong: spotRow.descriptionLong,
+    // customDescription байвал ашиглах, үгүй бол анхны тайлбар
+    descriptionLong: spotRow.customDescription || spotRow.descriptionLong,
     infoPageHref: '../code/index.html#/spot-info'
   };
 };
@@ -424,6 +428,54 @@ app.put('/api/plans/:userId/notes', (req, res) => {
   }
 });
 
+// plan spot-ийн customTitle шинэчлэх
+app.put('/api/plans/:userId/spots/:spotId/title', (req, res) => {
+  try {
+    const { userId, spotId } = req.params;
+    const { customTitle } = req.body;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const updated = updatePlanSpotTitle(plan.id, spotId, customTitle);
+
+    if (updated) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Spot not found in plan' });
+    }
+  } catch (error) {
+    console.error('Error updating spot title:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// plan spot-ийн customDescription шинэчлэх
+app.put('/api/plans/:userId/spots/:spotId/description', (req, res) => {
+  try {
+    const { userId, spotId } = req.params;
+    const { description } = req.body;
+
+    const plan = getPlanByUserId(userId);
+    if (!plan) {
+      return res.status(404).json({ success: false, error: 'Plan not found' });
+    }
+
+    const updated = updatePlanSpotDescription(plan.id, spotId, description);
+
+    if (updated) {
+      res.json({ success: true });
+    } else {
+      res.status(404).json({ success: false, error: 'Spot not found in plan' });
+    }
+  } catch (error) {
+    console.error('Error updating spot description:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
 // plan дахь бүх spot-уудыг устгах
 app.delete('/api/plans/:userId/spots', (req, res) => {
   try {
@@ -511,6 +563,59 @@ app.post('/api/guides/:guideId/reviews', (req, res) => {
     res.status(201).json({ success: true, id: result.id });
   } catch (error) {
     console.error('Error creating guide review:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// Google Maps Distance Matrix API дуудлага
+app.post('/api/distance', async (req, res) => {
+  try {
+    const { origin, destination } = req.body;
+
+    if (!origin || !destination) {
+      return res.status(400).json({
+        success: false,
+        error: 'origin and destination are required'
+      });
+    }
+
+    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({
+        success: false,
+        error: 'Google Maps API key not configured'
+      });
+    }
+
+    const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}&language=mn`;
+
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.status !== 'OK') {
+      return res.status(400).json({
+        success: false,
+        error: `Google Maps API error: ${data.status}`
+      });
+    }
+
+    const element = data.rows[0]?.elements[0];
+    if (!element || element.status !== 'OK') {
+      return res.status(400).json({
+        success: false,
+        error: 'Unable to calculate distance'
+      });
+    }
+
+    res.json({
+      success: true,
+      distance: element.distance.text,
+      duration: element.duration.text,
+      distanceValue: element.distance.value, // meters
+      durationValue: element.duration.value  // seconds
+    });
+  } catch (error) {
+    console.error('Error calculating distance:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });

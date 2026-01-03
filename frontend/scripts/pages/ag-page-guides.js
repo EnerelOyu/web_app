@@ -16,7 +16,7 @@ class PageGuides extends HTMLElement {
     render() {
         this.innerHTML = `
             <style>
-                @import url('/styles/fonts.css');
+                @import url('./styles/fonts.css');
 
                 page-guides {
                     display: block;
@@ -41,6 +41,7 @@ class PageGuides extends HTMLElement {
                     font-family: 'Rubik';
                     text-transform: uppercase;
                     margin-bottom: var(--m-lg);
+                    margin-top: var(--m-lg);
                 }
             </style>
 
