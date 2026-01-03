@@ -13,7 +13,7 @@ class AgFilter extends HTMLElement {
   }
 
   attributeChangedCallback() {
-    // атрибут өөрчлөгдвөл (жишээ нь динамикаар) дахин зурах
+    // атрибут өөрчлөгдвөл дахин зурах
     if (this.isConnected) {
       this.render();
     }

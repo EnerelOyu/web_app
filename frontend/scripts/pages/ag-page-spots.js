@@ -417,10 +417,6 @@ class PageSpots extends HTMLElement {
         }
     }
 
-    /**
-     * Идэвхтэй шүүлт байгаа эсэхийг шалгах
-     * @returns {boolean}
-     */
     hasActiveFilters() {
         return Object.values(this.activeFilters).some(arr => arr.length > 0);
     }
@@ -432,14 +428,11 @@ class PageSpots extends HTMLElement {
             <aside class="filter-aside">
                 <h2>Аяллын цэг хайх</h2>
                 <section class="filter-section" id="filter-section">
-                    <!-- Filters will be dynamically generated -->
                 </section>
             </aside>
             <div class="spot-cards-container">
-                <ag-spot-manager></ag-spot-manager>
                 <p class="container-hdr">шүүсэн аяллын цэгүүд</p>
                 <div class="spots-grid" id="spots-grid">
-                    <!-- Spot cards will be dynamically generated -->
                 </div>
             </div>
         </main>
@@ -470,11 +463,6 @@ class PageSpots extends HTMLElement {
         });
     }
 
-    /**
-     * ag-filter элемент үүсгэх
-     * @param {string} name - Шүүлтийн нэр
-     * @returns {string} - HTML string
-     */
     createFilterElement(name) {
         // ag-filter компонент дотроо static өгөгдөл ашиглана
         return `<ag-filter ner="${name}"></ag-filter>`;
