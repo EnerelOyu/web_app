@@ -479,14 +479,20 @@ class AgRouteSection extends HTMLElement {
     savePlanOrder() {
         if (!window.appState) return;
 
+        // Одоогийн дарааллыг хувьсагчуудад авна
         const itemsInOrder = Array.from(this.querySelectorAll('ag-route-item'));
         const planItems = window.appState.getPlanItems?.() || [];
+        // AppState-д item-уудыг id-аар map болгон бэлтгэж, хадгална.
         const planById = new Map(planItems.map(item => [String(item.id), item]));
 
         const updatedPlanItems = [];
         let planIndex = 0;
 
-        itemsInOrder.forEach((item) => {
+        /* ForEach дотор spotId-г DOM-оос аван, индексийг 1-ээс өсгөж 
+        (planIndex += 1) шинэ number онооно. Өмнөх item байвал spread-ээр 
+        үлдсэн талбарыг авч, үгүй бол { id: spotId }-оос эхлүүлнэ.
+        */
+       itemsInOrder.forEach((item) => {
             const spotId = String(item.getAttribute('data-spot-id') || '');
             if (!spotId) return;
             planIndex += 1;

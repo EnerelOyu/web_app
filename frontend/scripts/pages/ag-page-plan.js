@@ -59,9 +59,8 @@ class PagePlan extends HTMLElement {
                     </div>
                 </div>
 
-                <!-- Төлөвлөгөөний жагсаалт - Динамик контент -->
                 <ag-route-section id="route-section">
-                    <!-- Маршрутын элементүүд энд динамикаар нэмэгдэнэ -->
+                    <!-- динамик-->
                 </ag-route-section>
             </div>
         `;
